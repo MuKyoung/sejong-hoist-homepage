@@ -1,182 +1,182 @@
+"use client";
+
+import { motion } from "framer-motion";
 import Link from "next/link";
 import Image from "next/image";
+
+const E = [0.16, 1, 0.3, 1] as never;
 
 const DEMOS = [
   {
     num: "01",
-    name: "PRESTIGE",
-    subtitle: "다크 럭셔리 산업 브랜드",
-    ref: "Tesla × Konecranes",
-    desc: "테슬라의 제품 중심 미니멀리즘과 세계 1위 크레인 기업 Konecranes의 기술 권위를 결합. 다크 배경, 풀스크린 제품 섹션, 영화적 타이포그래피.",
-    principles: [
-      "Peak-End Rule — 충격적 오프닝 + 강력한 마감",
-      "희소성 효과 — 맞춤 제작 프리미엄 포지셔닝",
-      "유창성 효과 — 부드러운 애니메이션 = 품질 지각",
-      "시각적 앵커링 — 200T 먼저 → 기대치 재설정",
-    ],
-    palette: ["#0a0a0a", "#1a1a1a", "#f47c20", "#9a9a9a"],
+    name: "APEX",
+    subtitle: "다크 럭셔리",
+    ref: "Apple × BMW × Caterpillar",
+    palette: ["#060606", "#f0f0f0", "#e8721a"],
+    desc: "순수한 어둠 위에 올린 거대한 타이포그래피. 제품이 침묵으로 말합니다. 선·장식 없음, 여백이 전부.",
+    keys: ["패럴랙스 이미지", "클립 리빌 타이포", "물리 기반 카운터"],
+    img: "/images/sejong_3.png",
     href: "/demo/1",
-    img: "/images/sejong_2.png",
-    tag: "다크 · 럭셔리 · 제품 중심",
+    dark: true,
   },
   {
     num: "02",
-    name: "COMMAND",
-    subtitle: "기업 권위 대시보드",
-    ref: "Samsung × 한화시스템",
-    desc: "삼성반도체·한화시스템의 기업 권위와 데이터 시각화를 결합. 실시간 현황 대시보드, 업종별 납품 실적 차트, 고객사 티커.",
-    principles: [
-      "권위 편향 — 인증·수상·고객사로 신뢰 구축",
-      "사회적 증거 — '현재 347개 현장 가동 중'",
-      "앵커링 — 최대 숫자를 첫 화면에 배치",
-      "FOMO — 실시간 느낌의 LIVE 대시보드",
-    ],
-    palette: ["#0a1c4a", "#f47c20", "#ffffff", "#f5f7fa"],
+    name: "NEXUS",
+    subtitle: "코퍼리트 커맨드",
+    ref: "Samsung Semiconductor × Bloomberg",
+    palette: ["#071129", "#f4f7fc", "#f47c20"],
+    desc: "분할 화면에 라이브 데이터 대시보드. 실시간 운영 현황이 보이는 투명한 기업.",
+    keys: ["실시간 메트릭 UI", "SVG 애니메이션 차트", "뉴스 스태거 리스트"],
+    img: "/images/sejong_2.png",
     href: "/demo/2",
-    img: "/images/sejong_1.png",
-    tag: "네이비 · 데이터 · 권위",
+    dark: true,
   },
   {
     num: "03",
-    name: "CRAFT",
-    subtitle: "에디토리얼 장인 브랜드",
-    ref: "Shinsegae ENC × Liebherr",
-    desc: "신세계건설의 세련된 에디토리얼 감성과 세계적 중장비 기업 Liebherr의 장인 정신을 결합. 세리프 타이포그래피, 크림 배경, 스토리 중심 내러티브.",
-    principles: [
-      "미적 사용성 효과 — 아름다운 UI = 품질 지각",
-      "제이가르닉 효과 — 미완성 리빌로 스크롤 유도",
-      "헤일로 효과 — 디자인 품질 → 제품 품질 연상",
-      "단순 노출 효과 — 반복 브랜드 노출 = 친숙함",
-    ],
-    palette: ["#f7f4f0", "#1a1a1a", "#c4a46b", "#6b6b6b"],
+    name: "ATELIER",
+    subtitle: "에디토리얼 마스터크래프트",
+    ref: "Hermès × Aesop × Liebherr",
+    palette: ["#f9f6f1", "#111111", "#9b7840"],
+    desc: "크림 배경에 세리프 타이포그래피. 사진이 텍스트보다 크다. 브랜드 철학이 콘텐츠입니다.",
+    keys: ["세리프 에디토리얼", "풀블리드 패럴랙스", "타임라인 라인 드로"],
+    img: "/images/sejong_1.png",
     href: "/demo/3",
-    img: "/images/sejong_3.png",
-    tag: "에디토리얼 · 세리프 · 스토리",
+    dark: false,
   },
   {
     num: "04",
-    name: "HANWHA",
-    subtitle: "한화시스템 직접 분석 스타일",
-    ref: "hanwhasystems.com 직접 분석",
-    desc: "한화시스템 사이트를 실제로 분석해 'CONNECT TO THE FUTURE' 초대형 타이포그래피 히어로, Persona 선택 UX, ESG 번호형 아코디언, 번호형 뉴스 리스트를 세종에 맞게 이식.",
-    principles: [
-      "타이포그래피 계층 효과 — 초대형 주제어 → 보조정보",
-      "기대 확인(대기업 레이아웃 익숙함) — 인지적 신뢰 ↑",
-      "능동적 참여 — Persona 선택 = IKEA 효과",
-      "색 심리학 — Navy 권위 + Orange 행동 유발",
-    ],
-    palette: ["#0a1c4a", "#f47c20", "#f5f7fb", "#060f25"],
-    href: "/demo/4",
+    name: "AUTHORITY",
+    subtitle: "한국 기업 권위",
+    ref: "Samsung.com × Hanwha Systems × SK",
+    palette: ["#0f172a", "#f4f6f9", "#f47c20"],
+    desc: "구조적 격자, 탭 제품 탐색, 어코디언 가치. 신뢰와 데이터로 설득하는 한국 기업 스탠다드.",
+    keys: ["탭 기반 제품 탐색", "어코디언 핵심 가치", "인증 배너 + 고객사"],
     img: "/images/sejong_4.png",
-    tag: "한화시스템 · 번호형 · Persona",
+    href: "/demo/4",
+    dark: true,
   },
-];
+] as const;
 
-export default function DemoIndexPage() {
+export default function DemoSelector() {
   return (
-    <div className="min-h-screen bg-[#0d0d0d] text-white">
+    <div className="min-h-screen font-sans" style={{ background: "#0a0a0a", color: "#f0f0f0" }}>
+
       {/* 헤더 */}
-      <div className="border-b border-white/5 px-6 md:px-14 py-5 flex items-center justify-between">
-        <Link href="/">
-          <Image src="/images/sejong-logo.png" alt="SEJONG" width={120} height={30} className="h-7 w-auto brightness-0 invert" />
-        </Link>
-        <p className="text-white/30 text-xs tracking-[0.15em] uppercase">Design Demo</p>
+      <div className="container-xl py-12 md:py-20">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, ease: E }}
+        >
+          <Link href="/" className="inline-flex items-center gap-2 text-[12px] font-mono mb-12"
+            style={{ color: "rgba(240,240,240,0.28)" }}>
+            ← 메인으로
+          </Link>
+          <p className="text-[11px] font-mono tracking-[0.35em] uppercase mb-4" style={{ color: "rgba(240,240,240,0.25)" }}>
+            Design Demos — v3.0
+          </p>
+          <h1 className="text-h1 mb-5">데모 디자인 선택</h1>
+          <p className="text-[15px] leading-[1.8] max-w-xl" style={{ color: "rgba(240,240,240,0.4)" }}>
+            4가지 디자인 방향성 중 하나를 선택하면 그 방향으로 전체 사이트를 구축합니다.
+            각 데모는 완전히 다른 철학과 레퍼런스를 기반으로 합니다.
+          </p>
+        </motion.div>
+
+        {/* 기술 스택 배지 */}
+        <motion.div
+          initial={{ opacity: 0 }} animate={{ opacity: 1 }}
+          transition={{ delay: 0.4 }}
+          className="flex flex-wrap gap-2.5 mt-8"
+        >
+          {["Next.js 16 App Router", "TypeScript 5 strict", "Tailwind CSS v4", "Framer Motion 12", "Pretendard"].map(t => (
+            <span key={t} className="text-[11px] font-mono px-3 py-1.5"
+              style={{ background: "rgba(255,255,255,0.05)", color: "rgba(240,240,240,0.4)", border: "1px solid rgba(255,255,255,0.08)" }}>
+              {t}
+            </span>
+          ))}
+        </motion.div>
       </div>
 
-      <div className="max-w-[1400px] mx-auto px-6 md:px-14 py-16">
-        {/* 타이틀 */}
-        <div className="mb-16">
-          <p className="text-[#f47c20] text-[10px] tracking-[0.3em] uppercase mb-4">세종호이스트크레인 디자인 데모</p>
-          <h1 className="text-4xl md:text-6xl font-black mb-4" style={{ letterSpacing: "-0.03em" }}>
-            3가지 디자인 방향
-          </h1>
-          <p className="text-white/40 text-base max-w-2xl leading-relaxed">
-            8개 레퍼런스 사이트 분석 + Konecranes·Liebherr 세계 사례 리서치를 바탕으로 도출한 3가지 디자인 시스템. 각 데모는 독립적인 디자인 언어와 심리학 원리를 적용합니다.
-          </p>
-        </div>
+      {/* 데모 카드 그리드 */}
+      <div className="container-xl pb-24">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+          {DEMOS.map((d, i) => (
+            <motion.div
+              key={d.num}
+              initial={{ opacity: 0, y: 28 }} animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.15 + i * 0.08, duration: 0.8, ease: E }}
+            >
+              <Link href={d.href} className="block group relative overflow-hidden"
+                style={{ background: d.dark ? "#111" : "#f9f6f1" }}>
 
-        {/* 데모 카드 */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-0.5 bg-white/5">
-          {DEMOS.map((demo) => (
-            <Link key={demo.num} href={demo.href} className="group bg-[#0d0d0d] p-8 md:p-10 hover:bg-[#141414] transition-colors relative overflow-hidden flex flex-col">
-              {/* 배경 이미지 힌트 */}
-              <div className="absolute inset-0 opacity-0 group-hover:opacity-5 transition-opacity duration-500">
-                <Image src={demo.img} alt="" fill className="object-cover" />
-              </div>
+                {/* 이미지 */}
+                <div className="relative overflow-hidden" style={{ aspectRatio: "16/10" }}>
+                  <Image src={d.img} alt={d.name} fill className="object-cover transition-transform duration-700 group-hover:scale-[1.04]"
+                    style={{ filter: d.dark ? "brightness(0.25)" : "brightness(0.45) saturate(0.7)" }}
+                    sizes="(max-width:768px)100vw,50vw" />
+                  <div className="absolute inset-0" style={{
+                    background: d.dark
+                      ? "linear-gradient(to top, #111 0%, transparent 50%)"
+                      : "linear-gradient(to top, #f9f6f1 0%, transparent 50%)"
+                  }} />
 
-              {/* 번호 */}
-              <p className="text-white/5 font-black text-8xl absolute -top-4 -right-2 leading-none select-none">
-                {demo.num}
-              </p>
+                  {/* 번호 */}
+                  <div className="absolute top-6 left-6">
+                    <span className="text-[11px] font-mono" style={{ color: d.dark ? "rgba(240,240,240,0.25)" : "rgba(17,17,17,0.3)" }}>
+                      {d.num}
+                    </span>
+                  </div>
 
-              <div className="relative z-10 flex flex-col flex-1">
-                {/* 태그 */}
-                <p className="text-[10px] tracking-[0.2em] uppercase text-white/30 mb-5">{demo.tag}</p>
-
-                {/* 제목 */}
-                <h2 className="text-3xl font-black mb-1 group-hover:text-[#f47c20] transition-colors" style={{ letterSpacing: "-0.02em" }}>
-                  {demo.name}
-                </h2>
-                <p className="text-white/40 text-sm mb-2">{demo.subtitle}</p>
-                <p className="text-[#f47c20]/60 text-[11px] tracking-wider uppercase mb-6">{demo.ref}</p>
-
-                {/* 설명 */}
-                <p className="text-white/40 text-sm leading-relaxed mb-8 flex-1">{demo.desc}</p>
-
-                {/* 색상 팔레트 */}
-                <div className="flex gap-2 mb-8">
-                  {demo.palette.map((color, ci) => (
-                    <div key={ci} className="w-6 h-6 rounded-sm border border-white/10" style={{ background: color }} title={color} />
-                  ))}
-                </div>
-
-                {/* 심리학 원리 */}
-                <div className="mb-8">
-                  <p className="text-[10px] tracking-[0.2em] uppercase text-white/20 mb-3">적용 심리학</p>
-                  <ul className="space-y-1.5">
-                    {demo.principles.map((p, pi) => (
-                      <li key={pi} className="flex items-start gap-2 text-white/30 text-xs leading-snug">
-                        <span className="text-[#f47c20] flex-shrink-0 mt-0.5">•</span>
-                        {p}
-                      </li>
+                  {/* 팔레트 */}
+                  <div className="absolute top-6 right-6 flex gap-1.5">
+                    {d.palette.map(c => (
+                      <span key={c} className="block w-4 h-4 rounded-full" style={{ background: c, border: "1px solid rgba(255,255,255,0.15)" }} />
                     ))}
-                  </ul>
+                  </div>
                 </div>
 
-                {/* CTA */}
-                <div className="flex items-center gap-2 text-sm font-semibold text-white/50 group-hover:text-white transition-colors">
-                  <span className="h-px w-6 bg-current group-hover:w-10 transition-all" />
-                  데모 보기 →
+                {/* 텍스트 영역 */}
+                <div className="p-7 md:p-8" style={{ color: d.dark ? "#f0f0f0" : "#111" }}>
+                  <div className="flex items-start justify-between mb-4">
+                    <div>
+                      <p className="text-[11px] font-mono mb-1.5" style={{ color: d.dark ? "rgba(240,240,240,0.28)" : "rgba(17,17,17,0.35)" }}>
+                        {d.subtitle}
+                      </p>
+                      <h2 className="text-2xl font-black tracking-tight">{d.name}</h2>
+                    </div>
+                    <span className="text-xl font-light opacity-25 group-hover:opacity-60 group-hover:translate-x-1 transition-all duration-300">→</span>
+                  </div>
+
+                  <p className="text-[12px] mb-5" style={{ color: d.dark ? "rgba(240,240,240,0.28)" : "rgba(17,17,17,0.38)" }}>
+                    레퍼런스: {d.ref}
+                  </p>
+                  <p className="text-[14px] leading-[1.75] mb-7" style={{ color: d.dark ? "rgba(240,240,240,0.5)" : "rgba(17,17,17,0.55)" }}>
+                    {d.desc}
+                  </p>
+
+                  <div className="flex flex-wrap gap-2">
+                    {d.keys.map(k => (
+                      <span key={k} className="text-[11px] px-2.5 py-1"
+                        style={{
+                          background: d.dark ? "rgba(255,255,255,0.06)" : "rgba(17,17,17,0.06)",
+                          color: d.dark ? "rgba(240,240,240,0.38)" : "rgba(17,17,17,0.42)",
+                        }}>
+                        {k}
+                      </span>
+                    ))}
+                  </div>
                 </div>
-              </div>
-            </Link>
+              </Link>
+            </motion.div>
           ))}
         </div>
+      </div>
 
-        {/* 리서치 근거 */}
-        <div className="mt-16 border-t border-white/5 pt-12">
-          <p className="text-white/20 text-xs tracking-[0.2em] uppercase mb-8">리서치 기반</p>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-            {[
-              { name: "Konecranes", desc: "세계 1위 크레인 기업", insight: "데이터·디지털 통합 = 신뢰" },
-              { name: "Liebherr", desc: "독일 중장비 명가", insight: "뉴스 = 활성 기업 신호" },
-              { name: "Tesla.com", desc: "제품 중심 미니멀", insight: "단일 포커스 = 전환율 ↑" },
-              { name: "Shinsegae ENC", desc: "한국 고급 건설", insight: "에디토리얼 = 브랜드 가치 ↑" },
-            ].map((r, i) => (
-              <div key={i} className="p-5 border border-white/5">
-                <p className="text-white font-semibold text-sm mb-1">{r.name}</p>
-                <p className="text-white/30 text-xs mb-3">{r.desc}</p>
-                <p className="text-[#f47c20]/60 text-[10px]">→ {r.insight}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        <div className="mt-8 text-center">
-          <Link href="/" className="text-white/20 hover:text-white text-sm transition-colors">
-            ← 메인 사이트로 돌아가기
-          </Link>
-        </div>
+      {/* 하단 안내 */}
+      <div className="container-xl pb-16" style={{ borderTop: "1px solid rgba(255,255,255,0.05)" }}>
+        <p className="text-[12px] mt-10" style={{ color: "rgba(240,240,240,0.2)" }}>
+          * 각 데모는 동일한 세종호이스트크레인 콘텐츠를 기반으로 하되, 완전히 다른 디자인 철학을 적용합니다.
+          <br />* 선택 후 해당 방향으로 전체 사이트 (메인, 회사소개, 사업영역, 납품실적, 고객지원) 를 완성합니다.
+        </p>
       </div>
     </div>
   );

@@ -1,121 +1,87 @@
 "use client";
 
 /**
- * DEMO 2: COMMAND CENTER
- * Bloomberg × Samsung Semiconductor × Palantir
- * 실제 운영 데이터가 있는 것처럼 느껴지는 대시보드형 기업 사이트
+ * DEMO 2: NEXUS — 코퍼리트 커맨드 센터
+ * Samsung Semiconductor × Bloomberg × Microsoft Azure
+ *
+ * 설계 원칙:
+ * - 화이트/네이비 교번 섹션
+ * - 실제 운영 데이터가 있는 것처럼 느껴지는 라이브 UI
+ * - SVG 애니메이션 차트
+ * - Pretendard 한국어 최적화 타이포그래피
+ * - 애니메이션: ① 카운터  ② SVG 바  ③ 리스트 스태거 — 3가지만
  */
 
-import { useRef, useEffect, useState } from "react";
-import {
-  motion, useInView, useSpring, useMotionValue,
-  animate, AnimatePresence
-} from "framer-motion";
+import { useRef, useEffect, useState, useCallback } from "react";
+import { motion, useInView, animate, useScroll, useTransform } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
+import { cn } from "@/lib/utils";
 
-/* ─── 카운터 ─── */
-function Counter({ to, suffix = "", decimal = false }: { to: number; suffix?: string; decimal?: boolean }) {
-  const mv = useMotionValue(0);
-  const spring = useSpring(mv, { stiffness: 50, damping: 18 });
-  const [v, setV] = useState(0);
-  const ref = useRef(null);
-  const inView = useInView(ref, { once: true, margin: "-60px" });
+const E = [0.16, 1, 0.3, 1] as never;
 
-  useEffect(() => { if (inView) mv.set(to); }, [inView, to, mv]);
-  useEffect(() => spring.on("change", n => setV(decimal ? Math.round(n * 10) / 10 : Math.floor(n))), [spring, decimal]);
-
-  return <span ref={ref}>{decimal ? v.toFixed(1) : v.toLocaleString()}{suffix}</span>;
+/* ─── 카운터 훅 ─── */
+function useCounter(to: number) {
+  const ref = useRef<HTMLElement>(null);
+  const inView = useInView(ref, { once: true, margin: "-15%" });
+  const [n, setN] = useState(0);
+  useEffect(() => {
+    if (!inView) return;
+    const c = animate(0, to, { duration: 2, ease: E as never, onUpdate: v => setN(Math.floor(v)) });
+    return () => c.stop();
+  }, [inView, to]);
+  return { ref, n };
 }
 
-/* ─── SVG 막대 차트 ─── */
-const INDUSTRY_DATA = [
-  { label: "철강·금속", value: 112, color: "#f47c20" },
-  { label: "물류·창고", value: 91, color: "#f47c20" },
-  { label: "반도체", value: 87, color: "#f47c20" },
-  { label: "발전·에너지", value: 73, color: "#f47c20" },
-  { label: "석유화학", value: 64, color: "#f47c20" },
-  { label: "자동차", value: 55, color: "#f47c20" },
-  { label: "조선·해양", value: 41, color: "#f47c20" },
+/* ─── 라이브 메트릭 ─── */
+interface Metric { val: number; suffix: string; label: string; desc: string; live?: boolean; }
+const METRICS: Metric[] = [
+  { val: 347, suffix: "개", label: "현재 가동 크레인", desc: "실시간 운영 중", live: true },
+  { val: 523, suffix: "건", label: "누적 납품 실적", desc: "1984–2026" },
+  { val: 99,  suffix: "%", label: "품질 합격률", desc: "2025년 기준" },
+  { val: 94,  suffix: "+", label: "신뢰 고객사", desc: "국내외 합산" },
 ];
-const MAX_VAL = 112;
 
-function IndustryChart() {
+/* ─── 업종 차트 데이터 ─── */
+const CHART = [
+  { label: "철강·금속", val: 112 },
+  { label: "물류·창고", val: 91 },
+  { label: "반도체",   val: 87 },
+  { label: "발전·에너지", val: 73 },
+  { label: "석유화학", val: 64 },
+  { label: "자동차",   val: 55 },
+  { label: "조선·해양", val: 41 },
+];
+const MAX_C = 112;
+
+function Chart() {
   const ref = useRef(null);
-  const inView = useInView(ref, { once: true, margin: "-60px" });
+  const inView = useInView(ref, { once: true, margin: "-10%" });
   return (
-    <div ref={ref} className="space-y-3.5">
-      {INDUSTRY_DATA.map((d, i) => (
+    <div ref={ref} className="space-y-4">
+      {CHART.map((d, i) => (
         <div key={i} className="flex items-center gap-4">
-          <span className="text-[12px] w-20 flex-shrink-0 text-right" style={{ color: "rgba(255,255,255,0.4)" }}>{d.label}</span>
-          <div className="flex-1 h-[3px] rounded-full" style={{ background: "rgba(255,255,255,0.07)" }}>
+          <span className="text-[12px] w-20 text-right shrink-0" style={{ color: "#94a3b8" }}>{d.label}</span>
+          <div className="flex-1 h-[3px] rounded-full" style={{ background: "rgba(10,28,74,0.08)" }}>
             <motion.div
               className="h-full rounded-full"
+              style={{ background: "#f47c20", opacity: 0.7 }}
               initial={{ width: 0 }}
-              animate={inView ? { width: `${(d.value / MAX_VAL) * 100}%` } : {}}
-              transition={{ duration: 1.2, delay: 0.1 + i * 0.07, ease: [0.16, 1, 0.3, 1] as never }}
-              style={{ background: d.color, opacity: 0.75 }}
+              animate={inView ? { width: `${(d.val / MAX_C) * 100}%` } : {}}
+              transition={{ duration: 1.3, delay: 0.08 * i, ease: E }}
             />
           </div>
           <motion.span
+            className="text-[12px] font-mono w-7 text-right shrink-0"
+            style={{ color: "#64748b" }}
             initial={{ opacity: 0 }} animate={inView ? { opacity: 1 } : {}}
-            transition={{ delay: 0.5 + i * 0.07 }}
-            className="text-[12px] w-8 text-right font-mono tabular-nums" style={{ color: "rgba(255,255,255,0.55)" }}
+            transition={{ delay: 0.5 + 0.08 * i }}
           >
-            {d.value}
+            {d.val}
           </motion.span>
         </div>
       ))}
     </div>
-  );
-}
-
-/* ─── 실시간 티커 (CSS 마키) ─── */
-const CLIENTS = ["삼성전자", "현대제철", "LG화학", "SK이노베이션", "POSCO", "한국수력원자력", "OCI", "한화솔루션", "GS칼텍스", "두산중공업", "현대건설", "롯데케미칼", "효성중공업", "현대모비스", "HD현대"];
-
-function Marquee() {
-  const items = [...CLIENTS, ...CLIENTS];
-  return (
-    <div className="relative overflow-hidden py-4" style={{ borderTop: "1px solid rgba(255,255,255,0.07)", borderBottom: "1px solid rgba(255,255,255,0.07)" }}>
-      <motion.div
-        className="flex gap-12 whitespace-nowrap"
-        animate={{ x: [0, -50 * CLIENTS.length] }}
-        transition={{ duration: CLIENTS.length * 2.5, repeat: Infinity, ease: "linear" }}
-      >
-        {items.map((c, i) => (
-          <span key={i} className="text-[13px] font-semibold flex-shrink-0"
-            style={{ color: "rgba(255,255,255,0.28)" }}>{c}</span>
-        ))}
-      </motion.div>
-      {/* 좌우 페이드 마스크 */}
-      <div className="absolute inset-y-0 left-0 w-20 pointer-events-none" style={{ background: "linear-gradient(to right, #0a1c4a, transparent)" }} />
-      <div className="absolute inset-y-0 right-0 w-20 pointer-events-none" style={{ background: "linear-gradient(to left, #0a1c4a, transparent)" }} />
-    </div>
-  );
-}
-
-/* ─── 라이브 메트릭 카드 ─── */
-function MetricCard({ val, suffix, label, live, delay = 0 }: {
-  val: number; suffix?: string; label: string; live?: boolean; delay?: number;
-}) {
-  return (
-    <motion.div
-      initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}
-      transition={{ delay, duration: 0.7 }}
-      className="p-5 flex flex-col gap-2 relative overflow-hidden"
-      style={{ background: live ? "rgba(244,124,32,0.08)" : "rgba(255,255,255,0.04)", border: `1px solid ${live ? "rgba(244,124,32,0.25)" : "rgba(255,255,255,0.08)"}` }}
-    >
-      {live && (
-        <span className="absolute top-3 right-3 flex items-center gap-1.5">
-          <span className="w-1.5 h-1.5 rounded-full animate-pulse" style={{ background: "#4ade80" }} />
-          <span className="text-[9px] font-mono" style={{ color: "#4ade80" }}>LIVE</span>
-        </span>
-      )}
-      <p className="font-black tabular-nums leading-none" style={{ fontSize: "clamp(1.8rem, 4vw, 2.5rem)", color: live ? "#f47c20" : "#fff", letterSpacing: "-0.03em" }}>
-        <Counter to={val} suffix={suffix} />
-      </p>
-      <p className="text-[11px] leading-snug" style={{ color: "rgba(255,255,255,0.38)" }}>{label}</p>
-    </motion.div>
   );
 }
 
@@ -126,123 +92,85 @@ const NEWS = [
   { num: "03", date: "2026.04", cat: "수상", title: "산업통상자원부 장관 표창 수상 — 산업기계 혁신 부문" },
   { num: "04", date: "2026.03", cat: "채용", title: "2026 상반기 공개채용 — 기계설계·전기제어·영업" },
   { num: "05", date: "2026.02", cat: "인증", title: "ISO 9001:2015 품질경영시스템 갱신 완료 — 3회 연속" },
-  { num: "06", date: "2026.01", cat: "납품", title: "SK이노베이션 울산 공장 갠트리크레인 납품 완료" },
+  { num: "06", date: "2026.01", cat: "납품", title: "SK이노베이션 울산 갠트리크레인 납품 완료" },
 ];
 
-/* ─── 인증 ─── */
-const CERTS = [
-  { code: "ISO\n9001", label: "품질경영\n시스템", year: "2015" },
-  { code: "KS\nINDUSTRY", label: "산업표준\n적합성", year: "KS" },
-  { code: "방폭\nEXPLOSION", label: "위험장소\n적합 검정", year: "IECEx" },
-  { code: "KGS\nINSPECT", label: "크레인\n정기 검사", year: "KGS" },
-];
+/* ─── 메인 ─── */
+export default function NexusDemo() {
+  /* 마키 */
+  const CLIENTS = ["삼성전자", "현대제철", "LG화학", "SK이노베이션", "POSCO", "한국수력원자력", "OCI", "한화솔루션", "GS칼텍스", "두산중공업", "현대건설", "롯데케미칼"];
 
-export default function CommandDemo() {
+  /* 히어로 패럴랙스 */
+  const heroRef = useRef(null);
+  const { scrollYProgress: hp } = useScroll({ target: heroRef, offset: ["start start", "end start"] });
+  const heroY = useTransform(hp, [0, 1], ["0%", "22%"]);
+  const heroOp = useTransform(hp, [0, 0.75], [1, 0]);
+
   return (
-    <div className="min-h-screen font-sans" style={{ color: "#fff" }}>
+    <div className="font-sans overflow-x-hidden" style={{ color: "#0a1c4a" }}>
 
       {/* NAV */}
-      <nav className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-6 md:px-12 h-[64px]"
-        style={{ background: "#0a1c4a", borderBottom: "1px solid rgba(255,255,255,0.08)" }}>
-        <Link href="/">
-          <Image src="/images/sejong-logo.png" alt="SEJONG" width={120} height={28} className="h-7 w-auto brightness-0 invert" />
-        </Link>
-        <div className="hidden lg:flex items-center gap-1">
-          {["회사소개", "사업영역", "납품실적", "기술력", "고객지원"].map(m => (
-            <a key={m} href="#"
-              className="px-3.5 py-2 text-[13px] transition-colors"
-              style={{ color: "rgba(255,255,255,0.5)" }}
-              onMouseEnter={e => (e.currentTarget.style.color = "#fff")}
-              onMouseLeave={e => (e.currentTarget.style.color = "rgba(255,255,255,0.5)")}
-            >{m}</a>
-          ))}
+      <header className="fixed top-0 inset-x-0 z-50 h-[64px]"
+        style={{ background: "#071129", borderBottom: "1px solid rgba(255,255,255,0.07)" }}>
+        <div className="container-xl h-full flex items-center justify-between">
+          <Link href="/">
+            <Image src="/images/sejong-logo.png" alt="SEJONG" width={120} height={28} className="h-7 w-auto brightness-0 invert" />
+          </Link>
+          <nav className="hidden lg:flex items-center gap-1 text-[13px]" style={{ color: "rgba(255,255,255,0.45)" }}>
+            {["회사소개", "사업영역", "납품실적", "고객지원"].map(m => (
+              <a key={m} href="#" className="px-3.5 py-2 hover:text-white transition-colors">{m}</a>
+            ))}
+          </nav>
+          <div className="flex items-center gap-3">
+            <a href="tel:0317771234" className="hidden md:block text-[12px]" style={{ color: "rgba(255,255,255,0.3)" }}>
+              031-777-1234
+            </a>
+            <a href="/support/inquiry"
+              className="text-[12px] font-bold px-5 py-2.5 transition-opacity hover:opacity-80"
+              style={{ background: "#f47c20", color: "#fff" }}
+            >
+              문의하기
+            </a>
+          </div>
         </div>
-        <div className="flex items-center gap-3">
-          <a href="tel:0317771234" className="hidden md:flex items-center gap-2 text-[12px]" style={{ color: "rgba(255,255,255,0.35)" }}>
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-              <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 014.69 9.8a19.79 19.79 0 01-3.07-8.67A2 2 0 013.44 2h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z" />
-            </svg>
-            031-777-1234
-          </a>
-          <a href="/support/inquiry"
-            className="text-[12px] font-bold px-4 py-2 transition-colors"
-            style={{ background: "#f47c20", color: "#fff" }}
-            onMouseEnter={e => (e.currentTarget.style.background = "#d96a10")}
-            onMouseLeave={e => (e.currentTarget.style.background = "#f47c20")}
-          >
-            문의하기
-          </a>
-        </div>
-      </nav>
+      </header>
 
       {/* HERO */}
-      <section className="pt-[64px]" style={{ background: "#0a1c4a" }}>
-        <div className="max-w-[1440px] mx-auto px-6 md:px-12">
-          <div className="grid grid-cols-1 lg:grid-cols-5 gap-0 py-20 md:py-28 items-center">
+      <section ref={heroRef} className="pt-[64px] overflow-hidden" style={{ background: "#071129", minHeight: "100svh" }}>
+        <div className="container-xl">
+          <div className="grid grid-cols-1 lg:grid-cols-5 gap-0 items-center py-24 md:py-32 min-h-[calc(100svh-64px)]">
 
-            {/* 왼쪽: 메인 카피 */}
+            {/* 좌: 카피 */}
             <div className="lg:col-span-3 lg:pr-20">
-              <motion.p
-                initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: 0.2 }}
-                className="text-[11px] font-mono tracking-[0.3em] uppercase mb-7"
-                style={{ color: "#f47c20" }}
-              >
+              <motion.p initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.2 }}
+                className="text-[11px] font-mono tracking-[0.35em] uppercase mb-8" style={{ color: "#f47c20" }}>
                 대한민국 크레인 전문기업 · Since 1984
               </motion.p>
 
-              <div className="overflow-hidden mb-3">
-                <motion.h1
-                  initial={{ y: "105%" }} animate={{ y: 0 }}
-                  transition={{ delay: 0.4, duration: 1.0, ease: [0.16, 1, 0.3, 1] as never }}
-                  className="font-bold leading-[1.02]"
-                  style={{ fontSize: "clamp(2.6rem, 6vw, 4.8rem)", letterSpacing: "-0.03em" }}
-                >
-                  40년의 기술이
-                </motion.h1>
-              </div>
-              <div className="overflow-hidden mb-3">
-                <motion.h1
-                  initial={{ y: "105%" }} animate={{ y: 0 }}
-                  transition={{ delay: 0.52, duration: 1.0, ease: [0.16, 1, 0.3, 1] as never }}
-                  className="font-bold leading-[1.02]"
-                  style={{ fontSize: "clamp(2.6rem, 6vw, 4.8rem)", letterSpacing: "-0.03em", color: "#f47c20" }}
-                >
-                  산업현장을
-                </motion.h1>
-              </div>
-              <div className="overflow-hidden mb-10">
-                <motion.h1
-                  initial={{ y: "105%" }} animate={{ y: 0 }}
-                  transition={{ delay: 0.64, duration: 1.0, ease: [0.16, 1, 0.3, 1] as never }}
-                  className="font-bold leading-[1.02]"
-                  style={{ fontSize: "clamp(2.6rem, 6vw, 4.8rem)", letterSpacing: "-0.03em" }}
-                >
-                  바꿉니다.
-                </motion.h1>
-              </div>
+              {["40년의 기술이", "산업현장을", "바꿉니다."].map((line, i) => (
+                <div key={i} className="overflow-hidden">
+                  <motion.h1
+                    className="text-h1 text-white leading-[1.04]"
+                    initial={{ y: "105%" }} animate={{ y: 0 }}
+                    transition={{ delay: 0.38 + i * 0.12, duration: 1.0, ease: E }}
+                    style={{ color: i === 1 ? "#f47c20" : "#fff" }}
+                  >
+                    {line}
+                  </motion.h1>
+                </div>
+              ))}
 
-              <motion.p
-                initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.9 }}
-                className="text-[15px] leading-[1.8] mb-10 max-w-md"
-                style={{ color: "rgba(255,255,255,0.45)" }}
-              >
+              <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.95 }}
+                className="text-[15px] leading-[1.8] mt-8 mb-10 max-w-md" style={{ color: "rgba(255,255,255,0.42)" }}>
                 반도체 클린룸부터 원자력 발전소까지. 세종호이스트크레인의 기술이 대한민국 핵심 산업 현장에서 가동됩니다.
               </motion.p>
-
-              <motion.div
-                initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1.1 }}
-                className="flex flex-wrap gap-3"
-              >
-                <a href="/support/inquiry"
-                  className="px-8 py-3.5 font-bold text-[13px] transition-opacity hover:opacity-80"
-                  style={{ background: "#f47c20", color: "#fff" }}
-                >
+              <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1.1 }} className="flex flex-wrap gap-3">
+                <a href="/support/inquiry" className="px-8 py-3.5 font-bold text-[13px] hover:opacity-80 transition-opacity"
+                  style={{ background: "#f47c20", color: "#fff" }}>
                   무료 상담 신청
                 </a>
-                <a href="/portfolio"
-                  className="px-8 py-3.5 font-semibold text-[13px] transition-all"
-                  style={{ border: "1px solid rgba(255,255,255,0.2)", color: "rgba(255,255,255,0.8)" }}
+                <a href="/portfolio" className="px-8 py-3.5 font-semibold text-[13px] transition-all"
+                  style={{ border: "1px solid rgba(255,255,255,0.2)", color: "rgba(255,255,255,0.7)" }}
                   onMouseEnter={e => (e.currentTarget.style.borderColor = "rgba(255,255,255,0.5)")}
                   onMouseLeave={e => (e.currentTarget.style.borderColor = "rgba(255,255,255,0.2)")}
                 >
@@ -251,94 +179,108 @@ export default function CommandDemo() {
               </motion.div>
             </div>
 
-            {/* 오른쪽: 실시간 대시보드 */}
-            <div className="lg:col-span-2 mt-12 lg:mt-0"
-              style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.1)", padding: "28px" }}>
+            {/* 우: 라이브 대시보드 */}
+            <motion.div
+              initial={{ opacity: 0, x: 40 }} animate={{ opacity: 1, x: 0 }}
+              transition={{ delay: 0.6, duration: 0.9, ease: E }}
+              className="lg:col-span-2 mt-14 lg:mt-0 p-7"
+              style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.09)" }}
+            >
               <div className="flex items-center justify-between mb-6">
-                <p className="text-[11px] font-mono tracking-widest uppercase" style={{ color: "rgba(255,255,255,0.35)" }}>
+                <p className="text-[11px] font-mono tracking-widest uppercase" style={{ color: "rgba(255,255,255,0.3)" }}>
                   실시간 운영 현황
                 </p>
                 <div className="flex items-center gap-1.5">
-                  <motion.div
-                    animate={{ opacity: [1, 0.3, 1] }}
-                    transition={{ duration: 1.5, repeat: Infinity }}
-                    className="w-1.5 h-1.5 rounded-full" style={{ background: "#4ade80" }}
-                  />
-                  <span className="text-[10px] font-mono" style={{ color: "#4ade80" }}>LIVE DATA</span>
+                  <span className="w-1.5 h-1.5 rounded-full animate-pulse-dot" style={{ background: "#4ade80" }} />
+                  <span className="text-[9px] font-mono" style={{ color: "#4ade80" }}>LIVE</span>
                 </div>
               </div>
 
               <div className="grid grid-cols-2 gap-3 mb-6">
-                <MetricCard val={347} suffix="개" label="현재 가동 중인 크레인" live delay={0.8} />
-                <MetricCard val={523} label="누적 납품 실적 (건)" delay={0.9} />
-                <MetricCard val={94} label="고객사 수" delay={1.0} />
-                <MetricCard val={24} suffix="H" label="AS 대응 체계" delay={1.1} />
+                {METRICS.map((m, i) => {
+                  const { ref, n } = useCounter(m.val);
+                  return (
+                    <div key={i} className={cn("p-4", m.live ? "border" : "")}
+                      style={{
+                        background: m.live ? "rgba(244,124,32,0.08)" : "rgba(255,255,255,0.04)",
+                        borderColor: m.live ? "rgba(244,124,32,0.25)" : undefined,
+                      }}>
+                      <p ref={ref as React.RefObject<HTMLParagraphElement>}
+                        className="font-black tabular-nums leading-none mb-2"
+                        style={{ fontSize: "clamp(1.6rem,3.5vw,2.2rem)", color: m.live ? "#f47c20" : "#fff", letterSpacing: "-0.03em" }}>
+                        {n.toLocaleString()}{m.suffix}
+                      </p>
+                      <p className="text-[11px] leading-snug" style={{ color: "rgba(255,255,255,0.35)" }}>{m.label}</p>
+                      {m.live && <p className="text-[9px] mt-1.5" style={{ color: "#4ade80" }}>● {m.desc}</p>}
+                    </div>
+                  );
+                })}
               </div>
 
-              {/* 업종별 현황 미니 차트 */}
-              <div style={{ borderTop: "1px solid rgba(255,255,255,0.06)", paddingTop: 20 }}>
-                <p className="text-[10px] font-mono tracking-wider uppercase mb-4" style={{ color: "rgba(255,255,255,0.22)" }}>
-                  업종별 납품 비중
+              {/* 미니 차트 */}
+              <div style={{ borderTop: "1px solid rgba(255,255,255,0.07)", paddingTop: 20 }}>
+                <p className="text-[10px] font-mono tracking-wider uppercase mb-4" style={{ color: "rgba(255,255,255,0.2)" }}>
+                  업종별 납품
                 </p>
-                <IndustryChart />
+                <Chart />
               </div>
-            </div>
+            </motion.div>
           </div>
         </div>
 
         {/* 고객사 마키 */}
-        <Marquee />
+        <div className="overflow-hidden py-4" style={{ borderTop: "1px solid rgba(255,255,255,0.06)", background: "rgba(255,255,255,0.02)" }}>
+          <div className="flex gap-12 animate-marquee whitespace-nowrap" style={{ width: "max-content" }}>
+            {[...CLIENTS, ...CLIENTS].map((c, i) => (
+              <span key={i} className="text-[13px] font-semibold shrink-0" style={{ color: "rgba(255,255,255,0.2)" }}>{c}</span>
+            ))}
+          </div>
+        </div>
       </section>
 
-      {/* 사업영역 */}
+      {/* 사업영역 2분할 */}
       <section className="grid grid-cols-1 md:grid-cols-2">
         {[
-          { code: "CRANE", label: "크레인", img: "/images/sejong_2.png", count: "348", desc: "이중거더 천장크레인부터 1,000T 갠트리크레인까지 산업현장의 모든 조건에 대응합니다.", items: ["이중거더 천장크레인", "단거더 천장크레인", "레일식 갠트리크레인", "타이어식 갠트리크레인"] },
-          { code: "HOIST & SPECIAL", label: "호이스트 & 특수", img: "/images/sejong_3.png", count: "175", desc: "전동 체인호이스트부터 방폭·클린룸·원자력 특수크레인까지. 세종의 기술 경계를 시험하는 제품군.", items: ["전동 체인호이스트", "와이어로프 호이스트", "방폭형 크레인", "클린룸 크레인"] },
-        ].map((panel, i) => (
-          <motion.div
-            key={i}
+          { label: "크레인", en: "Crane Solutions", img: "/images/sejong_2.png", count: "348", items: ["이중거더 천장크레인", "단거더 천장크레인", "레일식 갠트리크레인", "타이어식 갠트리크레인"], desc: "산업현장의 모든 조건에 대응하는 세종의 핵심 제품군." },
+          { label: "호이스트 & 특수", en: "Hoist & Special", img: "/images/sejong_3.png", count: "175", items: ["전동 체인호이스트", "방폭형 크레인", "클린룸 크레인", "원자력 특수 크레인"], desc: "일반 크레인이 들어갈 수 없는 곳에 세종의 해법이 있습니다." },
+        ].map((p, i) => (
+          <motion.div key={i}
             initial={{ opacity: 0 }} whileInView={{ opacity: 1 }}
-            viewport={{ once: true }} transition={{ duration: 0.8, delay: i * 0.1 }}
-            className="relative group overflow-hidden cursor-pointer"
-            style={{ minHeight: 520 }}
-          >
-            <Image src={panel.img} alt={panel.label} fill
+            viewport={{ once: true }} transition={{ duration: 0.9, delay: i * 0.1 }}
+            className="relative group overflow-hidden cursor-pointer" style={{ minHeight: 560 }}>
+            <Image src={p.img} alt={p.label} fill
               className="object-cover transition-all duration-700 group-hover:scale-105"
-              style={{ filter: "brightness(0.35)" }}
-            />
-            <div className="absolute inset-0 transition-opacity duration-500"
-              style={{ background: "linear-gradient(to top, rgba(10,28,74,0.92) 0%, rgba(10,28,74,0.2) 50%, transparent 100%)" }} />
+              style={{ filter: "brightness(0.28)" }} sizes="(max-width:768px)100vw,50vw" />
+            <div className="absolute inset-0" style={{ background: "linear-gradient(to top,#071129f0 0%,#071129 40 0%,transparent 100%)" }} />
 
-            <div className="absolute inset-0 p-10 md:p-14 flex flex-col justify-between">
-              <div className="flex items-start justify-between">
-                <span className="text-[10px] font-mono tracking-[0.25em] uppercase px-3 py-1.5"
+            <div className="absolute inset-0 flex flex-col justify-between p-10 md:p-14">
+              <div>
+                <span className="text-[10px] font-bold tracking-[0.25em] uppercase px-3 py-1.5"
                   style={{ border: "1px solid rgba(244,124,32,0.4)", color: "#f47c20" }}>
-                  {panel.code}
-                </span>
-                <span className="text-[11px] font-mono" style={{ color: "rgba(255,255,255,0.3)" }}>
-                  {panel.count}건 납품
+                  {p.en}
                 </span>
               </div>
-
               <div>
-                <h3 className="font-bold mb-4 leading-tight" style={{ fontSize: "clamp(1.8rem, 3.5vw, 2.8rem)", letterSpacing: "-0.02em" }}>
-                  {panel.label}
-                </h3>
-                <p className="text-[14px] leading-[1.7] mb-7 max-w-xs" style={{ color: "rgba(255,255,255,0.5)" }}>
-                  {panel.desc}
+                <p className="text-[11px] font-mono mb-3" style={{ color: "rgba(255,255,255,0.35)" }}>
+                  납품 {p.count}건
                 </p>
-                <ul className="space-y-2 mb-8">
-                  {panel.items.map((item) => (
-                    <li key={item} className="flex items-center gap-3 text-[13px]" style={{ color: "rgba(255,255,255,0.45)" }}>
-                      <span className="w-4 h-px" style={{ background: "rgba(244,124,32,0.5)" }} />
+                <h3 className="text-white font-bold mb-4 leading-tight" style={{ fontSize: "clamp(1.8rem,3.5vw,2.6rem)", letterSpacing: "-0.02em" }}>
+                  {p.label}
+                </h3>
+                <p className="text-[14px] leading-[1.75] mb-7 max-w-xs" style={{ color: "rgba(255,255,255,0.45)" }}>
+                  {p.desc}
+                </p>
+                <ul className="space-y-2.5 mb-9">
+                  {p.items.map(item => (
+                    <li key={item} className="flex items-center gap-3 text-[13px]" style={{ color: "rgba(255,255,255,0.4)" }}>
+                      <span className="w-4 h-px shrink-0" style={{ background: "rgba(244,124,32,0.5)" }} />
                       {item}
                     </li>
                   ))}
                 </ul>
-                <a href="/business" className="group/link inline-flex items-center gap-3 text-[13px] font-semibold">
-                  <span className="h-px transition-all duration-300 group-hover/link:w-12 group-hover/link:bg-orange-400"
-                    style={{ width: 24, background: "rgba(255,255,255,0.4)" }} />
+                <a href="/business" className="inline-flex items-center gap-3 text-[13px] font-semibold text-white group/l">
+                  <span className="h-px w-6 group-hover/l:w-12 group-hover/l:bg-orange-400 transition-all duration-300"
+                    style={{ background: "rgba(255,255,255,0.4)" }} />
                   더 보기
                 </a>
               </div>
@@ -347,138 +289,87 @@ export default function CommandDemo() {
         ))}
       </section>
 
-      {/* 업종별 납품 실적 풀 차트 */}
-      <section className="py-24 md:py-36" style={{ background: "#060f25" }}>
-        <div className="max-w-[1440px] mx-auto px-6 md:px-12">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24 items-start">
+      {/* 업종 차트 + 핵심 지표 */}
+      <section className="section-pad" style={{ background: "#f4f7fc" }}>
+        <div className="container-xl">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-20 items-start">
             <div>
-              <motion.p
-                initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }}
-                className="text-[11px] font-mono tracking-[0.28em] uppercase mb-5"
-                style={{ color: "rgba(255,255,255,0.25)" }}
-              >
-                Industry Breakdown
+              <motion.p initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }}
+                className="text-[11px] font-mono tracking-[0.28em] uppercase mb-5" style={{ color: "#f47c20" }}>
+                Industry
               </motion.p>
-              <motion.h2
+              <motion.h2 className="text-h2 mb-5" style={{ color: "#0a1c4a" }}
                 initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }} transition={{ duration: 0.8 }}
-                className="font-bold mb-4 leading-[1.05]"
-                style={{ fontSize: "clamp(2rem, 4.5vw, 3.5rem)", letterSpacing: "-0.03em" }}
-              >
+                viewport={{ once: true }} transition={{ duration: 0.8, ease: E }}>
                 모든 산업 현장에서<br />세종이 함께합니다
               </motion.h2>
-              <motion.p
-                initial={{ opacity: 0 }} whileInView={{ opacity: 1 }}
-                viewport={{ once: true }} transition={{ delay: 0.2 }}
-                className="text-[15px] leading-[1.8]"
-                style={{ color: "rgba(255,255,255,0.4)" }}
-              >
-                철강·물류·반도체·에너지 등 7개 핵심 산업에 걸쳐<br />총 523건의 납품 실적을 보유하고 있습니다.
+              <motion.p className="text-[15px] leading-[1.8] mb-12" style={{ color: "#64748b" }}
+                initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} transition={{ delay: 0.15 }}>
+                철강·물류·반도체·에너지 등 7개 핵심 산업에 걸쳐 총 523건의 납품 실적을 보유합니다.
               </motion.p>
+              <Chart />
             </div>
-            <div>
-              <IndustryChart />
+
+            {/* 핵심 지표 4개 */}
+            <div className="grid grid-cols-2 gap-px" style={{ background: "rgba(10,28,74,0.08)" }}>
+              {[
+                { val: 40, suffix: "+", label: "년 업력", note: "1984년 창립" },
+                { val: 523, suffix: "", label: "건 납품", note: "누적 실적" },
+                { val: 200, suffix: "T", label: "최대 하중", note: "제작 가능" },
+                { val: 24, suffix: "H", label: "AS 대응", note: "24시간 체계" },
+              ].map((s, i) => {
+                const { ref, n } = useCounter(s.val);
+                return (
+                  <div key={i} ref={ref as React.RefObject<HTMLDivElement>}
+                    className="flex flex-col justify-center p-8 md:p-10 text-center group hover:bg-brand-navy transition-colors duration-300"
+                    style={{ background: "#fff" }}
+                    onMouseEnter={e => (e.currentTarget.style.background = "#0a1c4a")}
+                    onMouseLeave={e => (e.currentTarget.style.background = "#fff")}
+                  >
+                    <p className="font-black tabular-nums mb-1.5"
+                      style={{ fontSize: "clamp(2.5rem,5vw,4rem)", letterSpacing: "-0.04em", color: "#0a1c4a", transition: "color 0.3s" }}>
+                      {n.toLocaleString()}{s.suffix}
+                    </p>
+                    <p className="text-[13px] font-semibold" style={{ color: "#0a1c4a", transition: "color 0.3s" }}>{s.label}</p>
+                    <p className="text-[11px] mt-1" style={{ color: "#94a3b8", transition: "color 0.3s" }}>{s.note}</p>
+                  </div>
+                );
+              })}
             </div>
-          </div>
-        </div>
-      </section>
-
-      {/* 핵심 지표 - 선 없이 공간으로만 구분 */}
-      <section className="py-24 md:py-36" style={{ background: "#0a1c4a" }}>
-        <div className="max-w-[1440px] mx-auto px-6 md:px-12">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-10 md:gap-0">
-            {[
-              { val: 40, suffix: "+", label: "년 업력", note: "창립 1984년" },
-              { val: 523, suffix: "", label: "건 납품", note: "누적 실적" },
-              { val: 200, suffix: "T", label: "최대 하중", note: "제작 가능" },
-              { val: 99, suffix: "%+", label: "고객 만족도", note: "2025 기준" },
-            ].map((s, i) => (
-              <motion.div
-                key={i}
-                initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }} transition={{ delay: i * 0.08, duration: 0.7 }}
-                className="text-center md:text-left md:px-10 first:pl-0 last:pr-0 md:border-r last:border-r-0"
-                style={{ borderColor: "rgba(255,255,255,0.07)" }}
-              >
-                <p className="font-black tabular-nums leading-none mb-2"
-                  style={{ fontSize: "clamp(2.8rem, 6vw, 5rem)", letterSpacing: "-0.04em" }}>
-                  <Counter to={s.val} suffix={s.suffix} />
-                </p>
-                <p className="text-[13px] mb-1" style={{ color: "rgba(255,255,255,0.7)" }}>{s.label}</p>
-                <p className="text-[11px]" style={{ color: "rgba(255,255,255,0.28)" }}>{s.note}</p>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* 인증 */}
-      <section className="py-16" style={{ background: "#080e1e" }}>
-        <div className="max-w-[1440px] mx-auto px-6 md:px-12">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-px" style={{ background: "rgba(255,255,255,0.06)" }}>
-            {CERTS.map((c, i) => (
-              <motion.div
-                key={i}
-                initial={{ opacity: 0 }} whileInView={{ opacity: 1 }}
-                viewport={{ once: true }} transition={{ delay: i * 0.08 }}
-                className="flex items-center gap-5 px-8 py-7"
-                style={{ background: "#080e1e" }}
-              >
-                <div className="w-12 h-12 flex-shrink-0 flex items-center justify-center text-center"
-                  style={{ border: "1px solid rgba(244,124,32,0.3)" }}>
-                  <p className="text-[8px] font-bold leading-tight text-center" style={{ color: "#f47c20", whiteSpace: "pre-line" }}>
-                    {c.code}
-                  </p>
-                </div>
-                <div>
-                  <p className="font-semibold text-sm leading-tight" style={{ whiteSpace: "pre-line" }}>{c.label}</p>
-                  <p className="text-[11px] mt-1" style={{ color: "rgba(255,255,255,0.3)" }}>{c.year}</p>
-                </div>
-              </motion.div>
-            ))}
           </div>
         </div>
       </section>
 
       {/* 뉴스 */}
-      <section className="py-24 md:py-32" style={{ background: "#fff", color: "#0a1c4a" }}>
-        <div className="max-w-[1440px] mx-auto px-6 md:px-12">
+      <section className="section-pad" style={{ background: "#fff" }}>
+        <div className="container-xl">
           <div className="flex items-end justify-between mb-14">
             <div>
               <p className="text-[11px] font-mono tracking-[0.3em] uppercase mb-3" style={{ color: "#f47c20" }}>Newsroom</p>
-              <h2 className="font-bold leading-[1.05]" style={{ fontSize: "clamp(1.8rem, 3.5vw, 2.8rem)", letterSpacing: "-0.025em" }}>
-                최신 소식
-              </h2>
+              <h2 className="text-h2" style={{ color: "#0a1c4a" }}>최신 소식</h2>
             </div>
             <Link href="/support/notice" className="hidden md:block text-[13px] font-semibold hover:opacity-60 transition-opacity"
               style={{ color: "#0a1c4a" }}>
-              전체 보기 →
+              전체 →
             </Link>
           </div>
 
-          <div style={{ borderTop: "1px solid rgba(10,28,74,0.08)" }}>
+          <div style={{ borderTop: "1px solid rgba(10,28,74,0.07)" }}>
             {NEWS.map((n, i) => (
-              <motion.a
-                key={i} href="/support/notice"
-                initial={{ opacity: 0, x: -10 }} whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }} transition={{ delay: i * 0.06 }}
-                className="flex items-center gap-5 md:gap-10 py-5 group"
-                style={{ borderBottom: "1px solid rgba(10,28,74,0.08)", transition: "background 0.2s" }}
-                onMouseEnter={e => (e.currentTarget.style.background = "#f5f7fb")}
-                onMouseLeave={e => (e.currentTarget.style.background = "transparent")}
+              <motion.a key={i} href="/support/notice"
+                initial={{ opacity: 0, x: -12 }} whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }} transition={{ delay: i * 0.055, ease: E }}
+                className="flex items-center gap-5 md:gap-10 py-5 group transition-all"
+                style={{ borderBottom: "1px solid rgba(10,28,74,0.07)" }}
+                onMouseEnter={e => (e.currentTarget.style.paddingLeft = "10px", e.currentTarget.style.background = "#f4f7fc")}
+                onMouseLeave={e => (e.currentTarget.style.paddingLeft = "0", e.currentTarget.style.background = "transparent")}
               >
-                <span className="font-black text-xl w-8 flex-shrink-0" style={{ color: "rgba(10,28,74,0.1)" }}>{n.num}</span>
-                <span className="text-[11px] font-mono hidden md:block w-16 flex-shrink-0" style={{ color: "rgba(10,28,74,0.35)" }}>{n.date}</span>
-                <span className="text-[10px] font-bold px-2.5 py-1 flex-shrink-0"
+                <span className="font-black text-xl w-8 shrink-0" style={{ color: "rgba(10,28,74,0.1)" }}>{n.num}</span>
+                <span className="text-[11px] font-mono hidden md:block w-16 shrink-0" style={{ color: "#94a3b8" }}>{n.date}</span>
+                <span className="text-[10px] font-bold px-2.5 py-1 shrink-0"
                   style={{ background: "rgba(244,124,32,0.1)", color: "#f47c20" }}>{n.cat}</span>
                 <span className="flex-1 text-[14px] font-medium transition-colors" style={{ color: "#0a1c4a" }}>{n.title}</span>
-                <motion.span
-                  className="hidden md:block text-[13px] flex-shrink-0 transition-all"
-                  style={{ color: "rgba(10,28,74,0.25)" }}
-                  whileHover={{ x: 4, color: "#f47c20" }}
-                >
-                  →
-                </motion.span>
+                <span className="hidden md:block text-[13px] shrink-0 group-hover:text-orange-500 transition-colors" style={{ color: "rgba(10,28,74,0.2)" }}>→</span>
               </motion.a>
             ))}
           </div>
@@ -486,40 +377,29 @@ export default function CommandDemo() {
       </section>
 
       {/* CTA */}
-      <section className="py-24 md:py-36 px-6 md:px-12" style={{ background: "#0a1c4a" }}>
-        <div className="max-w-[1440px] mx-auto grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-20 items-center">
+      <section className="section-pad" style={{ background: "#071129" }}>
+        <div className="container-xl grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-20 items-center">
           <div>
-            <motion.h2
+            <motion.h2 className="text-h1 text-white mb-5"
               initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }} transition={{ duration: 0.8 }}
-              className="font-bold leading-[1.05] mb-5"
-              style={{ fontSize: "clamp(2rem, 4.5vw, 3.5rem)", letterSpacing: "-0.025em" }}
-            >
+              viewport={{ once: true }} transition={{ duration: 0.8, ease: E }}>
               크레인 도입을<br />계획하고 계신가요?
             </motion.h2>
-            <motion.p
-              initial={{ opacity: 0 }} whileInView={{ opacity: 1 }}
-              viewport={{ once: true }} transition={{ delay: 0.2 }}
-              className="text-[15px] leading-[1.8]"
-              style={{ color: "rgba(255,255,255,0.45)" }}
-            >
-              전문 엔지니어가 현장을 직접 방문하여 최적의 솔루션을 제안합니다. 문의 접수 후 영업일 1일 이내 답변.
+            <motion.p className="text-[15px] leading-[1.8]" style={{ color: "rgba(255,255,255,0.4)" }}
+              initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} transition={{ delay: 0.2 }}>
+              전문 엔지니어가 현장을 방문하여 최적의 솔루션을 제안합니다. 문의 접수 후 영업일 1일 이내 답변.
             </motion.p>
           </div>
-          <motion.div
-            initial={{ opacity: 0 }} whileInView={{ opacity: 1 }}
-            viewport={{ once: true }} transition={{ delay: 0.3 }}
-            className="flex flex-col sm:flex-row gap-4"
-          >
+          <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} transition={{ delay: 0.3 }}
+            className="flex flex-col sm:flex-row gap-4">
             <a href="/support/inquiry"
-              className="flex-1 py-4 font-bold text-center text-[13px] transition-opacity hover:opacity-80"
-              style={{ background: "#f47c20", color: "#fff" }}
-            >
+              className="flex-1 py-4 font-bold text-center text-[13px] hover:opacity-80 transition-opacity"
+              style={{ background: "#f47c20", color: "#fff" }}>
               온라인 문의
             </a>
             <a href="tel:0317771234"
               className="flex-1 py-4 font-semibold text-center text-[13px] transition-all"
-              style={{ border: "1px solid rgba(255,255,255,0.2)", color: "rgba(255,255,255,0.8)" }}
+              style={{ border: "1px solid rgba(255,255,255,0.2)", color: "rgba(255,255,255,0.7)" }}
               onMouseEnter={e => (e.currentTarget.style.borderColor = "rgba(255,255,255,0.5)")}
               onMouseLeave={e => (e.currentTarget.style.borderColor = "rgba(255,255,255,0.2)")}
             >
@@ -530,14 +410,12 @@ export default function CommandDemo() {
       </section>
 
       {/* FOOTER */}
-      <footer className="px-6 md:px-12 py-7 flex flex-col md:flex-row justify-between items-center gap-3"
-        style={{ background: "#060f25", borderTop: "1px solid rgba(255,255,255,0.05)" }}>
-        <p className="text-[12px]" style={{ color: "rgba(255,255,255,0.18)" }}>
-          © 2026 Sejong Hoist &amp; Crane. All rights reserved.
-        </p>
+      <footer className="px-6 md:px-14 py-7 flex flex-col md:flex-row justify-between items-center gap-3"
+        style={{ background: "#040c1e", borderTop: "1px solid rgba(255,255,255,0.05)" }}>
+        <p className="text-[12px]" style={{ color: "rgba(255,255,255,0.18)" }}>© 2026 Sejong Hoist &amp; Crane.</p>
         <div className="flex items-center gap-2 text-[12px]" style={{ color: "rgba(255,255,255,0.18)" }}>
-          <span className="w-1.5 h-1.5 rounded-full animate-pulse" style={{ background: "#f47c20" }} />
-          Demo 2 — COMMAND
+          <span className="w-1.5 h-1.5 rounded-full animate-pulse-dot" style={{ background: "#f47c20" }} />
+          Demo 2 — NEXUS
           <Link href="/demo" className="ml-4 hover:text-white/50 transition-colors">← 데모 목록</Link>
         </div>
       </footer>

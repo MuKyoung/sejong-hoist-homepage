@@ -1,40 +1,127 @@
 @import "tailwindcss";
 
-* {
+/* ═══════════════════════════════════════════════════════════════
+   DESIGN TOKENS — Tailwind CSS v4 CSS-first configuration
+   ═══════════════════════════════════════════════════════════════ */
+
+@theme {
+  /* Brand */
+  --color-brand-navy:   #0a1c4a;
+  --color-brand-orange: #f47c20;
+  --color-brand-cream:  #f6f3ee;
+
+  /* Demo 1: APEX (Dark Luxury) */
+  --color-apex-bg:      #060606;
+  --color-apex-surface: #0f0f0f;
+  --color-apex-text:    #f0f0f0;
+  --color-apex-muted:   #555555;
+  --color-apex-accent:  #e8721a;
+
+  /* Demo 2: NEXUS (Corporate) */
+  --color-nexus-navy:   #071129;
+  --color-nexus-orange: #f47c20;
+  --color-nexus-light:  #f4f7fc;
+
+  /* Demo 3: ATELIER (Editorial) */
+  --color-atelier-bg:   #f9f6f1;
+  --color-atelier-text: #111111;
+  --color-atelier-gold: #9b7840;
+  --color-atelier-dark: #16120c;
+
+  /* Demo 4: AUTHORITY (Korean Corporate) */
+  --color-auth-bg:    #f4f6f9;
+  --color-auth-navy:  #0f172a;
+  --color-auth-blue:  #1e40af;
+  --color-auth-orange:#f47c20;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   GLOBAL RESET & BASE
+   ═══════════════════════════════════════════════════════════════ */
+
+*, *::before, *::after {
   box-sizing: border-box;
-  padding: 0;
   margin: 0;
+  padding: 0;
 }
 
 html {
   scroll-behavior: smooth;
+  font-size: 16px;
+  -webkit-text-size-adjust: 100%;
 }
 
 body {
-  font-family: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont,
-    "Apple SD Gothic Neo", "Noto Sans KR", sans-serif;
-  color: #1a1a1a;
+  font-family: "Pretendard Variable", Pretendard, -apple-system,
+    BlinkMacSystemFont, "Apple SD Gothic Neo", "Noto Sans KR",
+    system-ui, sans-serif;
+  font-weight: 400;
+  color: #111;
   background: #fff;
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  line-height: 1.6;
 }
 
-/* Pretendard */
-@font-face {
-  font-family: "Pretendard Variable";
-  font-weight: 45 920;
-  font-style: normal;
-  font-display: swap;
-  src: local("Pretendard Variable");
+/* ═══════════════════════════════════════════════════════════════
+   TYPOGRAPHY UTILITIES
+   ═══════════════════════════════════════════════════════════════ */
+
+.text-display {
+  font-size: clamp(4.5rem, 13vw, 11rem);
+  font-weight: 900;
+  line-height: 0.88;
+  letter-spacing: -0.04em;
 }
 
-/* 스크롤바 */
-::-webkit-scrollbar { width: 5px; }
-::-webkit-scrollbar-track { background: #f0f0f0; }
-::-webkit-scrollbar-thumb { background: #0a1c4a; }
+.text-h1 {
+  font-size: clamp(2.8rem, 6vw, 5rem);
+  font-weight: 700;
+  line-height: 1.02;
+  letter-spacing: -0.03em;
+}
 
-/* 히어로 비디오 */
+.text-h2 {
+  font-size: clamp(2rem, 4vw, 3.2rem);
+  font-weight: 700;
+  line-height: 1.06;
+  letter-spacing: -0.025em;
+}
+
+.text-h3 {
+  font-size: clamp(1.25rem, 2.5vw, 1.75rem);
+  font-weight: 600;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   LAYOUT UTILITIES
+   ═══════════════════════════════════════════════════════════════ */
+
+.container-xl {
+  max-width: 1440px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: clamp(1.5rem, 5vw, 5rem);
+  padding-right: clamp(1.5rem, 5vw, 5rem);
+}
+
+.section-pad {
+  padding-top: clamp(5rem, 10vw, 11rem);
+  padding-bottom: clamp(5rem, 10vw, 11rem);
+}
+
+.section-pad-sm {
+  padding-top: clamp(3rem, 6vw, 7rem);
+  padding-bottom: clamp(3rem, 6vw, 7rem);
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   MEDIA & VIDEO
+   ═══════════════════════════════════════════════════════════════ */
+
 .hero-video {
   position: absolute;
   inset: 0;
@@ -43,121 +130,58 @@ body {
   object-fit: cover;
 }
 
-/* 히어로 메인 텍스트 */
-.hero-title {
-  font-size: clamp(3.5rem, 8vw, 7rem);
-  font-weight: 800;
-  line-height: 0.95;
-  letter-spacing: -0.02em;
-  color: #fff;
-  display: block;
+/* ═══════════════════════════════════════════════════════════════
+   ANIMATIONS
+   ═══════════════════════════════════════════════════════════════ */
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
 }
 
-/* 섹션 공통 */
-.page-hero-bg {
-  background-color: #0a1c4a;
-  background-image: repeating-linear-gradient(
-    45deg,
-    rgba(255,255,255,0.03) 0,
-    rgba(255,255,255,0.03) 1px,
-    transparent 0,
-    transparent 50%
-  );
-  background-size: 24px 24px;
-}
-
-/* 뉴스 리스트 아이템 호버 라인 */
-.news-item {
-  position: relative;
-}
-.news-item::before {
-  content: '';
-  position: absolute;
-  left: 0;
-  top: 0;
-  height: 100%;
-  width: 2px;
-  background: #f47c20;
-  transform: scaleY(0);
-  transform-origin: top;
-  transition: transform 0.3s ease;
-}
-.news-item:hover::before {
-  transform: scaleY(1);
-}
-
-/* 패널 호버 */
-.biz-panel {
-  position: relative;
-  overflow: hidden;
-}
-.biz-panel::after {
-  content: '';
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  height: 3px;
-  background: #f47c20;
-  transform: scaleX(0);
-  transform-origin: left;
-  transition: transform 0.4s ease;
-}
-.biz-panel:hover::after {
-  transform: scaleX(1);
-}
-
-/* 수직 텍스트 */
-.writing-vertical {
-  writing-mode: vertical-rl;
-  text-orientation: mixed;
-}
-
-/* 스크롤 인디케이터 */
 @keyframes scrollDrop {
   0%   { transform: translateY(-100%); opacity: 0; }
   30%  { opacity: 1; }
-  100% { transform: translateY(200%); opacity: 0; }
+  100% { transform: translateY(250%); opacity: 0; }
 }
-.scroll-line::after {
+
+@keyframes pulse-dot {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.3; }
+}
+
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+.animate-fade-up     { animation: fadeUp 0.75s cubic-bezier(0.16, 1, 0.3, 1) both; }
+.animate-pulse-dot   { animation: pulse-dot 2s ease-in-out infinite; }
+.animate-marquee     { animation: marquee 30s linear infinite; }
+
+/* 스크롤 인디케이터 라인 */
+.scroll-indicator {
+  position: relative;
+  width: 1px;
+  height: 60px;
+  overflow: hidden;
+  background: rgba(255,255,255,0.15);
+}
+.scroll-indicator::after {
   content: '';
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 40%;
-  background: rgba(255,255,255,0.8);
+  background: rgba(255,255,255,0.75);
   animation: scrollDrop 1.8s ease-in-out infinite;
 }
 
-/* 트랜지션 그룹 */
-@keyframes fadeUp {
-  from { opacity: 0; transform: translateY(24px); }
-  to   { opacity: 1; transform: translateY(0); }
-}
-.fade-up {
-  animation: fadeUp 0.7s ease forwards;
-}
+/* ═══════════════════════════════════════════════════════════════
+   SCROLLBAR
+   ═══════════════════════════════════════════════════════════════ */
 
-/* 부드러운 언더라인 버튼 */
-.link-underline {
-  position: relative;
-  display: inline-flex;
-  align-items: center;
-  gap: 0.4rem;
-}
-.link-underline::after {
-  content: '';
-  position: absolute;
-  bottom: -2px;
-  left: 0;
-  width: 100%;
-  height: 1px;
-  background: currentColor;
-  transform: scaleX(1);
-  transition: transform 0.25s ease;
-}
-.link-underline:hover::after {
-  transform: scaleX(0);
-  transform-origin: right;
-}
+::-webkit-scrollbar       { width: 4px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: #0a1c4a; border-radius: 2px; }
