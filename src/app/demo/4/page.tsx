@@ -1,7 +1,7 @@
 "use client";
 
 /**
- * DEMO 4 — AUTHORITY (반응형 완전 대응)
+ * DEMO 4 : AUTHORITY (반응형 완전 대응)
  * 모바일 탭 가로 스크롤 + 스펙 2열 + 히어로 수치 sm+ 표시
  */
 
@@ -157,7 +157,7 @@ export default function Authority() {
             </motion.div>
           </div>
 
-          {/* 히어로 수치 — sm 이상에서만 표시 (모바일에서 컨텐츠 겹침 방지) */}
+          {/* 히어로 수치 : sm 이상에서만 표시 (모바일에서 컨텐츠 겹침 방지) */}
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1.2 }}
             className="hidden sm:flex absolute bottom-8 sm:bottom-10 right-5 sm:right-8 md:right-12 gap-7 sm:gap-10 md:gap-14">
             {[{ v: 40, s: "+", l: "년 업력" }, { v: 523, s: "", l: "건 납품" }, { v: 94, s: "+", l: "고객사" }].map((s, i) => (
@@ -206,7 +206,7 @@ export default function Authority() {
               </Clip>
             </div>
 
-            {/* 탭 버튼 — 모바일에서 가로 스크롤 */}
+            {/* 탭 버튼 : 모바일에서 가로 스크롤 */}
             <div className="flex gap-2 overflow-x-auto pb-1 scrollbar-hide" style={{ WebkitOverflowScrolling: "touch" }}>
               {PRODUCTS.map((p, i) => (
                 <button key={i} onClick={() => setTab(i)}
@@ -253,7 +253,7 @@ export default function Authority() {
                   ))}
                 </div>
 
-                {/* 스펙 — 모바일 2열, sm+ 3열 */}
+                {/* 스펙 : 모바일 2열, sm+ 3열 */}
                 <div className="grid grid-cols-2 sm:grid-cols-3 gap-2.5 sm:gap-3 mb-9">
                   {PRODUCTS[tab].specs.map(s => (
                     <div key={s.k} className="p-3.5 sm:p-4" style={{ background: "#f4f6f9" }}>
@@ -368,7 +368,7 @@ export default function Authority() {
         </div>
         <div className="flex items-center gap-2.5">
           <span className="w-1.5 h-1.5 rounded-full" style={{ background: "#f47c20" }} />
-          <span className="text-[11px] font-mono" style={{ color: "rgba(15,23,42,0.28)" }}>Demo 4 — AUTHORITY</span>
+          <span className="text-[11px] font-mono" style={{ color: "rgba(15,23,42,0.28)" }}>Demo 4 : AUTHORITY</span>
           <Link href="/demo" className="ml-3 text-[11px] hover:opacity-50 transition-opacity"
             style={{ color: "rgba(15,23,42,0.28)" }}>← 데모 목록</Link>
         </div>

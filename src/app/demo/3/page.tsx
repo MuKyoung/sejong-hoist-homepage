@@ -1,7 +1,7 @@
 "use client";
 
 /**
- * DEMO 3 — ATELIER (반응형 완전 대응)
+ * DEMO 3 : ATELIER (반응형 완전 대응)
  */
 
 import { useRef } from "react";
@@ -312,7 +312,7 @@ export default function Atelier() {
         </p>
         <div className="flex items-center gap-2.5">
           <span className="w-1.5 h-1.5 rounded-full" style={{ background: "#9b7840" }} />
-          <span className="text-[11px]" style={{ color: "rgba(255,255,255,0.18)" }}>Demo 3 — ATELIER</span>
+          <span className="text-[11px]" style={{ color: "rgba(255,255,255,0.18)" }}>Demo 3 : ATELIER</span>
           <Link href="/demo" className="ml-3 text-[11px] hover:text-white/40 transition-colors"
             style={{ color: "rgba(255,255,255,0.18)" }}>← 데모 목록</Link>
         </div>

@@ -1,7 +1,7 @@
 "use client";
 
 /**
- * DEMO 1 — APEX (반응형 완전 대응)
+ * DEMO 1 : APEX (반응형 완전 대응)
  * 320px 모바일 ~ 4K 와이드스크린
  */
 
@@ -151,7 +151,7 @@ export default function Apex() {
         <div className="absolute inset-0 pointer-events-none"
           style={{ background: "linear-gradient(to top, rgba(4,4,4,0.92) 0%, rgba(4,4,4,0.35) 40%, rgba(4,4,4,0.12) 100%)" }} />
 
-        {/* 히어로 콘텐츠 — 좌하단 */}
+        {/* 히어로 콘텐츠 : 좌하단 */}
         <motion.div style={{ opacity: heroOp }}
           className="relative z-10 mt-auto px-5 sm:px-8 md:px-12 pb-12 sm:pb-16 md:pb-24">
           <div>
@@ -160,10 +160,10 @@ export default function Apex() {
               transition={{ delay: 0.4 }}
               className="text-[10px] sm:text-[11px] font-bold tracking-[0.4em] uppercase mb-5 sm:mb-7"
               style={{ color: "#e8721a" }}>
-              Sejong Hoist &amp; Crane — Est. 1984
+              Sejong Hoist &amp; Crane : Est. 1984
             </motion.p>
 
-            {/* 디스플레이 타이포 — clamp로 모든 화면 대응 */}
+            {/* 디스플레이 타이포 : clamp로 모든 화면 대응 */}
             {["중력을", "우리가", "다룹니다."].map((word, i) => (
               <div key={i} className="overflow-hidden leading-[0.88]">
                 <motion.span
@@ -200,7 +200,7 @@ export default function Apex() {
           </div>
         </motion.div>
 
-        {/* 우상단 — 시계 (sm 이상에서만 표시) */}
+        {/* 우상단 : 시계 (sm 이상에서만 표시) */}
         <motion.div
           initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1.0 }}
           className="absolute top-[68px] right-5 sm:right-8 md:right-12 text-right z-10 hidden sm:block"
@@ -278,7 +278,7 @@ export default function Apex() {
                 viewport={{ once: true }}
                 className="text-[10px] font-bold tracking-[0.35em] uppercase mb-6"
                 style={{ color: "rgba(235,235,235,0.2)" }}>
-                {p.no} — {p.sub}
+                {p.no} : {p.sub}
               </motion.p>
 
               <Clip className="mb-2.5">
@@ -299,7 +299,7 @@ export default function Apex() {
                 {p.copy}
               </motion.p>
 
-              {/* 스펙 — 3열 (모바일도 3열, 항목이 짧아 OK) */}
+              {/* 스펙 : 3열 (모바일도 3열, 항목이 짧아 OK) */}
               <motion.div
                 initial={{ opacity: 0 }} whileInView={{ opacity: 1 }}
                 viewport={{ once: true }} transition={{ delay: 0.25 }}
@@ -414,7 +414,7 @@ export default function Apex() {
               <span className="font-semibold flex-1 min-w-0 truncate text-[13px] sm:text-[14px] md:text-[15px] group-hover:text-white transition-colors">
                 {w.client}
               </span>
-              {/* 설명 — md 이상에서만 */}
+              {/* 설명 : md 이상에서만 */}
               <span className="hidden md:block flex-1 text-[13px] truncate" style={{ color: "rgba(235,235,235,0.38)" }}>{w.desc}</span>
               {/* 연도 */}
               <span className="font-mono text-[11px] shrink-0" style={{ color: "rgba(235,235,235,0.22)" }}>{w.year}</span>
@@ -426,7 +426,7 @@ export default function Apex() {
         </div>
       </section>
 
-      {/* ─── CTA — 풀블리드 영상 ─── */}
+      {/* ─── CTA : 풀블리드 영상 ─── */}
       <section className="relative overflow-hidden flex items-center justify-center" style={{ minHeight: "60vh" }}>
         <video
           src="/videos/48420-453832153_medium.mp4"
@@ -472,7 +472,7 @@ export default function Apex() {
         <p className="text-[11px] font-mono" style={{ color: "rgba(235,235,235,0.15)" }}>© 2026 Sejong Hoist &amp; Crane</p>
         <div className="flex items-center gap-2.5">
           <span className="w-1.5 h-1.5 rounded-full animate-pulse-dot" style={{ background: "#e8721a" }} />
-          <span className="text-[11px] font-mono" style={{ color: "rgba(235,235,235,0.15)" }}>Demo 1 — APEX</span>
+          <span className="text-[11px] font-mono" style={{ color: "rgba(235,235,235,0.15)" }}>Demo 1 : APEX</span>
           <Link href="/demo" className="ml-3 text-[11px] font-mono hover:text-white/40 transition-colors"
             style={{ color: "rgba(235,235,235,0.15)" }}>← 데모 목록</Link>
         </div>

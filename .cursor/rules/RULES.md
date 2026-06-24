@@ -1,4 +1,4 @@
-# 세종호이스트크레인 홈페이지 — 프로젝트 규칙
+# 세종호이스트크레인 홈페이지 : 프로젝트 규칙
 
 ## 기술 스택 (변경 금지)
 
@@ -7,7 +7,7 @@
 | Next.js | 16 (App Router, `src/app/` 구조) |
 | React | 19 |
 | TypeScript | 5 (strict mode, 모든 파일 `.tsx`) |
-| Tailwind CSS | **v4** — `@import "tailwindcss"` CSS-first 방식 |
+| Tailwind CSS | **v4** : `@import "tailwindcss"` CSS-first 방식 |
 | Framer Motion | 12 (`"use client"` 컴포넌트에서만 사용) |
 | shadcn/ui deps | `class-variance-authority`, `clsx`, `tailwind-merge`, `lucide-react` |
 | Font | Pretendard (한국어 최적화 sans-serif) |
@@ -72,7 +72,7 @@ const data: any = ...;
 ## Tailwind CSS v4 규칙
 
 ```css
-/* globals.css — CSS-first 설정 */
+/* globals.css : CSS-first 설정 */
 @import "tailwindcss";
 
 @theme {
@@ -87,7 +87,7 @@ const data: any = ...;
 
 **금지 사항:**
 - `tailwind.config.js` 생성 (v4에서 불필요)
-- `bg-[#0a1c4a]` 임의값 — 반드시 CSS 변수 토큰 사용
+- `bg-[#0a1c4a]` 임의값 : 반드시 CSS 변수 토큰 사용
 - `style={{}}` 인라인 스타일과 Tailwind 혼용 최소화
 
 ---
@@ -120,18 +120,18 @@ const data: any = ...;
 
 ### 금지 디자인 패턴
 
-❌ `border-r border-white/5 last:border-r-0` — 그리드 선 남발  
+❌ `border-r border-white/5 last:border-r-0` : 그리드 선 남발  
 ❌ 장식용 `|` 구분자  
 ❌ 불필요한 그라데이션 레이어 중첩  
 ❌ 모든 섹션에 동일한 텍스트 계층 반복  
-❌ `text-[10px] tracking-[0.3em] uppercase` — 섹션마다 반복 사용  
+❌ `text-[10px] tracking-[0.3em] uppercase` : 섹션마다 반복 사용  
 ❌ 배경 이미지에 그라데이션 오버레이 + 텍스트 오버레이 동시 적용
 
 ### 필수 디자인 원칙
 
 ✅ 섹션마다 **다른 배경색** (흰색/어두운 섹션 교번)  
 ✅ 히어로 텍스트는 **뷰포트 너비의 15-20%** 크기  
-✅ 여백이 럭셔리 — **넉넉한 padding**  
+✅ 여백이 럭셔리 : **넉넉한 padding**  
 ✅ 이미지는 **최소 50vw** 이상의 공간 확보  
 ✅ CTA 버튼은 **명확한 대비색**으로 1개만
 

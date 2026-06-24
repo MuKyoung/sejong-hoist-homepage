@@ -72,7 +72,7 @@ export default function DemoSelector() {
             ← 메인으로
           </Link>
           <p className="text-[11px] font-mono tracking-[0.35em] uppercase mb-4" style={{ color: "rgba(240,240,240,0.25)" }}>
-            Design Demos — v3.0
+            Design Demos v3.0
           </p>
           <h1 className="text-h1 mb-5">데모 디자인 선택</h1>
           <p className="text-[15px] leading-[1.8] max-w-xl" style={{ color: "rgba(240,240,240,0.4)" }}>

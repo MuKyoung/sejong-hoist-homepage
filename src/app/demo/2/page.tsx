@@ -1,7 +1,7 @@
 "use client";
 
 /**
- * DEMO 2 — NEXUS (반응형 완전 대응)
+ * DEMO 2 : NEXUS (반응형 완전 대응)
  */
 
 import { useRef, useState, useEffect } from "react";
@@ -83,8 +83,8 @@ const METRICS = [
 const NEWS = [
   { dt: "2026.06", tag: "기술", title: "반도체 클린룸 크레인, 0.1μm 진동 제어 달성" },
   { dt: "2026.05", tag: "납품", title: "당진 발전소 200T 천장크레인 준공" },
-  { dt: "2026.04", tag: "수상", title: "산업통상자원부 장관 표창 — 산업기계 혁신" },
-  { dt: "2026.03", tag: "채용", title: "2026 상반기 공채 — 기계설계·전기제어·영업" },
+  { dt: "2026.04", tag: "수상", title: "산업통상자원부 장관 표창 : 산업기계 혁신" },
+  { dt: "2026.03", tag: "채용", title: "2026 상반기 공채 : 기계설계·전기제어·영업" },
   { dt: "2026.02", tag: "인증", title: "ISO 9001:2015 품질경영시스템 3회 연속 갱신" },
   { dt: "2026.01", tag: "납품", title: "SK이노베이션 울산 갠트리크레인 납품 완료" },
 ];
@@ -177,7 +177,7 @@ export default function Nexus() {
               </motion.div>
             </div>
 
-            {/* 우: 대시보드 — xl에서만 보이고 모바일은 히어로 아래로 */}
+            {/* 우: 대시보드 : xl에서만 보이고 모바일은 히어로 아래로 */}
             <motion.div
               initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.7, duration: 0.9, ease: E }}
@@ -311,7 +311,7 @@ export default function Nexus() {
                 onMouseEnter={e => { e.currentTarget.style.paddingLeft = "10px"; e.currentTarget.style.background = "#f4f7fc"; }}
                 onMouseLeave={e => { e.currentTarget.style.paddingLeft = "0"; e.currentTarget.style.background = "transparent"; }}
               >
-                {/* 날짜 — sm 이상에서만 */}
+                {/* 날짜 : sm 이상에서만 */}
                 <span className="hidden sm:block font-mono text-[11px] shrink-0" style={{ color: "#94a3b8" }}>{n.dt}</span>
                 <span className="text-[10px] font-bold px-2 py-1 shrink-0"
                   style={{ background: "rgba(244,124,32,0.1)", color: "#f47c20" }}>{n.tag}</span>
@@ -368,7 +368,7 @@ export default function Nexus() {
         <p className="text-[11px] font-mono" style={{ color: "rgba(255,255,255,0.15)" }}>© 2026 Sejong Hoist &amp; Crane</p>
         <div className="flex items-center gap-2.5">
           <span className="w-1.5 h-1.5 rounded-full animate-pulse-dot" style={{ background: "#f47c20" }} />
-          <span className="text-[11px] font-mono" style={{ color: "rgba(255,255,255,0.15)" }}>Demo 2 — NEXUS</span>
+          <span className="text-[11px] font-mono" style={{ color: "rgba(255,255,255,0.15)" }}>Demo 2 : NEXUS</span>
           <Link href="/demo" className="ml-3 text-[11px] font-mono hover:text-white/40 transition-colors"
             style={{ color: "rgba(255,255,255,0.15)" }}>← 데모 목록</Link>
         </div>

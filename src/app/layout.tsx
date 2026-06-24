@@ -27,7 +27,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="ko" className={inter.variable}>
       <head>
-        {/* Pretendard — 한국어 최적화, 상업용 무료 */}
+        {/* Pretendard: 한국어 최적화, 상업용 무료 */}
         <link
           rel="preload"
           as="style"
