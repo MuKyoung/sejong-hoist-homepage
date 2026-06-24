@@ -4,61 +4,33 @@ import { useRef, useEffect, useState } from "react";
 import { motion, useInView } from "framer-motion";
 
 const STATS = [
-  {
-    number: 1984,
-    suffix: "",
-    prefix: "",
-    label: "설립 연도",
-    desc: "40년 이상의 산업용\n크레인 전문 제조 이력",
-  },
-  {
-    number: 500,
-    suffix: "+",
-    prefix: "",
-    label: "누적 납품 건수",
-    desc: "대기업·중소기업·공공기관\n전국 주요 산업 현장 납품",
-  },
-  {
-    number: 200,
-    suffix: "T",
-    prefix: "",
-    label: "최대 인양 하중",
-    desc: "고객 요구사양에 따른\n맞춤형 중량물 설계 납품",
-  },
-  {
-    number: 98,
-    suffix: "%",
-    prefix: "",
-    label: "고객 재주문율",
-    desc: "품질과 A/S로 검증된\n장기 파트너십 유지",
-  },
+  { number: 40, suffix: "년", label: "전문 제조 경력", sub: "1984년 창업" },
+  { number: 500, suffix: "+", label: "누적 납품 건수", sub: "대·중소기업, 공공기관" },
+  { number: 200, suffix: "T", label: "최대 인양 하중", sub: "맞춤형 설계 대응" },
+  { number: 98, suffix: "%", label: "재주문율", sub: "품질과 A/S 신뢰" },
 ];
 
 const E = [0.22, 1, 0.36, 1] as never;
 
-function AnimatedNumber({ target, suffix, prefix, trigger }: { target: number; suffix: string; prefix: string; trigger: boolean }) {
-  const [current, setCurrent] = useState(0);
+function Counter({ to, suffix, trigger }: { to: number; suffix: string; trigger: boolean }) {
+  const [val, setVal] = useState(0);
 
   useEffect(() => {
     if (!trigger) return;
-    const duration = 1600;
-    const start = performance.now();
+    let start: number | null = null;
+    const dur = 1800;
 
-    const tick = (now: number) => {
-      const elapsed = now - start;
-      const progress = Math.min(elapsed / duration, 1);
-      const eased = 1 - Math.pow(1 - progress, 3);
-      setCurrent(Math.round(eased * target));
-      if (progress < 1) requestAnimationFrame(tick);
+    const step = (ts: number) => {
+      if (!start) start = ts;
+      const prog = Math.min((ts - start) / dur, 1);
+      const eased = 1 - Math.pow(1 - prog, 4);
+      setVal(Math.round(eased * to));
+      if (prog < 1) requestAnimationFrame(step);
     };
-    requestAnimationFrame(tick);
-  }, [trigger, target]);
+    requestAnimationFrame(step);
+  }, [trigger, to]);
 
-  return (
-    <span className="tabular-nums">
-      {prefix}{current.toLocaleString()}{suffix}
-    </span>
-  );
+  return <>{val.toLocaleString()}{suffix}</>;
 }
 
 export default function StatsSection() {
@@ -66,34 +38,47 @@ export default function StatsSection() {
   const inView = useInView(ref, { once: true, margin: "-60px" });
 
   return (
-    <section className="bg-[#0B1E4E] py-20 lg:py-28" aria-label="주요 실적">
-      <div className="max-w-[1440px] mx-auto px-6 lg:px-10 xl:px-20">
-        <div ref={ref} className="grid grid-cols-2 lg:grid-cols-4 gap-px bg-white/10">
+    <section ref={ref} className="relative bg-white overflow-hidden py-20 lg:py-28" aria-label="주요 실적">
+      {/* 배경 텍스처: 대형 반투명 숫자 */}
+      <div
+        aria-hidden
+        className="absolute right-[-5%] top-1/2 -translate-y-1/2 font-black text-slate-50 select-none pointer-events-none leading-none"
+        style={{ fontSize: "clamp(12rem, 30vw, 28rem)", letterSpacing: "-0.06em" }}
+      >
+        40
+      </div>
+
+      <div className="relative z-10 max-w-[1440px] mx-auto px-6 lg:px-10 xl:px-20">
+        {/* 라벨 */}
+        <motion.p
+          initial={{ opacity: 0, y: 8 }}
+          animate={inView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.5, ease: E }}
+          className="text-[10.5px] font-bold tracking-[0.25em] uppercase text-orange-500 mb-12 lg:mb-16 flex items-center gap-2"
+        >
+          <span className="w-5 h-[1px] bg-orange-500 block" />
+          Key Figures
+        </motion.p>
+
+        {/* 수치 그리드 */}
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-0 lg:divide-x lg:divide-slate-100">
           {STATS.map((s, i) => (
             <motion.div
               key={i}
-              initial={{ opacity: 0 }}
-              animate={inView ? { opacity: 1 } : {}}
-              transition={{ duration: 0.6, ease: E, delay: i * 0.1 }}
-              className="bg-[#0B1E4E] px-8 py-12 lg:py-14 xl:px-12 group hover:bg-[#122466] transition-colors duration-300"
+              initial={{ opacity: 0, y: 20 }}
+              animate={inView ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 0.65, ease: E, delay: i * 0.08 }}
+              className="lg:px-10 xl:px-14 first:pl-0 last:pr-0"
             >
+              {/* 수치 */}
               <div
-                className="font-black text-white tracking-[-0.04em] leading-none mb-3"
-                style={{ fontSize: "clamp(2.4rem, 5vw, 3.8rem)" }}
+                className="font-black text-[#0B1E4E] tracking-[-0.05em] leading-none mb-3 tabular-nums"
+                style={{ fontSize: "clamp(3rem, 6vw, 5.5rem)" }}
               >
-                <AnimatedNumber
-                  target={s.number}
-                  suffix={s.suffix}
-                  prefix={s.prefix}
-                  trigger={inView}
-                />
+                <Counter to={s.number} suffix={s.suffix} trigger={inView} />
               </div>
-              <p className="text-[11px] font-bold tracking-[0.12em] uppercase text-orange-400 mb-3">
-                {s.label}
-              </p>
-              <p className="text-[12.5px] text-white/45 leading-[1.8] whitespace-pre-line hidden lg:block">
-                {s.desc}
-              </p>
+              <p className="text-[13px] font-bold text-slate-700 mb-1">{s.label}</p>
+              <p className="text-[11.5px] text-slate-400">{s.sub}</p>
             </motion.div>
           ))}
         </div>

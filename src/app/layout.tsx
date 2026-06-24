@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import ConditionalLayout from "@/components/layout/ConditionalLayout";
+import SmoothScroll from "@/components/providers/SmoothScroll";
 
 /* ─── 폰트: Inter (Google Fonts, 상업용 최고 인기) ─── */
 const inter = Inter({
@@ -40,7 +41,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <link rel="icon" href="/images/sejong-logo.png" type="image/png" />
       </head>
       <body>
-        <ConditionalLayout>{children}</ConditionalLayout>
+        <SmoothScroll>
+          <ConditionalLayout>{children}</ConditionalLayout>
+        </SmoothScroll>
       </body>
     </html>
   );

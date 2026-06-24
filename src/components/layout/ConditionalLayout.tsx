@@ -15,7 +15,8 @@ export default function ConditionalLayout({ children }: { children: React.ReactN
   return (
     <>
       <Header />
-      <main>{children}</main>
+      {/* 고정 헤더 높이 보정: utility bar(36px, lg only) + nav(64px mobile / 68px lg) */}
+      <main className="pt-16 lg:pt-[104px]">{children}</main>
       <Footer />
     </>
   );

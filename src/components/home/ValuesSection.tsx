@@ -1,53 +1,59 @@
 "use client";
 
 import { useRef } from "react";
-import { motion, useInView } from "framer-motion";
 import Image from "next/image";
+import { motion, useInView } from "framer-motion";
+import * as Tabs from "@radix-ui/react-tabs";
+import { CheckCircle2, Timer, ShieldCheck, Wrench } from "lucide-react";
 
 const VALUES = [
   {
-    num: "01",
-    title: "검증된 제조 역량",
-    desc: "국내 자체 공장 생산. 핵심 부품 직납으로 납기·품질을 동시에 통제. ISO 9001 인증 품질관리 시스템 운영.",
-    icon: (
-      <svg viewBox="0 0 32 32" fill="none" className="w-7 h-7">
-        <path d="M16 3L3 9v14l13 6 13-6V9L16 3z" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round"/>
-        <path d="M3 9l13 6 13-6M16 15v14" stroke="currentColor" strokeWidth="1.5"/>
-      </svg>
-    ),
+    id: "quality",
+    icon: <CheckCircle2 size={20} />,
+    tab: "제조 역량",
+    title: "자체 공장 직납,\n품질을 직접 통제합니다",
+    body: "국내 자체 생산 시설을 통해 핵심 부품부터 완성품까지 전 공정을 내재화했습니다. 납기 준수율 99%, ISO 9001 품질관리 시스템으로 일관된 품질을 보장합니다.",
+    metrics: [
+      { label: "납기 준수율", value: "99%" },
+      { label: "불량 반품률", value: "0.3%↓" },
+    ],
+    img: "/images/sejong_1.png",
   },
   {
-    num: "02",
-    title: "현장 맞춤 설계",
-    desc: "단순 카탈로그 납품이 아닌, 고객 공정을 직접 분석하여 최적화된 사양을 제안. 특수 환경(방폭·클린룸·내열)도 대응.",
-    icon: (
-      <svg viewBox="0 0 32 32" fill="none" className="w-7 h-7">
-        <path d="M4 28L12 4l6 12 4-6 6 18" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-        <circle cx="12" cy="16" r="2" fill="currentColor"/>
-      </svg>
-    ),
+    id: "design",
+    icon: <Wrench size={20} />,
+    tab: "맞춤 설계",
+    title: "카탈로그가 아닌\n현장 분석에서 시작합니다",
+    body: "단순 규격 제품 납품이 아닌, 고객의 생산 공정·환경·하중 조건을 직접 분석하여 최적 사양을 제안합니다. 방폭·클린룸·내열 등 특수 환경도 대응 가능합니다.",
+    metrics: [
+      { label: "맞춤 설계 비율", value: "65%" },
+      { label: "현장 재설계 사례", value: "0건" },
+    ],
+    img: "/images/sejong_2.png",
   },
   {
-    num: "03",
-    title: "신속한 A/S 대응",
-    desc: "전국 서비스 네트워크로 긴급 출동 24시간 이내. 설비 가동 중단 최소화를 위한 예방정비 시스템 운영.",
-    icon: (
-      <svg viewBox="0 0 32 32" fill="none" className="w-7 h-7">
-        <circle cx="16" cy="16" r="12" stroke="currentColor" strokeWidth="1.5"/>
-        <path d="M16 9v8l5 3" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
-      </svg>
-    ),
+    id: "service",
+    icon: <Timer size={20} />,
+    tab: "A/S 대응",
+    title: "가동 중단 시간을\n최소화하는 빠른 대응",
+    body: "전국 서비스 네트워크로 긴급 요청 시 24시간 이내 현장 출동합니다. 예방 정비 계획 수립을 통해 비계획적 가동 중단을 사전에 방지합니다.",
+    metrics: [
+      { label: "평균 출동 시간", value: "4.2h" },
+      { label: "연간 예방정비 계약사", value: "120+" },
+    ],
+    img: "/images/sejong_3.png",
   },
   {
-    num: "04",
-    title: "안전 최우선 철학",
-    desc: "산업안전보건법 기준 초과 설계. 전 제품 출하 전 부하 테스트 및 안전장치 검증. 현장 작업자 안전 교육 병행 제공.",
-    icon: (
-      <svg viewBox="0 0 32 32" fill="none" className="w-7 h-7">
-        <path d="M16 4l10 4v10c0 6-10 10-10 10S6 24 6 18V8l10-4z" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round"/>
-        <path d="M11 16l3 3 7-7" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-      </svg>
-    ),
+    id: "safety",
+    icon: <ShieldCheck size={20} />,
+    tab: "안전 기준",
+    title: "법정 기준을 초과하는\n안전 설계 원칙",
+    body: "산업안전보건법 기준 대비 130% 이상의 안전계수로 설계합니다. 전 제품 출하 전 125% 부하 테스트 및 전기·기계 안전장치 검증을 의무화합니다.",
+    metrics: [
+      { label: "안전계수", value: "130%+" },
+      { label: "출하 전 부하 테스트", value: "125%" },
+    ],
+    img: "/images/sejong_4.png",
   },
 ];
 
@@ -58,91 +64,110 @@ export default function ValuesSection() {
   const inView = useInView(ref, { once: true, margin: "-80px" });
 
   return (
-    <section className="bg-[#f8fafc] py-24 lg:py-32" aria-label="세종호이스트의 강점">
+    <section ref={ref} className="bg-[#f8fafc] py-20 lg:py-28 overflow-hidden" aria-label="세종호이스트 강점">
       <div className="max-w-[1440px] mx-auto px-6 lg:px-10 xl:px-20">
-        <div ref={ref} className="grid grid-cols-1 lg:grid-cols-[400px_1fr] gap-16 lg:gap-20 items-start">
 
-          {/* 좌: 섹션 헤더 + 이미지 */}
+        {/* 헤더 */}
+        <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6 mb-10 lg:mb-14">
           <div>
             <motion.p
-              initial={{ opacity: 0, y: 10 }}
+              initial={{ opacity: 0, y: 8 }}
               animate={inView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.5, ease: E }}
-              className="text-[11px] font-bold tracking-[0.2em] uppercase text-orange-500 mb-3 flex items-center gap-2"
+              className="text-[10.5px] font-bold tracking-[0.25em] uppercase text-orange-500 mb-3 flex items-center gap-2"
             >
-              <span className="block w-4 h-[1px] bg-orange-500" />
+              <span className="w-5 h-[1px] bg-orange-500 block" />
               Why Sejong
             </motion.p>
             <motion.h2
-              initial={{ opacity: 0, y: 16 }}
+              initial={{ opacity: 0, y: 14 }}
               animate={inView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.65, ease: E, delay: 0.08 }}
-              className="font-black text-slate-900 tracking-[-0.03em] leading-tight mb-6"
-              style={{ fontSize: "clamp(1.75rem, 3.5vw, 2.6rem)" }}
+              className="font-black text-[#0B1E4E] tracking-[-0.04em] leading-none"
+              style={{ fontSize: "clamp(2rem, 4.5vw, 3.5rem)" }}
             >
-              세종호이스트를<br />
               선택하는 이유
             </motion.h2>
-            <motion.p
-              initial={{ opacity: 0, y: 12 }}
-              animate={inView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.65, ease: E, delay: 0.15 }}
-              className="text-[14px] text-slate-500 leading-[1.9] mb-10"
-            >
-              1984년 창업 이후, 오직 크레인과 호이스트만을
-              전문으로 해온 기업입니다. 단순 제조를 넘어
-              현장의 문제를 함께 해결하는 파트너입니다.
-            </motion.p>
-
-            {/* 현장 이미지 */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={inView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.8, ease: E, delay: 0.25 }}
-              className="relative aspect-[4/3] overflow-hidden"
-            >
-              <Image
-                src="/images/sejong_1.png"
-                alt="세종호이스트 시공 현장"
-                fill
-                className="object-cover"
-                sizes="(max-width: 1024px) 100vw, 400px"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent" />
-              <div className="absolute bottom-5 left-5 right-5">
-                <p className="text-white text-[11px] font-bold tracking-[0.15em] uppercase opacity-80">
-                  실제 시공 현장 ·  2024
-                </p>
-              </div>
-            </motion.div>
           </div>
-
-          {/* 우: 밸류 리스트 */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 lg:gap-6 pt-2">
-            {VALUES.map((v, i) => (
-              <motion.div
-                key={i}
-                initial={{ opacity: 0, y: 20 }}
-                animate={inView ? { opacity: 1, y: 0 } : {}}
-                transition={{ duration: 0.65, ease: E, delay: 0.1 + i * 0.08 }}
-                className="bg-white border border-slate-100 p-7 hover:border-slate-200 hover:shadow-lg transition-all duration-300 group"
-              >
-                <div className="flex items-start justify-between mb-5">
-                  <div className="w-12 h-12 bg-[#f0f4ff] flex items-center justify-center text-[#0B1E4E] group-hover:bg-[#0B1E4E] group-hover:text-white transition-colors duration-300">
-                    {v.icon}
-                  </div>
-                  <span className="text-[11px] font-black text-slate-200 tracking-tight">{v.num}</span>
-                </div>
-                <h3 className="text-[15.5px] font-bold text-slate-900 tracking-[-0.01em] mb-3">
-                  {v.title}
-                </h3>
-                <p className="text-[13px] text-slate-500 leading-[1.85]">
-                  {v.desc}
-                </p>
-              </motion.div>
-            ))}
-          </div>
+          <motion.p
+            initial={{ opacity: 0 }}
+            animate={inView ? { opacity: 1 } : {}}
+            transition={{ duration: 0.6, ease: E, delay: 0.2 }}
+            className="text-[13.5px] text-slate-500 leading-[1.8] max-w-[380px] hidden lg:block"
+          >
+            1984년부터 오직 크레인과 호이스트만을 전문으로 해온 기업.<br />
+            제조부터 A/S까지 일관된 책임으로 고객 현장을 지원합니다.
+          </motion.p>
         </div>
+
+        {/* Radix Tabs */}
+        <motion.div
+          initial={{ opacity: 0, y: 24 }}
+          animate={inView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.7, ease: E, delay: 0.2 }}
+        >
+          <Tabs.Root defaultValue="quality">
+            {/* 탭 목록 */}
+            <Tabs.List className="flex gap-1 mb-8 overflow-x-auto scrollbar-none pb-1" aria-label="강점 목록">
+              {VALUES.map((v) => (
+                <Tabs.Trigger
+                  key={v.id}
+                  value={v.id}
+                  className="group flex-shrink-0 flex items-center gap-2 px-4 py-2.5 text-[12.5px] font-bold text-slate-500 border border-transparent
+                    data-[state=active]:bg-white data-[state=active]:text-[#0B1E4E] data-[state=active]:border-slate-200 data-[state=active]:shadow-sm
+                    hover:text-slate-800 transition-all duration-200 whitespace-nowrap"
+                >
+                  <span className="text-orange-400">{v.icon}</span>
+                  {v.tab}
+                </Tabs.Trigger>
+              ))}
+            </Tabs.List>
+
+            {/* 탭 콘텐츠 */}
+            {VALUES.map((v) => (
+              <Tabs.Content key={v.id} value={v.id} className="outline-none">
+                <div className="grid grid-cols-1 lg:grid-cols-[1fr_420px] gap-8 lg:gap-12 items-center bg-white border border-slate-100 p-6 lg:p-10 shadow-sm">
+                  {/* 좌: 텍스트 */}
+                  <div>
+                    <div className="w-10 h-10 bg-orange-50 text-orange-500 flex items-center justify-center mb-6">
+                      {v.icon}
+                    </div>
+                    <h3
+                      className="font-black text-[#0B1E4E] tracking-[-0.025em] leading-[1.15] mb-5 whitespace-pre-line"
+                      style={{ fontSize: "clamp(1.4rem, 2.5vw, 2rem)" }}
+                    >
+                      {v.title}
+                    </h3>
+                    <p className="text-[14px] text-slate-500 leading-[1.85] mb-8">{v.body}</p>
+
+                    {/* 지표 */}
+                    <div className="flex items-center gap-8">
+                      {v.metrics.map((m, i) => (
+                        <div key={i}>
+                          <div className="text-[2rem] font-black text-[#0B1E4E] tracking-tight leading-none mb-1 tabular-nums">
+                            {m.value}
+                          </div>
+                          <div className="text-[11.5px] text-slate-400 font-semibold">{m.label}</div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* 우: 이미지 */}
+                  <div className="relative aspect-[4/3] overflow-hidden bg-slate-100 order-first lg:order-last">
+                    <Image
+                      src={v.img}
+                      alt={v.tab}
+                      fill
+                      className="object-cover"
+                      sizes="(max-width: 1024px) 100vw, 420px"
+                    />
+                  </div>
+                </div>
+              </Tabs.Content>
+            ))}
+          </Tabs.Root>
+        </motion.div>
       </div>
     </section>
   );
