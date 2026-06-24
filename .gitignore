@@ -41,3 +41,9 @@ yarn-error.log*
 next-env.d.ts
 
 .vercel
+
+# 루트에 있는 원본 미디어 파일 (public/에 복사본이 있음)
+/*.mp4
+/*.png
+/*.jpg
+/*.jpeg

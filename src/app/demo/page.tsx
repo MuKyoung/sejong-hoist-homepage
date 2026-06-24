@@ -53,6 +53,23 @@ const DEMOS = [
     img: "/images/sejong_3.png",
     tag: "에디토리얼 · 세리프 · 스토리",
   },
+  {
+    num: "04",
+    name: "HANWHA",
+    subtitle: "한화시스템 직접 분석 스타일",
+    ref: "hanwhasystems.com 직접 분석",
+    desc: "한화시스템 사이트를 실제로 분석해 'CONNECT TO THE FUTURE' 초대형 타이포그래피 히어로, Persona 선택 UX, ESG 번호형 아코디언, 번호형 뉴스 리스트를 세종에 맞게 이식.",
+    principles: [
+      "타이포그래피 계층 효과 — 초대형 주제어 → 보조정보",
+      "기대 확인(대기업 레이아웃 익숙함) — 인지적 신뢰 ↑",
+      "능동적 참여 — Persona 선택 = IKEA 효과",
+      "색 심리학 — Navy 권위 + Orange 행동 유발",
+    ],
+    palette: ["#0a1c4a", "#f47c20", "#f5f7fb", "#060f25"],
+    href: "/demo/4",
+    img: "/images/sejong_4.png",
+    tag: "한화시스템 · 번호형 · Persona",
+  },
 ];
 
 export default function DemoIndexPage() {
