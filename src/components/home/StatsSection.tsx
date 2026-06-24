@@ -1,83 +1,100 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useRef, useEffect, useState } from "react";
+import { motion, useInView } from "framer-motion";
 
-const stats = [
-  { value: 40, suffix: "+", label: "업력", sub: "Years of Experience" },
-  { value: 500, suffix: "+", label: "납품 실적", sub: "Delivery Records" },
-  { value: 99.8, suffix: "%", label: "고객 만족도", sub: "Customer Satisfaction", decimal: true },
-  { value: 24, suffix: "H", label: "A/S 대응", sub: "Service Response" },
+const STATS = [
+  {
+    number: 1984,
+    suffix: "",
+    prefix: "",
+    label: "설립 연도",
+    desc: "40년 이상의 산업용\n크레인 전문 제조 이력",
+  },
+  {
+    number: 500,
+    suffix: "+",
+    prefix: "",
+    label: "누적 납품 건수",
+    desc: "대기업·중소기업·공공기관\n전국 주요 산업 현장 납품",
+  },
+  {
+    number: 200,
+    suffix: "T",
+    prefix: "",
+    label: "최대 인양 하중",
+    desc: "고객 요구사양에 따른\n맞춤형 중량물 설계 납품",
+  },
+  {
+    number: 98,
+    suffix: "%",
+    prefix: "",
+    label: "고객 재주문율",
+    desc: "품질과 A/S로 검증된\n장기 파트너십 유지",
+  },
 ];
 
-function CountUp({ target, suffix, decimal }: { target: number; suffix: string; decimal?: boolean }) {
-  const [count, setCount] = useState(0);
-  const ref = useRef<HTMLSpanElement>(null);
-  const animated = useRef(false);
+const E = [0.22, 1, 0.36, 1] as never;
+
+function AnimatedNumber({ target, suffix, prefix, trigger }: { target: number; suffix: string; prefix: string; trigger: boolean }) {
+  const [current, setCurrent] = useState(0);
 
   useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting && !animated.current) {
-          animated.current = true;
-          const duration = 2000;
-          const start = Date.now();
-          const tick = () => {
-            const elapsed = Date.now() - start;
-            const progress = Math.min(elapsed / duration, 1);
-            const eased = 1 - Math.pow(1 - progress, 3);
-            setCount(eased * target);
-            if (progress < 1) requestAnimationFrame(tick);
-          };
-          requestAnimationFrame(tick);
-        }
-      },
-      { threshold: 0.5 }
-    );
-    if (ref.current) observer.observe(ref.current);
-    return () => observer.disconnect();
-  }, [target]);
+    if (!trigger) return;
+    const duration = 1600;
+    const start = performance.now();
+
+    const tick = (now: number) => {
+      const elapsed = now - start;
+      const progress = Math.min(elapsed / duration, 1);
+      const eased = 1 - Math.pow(1 - progress, 3);
+      setCurrent(Math.round(eased * target));
+      if (progress < 1) requestAnimationFrame(tick);
+    };
+    requestAnimationFrame(tick);
+  }, [trigger, target]);
 
   return (
-    <span ref={ref}>
-      {decimal ? count.toFixed(1) : Math.floor(count)}
-      {suffix}
+    <span className="tabular-nums">
+      {prefix}{current.toLocaleString()}{suffix}
     </span>
   );
 }
 
 export default function StatsSection() {
+  const ref = useRef<HTMLDivElement>(null);
+  const inView = useInView(ref, { once: true, margin: "-60px" });
+
   return (
-    <section className="py-20 bg-[#0a1f5c] relative overflow-hidden">
-      {/* 배경 패턴 */}
-      <div className="absolute inset-0 opacity-5">
-        <div className="absolute inset-0" style={{
-          backgroundImage: "radial-gradient(circle at 1px 1px, white 1px, transparent 0)",
-          backgroundSize: "40px 40px",
-        }} />
-      </div>
-
-      <div className="max-w-[1400px] mx-auto px-6 relative z-10">
-        <div className="text-center mb-16">
-          <p className="text-orange-400 text-xs font-bold tracking-widest uppercase mb-4">
-            WHY SEJONG
-          </p>
-          <h2 className="text-white text-4xl font-bold">
-            숫자로 증명하는<br />세종호이스트크레인
-          </h2>
-        </div>
-
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-0.5">
-          {stats.map((stat, idx) => (
-            <div
-              key={idx}
-              className="bg-white/5 hover:bg-white/10 transition-colors p-10 text-center group"
+    <section className="bg-[#0B1E4E] py-20 lg:py-28" aria-label="주요 실적">
+      <div className="max-w-[1440px] mx-auto px-6 lg:px-10 xl:px-20">
+        <div ref={ref} className="grid grid-cols-2 lg:grid-cols-4 gap-px bg-white/10">
+          {STATS.map((s, i) => (
+            <motion.div
+              key={i}
+              initial={{ opacity: 0 }}
+              animate={inView ? { opacity: 1 } : {}}
+              transition={{ duration: 0.6, ease: E, delay: i * 0.1 }}
+              className="bg-[#0B1E4E] px-8 py-12 lg:py-14 xl:px-12 group hover:bg-[#122466] transition-colors duration-300"
             >
-              <div className="text-5xl font-black text-white mb-2 group-hover:text-orange-400 transition-colors duration-300">
-                <CountUp target={stat.value} suffix={stat.suffix} decimal={stat.decimal} />
+              <div
+                className="font-black text-white tracking-[-0.04em] leading-none mb-3"
+                style={{ fontSize: "clamp(2.4rem, 5vw, 3.8rem)" }}
+              >
+                <AnimatedNumber
+                  target={s.number}
+                  suffix={s.suffix}
+                  prefix={s.prefix}
+                  trigger={inView}
+                />
               </div>
-              <p className="text-white font-semibold mb-1">{stat.label}</p>
-              <p className="text-white/30 text-xs tracking-wider uppercase">{stat.sub}</p>
-            </div>
+              <p className="text-[11px] font-bold tracking-[0.12em] uppercase text-orange-400 mb-3">
+                {s.label}
+              </p>
+              <p className="text-[12.5px] text-white/45 leading-[1.8] whitespace-pre-line hidden lg:block">
+                {s.desc}
+              </p>
+            </motion.div>
           ))}
         </div>
       </div>

@@ -1,197 +1,217 @@
 "use client";
 
-import { useState, useEffect, useRef, useCallback } from "react";
+import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
+import { motion, useScroll, useTransform } from "framer-motion";
 
 const VIDEOS = [
-  "/videos/4763-179741146_medium.mp4",
-  "/videos/4764-179741142_medium.mp4",
-  "/videos/4765-179741137_medium.mp4",
-  "/videos/4768-179741152_medium.mp4",
-  "/videos/5497-184226939_medium.mp4",
+  "/videos/47713-451772938_medium.mp4",
   "/videos/12716-241674181_medium.mp4",
   "/videos/27239-362518579_medium.mp4",
-  "/videos/47713-451772938_medium.mp4",
-  "/videos/48420-453832153_medium.mp4",
-  "/videos/144584-785095786_medium.mp4",
-  "/videos/159052-818026310_medium.mp4",
-  "/videos/161515-823603558_medium.mp4",
 ];
 
-const SLIDES = [
-  { video: 0,  tab: "크레인",  line1: "산업을",      line2: "움직이는 힘",   sub: "40년의 기술력으로 대한민국 산업현장의\n안전과 효율을 책임집니다" },
-  { video: 3,  tab: "호이스트", line1: "강인함이",     line2: "일상이 되는 곳", sub: "최고의 품질과 안전을 기준으로\n모든 크레인을 설계·제작합니다" },
-  { video: 6,  tab: "크레인",  line1: "신뢰를 쌓아온", line2: "세종의 기술",    sub: "고객의 현장에 맞는 맞춤형 솔루션으로\n안전한 작업 환경을 만듭니다" },
-  { video: 9,  tab: "특수크레인", line1: "미래를 향한", line2: "도전과 혁신",   sub: "지속적인 연구개발로 더 안전하고\n더 강한 크레인을 만들어 갑니다" },
+const STATS = [
+  { value: "40", unit: "년", label: "업력" },
+  { value: "500", unit: "+", label: "누적 시공" },
+  { value: "200", unit: "T", label: "최대 하중" },
+  { value: "ISO", unit: "", label: "9001 인증" },
 ];
 
-const DURATION = 7000;
+const E = [0.22, 1, 0.36, 1] as never;
 
 export default function HeroSection() {
-  const [current, setCurrent] = useState(0);
-  const [prev, setPrev]       = useState<number | null>(null);
-  const [titleKey, setTitleKey]     = useState(0);
-  const videoRefs  = useRef<(HTMLVideoElement | null)[]>([]);
-  const timerRef   = useRef<NodeJS.Timeout | null>(null);
+  const [videoIdx, setVideoIdx] = useState(0);
+  const [loaded, setLoaded] = useState(false);
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
 
-  const go = useCallback((next: number) => {
-    setPrev(current);
-    setCurrent(next);
-    setTitleKey(k => k + 1);
-  }, [current]);
-
-  useEffect(() => {
-    timerRef.current = setInterval(() => {
-      go((current + 1) % SLIDES.length);
-    }, DURATION);
-    return () => { if (timerRef.current) clearInterval(timerRef.current); };
-  }, [current, go]);
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ["start start", "end start"],
+  });
+  const yText = useTransform(scrollYProgress, [0, 1], ["0%", "18%"]);
+  const opText = useTransform(scrollYProgress, [0, 0.6], [1, 0]);
 
   useEffect(() => {
-    SLIDES.forEach((s, i) => {
-      const el = videoRefs.current[i];
-      if (!el) return;
-      if (i === current) { el.currentTime = 0; el.play().catch(() => {}); }
-      else el.pause();
-    });
-  }, [current]);
+    const timer = setTimeout(() => setLoaded(true), 100);
+    return () => clearTimeout(timer);
+  }, []);
 
-  const jump = (i: number) => {
-    if (i === current) return;
-    if (timerRef.current) clearInterval(timerRef.current);
-    go(i);
-    timerRef.current = setInterval(() => go((i + 1) % SLIDES.length), DURATION);
+  const handleVideoEnd = () => {
+    setVideoIdx(i => (i + 1) % VIDEOS.length);
   };
 
   return (
-    <section className="relative w-full h-screen overflow-hidden bg-[#0a1c4a]">
+    <section
+      ref={containerRef}
+      className="relative w-full h-[100svh] overflow-hidden bg-[#050e20]"
+      aria-label="메인 히어로"
+    >
+      {/* ── 영상 배경 ── */}
+      <video
+        ref={videoRef}
+        key={videoIdx}
+        autoPlay
+        muted
+        playsInline
+        onEnded={handleVideoEnd}
+        className="absolute inset-0 w-full h-full object-cover"
+        style={{ opacity: loaded ? 1 : 0, transition: "opacity 1s ease" }}
+      >
+        <source src={VIDEOS[videoIdx]} type="video/mp4" />
+      </video>
 
-      {/* ── 비디오 레이어 ── */}
-      {SLIDES.map((s, i) => (
-        <div
-          key={i}
-          className="absolute inset-0 transition-opacity duration-700"
-          style={{ opacity: i === current ? 1 : 0, zIndex: i === current ? 1 : 0 }}
-        >
-          <video
-            ref={el => { videoRefs.current[i] = el; }}
-            src={VIDEOS[s.video]}
-            className="hero-video"
-            muted
-            loop
-            playsInline
-            preload={i === current ? "auto" : "none"}
-          />
-        </div>
-      ))}
+      {/* ── 오버레이 레이어 ── */}
+      <div className="absolute inset-0 bg-gradient-to-r from-black/75 via-black/50 to-black/20" />
+      <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
 
-      {/* ── 오버레이 ── */}
-      <div className="absolute inset-0 z-10"
-        style={{ background: "linear-gradient(to right, rgba(10,28,74,0.75) 0%, rgba(10,28,74,0.3) 60%, transparent 100%)" }}
-      />
-      <div className="absolute inset-0 z-10"
-        style={{ background: "linear-gradient(to top, rgba(0,0,0,0.55) 0%, transparent 50%)" }}
-      />
+      {/* ── 헤더 높이만큼 상단 여백 ── */}
+      {/* Header는 화이트 고정이므로 히어로 내 콘텐츠가 그 아래 시작 */}
+      <div className="absolute inset-0 flex flex-col justify-center pt-[104px] lg:pt-[108px]">
+        <div className="max-w-[1440px] mx-auto px-6 lg:px-10 xl:px-20 w-full">
+          <div className="flex items-end justify-between gap-10">
 
-      {/* ── 콘텐츠 ── */}
-      <div className="absolute inset-0 z-20 flex flex-col justify-between px-8 md:px-16 py-10 md:py-14">
-
-        {/* 상단: 슬라이드 번호 (우측) */}
-        <div className="flex justify-end">
-          <div className="hidden md:flex flex-col items-end gap-3">
-            {SLIDES.map((_, i) => (
-              <button key={i} onClick={() => jump(i)} className="group flex items-center gap-2.5">
-                <span className={`text-[11px] font-mono transition-colors ${i === current ? "text-white" : "text-white/30 group-hover:text-white/60"}`}>
-                  0{i + 1}
-                </span>
-                <span className={`block h-px transition-all duration-300 ${i === current ? "w-10 bg-[#f47c20]" : "w-5 bg-white/20 group-hover:bg-white/40"}`} />
-              </button>
-            ))}
-          </div>
-        </div>
-
-        {/* 하단: 메인 텍스트 + 탭 */}
-        <div>
-          {/* 텍스트 */}
-          <div key={titleKey} className="mb-10 fade-up">
-            <span className="hero-title block">{SLIDES[current].line1}</span>
-            <span className="hero-title block text-[#f47c20]">{SLIDES[current].line2}</span>
-            <div className="w-12 h-[2px] bg-[#f47c20] my-6" />
-            <p className="text-white/60 text-sm md:text-base leading-relaxed" style={{ whiteSpace: "pre-line" }}>
-              {SLIDES[current].sub}
-            </p>
-          </div>
-
-          {/* Defense/ICT 스타일 탭 */}
-          <div className="flex items-end gap-0 border-t border-white/20">
-            {[
-              {
-                label: "크레인",
-                en: "Crane",
-                desc: "천장크레인, 갠트리크레인 등 산업현장 맞춤 크레인 시스템을 설계·제작합니다.",
-                links: ["천장크레인", "갠트리크레인"],
-                href: "/business",
-              },
-              {
-                label: "호이스트 & 특수",
-                en: "Hoist & Special",
-                desc: "체인호이스트부터 반도체·원자력 특수 크레인까지 전 분야를 커버합니다.",
-                links: ["호이스트", "특수크레인"],
-                href: "/business",
-              },
-            ].map((tab, ti) => (
-              <div
-                key={ti}
-                className="group flex-1 border-r border-white/20 last:border-r-0 cursor-pointer"
+            {/* ── 좌: 메인 카피 ── */}
+            <motion.div
+              className="max-w-[620px]"
+              style={{ y: yText, opacity: opText }}
+            >
+              {/* 태그 */}
+              <motion.div
+                initial={{ opacity: 0, y: 12 }}
+                animate={{ opacity: loaded ? 1 : 0, y: loaded ? 0 : 12 }}
+                transition={{ duration: 0.6, ease: E, delay: 0.2 }}
+                className="inline-flex items-center gap-2 mb-6"
               >
-                <div className="px-6 py-6 md:py-8">
-                  <div className="flex items-center justify-between mb-1">
-                    <p className="text-white font-bold text-base md:text-lg">{tab.label}</p>
-                    <Link href={tab.href} className="text-white/40 group-hover:text-[#f47c20] text-sm transition-colors">
-                      →
-                    </Link>
-                  </div>
-                  <p className="text-[10px] text-white/30 tracking-widest uppercase mb-3">{tab.en}</p>
-                  <p className="hidden md:block text-white/50 text-xs leading-relaxed mb-4">{tab.desc}</p>
-                  <div className="hidden md:flex gap-3">
-                    {tab.links.map(l => (
-                      <Link
-                        key={l}
-                        href={tab.href}
-                        className="text-white/40 hover:text-white text-xs border border-white/20 hover:border-white/50 px-3 py-1 transition-all"
-                      >
-                        {l}
-                      </Link>
-                    ))}
-                  </div>
+                <span className="block w-5 h-[1px] bg-orange-400" />
+                <span className="text-[11px] font-bold tracking-[0.22em] uppercase text-orange-400">
+                  Industrial Crane Manufacturer
+                </span>
+              </motion.div>
+
+              {/* 헤드라인 */}
+              <motion.h1
+                initial={{ opacity: 0, y: 24 }}
+                animate={{ opacity: loaded ? 1 : 0, y: loaded ? 0 : 24 }}
+                transition={{ duration: 0.8, ease: E, delay: 0.35 }}
+                className="text-white font-black leading-[1.0] tracking-[-0.04em] mb-6"
+                style={{ fontSize: "clamp(3rem, 7.5vw, 5.5rem)" }}
+              >
+                무거운 것을<br />
+                <span className="text-orange-400">가볍게</span> 옮기는<br />
+                40년의 기술
+              </motion.h1>
+
+              {/* 서브카피 */}
+              <motion.p
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: loaded ? 1 : 0, y: loaded ? 0 : 20 }}
+                transition={{ duration: 0.8, ease: E, delay: 0.5 }}
+                className="text-white/65 text-[15px] leading-[1.9] mb-10 max-w-[440px]"
+              >
+                천장크레인·갠트리크레인·호이스트 전문 제조.<br />
+                국내 주요 제조·조선·철강 현장에 500건 이상 납품한<br />
+                검증된 파트너입니다.
+              </motion.p>
+
+              {/* CTA 버튼 */}
+              <motion.div
+                initial={{ opacity: 0, y: 16 }}
+                animate={{ opacity: loaded ? 1 : 0, y: loaded ? 0 : 16 }}
+                transition={{ duration: 0.8, ease: E, delay: 0.62 }}
+                className="flex items-center gap-4"
+              >
+                <Link
+                  href="/business"
+                  className="inline-flex items-center gap-2.5 bg-orange-500 hover:bg-orange-600 text-white font-bold text-[13px] tracking-wide px-7 py-4 transition-colors duration-200"
+                >
+                  제품 보기
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                    <line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/>
+                  </svg>
+                </Link>
+                <Link
+                  href="/portfolio"
+                  className="inline-flex items-center gap-2.5 border border-white/40 hover:border-white text-white font-semibold text-[13px] tracking-wide px-7 py-4 transition-all duration-200 hover:bg-white/10"
+                >
+                  납품 실적
+                </Link>
+              </motion.div>
+            </motion.div>
+
+            {/* ── 우: 스탯 카드 (데스크탑) ── */}
+            <motion.div
+              initial={{ opacity: 0, x: 24 }}
+              animate={{ opacity: loaded ? 1 : 0, x: loaded ? 0 : 24 }}
+              transition={{ duration: 0.9, ease: E, delay: 0.7 }}
+              className="hidden lg:block flex-shrink-0"
+            >
+              <div className="bg-white/10 backdrop-blur-md border border-white/15 p-7 min-w-[220px]">
+                <p className="text-[10px] font-bold tracking-[0.2em] uppercase text-white/50 mb-6">
+                  Key Figures
+                </p>
+                <div className="space-y-5">
+                  {STATS.map((s, i) => (
+                    <div key={i} className="flex items-baseline justify-between gap-8">
+                      <span className="text-[12px] text-white/55">{s.label}</span>
+                      <span className="font-black text-white text-[1.6rem] leading-none tracking-tight tabular-nums">
+                        {s.value}<span className="text-orange-400 text-[1.1rem]">{s.unit}</span>
+                      </span>
+                    </div>
+                  ))}
+                </div>
+                <div className="mt-7 pt-6 border-t border-white/10">
+                  <a
+                    href="tel:0317771234"
+                    className="flex items-center gap-2.5 text-white group"
+                  >
+                    <div className="w-8 h-8 bg-orange-500 flex items-center justify-center flex-shrink-0">
+                      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                        <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 1h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 8.91a16 16 0 0 0 5.94 5.94l1.28-1.28a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/>
+                      </svg>
+                    </div>
+                    <div>
+                      <p className="text-[10px] text-white/45 leading-none mb-0.5">무료 상담</p>
+                      <p className="text-[14px] font-bold tracking-tight group-hover:text-orange-400 transition-colors">031-777-1234</p>
+                    </div>
+                  </a>
                 </div>
               </div>
-            ))}
+            </motion.div>
           </div>
         </div>
       </div>
 
-      {/* ── SCROLL 인디케이터 ── */}
-      <div className="absolute bottom-12 left-1/2 -translate-x-1/2 z-30 hidden md:flex flex-col items-center gap-2">
-        <div className="relative w-px h-14 bg-white/20 overflow-hidden scroll-line" />
-        <p className="text-white/40 text-[10px] tracking-[0.2em] uppercase">Scroll</p>
+      {/* ── 비디오 인디케이터 ── */}
+      <div className="absolute bottom-10 left-1/2 -translate-x-1/2 flex gap-2">
+        {VIDEOS.map((_, i) => (
+          <button
+            key={i}
+            onClick={() => setVideoIdx(i)}
+            aria-label={`영상 ${i + 1}`}
+            className={`transition-all duration-300 ${
+              i === videoIdx
+                ? "w-8 h-[3px] bg-orange-400"
+                : "w-3 h-[3px] bg-white/35 hover:bg-white/60"
+            }`}
+          />
+        ))}
       </div>
 
-      {/* ── 진행 바 ── */}
-      <div className="absolute bottom-0 left-0 right-0 h-px bg-white/10 z-30">
-        <div
-          key={`prog-${titleKey}`}
-          className="h-full bg-[#f47c20]"
-          style={{ animation: `progressBar ${DURATION}ms linear forwards` }}
+      {/* ── 스크롤 유도 ── */}
+      <motion.div
+        className="absolute bottom-10 right-10 hidden lg:flex flex-col items-center gap-2"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: loaded ? 1 : 0 }}
+        transition={{ delay: 1.2, duration: 0.8 }}
+      >
+        <span className="text-[9px] font-bold tracking-[0.25em] uppercase text-white/40 rotate-90 mb-6">Scroll</span>
+        <motion.div
+          animate={{ y: [0, 6, 0] }}
+          transition={{ duration: 1.6, repeat: Infinity, ease: "easeInOut" }}
+          className="w-[1px] h-10 bg-gradient-to-b from-white/40 to-transparent"
         />
-      </div>
-
-      <style jsx>{`
-        @keyframes progressBar {
-          from { width: 0%; }
-          to   { width: 100%; }
-        }
-      `}</style>
+      </motion.div>
     </section>
   );
 }

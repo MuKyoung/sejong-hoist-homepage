@@ -1,126 +1,148 @@
 "use client";
 
-import { useState } from "react";
-import Link from "next/link";
+import { useRef } from "react";
+import { motion, useInView } from "framer-motion";
+import Image from "next/image";
 
 const VALUES = [
   {
     num: "01",
-    label: "안전",
-    en: "Safety",
-    desc: "안전을 최우선의 가치로 생각하고, 모든 크레인이 최고 수준의 안전 기준을 충족하도록 설계·제작합니다.",
+    title: "검증된 제조 역량",
+    desc: "국내 자체 공장 생산. 핵심 부품 직납으로 납기·품질을 동시에 통제. ISO 9001 인증 품질관리 시스템 운영.",
+    icon: (
+      <svg viewBox="0 0 32 32" fill="none" className="w-7 h-7">
+        <path d="M16 3L3 9v14l13 6 13-6V9L16 3z" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round"/>
+        <path d="M3 9l13 6 13-6M16 15v14" stroke="currentColor" strokeWidth="1.5"/>
+      </svg>
+    ),
   },
   {
     num: "02",
-    label: "기술",
-    en: "Technology",
-    desc: "지속적인 R&D 투자와 기술 개발로 더 강하고 더 정밀한 크레인을 만들어 갑니다. 특허 기술로 산업 표준을 이끕니다.",
+    title: "현장 맞춤 설계",
+    desc: "단순 카탈로그 납품이 아닌, 고객 공정을 직접 분석하여 최적화된 사양을 제안. 특수 환경(방폭·클린룸·내열)도 대응.",
+    icon: (
+      <svg viewBox="0 0 32 32" fill="none" className="w-7 h-7">
+        <path d="M4 28L12 4l6 12 4-6 6 18" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+        <circle cx="12" cy="16" r="2" fill="currentColor"/>
+      </svg>
+    ),
   },
   {
     num: "03",
-    label: "신뢰",
-    en: "Trust",
-    desc: "납품 전 과정에서 투명한 소통과 책임 있는 서비스로 고객의 신뢰를 쌓아갑니다. 40년이 그 증거입니다.",
+    title: "신속한 A/S 대응",
+    desc: "전국 서비스 네트워크로 긴급 출동 24시간 이내. 설비 가동 중단 최소화를 위한 예방정비 시스템 운영.",
+    icon: (
+      <svg viewBox="0 0 32 32" fill="none" className="w-7 h-7">
+        <circle cx="16" cy="16" r="12" stroke="currentColor" strokeWidth="1.5"/>
+        <path d="M16 9v8l5 3" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
+      </svg>
+    ),
   },
   {
     num: "04",
-    label: "성장",
-    en: "Growth",
-    desc: "고객과 함께 성장하는 기업. 지속 가능한 미래를 위해 사회적 책임을 다하고 공동의 가치를 높여갑니다.",
+    title: "안전 최우선 철학",
+    desc: "산업안전보건법 기준 초과 설계. 전 제품 출하 전 부하 테스트 및 안전장치 검증. 현장 작업자 안전 교육 병행 제공.",
+    icon: (
+      <svg viewBox="0 0 32 32" fill="none" className="w-7 h-7">
+        <path d="M16 4l10 4v10c0 6-10 10-10 10S6 24 6 18V8l10-4z" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round"/>
+        <path d="M11 16l3 3 7-7" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+      </svg>
+    ),
   },
 ];
 
+const E = [0.22, 1, 0.36, 1] as never;
+
 export default function ValuesSection() {
-  const [active, setActive] = useState(0);
+  const ref = useRef<HTMLDivElement>(null);
+  const inView = useInView(ref, { once: true, margin: "-80px" });
 
   return (
-    <section className="bg-white py-0">
-      <div className="max-w-[1400px] mx-auto">
+    <section className="bg-[#f8fafc] py-24 lg:py-32" aria-label="세종호이스트의 강점">
+      <div className="max-w-[1440px] mx-auto px-6 lg:px-10 xl:px-20">
+        <div ref={ref} className="grid grid-cols-1 lg:grid-cols-[400px_1fr] gap-16 lg:gap-20 items-start">
 
-        {/* 상단: 한화 "한화시스템은 모든 이해관계자의..." 스타일 */}
-        <div className="px-8 md:px-16 pt-24 pb-16 border-b border-gray-100">
-          <h2
-            className="text-[#0a1c4a] font-bold leading-[1.15]"
-            style={{ fontSize: "clamp(2rem, 4.5vw, 3.75rem)" }}
-          >
-            세종호이스트크레인은
-          </h2>
-          <h2
-            className="text-[#0a1c4a] font-bold leading-[1.15]"
-            style={{ fontSize: "clamp(2rem, 4.5vw, 3.75rem)" }}
-          >
-            고객의 신뢰를 바탕으로
-          </h2>
-          <h2
-            className="text-gray-300 font-bold leading-[1.15]"
-            style={{ fontSize: "clamp(2rem, 4.5vw, 3.75rem)" }}
-          >
-            더 안전한 산업현장을
-          </h2>
-          <h2
-            className="text-gray-300 font-bold leading-[1.15]"
-            style={{ fontSize: "clamp(2rem, 4.5vw, 3.75rem)" }}
-          >
-            만들어 갑니다
-          </h2>
-        </div>
-
-        {/* 번호형 가치 목록 - 한화 ESG 스타일 */}
-        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 border-t border-gray-100">
-          {VALUES.map((v, i) => (
-            <button
-              key={i}
-              className={`text-left px-8 md:px-10 py-12 border-b md:border-b-0 md:border-r border-gray-100 last:border-r-0 transition-colors duration-200 ${
-                active === i ? "bg-[#0a1c4a]" : "bg-white hover:bg-gray-50"
-              }`}
-              onClick={() => setActive(i)}
+          {/* 좌: 섹션 헤더 + 이미지 */}
+          <div>
+            <motion.p
+              initial={{ opacity: 0, y: 10 }}
+              animate={inView ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 0.5, ease: E }}
+              className="text-[11px] font-bold tracking-[0.2em] uppercase text-orange-500 mb-3 flex items-center gap-2"
             >
-              {/* 라벨 */}
-              <p className={`text-[11px] font-semibold tracking-[0.18em] uppercase mb-5 transition-colors ${
-                active === i ? "text-[#f47c20]" : "text-gray-400"
-              }`}>
-                {v.en}
-              </p>
+              <span className="block w-4 h-[1px] bg-orange-500" />
+              Why Sejong
+            </motion.p>
+            <motion.h2
+              initial={{ opacity: 0, y: 16 }}
+              animate={inView ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 0.65, ease: E, delay: 0.08 }}
+              className="font-black text-slate-900 tracking-[-0.03em] leading-tight mb-6"
+              style={{ fontSize: "clamp(1.75rem, 3.5vw, 2.6rem)" }}
+            >
+              세종호이스트를<br />
+              선택하는 이유
+            </motion.h2>
+            <motion.p
+              initial={{ opacity: 0, y: 12 }}
+              animate={inView ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 0.65, ease: E, delay: 0.15 }}
+              className="text-[14px] text-slate-500 leading-[1.9] mb-10"
+            >
+              1984년 창업 이후, 오직 크레인과 호이스트만을
+              전문으로 해온 기업입니다. 단순 제조를 넘어
+              현장의 문제를 함께 해결하는 파트너입니다.
+            </motion.p>
 
-              {/* 번호 + 제목 */}
-              <div className="flex items-baseline gap-3 mb-5">
-                <span className={`font-black text-5xl leading-none transition-colors ${
-                  active === i ? "text-[#f47c20]/20" : "text-gray-100"
-                }`}>
-                  {v.num}
-                </span>
-                <span className={`text-xl font-bold transition-colors ${
-                  active === i ? "text-white" : "text-[#0a1c4a]"
-                }`}>
-                  {v.label}
-                </span>
+            {/* 현장 이미지 */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={inView ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 0.8, ease: E, delay: 0.25 }}
+              className="relative aspect-[4/3] overflow-hidden"
+            >
+              <Image
+                src="/images/sejong_1.png"
+                alt="세종호이스트 시공 현장"
+                fill
+                className="object-cover"
+                sizes="(max-width: 1024px) 100vw, 400px"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent" />
+              <div className="absolute bottom-5 left-5 right-5">
+                <p className="text-white text-[11px] font-bold tracking-[0.15em] uppercase opacity-80">
+                  실제 시공 현장 ·  2024
+                </p>
               </div>
+            </motion.div>
+          </div>
 
-              {/* 설명 */}
-              <p className={`text-sm leading-relaxed transition-colors ${
-                active === i ? "text-white/60" : "text-gray-500"
-              }`}>
-                {v.desc}
-              </p>
-
-              {/* 하단 라인 */}
-              <div className={`mt-8 h-px transition-all duration-300 ${
-                active === i ? "bg-[#f47c20] w-10" : "bg-gray-200 w-6"
-              }`} />
-            </button>
-          ))}
+          {/* 우: 밸류 리스트 */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 lg:gap-6 pt-2">
+            {VALUES.map((v, i) => (
+              <motion.div
+                key={i}
+                initial={{ opacity: 0, y: 20 }}
+                animate={inView ? { opacity: 1, y: 0 } : {}}
+                transition={{ duration: 0.65, ease: E, delay: 0.1 + i * 0.08 }}
+                className="bg-white border border-slate-100 p-7 hover:border-slate-200 hover:shadow-lg transition-all duration-300 group"
+              >
+                <div className="flex items-start justify-between mb-5">
+                  <div className="w-12 h-12 bg-[#f0f4ff] flex items-center justify-center text-[#0B1E4E] group-hover:bg-[#0B1E4E] group-hover:text-white transition-colors duration-300">
+                    {v.icon}
+                  </div>
+                  <span className="text-[11px] font-black text-slate-200 tracking-tight">{v.num}</span>
+                </div>
+                <h3 className="text-[15.5px] font-bold text-slate-900 tracking-[-0.01em] mb-3">
+                  {v.title}
+                </h3>
+                <p className="text-[13px] text-slate-500 leading-[1.85]">
+                  {v.desc}
+                </p>
+              </motion.div>
+            ))}
+          </div>
         </div>
-
-        {/* 하단 링크 */}
-        <div className="px-8 md:px-16 py-10 border-t border-gray-100">
-          <Link
-            href="/about"
-            className="inline-flex items-center gap-2 text-[#0a1c4a] text-sm font-semibold link-underline"
-          >
-            세종호이스트크레인 더 알아보기 →
-          </Link>
-        </div>
-
       </div>
     </section>
   );

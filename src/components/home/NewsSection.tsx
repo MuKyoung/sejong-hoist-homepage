@@ -1,75 +1,140 @@
+"use client";
+
+import { useRef } from "react";
 import Link from "next/link";
+import { motion, useInView } from "framer-motion";
 
 const NEWS = [
-  { num: "01", date: "2026.06.10", title: "세종호이스트크레인, 반도체 클린룸 전용 크레인 개발 완료" },
-  { num: "02", date: "2026.05.22", title: "국내 최대 규모 200톤급 천장크레인 준공식 성료" },
-  { num: "03", date: "2026.04.15", title: "산업통상자원부 장관 표창 수상 — 산업기계 부문" },
-  { num: "04", date: "2026.03.08", title: "2026년 상반기 신입·경력사원 공개채용 안내" },
-  { num: "05", date: "2026.02.20", title: "ISO 9001:2015 품질경영시스템 인증 갱신 완료" },
-  { num: "06", date: "2026.01.30", title: "IoT 기반 크레인 원격 모니터링 시스템 특허 취득" },
-  { num: "07", date: "2025.12.05", title: "경기도 안산 신공장 증설 완공 — 생산능력 40% 확대" },
+  {
+    id: 1,
+    category: "수주 공시",
+    date: "2024.11.15",
+    title: "현대제철 당진 신규 크레인 설비 공급 계약 체결",
+    desc: "200T 급 천장크레인 2대 신규 공급. 납기 2025년 3월 예정.",
+  },
+  {
+    id: 2,
+    category: "인증 취득",
+    date: "2024.09.03",
+    title: "ISO 9001:2015 품질경영시스템 갱신 인증 완료",
+    desc: "3년 주기 심사를 완료하고 국제 품질 기준 적합성을 재확인.",
+  },
+  {
+    id: 3,
+    category: "보도자료",
+    date: "2024.07.22",
+    title: "2024 스마트팩토리 솔루션 엑스포 참가 안내",
+    desc: "창원 CECO 전시관 A-23 부스에서 최신 지능형 크레인 시스템 시연.",
+  },
+  {
+    id: 4,
+    category: "채용",
+    date: "2024.06.10",
+    title: "2024년 하반기 생산기술직·영업직 신입·경력 채용 공고",
+    desc: "크레인 설계·생산·현장관리 분야 전문 인력 상시 채용 중.",
+  },
 ];
 
-export default function NewsSection() {
-  return (
-    <section className="bg-white py-24">
-      <div className="max-w-[1400px] mx-auto px-8 md:px-16">
+const CATEGORY_COLORS: Record<string, string> = {
+  "수주 공시": "bg-blue-50 text-blue-600",
+  "인증 취득": "bg-green-50 text-green-600",
+  "보도자료": "bg-purple-50 text-purple-600",
+  "채용": "bg-orange-50 text-orange-600",
+};
 
-        {/* 헤딩 - 한화 "고객을 향하는 기술, 미래를 향한 도전" 스타일 */}
-        <div className="mb-4">
-          <p className="text-[#f47c20] text-[11px] font-semibold tracking-[0.2em] uppercase mb-6">Newsroom</p>
-          <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6">
-            <div>
-              <p
-                className="text-[#0a1c4a] font-bold leading-tight"
-                style={{ fontSize: "clamp(1.5rem, 3vw, 2.25rem)" }}
-              >
-                현장을 향하는 기술, 고객을 향한 신뢰.
-              </p>
-              <p
-                className="text-gray-400 font-bold leading-tight"
-                style={{ fontSize: "clamp(1.5rem, 3vw, 2.25rem)" }}
-              >
-                세종호이스트크레인의 다양한 모습을 만나보세요.
-              </p>
-            </div>
-            <Link href="/support/notice" className="text-[#0a1c4a] text-sm font-semibold link-underline self-start md:self-auto shrink-0">
-              뉴스룸 전체 보기 →
-            </Link>
+const E = [0.22, 1, 0.36, 1] as never;
+
+export default function NewsSection() {
+  const ref = useRef<HTMLDivElement>(null);
+  const inView = useInView(ref, { once: true, margin: "-80px" });
+
+  return (
+    <section className="bg-[#f8fafc] py-24 lg:py-32" aria-label="최신 소식">
+      <div className="max-w-[1440px] mx-auto px-6 lg:px-10 xl:px-20">
+
+        {/* 섹션 헤더 */}
+        <div ref={ref} className="flex flex-col lg:flex-row lg:items-end justify-between gap-6 mb-12">
+          <div>
+            <motion.p
+              initial={{ opacity: 0, y: 10 }}
+              animate={inView ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 0.5, ease: E }}
+              className="text-[11px] font-bold tracking-[0.2em] uppercase text-orange-500 mb-3 flex items-center gap-2"
+            >
+              <span className="block w-4 h-[1px] bg-orange-500" />
+              News &amp; Notice
+            </motion.p>
+            <motion.h2
+              initial={{ opacity: 0, y: 16 }}
+              animate={inView ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 0.65, ease: E, delay: 0.08 }}
+              className="font-black text-slate-900 tracking-[-0.03em] leading-tight"
+              style={{ fontSize: "clamp(1.75rem, 3.5vw, 2.6rem)" }}
+            >
+              최신 소식
+            </motion.h2>
           </div>
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={inView ? { opacity: 1 } : {}}
+            transition={{ duration: 0.6, ease: E, delay: 0.2 }}
+          >
+            <Link
+              href="/support/notice"
+              className="inline-flex items-center gap-2 text-[12.5px] font-bold text-slate-500 hover:text-[#0B1E4E] transition-colors group"
+            >
+              전체 보기
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" className="group-hover:translate-x-0.5 transition-transform">
+                <line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/>
+              </svg>
+            </Link>
+          </motion.div>
         </div>
 
-        {/* 번호형 리스트 - 한화 스타일 */}
-        <div className="mt-14 border-t border-gray-100">
+        {/* 뉴스 리스트 */}
+        <div className="space-y-3">
           {NEWS.map((item, i) => (
-            <Link
-              key={i}
-              href="/support/notice"
-              className="news-item flex items-start md:items-center gap-6 py-6 border-b border-gray-100 hover:pl-3 transition-all duration-200 group"
+            <motion.div
+              key={item.id}
+              initial={{ opacity: 0, y: 16 }}
+              animate={inView ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 0.6, ease: E, delay: 0.1 + i * 0.07 }}
             >
-              {/* 번호 */}
-              <span className="text-gray-200 font-black text-2xl md:text-3xl leading-none w-10 flex-shrink-0 group-hover:text-[#f47c20]/40 transition-colors">
-                {item.num}
-              </span>
+              <Link
+                href={`/support/notice/${item.id}`}
+                className="group flex flex-col sm:flex-row sm:items-center gap-4 bg-white border border-slate-100 hover:border-slate-200 hover:shadow-md p-5 lg:p-6 transition-all duration-250"
+              >
+                {/* 날짜 */}
+                <span className="flex-shrink-0 text-[12px] font-semibold text-slate-400 tabular-nums w-24">
+                  {item.date}
+                </span>
 
-              {/* 날짜 */}
-              <span className="hidden md:block text-gray-400 text-sm font-mono w-28 flex-shrink-0">
-                {item.date}
-              </span>
+                {/* 카테고리 배지 */}
+                <span className={`flex-shrink-0 text-[10.5px] font-bold px-2.5 py-1 w-fit ${CATEGORY_COLORS[item.category] ?? "bg-slate-50 text-slate-500"}`}>
+                  {item.category}
+                </span>
 
-              {/* 제목 */}
-              <span className="text-gray-800 font-medium text-sm md:text-base flex-1 group-hover:text-[#0a1c4a] transition-colors">
-                {item.title}
-              </span>
+                {/* 제목 + 설명 */}
+                <div className="flex-1 min-w-0">
+                  <h3 className="text-[14.5px] font-bold text-slate-800 group-hover:text-[#0B1E4E] transition-colors truncate mb-0.5">
+                    {item.title}
+                  </h3>
+                  <p className="text-[12.5px] text-slate-400 truncate">
+                    {item.desc}
+                  </p>
+                </div>
 
-              {/* 화살표 */}
-              <span className="text-gray-300 group-hover:text-[#f47c20] group-hover:translate-x-1 transition-all duration-200 flex-shrink-0">
-                →
-              </span>
-            </Link>
+                {/* 화살표 */}
+                <svg
+                  width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"
+                  className="flex-shrink-0 text-slate-300 group-hover:text-orange-400 group-hover:translate-x-0.5 transition-all"
+                >
+                  <line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/>
+                </svg>
+              </Link>
+            </motion.div>
           ))}
         </div>
-
       </div>
     </section>
   );
