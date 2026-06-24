@@ -1,140 +1,102 @@
 import Link from "next/link";
 import Image from "next/image";
+import { Phone, Mail, MapPin } from "lucide-react";
+import s from "./Footer.module.css";
 
-const FOOTER_NAV = [
+const LINKS = [
   {
     title: "회사소개",
-    links: [
-      { label: "기업개요", href: "/about" },
-      { label: "CEO 인사말", href: "/about/ceo" },
-      { label: "연혁", href: "/about/history" },
-      { label: "찾아오시는 길", href: "/about/location" },
+    items: [
+      { label: "회사개요",  href: "/about" },
+      { label: "연혁",      href: "/about/history" },
+      { label: "조직도",    href: "/about/organization" },
+      { label: "인증현황",  href: "/about/certifications" },
     ],
   },
   {
     title: "사업영역",
-    links: [
-      { label: "천장크레인", href: "/business/overhead-crane" },
+    items: [
+      { label: "천장크레인",   href: "/business/overhead-crane" },
       { label: "갠트리크레인", href: "/business/gantry-crane" },
-      { label: "호이스트", href: "/business/hoist" },
-      { label: "특수크레인", href: "/business/special-crane" },
+      { label: "호이스트",     href: "/business/hoist" },
+      { label: "특수크레인",   href: "/business/special-crane" },
     ],
   },
   {
     title: "납품실적",
-    links: [
-      { label: "납품실적 보기", href: "/portfolio" },
+    items: [
+      { label: "전체 포트폴리오", href: "/portfolio" },
+      { label: "산업별 사례",     href: "/portfolio#industry" },
     ],
   },
   {
     title: "고객지원",
-    links: [
-      { label: "공지사항", href: "/support/notice" },
-      { label: "온라인 문의", href: "/support/inquiry" },
-      { label: "AS 시스템 ↗", href: "https://sejong-hoist.vercel.app", external: true },
+    items: [
+      { label: "공지사항",   href: "/support/notice" },
+      { label: "묻고답하기", href: "/support/faq" },
+      { label: "견적문의",   href: "/support/inquiry" },
+      { label: "카탈로그",   href: "/support/catalog" },
     ],
   },
 ];
 
 export default function Footer() {
   return (
-    <footer>
-      {/* ── 상단: 로고 + 회사정보 + 링크 ── */}
-      <div className="bg-[#f8fafc] border-t border-slate-200">
-        <div className="max-w-[1440px] mx-auto px-6 lg:px-10 xl:px-20 py-16 lg:py-20">
-          <div className="grid grid-cols-1 lg:grid-cols-[320px_1fr] gap-12 lg:gap-20">
-
-            {/* 좌: 로고 + 회사 정보 */}
-            <div>
-              <Image
-                src="/images/sejong-logo.png"
-                alt="세종호이스트크레인"
-                width={148}
-                height={40}
-                className="h-10 w-auto mb-7"
+    <footer className={s.footer}>
+      <div className={s.inner}>
+        <div className={s.top}>
+          {/* 브랜드 */}
+          <div className={s.brand}>
+            <div className={s.logoWrap}>
+              <Image src="/images/sejong-logo.png" alt="세종호이스트" width={130} height={34}
+                style={{ width: "auto", height: "28px", objectFit: "contain" }}
               />
-              <p className="text-slate-500 text-[13.5px] leading-[1.85] mb-7 max-w-[280px]">
-                천장크레인·갠트리크레인·호이스트 전문 제조기업.<br />
-                40년의 기술력으로 산업 현장의<br />
-                안전과 효율을 책임집니다.
-              </p>
-              <div className="space-y-2.5 text-[13px]">
-                <a
-                  href="tel:0317771234"
-                  className="flex items-center gap-3 group"
-                >
-                  <span className="text-[10.5px] font-bold tracking-[0.1em] text-slate-400 w-10">TEL</span>
-                  <span className="text-slate-600 group-hover:text-orange-500 transition-colors font-medium">031-777-1234</span>
-                </a>
-                <div className="flex items-center gap-3">
-                  <span className="text-[10.5px] font-bold tracking-[0.1em] text-slate-400 w-10">FAX</span>
-                  <span className="text-slate-600">031-777-5678</span>
-                </div>
-                <a
-                  href="mailto:info@sejong-hoist.com"
-                  className="flex items-center gap-3 group"
-                >
-                  <span className="text-[10.5px] font-bold tracking-[0.1em] text-slate-400 w-10">EMAIL</span>
-                  <span className="text-slate-600 group-hover:text-orange-500 transition-colors">info@sejong-hoist.com</span>
-                </a>
-                <div className="flex items-start gap-3">
-                  <span className="text-[10.5px] font-bold tracking-[0.1em] text-slate-400 w-10 mt-0.5">ADDR</span>
-                  <span className="text-slate-600">경기도 안산시 단원구 산단로 XXX</span>
-                </div>
+            </div>
+            <p className={s.tagline}>
+              1984년부터 40년.<br />
+              천장크레인·갠트리크레인·호이스트<br />
+              전문 제조 기업.
+            </p>
+            <div className={s.contact}>
+              <div className={s.contactItem}>
+                <Phone size={12} className={s.contactIcon} />
+                <span>031-777-1234 (평일 08:30–17:30)</span>
+              </div>
+              <div className={s.contactItem}>
+                <Mail size={12} className={s.contactIcon} />
+                <span>info@sejong-hoist.co.kr</span>
+              </div>
+              <div className={s.contactItem}>
+                <MapPin size={12} className={s.contactIcon} />
+                <span>경기도 화성시 삼성1로 1</span>
               </div>
             </div>
+          </div>
 
-            {/* 우: 링크 그리드 */}
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-8">
-              {FOOTER_NAV.map((group, idx) => (
-                <div key={idx}>
-                  <h4 className="text-[11px] font-bold tracking-[0.15em] uppercase text-slate-400 mb-5">
-                    {group.title}
-                  </h4>
-                  <ul className="space-y-3">
-                    {group.links.map((link, lidx) => (
-                      <li key={lidx}>
-                        {"external" in link && link.external ? (
-                          <a
-                            href={link.href}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="text-[13.5px] text-slate-500 hover:text-orange-500 transition-colors flex items-center gap-1"
-                          >
-                            {link.label}
-                          </a>
-                        ) : (
-                          <Link
-                            href={link.href}
-                            className="text-[13.5px] text-slate-500 hover:text-[#0B1E4E] transition-colors"
-                          >
-                            {link.label}
-                          </Link>
-                        )}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              ))}
-            </div>
+          {/* 링크 컬럼 */}
+          <div className={s.linkColumns}>
+            {LINKS.map((col) => (
+              <div key={col.title} className={s.col}>
+                <p className={s.colTitle}>{col.title}</p>
+                {col.items.map((item) => (
+                  <Link key={item.href} href={item.href} className={s.colLink}>
+                    {item.label}
+                  </Link>
+                ))}
+              </div>
+            ))}
           </div>
         </div>
-      </div>
 
-      {/* ── 하단: 카피라이트 ── */}
-      <div className="bg-[#0B1E4E]">
-        <div className="max-w-[1440px] mx-auto px-6 lg:px-10 xl:px-20 py-5">
-          <div className="flex flex-col sm:flex-row items-center justify-between gap-3">
-            <p className="text-[11.5px] text-white/40 tracking-wide">
-              © {new Date().getFullYear()} SEJONG HOIST &amp; CRANE Co., Ltd. All rights reserved.
-            </p>
-            <div className="flex items-center gap-5 text-[11.5px] text-white/40">
-              <Link href="/privacy" className="hover:text-white/70 transition-colors">개인정보처리방침</Link>
-              <span className="text-white/20">|</span>
-              <Link href="/terms" className="hover:text-white/70 transition-colors">이용약관</Link>
-              <span className="text-white/20">|</span>
-              <Link href="/sitemap" className="hover:text-white/70 transition-colors">사이트맵</Link>
-            </div>
+        {/* 하단 */}
+        <div className={s.bottom}>
+          <p className={s.copy}>
+            © 2024 세종호이스트 주식회사. All rights reserved. | 사업자등록번호 123-45-67890
+          </p>
+          <div className={s.bottomLinks}>
+            <Link href="/privacy" className={s.bottomLink}>개인정보처리방침</Link>
+            <Link href="/terms"   className={s.bottomLink}>이용약관</Link>
+            <Link href="/sitemap" className={s.bottomLink}>사이트맵</Link>
           </div>
         </div>
       </div>

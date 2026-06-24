@@ -4,19 +4,19 @@ import { usePathname } from "next/navigation";
 import Header from "./Header";
 import Footer from "./Footer";
 
+/* 헤더 높이 보정: nav 64px (mobile) / 36px util + 68px nav = 104px (lg) */
+const mainStyle: React.CSSProperties = { paddingTop: "64px" };
+
 export default function ConditionalLayout({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
   const isDemo = pathname?.startsWith("/demo");
 
-  if (isDemo) {
-    return <>{children}</>;
-  }
+  if (isDemo) return <>{children}</>;
 
   return (
     <>
       <Header />
-      {/* 고정 헤더 높이 보정: utility bar(36px, lg only) + nav(64px mobile / 68px lg) */}
-      <main className="pt-16 lg:pt-[104px]">{children}</main>
+      <main style={mainStyle}>{children}</main>
       <Footer />
     </>
   );

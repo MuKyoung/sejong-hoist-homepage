@@ -1,0 +1,150 @@
+/* ── PortfolioSection ────────────────────────────────────── */
+.section {
+  background: #ffffff;
+  padding: 80px 0;
+}
+@media (min-width: 1024px) { .section { padding: 112px 0; } }
+
+.inner {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+@media (min-width: 1024px) { .inner { padding: 0 40px; } }
+@media (min-width: 1280px) { .inner { padding: 0 80px; } }
+
+/* 헤더 */
+.header {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-bottom: 32px;
+}
+@media (min-width: 640px) {
+  .header { flex-direction: row; align-items: flex-end; justify-content: space-between; }
+}
+@media (min-width: 1024px) { .header { margin-bottom: 40px; } }
+
+.tag {
+  font-size: 10.5px; font-weight: 700; letter-spacing: 0.25em;
+  text-transform: uppercase; color: #f97316;
+  display: flex; align-items: center; gap: 8px; margin-bottom: 12px;
+}
+.tagLine { display: block; width: 20px; height: 1px; background: #f97316; }
+
+.sectionTitle {
+  font-size: clamp(2rem, 4.5vw, 3.5rem);
+  font-weight: 900; color: #0b1e4e; letter-spacing: -0.04em; line-height: 1; margin: 0;
+}
+
+.allLink {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-size: 12.5px; font-weight: 700; color: #64748b;
+  text-decoration: none; transition: color 0.2s ease; white-space: nowrap;
+}
+.allLink:hover { color: #0b1e4e; }
+
+/* 그리드 */
+.grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+}
+@media (min-width: 640px) {
+  .grid { grid-template-columns: 1fr 1fr; gap: 16px; }
+}
+@media (min-width: 1024px) { .grid { gap: 20px; } }
+
+/* 카드 */
+.card {
+  position: relative;
+  overflow: hidden;
+  background: #e2e8f0;
+  cursor: pointer;
+}
+.cardLarge  { aspect-ratio: 4 / 3; }
+.cardSquare { aspect-ratio: 1 / 1; }
+
+.cardImg {
+  transition: transform 0.7s ease;
+  object-fit: cover;
+}
+.card:hover .cardImg { transform: scale(1.05); }
+
+.cardOverlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(0,0,0,0.78) 0%, rgba(0,0,0,0.18) 55%, transparent 100%);
+}
+
+.badge {
+  position: absolute;
+  top: 16px; left: 16px;
+  background: #f97316;
+  color: #ffffff;
+  font-size: 9.5px; font-weight: 700; letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 4px 10px;
+}
+
+.cardInfo {
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  padding: 20px 24px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+}
+
+.cardMeta {
+  font-size: 10.5px; font-weight: 700;
+  color: rgba(255,255,255,0.50);
+  letter-spacing: 0.05em; margin-bottom: 4px;
+}
+.cardClient {
+  font-size: clamp(1rem, 2vw, 1.35rem);
+  font-weight: 900; color: #ffffff; letter-spacing: -0.01em; line-height: 1.2;
+}
+
+.cardArrow {
+  width: 36px; height: 36px;
+  background: #f97316;
+  display: flex; align-items: center; justify-content: center;
+  opacity: 0; transition: opacity 0.3s ease; flex-shrink: 0;
+}
+.card:hover .cardArrow { opacity: 1; }
+
+/* 클라이언트 마퀴 */
+.clientsWrap {
+  margin-top: 48px;
+  padding-top: 40px;
+  border-top: 1px solid #f1f5f9;
+}
+
+.clientsLabel {
+  font-size: 9.5px; font-weight: 700; letter-spacing: 0.25em;
+  text-transform: uppercase; color: #cbd5e1; text-align: center; margin-bottom: 28px;
+}
+
+.marqueeOuter {
+  position: relative;
+  overflow: hidden;
+}
+
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+.marqueeInner {
+  display: flex;
+  align-items: center;
+  gap: 40px;
+  animation: marquee 28s linear infinite;
+  width: max-content;
+}
+@media (min-width: 1024px) { .marqueeInner { gap: 56px; } }
+
+.clientName {
+  font-size: 13px; font-weight: 700; color: #cbd5e1; flex-shrink: 0; white-space: nowrap;
+}
