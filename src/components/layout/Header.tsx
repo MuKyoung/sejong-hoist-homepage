@@ -237,10 +237,10 @@ export default function Header() {
       {/* ── 모바일 풀스크린 메뉴 ── */}
       <div
         className={`lg:hidden overflow-hidden transition-all duration-300 ${
-          mobileOpen ? "max-h-[100dvh] opacity-100" : "max-h-0 opacity-0"
+          mobileOpen ? "max-h-[calc(100dvh-64px)] opacity-100" : "max-h-0 opacity-0"
         }`}
       >
-        <div className="bg-white border-t border-slate-100 px-6 pb-6">
+        <div className="bg-white border-t border-slate-100 px-6 pb-6 overflow-y-auto max-h-[calc(100dvh-64px)]">
           {NAV.map((item, i) => (
             <div key={i} className="border-b border-slate-100 last:border-0">
               <button

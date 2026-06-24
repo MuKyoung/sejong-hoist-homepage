@@ -76,8 +76,8 @@ export default function HeroSection() {
               initial={{ y: "105%" }}
               animate={mounted ? { y: "0%" } : {}}
               transition={{ duration: 0.9, ease: E, delay: 0.2 }}
-              className="font-black text-white leading-[0.92] tracking-[-0.045em] mb-4 lg:mb-6"
-              style={{ fontSize: "clamp(3.6rem, 9.5vw, 8rem)" }}
+              className="font-black text-white leading-[0.92] tracking-[-0.045em] mb-4 lg:mb-6 break-keep"
+              style={{ fontSize: "clamp(2.2rem, 9.5vw, 8rem)" }}
             >
               중력의 한계를<br />
               <span className="text-orange-400">다시 그리다</span>
@@ -126,21 +126,21 @@ export default function HeroSection() {
           transition={{ duration: 0.8, ease: E, delay: 0.75 }}
           className="border-t border-white/10 bg-black/30 backdrop-blur-sm mt-10 lg:mt-12"
         >
-          <div className="max-w-[1440px] mx-auto px-6 lg:px-10 xl:px-20">
+          <div className="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-10 xl:px-20">
             <div className="flex items-stretch divide-x divide-white/10 overflow-x-auto scrollbar-none">
               {[
-                { num: "1984", label: "설립 연도" },
-                { num: "500+", label: "누적 납품" },
-                { num: "200T", label: "최대 하중" },
-                { num: "ISO", label: "9001 인증" },
+                { num: "1984", label: "설립" },
+                { num: "500+", label: "납품" },
+                { num: "200T", label: "하중" },
+                { num: "ISO", label: "인증" },
               ].map((s, i) => (
-                <div key={i} className="flex-shrink-0 px-6 py-4 lg:px-8 lg:py-5 flex items-center gap-3">
-                  <span className="font-black text-white tabular-nums text-[1.25rem] lg:text-[1.5rem] tracking-tight">{s.num}</span>
-                  <span className="text-[11px] text-white/40 font-semibold leading-tight">{s.label}</span>
+                <div key={i} className="flex-shrink-0 px-4 sm:px-6 py-3 lg:px-8 lg:py-5 flex items-center gap-2 sm:gap-3">
+                  <span className="font-black text-white tabular-nums text-[1.1rem] sm:text-[1.25rem] lg:text-[1.5rem] tracking-tight">{s.num}</span>
+                  <span className="text-[10px] sm:text-[11px] text-white/40 font-semibold leading-tight">{s.label}</span>
                 </div>
               ))}
-              {/* 전화 */}
-              <div className="flex-shrink-0 px-6 py-4 lg:px-8 lg:py-5 flex items-center gap-3 ml-auto">
+              {/* 전화 — sm 이상에서만 표시 */}
+              <div className="hidden sm:flex flex-shrink-0 px-6 py-3 lg:px-8 lg:py-5 items-center gap-3 ml-auto">
                 <a href="tel:0317771234" className="flex items-center gap-2 text-white/60 hover:text-white transition-colors">
                   <Phone size={14} />
                   <span className="text-[13px] font-bold">031-777-1234</span>

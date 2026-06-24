@@ -113,11 +113,11 @@ export default function ValuesSection() {
                 <Tabs.Trigger
                   key={v.id}
                   value={v.id}
-                  className="group flex-shrink-0 flex items-center gap-2 px-4 py-2.5 text-[12.5px] font-bold text-slate-500 border border-transparent
+                  className="group flex-shrink-0 flex items-center gap-2 px-3 sm:px-4 py-2.5 text-[12px] sm:text-[12.5px] font-bold text-slate-500 border border-transparent
                     data-[state=active]:bg-white data-[state=active]:text-[#0B1E4E] data-[state=active]:border-slate-200 data-[state=active]:shadow-sm
                     hover:text-slate-800 transition-all duration-200 whitespace-nowrap"
                 >
-                  <span className="text-orange-400">{v.icon}</span>
+                  <span className="text-orange-400 flex-shrink-0">{v.icon}</span>
                   {v.tab}
                 </Tabs.Trigger>
               ))}
@@ -126,7 +126,7 @@ export default function ValuesSection() {
             {/* 탭 콘텐츠 */}
             {VALUES.map((v) => (
               <Tabs.Content key={v.id} value={v.id} className="outline-none">
-                <div className="grid grid-cols-1 lg:grid-cols-[1fr_420px] gap-8 lg:gap-12 items-center bg-white border border-slate-100 p-6 lg:p-10 shadow-sm">
+                <div className="grid grid-cols-1 md:grid-cols-[1fr_300px] lg:grid-cols-[1fr_420px] gap-6 md:gap-8 lg:gap-12 items-center bg-white border border-slate-100 p-6 lg:p-10 shadow-sm">
                   {/* 좌: 텍스트 */}
                   <div>
                     <div className="w-10 h-10 bg-orange-50 text-orange-500 flex items-center justify-center mb-6">

@@ -64,7 +64,7 @@ export default function BusinessSection() {
   const inView = useInView(ref, { once: true, margin: "-80px" });
 
   return (
-    <section className="bg-[#06090f] py-20 lg:py-28 overflow-hidden" aria-label="사업영역">
+    <section className="bg-[#06090f] py-20 lg:py-28" aria-label="사업영역">
       {/* 섹션 헤더 */}
       <div ref={ref} className="max-w-[1440px] mx-auto px-6 lg:px-10 xl:px-20 mb-10 lg:mb-12">
         <div className="flex items-end justify-between gap-6">
@@ -116,10 +116,12 @@ export default function BusinessSection() {
           spaceBetween={20}
           slidesPerView={1.15}
           breakpoints={{
-            480: { slidesPerView: 1.5, spaceBetween: 20 },
-            768: { slidesPerView: 2.2, spaceBetween: 24 },
-            1024: { slidesPerView: 2.8, spaceBetween: 28 },
-            1280: { slidesPerView: 3.2, spaceBetween: 28 },
+            480:  { slidesPerView: 1.45, spaceBetween: 18 },
+            640:  { slidesPerView: 1.8,  spaceBetween: 20 },
+            768:  { slidesPerView: 2.2,  spaceBetween: 24 },
+            1024: { slidesPerView: 2.8,  spaceBetween: 28 },
+            1280: { slidesPerView: 3.2,  spaceBetween: 28 },
+            1440: { slidesPerView: 3.8,  spaceBetween: 28 },
           }}
           a11y={{ prevSlideMessage: "이전 제품", nextSlideMessage: "다음 제품" }}
           className="!overflow-visible"

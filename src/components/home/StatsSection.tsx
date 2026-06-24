@@ -61,14 +61,14 @@ export default function StatsSection() {
         </motion.p>
 
         {/* 수치 그리드 */}
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-0 lg:divide-x lg:divide-slate-100">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-0 md:divide-x md:divide-slate-100">
           {STATS.map((s, i) => (
             <motion.div
               key={i}
               initial={{ opacity: 0, y: 20 }}
               animate={inView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.65, ease: E, delay: i * 0.08 }}
-              className="lg:px-10 xl:px-14 first:pl-0 last:pr-0"
+              className="md:px-7 lg:px-10 xl:px-14 first:pl-0 last:pr-0"
             >
               {/* 수치 */}
               <div
