@@ -1,360 +1,486 @@
 "use client";
 
-import { useRef, useEffect, useState } from "react";
-import { motion, useInView, useScroll, useTransform, animate } from "framer-motion";
+import { useRef, useEffect, useState, useCallback } from "react";
+import {
+  motion, useInView, useScroll, useTransform,
+  useSpring, useMotionValue, animate, AnimatePresence
+} from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
 
-/* ── 숫자 카운터 ── */
-function Counter({ to, suffix = "", prefix = "" }: { to: number; suffix?: string; prefix?: string }) {
-  const ref = useRef<HTMLSpanElement>(null);
-  const inView = useInView(ref, { once: true, margin: "-80px" });
-  const [val, setVal] = useState(0);
-  useEffect(() => {
-    if (!inView) return;
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const ctrl = animate(0, to, {
-      duration: 2.2,
-      ease: [0.16, 1, 0.3, 1] as any,
-      onUpdate: v => setVal(Math.floor(v)),
-    });
-    return () => ctrl.stop();
-  }, [inView, to]);
-  return <span ref={ref}>{prefix}{val.toLocaleString()}{suffix}</span>;
+/* ─── DESIGN TOKENS ───────────────────────────────────────────────────── */
+// 배경: #080808, 텍스트: #ebebeb, 포인트: #f47c20 (최소 사용)
+// 타이포: clamp 기반 유체 스케일, 간격: 8px 기반 그리드
+
+/* ─── 공유 훅 ─── */
+function useScrollReveal() {
+  const ref = useRef(null);
+  const inView = useInView(ref, { once: true, margin: "-15%" });
+  return { ref, inView };
 }
 
-/* ── 패럴랙스 섹션 래퍼 ── */
-function ParallaxSection({ children, className }: { children: React.ReactNode; className?: string }) {
-  const ref = useRef(null);
-  const { scrollYProgress } = useScroll({ target: ref, offset: ["start end", "end start"] });
-  const y = useTransform(scrollYProgress, [0, 1], ["4%", "-4%"] as [string, string]);
+/* ─── 숫자 카운터 (spring) ─── */
+function Counter({ to, suffix = "" }: { to: number; suffix?: string }) {
+  const motionVal = useMotionValue(0);
+  const spring = useSpring(motionVal, { stiffness: 60, damping: 20 });
+  const [display, setDisplay] = useState(0);
+  const { ref, inView } = useScrollReveal();
+
+  useEffect(() => {
+    if (!inView) return;
+    motionVal.set(to);
+  }, [inView, to, motionVal]);
+
+  useEffect(() => spring.on("change", v => setDisplay(Math.floor(v))), [spring]);
+
+  return <span ref={ref}>{display.toLocaleString()}{suffix}</span>;
+}
+
+/* ─── 단어 단위 텍스트 리빌 ─── */
+function WordReveal({
+  children, className = "", delay = 0,
+}: { children: string; className?: string; delay?: number }) {
+  const words = children.split(" ");
+  const { ref, inView } = useScrollReveal();
   return (
-    <motion.div ref={ref} style={{ y }} className={className}>
-      {children}
-    </motion.div>
+    <span ref={ref} className={`inline ${className}`} aria-label={children}>
+      {words.map((word, i) => (
+        <span key={i} className="inline-block overflow-hidden" style={{ lineHeight: "inherit" }}>
+          <motion.span
+            className="inline-block"
+            initial={{ y: "108%" }}
+            animate={inView ? { y: 0 } : {}}
+            transition={{ duration: 0.85, delay: delay + i * 0.065, ease: [0.16, 1, 0.3, 1] as never }}
+          >
+            {word}
+          </motion.span>
+          {i < words.length - 1 && " "}
+        </span>
+      ))}
+    </span>
   );
 }
 
+/* ─── 이미지 패럴랙스 ─── */
+function ParallaxImg({ src, alt, className = "" }: { src: string; alt: string; className?: string }) {
+  const ref = useRef(null);
+  const { scrollYProgress } = useScroll({ target: ref, offset: ["start end", "end start"] });
+  const y = useTransform(scrollYProgress, [0, 1], ["-10%", "10%"]);
+  return (
+    <div ref={ref} className={`relative overflow-hidden ${className}`}>
+      <motion.div style={{ y }} className="absolute inset-[-12%] w-[112%] h-[112%]">
+        <Image src={src} alt={alt} fill className="object-cover" />
+      </motion.div>
+    </div>
+  );
+}
+
+/* ─── 데이터 ─── */
 const PRODUCTS = [
   {
-    num: "01",
-    code: "OC",
-    name: "천장크레인",
-    en: "Overhead Crane",
-    tagline: "정밀함이 힘이 된다",
-    spec: [
-      ["최대 하중", "500 T"],
-      ["최대 스팬", "40 m"],
-      ["양정", "최대 50 m"],
-      ["속도", "100 m/min"],
-    ],
+    num: "01", name: "천장크레인", en: "Overhead Crane",
+    headline: "정밀함이\n힘이 된다",
+    body: "반도체 클린룸의 0.1μm 진동 제어부터 200T 중량물까지. 세종의 천장크레인은 대한민국 산업 핵심 현장 348개소에서 가동 중입니다.",
+    specs: [["최대 하중", "500 T"], ["최대 스팬", "40 m"], ["양정", "50 m max"], ["납품", "348건"]],
     img: "/images/sejong_2.png",
-    accent: "#f47c20",
   },
   {
-    num: "02",
-    code: "GC",
-    name: "갠트리크레인",
-    en: "Gantry Crane",
-    tagline: "한계 없는 작업 공간",
-    spec: [
-      ["최대 하중", "1,000 T"],
-      ["스팬", "최대 60 m"],
-      ["양정", "30 m"],
-      ["방식", "레일 / 타이어"],
-    ],
+    num: "02", name: "갠트리크레인", en: "Gantry Crane",
+    headline: "한계 없는\n작업 공간",
+    body: "야외의 혹독한 환경, 바람과 극한의 하중. 조선소 선박 블록 탑재부터 수력발전소 수문 설치까지 175건이 입증합니다.",
+    specs: [["최대 하중", "1,000 T"], ["스팬", "60 m max"], ["방식", "레일 / 타이어"], ["납품", "175건"]],
     img: "/images/sejong_3.png",
-    accent: "#7eb3f7",
   },
   {
-    num: "03",
-    code: "HO",
-    name: "호이스트",
-    en: "Electric Hoist",
-    tagline: "작지만 강한 정밀함",
-    spec: [
-      ["최대 하중", "50 T"],
-      ["양정", "30 m"],
-      ["종류", "체인 / 와이어"],
-      ["구동", "전동 / 수동"],
-    ],
+    num: "03", name: "호이스트", en: "Electric Hoist",
+    headline: "작지만\n강한 정밀함",
+    body: "전동 체인호이스트부터 와이어로프 호이스트까지. 세밀하고 안정적인 작동으로 250건 이상의 현장에서 신뢰를 쌓았습니다.",
+    specs: [["최대 하중", "50 T"], ["양정", "30 m"], ["종류", "체인 / 와이어"], ["납품", "250건+"]],
     img: "/images/sejong_1.png",
-    accent: "#a8d8a8",
   },
   {
-    num: "04",
-    code: "SP",
-    name: "특수크레인",
-    en: "Special Crane",
-    tagline: "불가능한 조건은 없다",
-    spec: [
-      ["종류", "방폭 / 클린룸"],
-      ["적용", "반도체 / 원자력"],
-      ["인증", "KS · ISO · 방폭"],
-      ["설계", "완전 맞춤형"],
-    ],
+    num: "04", name: "특수크레인", en: "Special Crane",
+    headline: "불가능한\n조건은 없다",
+    body: "방폭형, 클린룸형, 원자력용. 일반 크레인이 들어갈 수 없는 곳에 세종의 특수크레인이 있습니다. 완전 맞춤 설계.",
+    specs: [["종류", "방폭 / 클린룸"], ["적용", "반도체 / 원자력"], ["인증", "ISO · 방폭 · KGS"], ["납품", "92건"]],
     img: "/images/sejong_4.png",
-    accent: "#f4b942",
   },
 ];
 
 const STATS = [
-  { val: 40, suffix: "+", label: "Years", sub: "40년 이상 업력" },
-  { val: 523, suffix: "+", label: "Projects", sub: "누적 납품 실적" },
-  { val: 200, suffix: "T", label: "Max Load", sub: "최대 제작 하중" },
-  { val: 94, suffix: "+", label: "Clients", sub: "국내외 고객사" },
+  { val: 40, suffix: "+", label: "Years", desc: "1984년 창립 이래" },
+  { val: 523, suffix: "", label: "Projects", desc: "누적 납품 실적" },
+  { val: 200, suffix: "T", label: "Max Load", desc: "최대 제작 하중" },
+  { val: 94, suffix: "+", label: "Clients", desc: "국내외 고객사" },
 ];
 
 const WORKS = [
-  { title: "한국수력원자력 월성 원전", cat: "특수크레인 · 30T", year: "2025", img: "/images/sejong_2.png" },
-  { title: "삼성전자 평택 반도체공장", cat: "클린룸 크레인 · 10T", year: "2024", img: "/images/sejong_1.png" },
-  { title: "POSCO 광양 제철소", cat: "천장크레인 · 200T", year: "2025", img: "/images/sejong_3.png" },
-  { title: "현대제철 당진 스틸센터", cat: "갠트리크레인 · 100T", year: "2023", img: "/images/sejong_4.png" },
+  { client: "한국수력원자력", type: "원자력 특수크레인", spec: "30T · 2025", img: "/images/sejong_2.png" },
+  { client: "삼성전자 평택", type: "클린룸 천장크레인", spec: "10T · 2024", img: "/images/sejong_1.png" },
+  { client: "POSCO 광양", type: "이중거더 천장크레인", spec: "200T · 2025", img: "/images/sejong_3.png" },
+  { client: "현대제철 당진", type: "갠트리크레인", spec: "100T · 2023", img: "/images/sejong_4.png" },
 ];
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-const ease = [0.16, 1, 0.3, 1] as any;
-const fadeUp = {
-  hidden: { opacity: 0, y: 40 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease } },
-};
-const stagger = { visible: { transition: { staggerChildren: 0.12 } } };
+/* ─── 플로팅 제품 인디케이터 ─── */
+function ProductIndicator({ active }: { active: number }) {
+  return (
+    <div className="fixed right-8 top-1/2 -translate-y-1/2 z-40 hidden xl:flex flex-col gap-3">
+      {PRODUCTS.map((p, i) => (
+        <div key={i} className="flex items-center gap-2.5 group justify-end">
+          <motion.span
+            animate={{ opacity: active === i ? 0.9 : 0.2, x: active === i ? 0 : 10 }}
+            className="text-white text-[10px] font-mono tracking-wider"
+          >
+            {p.num}
+          </motion.span>
+          <motion.div
+            animate={{ width: active === i ? 24 : 8, backgroundColor: active === i ? "#f47c20" : "rgba(255,255,255,0.2)" }}
+            transition={{ duration: 0.3 }}
+            className="h-px"
+          />
+        </div>
+      ))}
+    </div>
+  );
+}
 
+/* ─── 메인 ─── */
 export default function PrestigeDemo() {
   const [activeProduct, setActiveProduct] = useState(0);
+  const productRefs = useRef<(HTMLElement | null)[]>([]);
+
+  // 스크롤로 현재 제품 추적
+  const handleScroll = useCallback(() => {
+    const vh = window.innerHeight;
+    productRefs.current.forEach((el, i) => {
+      if (!el) return;
+      const rect = el.getBoundingClientRect();
+      if (rect.top < vh * 0.5 && rect.bottom > vh * 0.5) setActiveProduct(i);
+    });
+  }, []);
+
+  useEffect(() => {
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, [handleScroll]);
+
   const heroRef = useRef(null);
-  const { scrollYProgress: heroScroll } = useScroll({ target: heroRef, offset: ["start start", "end start"] });
-  const heroY = useTransform(heroScroll, [0, 1], ["0%", "30%"]);
-  const heroOpacity = useTransform(heroScroll, [0, 0.7], [1, 0]);
+  const { scrollYProgress: heroProgress } = useScroll({ target: heroRef, offset: ["start start", "end start"] });
+  const heroOpacity = useTransform(heroProgress, [0, 0.7], [1, 0]);
+  const heroScale = useTransform(heroProgress, [0, 1], [1, 1.04]);
 
   return (
-    <div className="bg-[#0a0a0a] text-white min-h-screen font-sans overflow-x-hidden">
+    <div className="min-h-screen font-sans" style={{ background: "#080808", color: "#ebebeb" }}>
 
-      {/* ── NAV ── */}
-      <nav className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-6 md:px-14 h-16 bg-[#0a0a0a]/80 backdrop-blur-md border-b border-white/5">
+      {/* NAV */}
+      <nav className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-8 md:px-16 h-[68px]"
+        style={{ background: "rgba(8,8,8,0.8)", backdropFilter: "blur(16px)", borderBottom: "1px solid rgba(255,255,255,0.05)" }}>
         <Link href="/">
-          <Image src="/images/sejong-logo.png" alt="SEJONG" width={120} height={30} className="h-7 w-auto brightness-0 invert" />
+          <Image src="/images/sejong-logo.png" alt="SEJONG" width={110} height={26} className="h-6 w-auto brightness-0 invert opacity-80 hover:opacity-100 transition-opacity" />
         </Link>
-        <div className="hidden md:flex items-center gap-8 text-[12px] tracking-[0.15em] uppercase text-white/50">
-          {["제품", "납품실적", "회사소개", "문의"].map(m => (
-            <a key={m} href="#" className="hover:text-white transition-colors">{m}</a>
+        <div className="hidden md:flex items-center gap-8">
+          {["Products", "Work", "About"].map(m => (
+            <a key={m} href="#" className="text-[13px] text-white/40 hover:text-white/80 transition-colors tracking-wide">{m}</a>
           ))}
         </div>
-        <a href="/support/inquiry" className="text-[11px] tracking-[0.15em] uppercase border border-[#f47c20]/60 text-[#f47c20] px-4 py-2 hover:bg-[#f47c20] hover:text-black transition-all duration-300">
-          견적 요청
+        <a href="/support/inquiry"
+          className="text-[12px] font-semibold tracking-wide px-5 py-2.5 transition-all"
+          style={{ background: "#f47c20", color: "#080808" }}
+          onMouseEnter={e => (e.currentTarget.style.background = "#e06810")}
+          onMouseLeave={e => (e.currentTarget.style.background = "#f47c20")}
+        >
+          무료 견적
         </a>
       </nav>
 
-      {/* ── HERO ── */}
-      <section ref={heroRef} className="relative h-screen flex items-end overflow-hidden">
-        <motion.div style={{ y: heroY }} className="absolute inset-0">
-          <Image src="/images/sejong_3.png" alt="hero" fill className="object-cover brightness-[0.3]" priority />
-        </motion.div>
-        {/* 그레인 텍스처 */}
-        <div className="absolute inset-0 opacity-[0.03]"
-          style={{ backgroundImage: "url(\"data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='1'/%3E%3C/svg%3E\")" }}
-        />
-        <div className="absolute inset-0 bg-gradient-to-t from-[#0a0a0a] via-transparent to-transparent" />
+      <ProductIndicator active={activeProduct} />
 
-        <motion.div style={{ opacity: heroOpacity }} className="relative z-10 px-6 md:px-14 pb-20 md:pb-28 w-full">
+      {/* HERO */}
+      <motion.section ref={heroRef} className="relative h-screen flex flex-col justify-end pb-20 md:pb-28 px-8 md:px-16 overflow-hidden">
+        <motion.div style={{ scale: heroScale }} className="absolute inset-0">
+          <Image src="/images/sejong_3.png" alt="hero" fill className="object-cover" style={{ filter: "brightness(0.18)" }} priority />
+        </motion.div>
+        {/* 결 텍스처 오버레이 */}
+        <div className="absolute inset-0" style={{ background: "radial-gradient(ellipse at 30% 70%, rgba(244,124,32,0.06) 0%, transparent 60%)" }} />
+
+        <motion.div style={{ opacity: heroOpacity }} className="relative z-10 max-w-[1600px]">
           <motion.p
-            initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.3, duration: 0.8 }}
-            className="text-[#f47c20] text-[10px] tracking-[0.35em] uppercase mb-6"
+            initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.3 }}
+            className="mb-6 text-[11px] font-mono tracking-[0.35em] uppercase"
+            style={{ color: "#f47c20" }}
           >
-            SEJONG HOIST &amp; CRANE — EST. 1984
+            Sejong Hoist &amp; Crane — Est. 1984
           </motion.p>
-          <motion.h1
-            initial={{ opacity: 0, y: 60 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.5, duration: 1, ease: [0.16, 1, 0.3, 1] }}
-            className="text-white leading-[0.9] font-black mb-6"
-            style={{ fontSize: "clamp(4rem, 12vw, 9rem)", letterSpacing: "-0.03em" }}
-          >
-            POWER<br />
-            <span className="text-white/20">BEYOND</span><br />
-            MEASURE
-          </motion.h1>
+
+          <h1 className="leading-[0.88] font-black mb-8 overflow-hidden" style={{ fontSize: "clamp(4.5rem, 13vw, 11rem)", letterSpacing: "-0.04em" }}>
+            {["POWER", "BEYOND", "MEASURE"].map((word, i) => (
+              <div key={word} className="overflow-hidden">
+                <motion.span
+                  className="block"
+                  initial={{ y: "105%" }}
+                  animate={{ y: 0 }}
+                  transition={{ duration: 1.0, delay: 0.4 + i * 0.12, ease: [0.16, 1, 0.3, 1] as never }}
+                  style={{ color: i === 1 ? "rgba(235,235,235,0.14)" : "#ebebeb" }}
+                >
+                  {word}
+                </motion.span>
+              </div>
+            ))}
+          </h1>
+
           <motion.div
-            initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.9, duration: 0.8 }}
-            className="flex flex-wrap items-center gap-6 text-white/30 text-sm"
+            initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 1.1, duration: 0.8 }}
+            className="flex flex-col sm:flex-row sm:items-center gap-5 sm:gap-10"
           >
-            <span>최대 하중 <strong className="text-white">200T</strong></span>
-            <span className="w-px h-4 bg-white/20" />
-            <span>누적 납품 <strong className="text-white">523+</strong>건</span>
-            <span className="w-px h-4 bg-white/20" />
-            <span>업력 <strong className="text-white">40</strong>년</span>
+            <p className="text-[15px] md:text-base leading-relaxed max-w-sm" style={{ color: "rgba(235,235,235,0.4)" }}>
+              최대 하중 <strong className="text-white">200T</strong> · 누적 납품 <strong className="text-white">523</strong>건<br />
+              대한민국 산업현장이 선택한 크레인
+            </p>
+            <a href="/business" className="group inline-flex items-center gap-3 text-[13px] font-semibold tracking-wide"
+              style={{ color: "#f47c20" }}>
+              <span className="h-px transition-all duration-300 group-hover:w-14" style={{ width: 32, background: "#f47c20" }} />
+              제품 보기
+              <motion.span animate={{ x: [0, 4, 0] }} transition={{ repeat: Infinity, duration: 1.6, ease: "easeInOut" }}>→</motion.span>
+            </a>
           </motion.div>
         </motion.div>
 
         {/* 스크롤 인디케이터 */}
         <motion.div
-          initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1.4 }}
-          className="absolute right-8 md:right-14 bottom-10 flex flex-col items-center gap-2 z-10"
+          initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1.6 }}
+          className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 z-10"
         >
-          <div className="relative w-px h-16 bg-white/10 overflow-hidden">
+          <div className="relative overflow-hidden" style={{ width: 1, height: 60, background: "rgba(255,255,255,0.1)" }}>
             <motion.div
-              className="absolute top-0 w-full bg-[#f47c20]"
-              style={{ height: "40%" }}
-              animate={{ y: ["0%", "250%"] }}
+              className="absolute top-0 w-full"
+              style={{ height: "40%", background: "rgba(255,255,255,0.7)" }}
+              animate={{ y: ["0%", "260%"] }}
               transition={{ duration: 1.8, repeat: Infinity, ease: "easeInOut" }}
             />
           </div>
-          <span className="text-[9px] tracking-[0.25em] uppercase text-white/30">Scroll</span>
+          <span className="text-[9px] tracking-[0.3em] uppercase" style={{ color: "rgba(255,255,255,0.3)" }}>Scroll</span>
         </motion.div>
-      </section>
-
-      {/* ── 제품 탐색 ── */}
-      <section className="py-8 border-y border-white/5 overflow-x-auto">
-        <div className="flex min-w-max md:justify-center gap-0">
-          {PRODUCTS.map((p, i) => (
-            <button
-              key={i}
-              onClick={() => setActiveProduct(i)}
-              className={`px-8 py-5 text-left transition-all duration-300 border-r border-white/5 last:border-r-0 group ${activeProduct === i ? "bg-white/5" : "hover:bg-white/3"}`}
-            >
-              <p className={`text-[9px] tracking-[0.2em] uppercase mb-1 transition-colors ${activeProduct === i ? "text-[#f47c20]" : "text-white/30 group-hover:text-white/50"}`}>
-                {p.num} / {p.code}
-              </p>
-              <p className={`font-semibold text-sm transition-colors ${activeProduct === i ? "text-white" : "text-white/50"}`}>
-                {p.name}
-              </p>
-            </button>
-          ))}
-        </div>
-      </section>
-
-      {/* ── 제품 상세 ── */}
-      <section className="relative min-h-screen flex items-center overflow-hidden">
-        {PRODUCTS.map((p, i) => (
-          <motion.div
-            key={i}
-            animate={{ opacity: activeProduct === i ? 1 : 0, x: activeProduct === i ? 0 : 60 }}
-            transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-            className={`absolute inset-0 flex flex-col md:flex-row ${activeProduct === i ? "pointer-events-auto" : "pointer-events-none"}`}
-          >
-            {/* 왼쪽: 이미지 */}
-            <div className="relative w-full md:w-7/12 h-64 md:h-auto overflow-hidden">
-              <Image src={p.img} alt={p.name} fill className="object-cover brightness-50" />
-              <div className="absolute inset-0 bg-gradient-to-r from-transparent to-[#0a0a0a] hidden md:block" />
-              {/* 번호 오버레이 */}
-              <p className="absolute top-8 left-8 text-white/5 font-black leading-none select-none"
-                style={{ fontSize: "clamp(8rem, 20vw, 16rem)" }}>
-                {p.num}
-              </p>
-            </div>
-
-            {/* 오른쪽: 콘텐츠 */}
-            <div className="flex-1 flex flex-col justify-center px-8 md:px-16 py-12">
-              <p className="text-[10px] tracking-[0.3em] uppercase mb-4" style={{ color: p.accent }}>
-                {p.en}
-              </p>
-              <h2 className="text-4xl md:text-6xl font-black mb-2" style={{ letterSpacing: "-0.03em" }}>
-                {p.name}
-              </h2>
-              <p className="text-white/40 text-lg mb-10">{p.tagline}</p>
-
-              {/* 스펙 */}
-              <div className="grid grid-cols-2 gap-0 mb-12 border border-white/10">
-                {p.spec.map(([k, v], si) => (
-                  <div key={si} className={`px-5 py-4 border-white/10 ${si % 2 === 0 ? "border-r" : ""} ${si < 2 ? "border-b" : ""}`}>
-                    <p className="text-white/30 text-[10px] uppercase tracking-wider mb-1">{k}</p>
-                    <p className="text-white font-bold text-lg">{v}</p>
-                  </div>
-                ))}
-              </div>
-
-              <a href="/business" className="inline-flex items-center gap-3 text-sm font-semibold group w-fit" style={{ color: p.accent }}>
-                <span className="h-px w-8 transition-all duration-300 group-hover:w-16" style={{ background: p.accent }} />
-                자세히 보기
-                <span className="group-hover:translate-x-1 transition-transform">→</span>
-              </a>
-            </div>
-          </motion.div>
-        ))}
-      </section>
-
-      {/* ── STATS ── */}
-      <motion.section
-        variants={stagger} initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-100px" }}
-        className="py-24 grid grid-cols-2 md:grid-cols-4 border-t border-white/5"
-      >
-        {STATS.map((s, i) => (
-          <motion.div key={i} variants={fadeUp} className="px-8 md:px-12 py-10 border-r border-white/5 last:border-r-0 text-center group hover:bg-white/3 transition-colors">
-            <p className="text-5xl md:text-7xl font-black mb-2 tabular-nums" style={{ letterSpacing: "-0.04em" }}>
-              <Counter to={s.val} suffix={s.suffix} />
-            </p>
-            <p className="text-[10px] tracking-[0.2em] uppercase text-white/30 mb-1">{s.label}</p>
-            <p className="text-white/50 text-sm">{s.sub}</p>
-          </motion.div>
-        ))}
       </motion.section>
 
-      {/* ── SELECTED WORKS ── */}
-      <section className="px-6 md:px-14 py-24 border-t border-white/5">
-        <motion.div variants={stagger} initial="hidden" whileInView="visible" viewport={{ once: true }}>
-          <motion.div variants={fadeUp} className="flex items-end justify-between mb-14">
-            <div>
-              <p className="text-[#f47c20] text-[10px] tracking-[0.3em] uppercase mb-4">Selected Works</p>
-              <h2 className="text-3xl md:text-5xl font-black" style={{ letterSpacing: "-0.03em" }}>
-                현장에서<br />증명된 결과
-              </h2>
-            </div>
-            <Link href="/portfolio" className="hidden md:block text-white/30 hover:text-white text-sm transition-colors">
-              전체 보기 →
-            </Link>
-          </motion.div>
+      {/* PRODUCT SECTIONS */}
+      {PRODUCTS.map((p, i) => (
+        <section
+          key={p.num}
+          ref={el => { productRefs.current[i] = el; }}
+          className="relative flex flex-col lg:flex-row"
+          style={{ minHeight: "100svh" }}
+        >
+          {/* 이미지 */}
+          <div className={`w-full lg:w-3/5 ${i % 2 === 1 ? "lg:order-2" : ""}`} style={{ minHeight: "50vh" }}>
+            <ParallaxImg src={p.img} alt={p.name} className="w-full h-full" />
+          </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-            {WORKS.map((w, i) => (
+          {/* 텍스트 */}
+          <div
+            className={`flex-1 flex flex-col justify-center px-8 md:px-14 xl:px-20 py-20 md:py-28 ${i % 2 === 1 ? "lg:order-1" : ""}`}
+            style={{ background: "#080808" }}
+          >
+            <motion.p
+              initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }}
+              transition={{ duration: 0.6 }}
+              className="mb-8 font-mono text-[11px] tracking-[0.25em]"
+              style={{ color: "rgba(255,255,255,0.25)" }}
+            >
+              {p.num} / {p.en.toUpperCase()}
+            </motion.p>
+
+            <h2 className="font-black leading-[0.93] mb-8" style={{ fontSize: "clamp(3rem, 7vw, 5.5rem)", letterSpacing: "-0.035em", whiteSpace: "pre-line" }}>
+              <WordReveal>{p.headline.replace("\n", " ")}</WordReveal>
+            </h2>
+
+            <motion.p
+              initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }} transition={{ duration: 0.7, delay: 0.2 }}
+              className="text-[15px] md:text-base leading-[1.75] mb-12 max-w-sm"
+              style={{ color: "rgba(235,235,235,0.45)" }}
+            >
+              {p.body}
+            </motion.p>
+
+            {/* 스펙 그리드 - 선 없이 공백으로만 구분 */}
+            <motion.div
+              initial={{ opacity: 0 }} whileInView={{ opacity: 1 }}
+              viewport={{ once: true }} transition={{ duration: 0.6, delay: 0.3 }}
+              className="grid grid-cols-2 gap-x-10 gap-y-7 mb-14"
+            >
+              {p.specs.map(([k, v]) => (
+                <div key={k}>
+                  <p className="text-[11px] mb-1.5" style={{ color: "rgba(255,255,255,0.2)" }}>{k}</p>
+                  <p className="text-lg font-semibold" style={{ color: "#ebebeb" }}>{v}</p>
+                </div>
+              ))}
+            </motion.div>
+
+            <motion.a
+              href="/business"
+              initial={{ opacity: 0 }} whileInView={{ opacity: 1 }}
+              viewport={{ once: true }} transition={{ delay: 0.4 }}
+              className="group inline-flex items-center gap-3 text-[13px] font-semibold w-fit"
+              style={{ color: "#f47c20" }}
+            >
+              <span className="h-px transition-all duration-400 group-hover:w-14" style={{ width: 28, background: "#f47c20" }} />
+              자세히 보기
+            </motion.a>
+          </div>
+        </section>
+      ))}
+
+      {/* STATS — 선 없이 순수 타이포그래피 */}
+      <section className="py-28 md:py-40 px-8 md:px-16" style={{ background: "#080808" }}>
+        <div className="max-w-[1600px] mx-auto">
+          <motion.p
+            initial={{ opacity: 0 }} whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+            className="text-[11px] font-mono tracking-[0.3em] uppercase mb-20"
+            style={{ color: "rgba(255,255,255,0.2)" }}
+          >
+            By the numbers
+          </motion.p>
+
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-y-16 gap-x-8">
+            {STATS.map((s, i) => (
               <motion.div
-                key={i} variants={fadeUp}
-                className="relative overflow-hidden group cursor-pointer"
-                style={{ aspectRatio: i === 0 ? "16/9" : "16/9" }}
+                key={i}
+                initial={{ opacity: 0, y: 32 }} whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }} transition={{ duration: 0.8, delay: i * 0.1 }}
               >
-                <ParallaxSection className="absolute inset-[-10%]">
-                  <Image src={w.img} alt={w.title} fill className="object-cover brightness-50 group-hover:brightness-40 transition-all duration-700 scale-110" />
-                </ParallaxSection>
-                <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent" />
-                <div className="absolute bottom-0 left-0 p-6 md:p-8">
-                  <p className="text-white/40 text-[10px] tracking-[0.2em] uppercase mb-2">{w.cat} · {w.year}</p>
-                  <h3 className="text-white font-bold text-lg md:text-xl group-hover:text-[#f47c20] transition-colors">{w.title}</h3>
-                </div>
-                <div className="absolute top-6 right-6 text-white/0 group-hover:text-white/60 transition-all duration-300 text-sm">
-                  →
-                </div>
+                <p className="font-black mb-3 leading-none tabular-nums"
+                  style={{ fontSize: "clamp(3.5rem, 8vw, 6.5rem)", letterSpacing: "-0.04em", color: "#ebebeb" }}>
+                  <Counter to={s.val} suffix={s.suffix} />
+                </p>
+                <p className="text-[11px] uppercase tracking-[0.2em] mb-2" style={{ color: "rgba(255,255,255,0.22)" }}>{s.label}</p>
+                <p className="text-sm" style={{ color: "rgba(255,255,255,0.38)" }}>{s.desc}</p>
               </motion.div>
             ))}
           </div>
-        </motion.div>
+        </div>
       </section>
 
-      {/* ── CTA ── */}
-      <section className="relative py-32 px-6 md:px-14 flex flex-col items-center text-center overflow-hidden border-t border-white/5">
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_rgba(244,124,32,0.08)_0%,_transparent_70%)]" />
-        <motion.div variants={stagger} initial="hidden" whileInView="visible" viewport={{ once: true }}>
-          <motion.p variants={fadeUp} className="text-[#f47c20] text-[10px] tracking-[0.3em] uppercase mb-6">Get In Touch</motion.p>
-          <motion.h2 variants={fadeUp} className="text-white font-black mb-6" style={{ fontSize: "clamp(2.5rem, 7vw, 6rem)", letterSpacing: "-0.03em" }}>
-            크레인 도입을<br />계획하고 계신가요?
-          </motion.h2>
-          <motion.p variants={fadeUp} className="text-white/40 text-base mb-12 max-w-lg mx-auto leading-relaxed">
-            40년의 경험을 가진 전문 엔지니어가<br />현장 조건에 맞는 최적의 솔루션을 제안합니다.
+      {/* SELECTED WORKS */}
+      <section className="py-28 md:py-40 px-8 md:px-16" style={{ background: "#0d0d0d" }}>
+        <div className="max-w-[1600px] mx-auto">
+          <div className="flex items-end justify-between mb-16">
+            <div>
+              <motion.p
+                initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }}
+                className="text-[11px] font-mono tracking-[0.3em] uppercase mb-4"
+                style={{ color: "rgba(255,255,255,0.2)" }}
+              >
+                Selected Works
+              </motion.p>
+              <h2 className="font-black leading-[0.93]" style={{ fontSize: "clamp(2.5rem, 6vw, 5rem)", letterSpacing: "-0.035em" }}>
+                <WordReveal>현장에서 증명된 결과</WordReveal>
+              </h2>
+            </div>
+            <Link href="/portfolio"
+              className="hidden md:flex items-center gap-2 text-[13px] transition-opacity hover:opacity-60"
+              style={{ color: "rgba(255,255,255,0.4)" }}
+            >
+              전체 보기 →
+            </Link>
+          </div>
+
+          {/* 비대칭 그리드: 첫 번째는 더 큰 비율 */}
+          <div className="grid grid-cols-1 md:grid-cols-5 gap-3">
+            <motion.div
+              initial={{ opacity: 0, scale: 0.97 }} whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true }} transition={{ duration: 0.8 }}
+              className="md:col-span-3 relative group cursor-pointer overflow-hidden"
+              style={{ aspectRatio: "16/10" }}
+            >
+              <Image src={WORKS[0].img} alt={WORKS[0].client} fill
+                className="object-cover transition-transform duration-700 group-hover:scale-105"
+                style={{ filter: "brightness(0.55)" }} />
+              <div className="absolute inset-0 transition-all duration-500 group-hover:opacity-50"
+                style={{ background: "linear-gradient(to top, rgba(8,8,8,0.85) 0%, transparent 55%)" }} />
+              <div className="absolute bottom-0 left-0 p-8 md:p-10">
+                <p className="text-[11px] font-mono tracking-wider mb-2.5" style={{ color: "rgba(255,255,255,0.4)" }}>
+                  {WORKS[0].type} · {WORKS[0].spec}
+                </p>
+                <p className="font-bold text-xl md:text-2xl transition-colors group-hover:text-[#f47c20]">{WORKS[0].client}</p>
+              </div>
+            </motion.div>
+
+            <div className="md:col-span-2 grid grid-rows-3 gap-3">
+              {WORKS.slice(1).map((w, i) => (
+                <motion.div
+                  key={i}
+                  initial={{ opacity: 0, scale: 0.97 }} whileInView={{ opacity: 1, scale: 1 }}
+                  viewport={{ once: true }} transition={{ duration: 0.8, delay: 0.1 + i * 0.08 }}
+                  className="relative group cursor-pointer overflow-hidden"
+                >
+                  <Image src={w.img} alt={w.client} fill
+                    className="object-cover transition-transform duration-700 group-hover:scale-105"
+                    style={{ filter: "brightness(0.5)" }} />
+                  <div className="absolute inset-0" style={{ background: "linear-gradient(to top, rgba(8,8,8,0.8) 0%, transparent 50%)" }} />
+                  <div className="absolute bottom-0 left-0 p-5">
+                    <p className="text-[10px] font-mono tracking-wider mb-1" style={{ color: "rgba(255,255,255,0.4)" }}>
+                      {w.type}
+                    </p>
+                    <p className="font-semibold text-sm transition-colors group-hover:text-[#f47c20]">{w.client}</p>
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* CTA */}
+      <section className="relative py-36 md:py-52 px-8 md:px-16 overflow-hidden" style={{ background: "#080808" }}>
+        <div className="absolute inset-0" style={{ background: "radial-gradient(ellipse at 50% 100%, rgba(244,124,32,0.06) 0%, transparent 65%)" }} />
+        <div className="relative max-w-[1600px] mx-auto">
+          <motion.p
+            initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }}
+            className="text-[11px] font-mono tracking-[0.3em] uppercase mb-8"
+            style={{ color: "rgba(255,255,255,0.2)" }}
+          >
+            Get in Touch
           </motion.p>
-          <motion.div variants={fadeUp} className="flex flex-wrap justify-center gap-4">
-            <a href="/support/inquiry" className="px-10 py-4 bg-[#f47c20] text-black font-bold text-sm hover:bg-[#d96a10] transition-colors">
-              무료 견적 요청
+          <h2 className="font-black leading-[0.92] mb-12" style={{ fontSize: "clamp(3.5rem, 11vw, 9.5rem)", letterSpacing: "-0.04em" }}>
+            <WordReveal delay={0.1}>크레인 도입을</WordReveal>
+            <br />
+            <WordReveal delay={0.3} className="text-white/20">계획하고 계신가요?</WordReveal>
+          </h2>
+          <motion.div
+            initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }} transition={{ delay: 0.5 }}
+            className="flex flex-wrap gap-4"
+          >
+            <a href="/support/inquiry"
+              className="px-10 py-4 text-[13px] font-bold tracking-wide transition-all hover:opacity-80"
+              style={{ background: "#f47c20", color: "#080808" }}
+            >
+              무료 상담 신청
             </a>
-            <a href="tel:0317771234" className="px-10 py-4 border border-white/20 text-white font-bold text-sm hover:border-white/50 transition-colors">
+            <a href="tel:0317771234"
+              className="px-10 py-4 text-[13px] font-semibold tracking-wide transition-all"
+              style={{ border: "1px solid rgba(255,255,255,0.15)", color: "rgba(255,255,255,0.6)" }}
+              onMouseEnter={e => (e.currentTarget.style.borderColor = "rgba(255,255,255,0.4)")}
+              onMouseLeave={e => (e.currentTarget.style.borderColor = "rgba(255,255,255,0.15)")}
+            >
               031-777-1234
             </a>
           </motion.div>
-        </motion.div>
+        </div>
       </section>
 
-      {/* ── FOOTER ── */}
-      <footer className="border-t border-white/5 px-6 md:px-14 py-8 flex flex-col md:flex-row justify-between items-center gap-4 text-white/20 text-xs">
-        <p>© 2026 SEJONG HOIST &amp; CRANE. All rights reserved.</p>
-        <div className="flex gap-2 items-center">
-          <span className="w-1.5 h-1.5 rounded-full bg-[#f47c20] animate-pulse" />
-          <span>Demo 1 — PRESTIGE DARK</span>
-          <Link href="/demo" className="ml-4 hover:text-white transition-colors">← 다른 데모 보기</Link>
+      {/* FOOTER */}
+      <footer className="px-8 md:px-16 py-8 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4"
+        style={{ borderTop: "1px solid rgba(255,255,255,0.06)", background: "#080808" }}>
+        <p className="text-[12px]" style={{ color: "rgba(255,255,255,0.18)" }}>
+          © 2026 Sejong Hoist &amp; Crane. All rights reserved.
+        </p>
+        <div className="flex items-center gap-2 text-[12px]" style={{ color: "rgba(255,255,255,0.18)" }}>
+          <span className="w-1.5 h-1.5 rounded-full animate-pulse" style={{ background: "#f47c20" }} />
+          Demo 1 — PRESTIGE
+          <Link href="/demo" className="ml-4 hover:text-white/50 transition-colors">← 데모 목록</Link>
         </div>
       </footer>
     </div>
