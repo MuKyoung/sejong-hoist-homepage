@@ -1,39 +1,46 @@
 import type { Metadata } from "next";
+import { Inter } from "next/font/google";
 import "./globals.css";
-import Header from "@/components/layout/Header";
-import Footer from "@/components/layout/Footer";
+import ConditionalLayout from "@/components/layout/ConditionalLayout";
+
+/* ─── 폰트: Inter (Google Fonts, 상업용 최고 인기) ─── */
+const inter = Inter({
+  subsets: ["latin"],
+  variable: "--font-inter",
+  display: "swap",
+  preload: true,
+});
 
 export const metadata: Metadata = {
   title: "세종호이스트크레인 | SEJONG HOIST & CRANE",
-  description: "세종호이스트크레인 - 천장크레인, 갠트리크레인, 호이스트 전문 제조기업. 40년 이상의 기술력으로 산업 현장의 안전과 효율을 책임집니다.",
-  keywords: "세종호이스트, 천장크레인, 갠트리크레인, 호이스트, 크레인 제조, 산업용 크레인",
+  description: "40년 기술력, 523건 납품. 천장크레인·갠트리크레인·호이스트 전문 제조기업.",
+  keywords: "세종호이스트, 천장크레인, 갠트리크레인, 호이스트, 크레인 제조",
   openGraph: {
     title: "세종호이스트크레인 | SEJONG HOIST & CRANE",
-    description: "천장크레인, 갠트리크레인, 호이스트 전문 제조기업",
+    description: "40년 기술력, 523건 납품. 크레인 전문 제조기업.",
     type: "website",
   },
 };
 
-export default function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="ko">
+    <html lang="ko" className={inter.variable}>
       <head>
+        {/* Pretendard — 한국어 최적화, 상업용 무료 */}
+        <link
+          rel="preload"
+          as="style"
+          href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css"
+        />
         <link
           rel="stylesheet"
-          as="style"
           crossOrigin="anonymous"
-          href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css"
+          href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css"
         />
         <link rel="icon" href="/images/sejong-logo.png" type="image/png" />
       </head>
       <body>
-        <Header />
-        <main>{children}</main>
-        <Footer />
+        <ConditionalLayout>{children}</ConditionalLayout>
       </body>
     </html>
   );

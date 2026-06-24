@@ -52,9 +52,10 @@ html {
 }
 
 body {
-  font-family: "Pretendard Variable", Pretendard, -apple-system,
-    BlinkMacSystemFont, "Apple SD Gothic Neo", "Noto Sans KR",
-    system-ui, sans-serif;
+  /* Inter (영문·숫자) → Pretendard (한국어) 순서 */
+  font-family: var(--font-inter), "Pretendard Variable", Pretendard,
+    -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo",
+    "Noto Sans KR", system-ui, sans-serif;
   font-weight: 400;
   color: #111;
   background: #fff;
