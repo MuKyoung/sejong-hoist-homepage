@@ -5,10 +5,10 @@ import { motion, useInView } from "framer-motion";
 import s from "./StatsSection.module.css";
 
 const STATS = [
-  { number: 40,  suffix: "년", label: "전문 제조 경력",  sub: "1984년 창업" },
-  { number: 500, suffix: "+", label: "누적 납품 건수",  sub: "대·중소기업, 공공기관" },
-  { number: 200, suffix: "T", label: "최대 인양 하중",  sub: "맞춤형 설계 대응" },
-  { number: 98,  suffix: "%", label: "재주문율",         sub: "품질과 A/S 신뢰" },
+  { number: 350, suffix: "T",  label: "최대 인양 하중",   sub: "그라브 갠트리크레인" },
+  { number: 500, suffix: "+",  label: "누적 시공 실적",   sub: "공공기관·민간기업 포함" },
+  { number: 5,   suffix: "종", label: "제품 라인업",      sub: "Wire·Chain·방폭·Crane·부품" },
+  { number: 24,  suffix: "h",  label: "긴급 A/S 대응",   sub: "전국 출동 서비스" },
 ];
 
 const E = [0.22, 1, 0.36, 1] as never;

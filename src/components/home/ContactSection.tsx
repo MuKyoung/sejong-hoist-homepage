@@ -7,12 +7,12 @@ import { Phone, Mail, MapPin, ArrowRight } from "lucide-react";
 import s from "./ContactSection.module.css";
 
 const CONTACTS = [
-  { icon: <Phone size={16} />, label: "대표 전화", value: "031-777-1234",
-    sub: "평일 08:30 – 17:30", href: "tel:0317771234" },
-  { icon: <Mail size={16} />, label: "이메일 문의", value: "info@sejong-hoist.co.kr",
-    sub: "24시간 접수 · 1영업일 이내 회신", href: "mailto:info@sejong-hoist.co.kr" },
-  { icon: <MapPin size={16} />, label: "본사 위치", value: "경기도 화성시 삼성1로 1",
-    sub: "서해안고속도로 비봉IC 5분", href: "https://maps.google.com" },
+  { icon: <Phone size={16} />, label: "대표 전화", value: "044-865-0801",
+    sub: "010-7605-1510 / FAX 044-865-0108", href: "tel:0448650801" },
+  { icon: <Mail size={16} />, label: "이메일 문의", value: "sj@sjhoist.com",
+    sub: "24시간 접수 · 신속 회신", href: "mailto:sj@sjhoist.com" },
+  { icon: <MapPin size={16} />, label: "본사 위치", value: "세종특별자치시 부강면",
+    sub: "시목부강로 314", href: "https://map.kakao.com/?q=세종특별자치시+부강면+시목부강로+314" },
 ];
 
 const E = [0.22, 1, 0.36, 1] as never;
@@ -48,8 +48,8 @@ export default function ContactSection() {
               initial={{ opacity: 0, y: 12 }} animate={inView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.65, ease: E, delay: 0.2 }}
             >
-              현장 방문 또는 도면 검토가 무료입니다. 연락처와 현장 개요를 남겨주시면
-              담당 엔지니어가 직접 회신드립니다.
+              견적 유형, 업체명, 연락처를 남겨주시면 담당자가 빠르게 연락드립니다.
+              현장 방문 및 도면 검토 상담 가능합니다.
             </motion.p>
             <motion.div
               initial={{ opacity: 0, y: 10 }} animate={inView ? { opacity: 1, y: 0 } : {}}

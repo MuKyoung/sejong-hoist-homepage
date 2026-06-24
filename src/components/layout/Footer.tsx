@@ -7,35 +7,32 @@ const LINKS = [
   {
     title: "회사소개",
     items: [
-      { label: "회사개요",  href: "/about" },
-      { label: "연혁",      href: "/about/history" },
-      { label: "조직도",    href: "/about/organization" },
-      { label: "인증현황",  href: "/about/certifications" },
+      { label: "인사말",    href: "/about" },
+      { label: "오시는 길", href: "/about/location" },
     ],
   },
   {
-    title: "사업영역",
+    title: "제품소개",
     items: [
-      { label: "천장크레인",   href: "/business/overhead-crane" },
-      { label: "갠트리크레인", href: "/business/gantry-crane" },
-      { label: "호이스트",     href: "/business/hoist" },
-      { label: "특수크레인",   href: "/business/special-crane" },
+      { label: "Wire Hoist",            href: "/business/wire-hoist" },
+      { label: "Chain Hoist",           href: "/business/chain-hoist" },
+      { label: "Explosion-Proof Hoist", href: "/business/explosion-proof-hoist" },
+      { label: "Crane",                 href: "/business/crane" },
+      { label: "Hoist & Crane",         href: "/business/hoist-crane" },
     ],
   },
   {
-    title: "납품실적",
+    title: "시공사례",
     items: [
-      { label: "전체 포트폴리오", href: "/portfolio" },
-      { label: "산업별 사례",     href: "/portfolio#industry" },
+      { label: "전체 시공사례", href: "/portfolio" },
     ],
   },
   {
     title: "고객지원",
     items: [
-      { label: "공지사항",   href: "/support/notice" },
-      { label: "묻고답하기", href: "/support/faq" },
-      { label: "견적문의",   href: "/support/inquiry" },
-      { label: "카탈로그",   href: "/support/catalog" },
+      { label: "견적문의", href: "/support/inquiry" },
+      { label: "자료실",   href: "/support/catalog" },
+      { label: "공지사항", href: "/support/notice" },
     ],
   },
 ];
@@ -53,22 +50,22 @@ export default function Footer() {
               />
             </div>
             <p className={s.tagline}>
-              1984년부터 40년.<br />
-              천장크레인·갠트리크레인·호이스트<br />
-              전문 제조 기업.
+              Wire Hoist · Chain Hoist · Explosion-Proof Hoist<br />
+              Crane 전문 제조기업.<br />
+              대표이사 김승용
             </p>
             <div className={s.contact}>
               <div className={s.contactItem}>
                 <Phone size={12} className={s.contactIcon} />
-                <span>031-777-1234 (평일 08:30–17:30)</span>
+                <span>044-865-0801 / 010-7605-1510</span>
               </div>
               <div className={s.contactItem}>
                 <Mail size={12} className={s.contactIcon} />
-                <span>info@sejong-hoist.co.kr</span>
+                <span>sj@sjhoist.com</span>
               </div>
               <div className={s.contactItem}>
                 <MapPin size={12} className={s.contactIcon} />
-                <span>경기도 화성시 삼성1로 1</span>
+                <span>세종특별자치시 부강면 시목부강로 314</span>
               </div>
             </div>
           </div>
@@ -91,7 +88,7 @@ export default function Footer() {
         {/* 하단 */}
         <div className={s.bottom}>
           <p className={s.copy}>
-            © 2024 세종호이스트 주식회사. All rights reserved. | 사업자등록번호 123-45-67890
+            © 2024 (주)세종호이스트크레인. All rights reserved. | 사업자등록번호 142-88-01261 | FAX 044-865-0108
           </p>
           <div className={s.bottomLinks}>
             <Link href="/privacy" className={s.bottomLink}>개인정보처리방침</Link>

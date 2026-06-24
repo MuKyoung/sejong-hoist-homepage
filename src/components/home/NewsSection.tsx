@@ -7,18 +7,18 @@ import { ArrowRight, Megaphone, Award, Newspaper, Users } from "lucide-react";
 import s from "./NewsSection.module.css";
 
 const NEWS = [
-  { id:1, cat:"수주", badge: s.badgeBlue,   icon:<Megaphone size={13}/>, date:"2024.11.15",
-    title:"현대제철 당진 200T 천장크레인 공급 계약 체결",
-    desc:"납기 2025년 3월 예정. 설치 후 3년 무상 A/S 포함." },
-  { id:2, cat:"인증", badge: s.badgeGreen,  icon:<Award size={13}/>,     date:"2024.09.03",
-    title:"ISO 9001:2015 품질경영시스템 갱신 인증 완료",
-    desc:"3년 주기 심사 완료, 국제 품질 기준 지속 적합성 유지." },
-  { id:3, cat:"보도", badge: s.badgePurple, icon:<Newspaper size={13}/>, date:"2024.07.22",
-    title:"2024 스마트팩토리 솔루션 엑스포 A-23 부스 참가",
-    desc:"창원 CECO, 최신 지능형 크레인 시스템 실물 시연 예정." },
-  { id:4, cat:"채용", badge: s.badgeOrange, icon:<Users size={13}/>,     date:"2024.06.10",
-    title:"2024 하반기 생산기술·영업직 신입/경력 공개 채용",
-    desc:"크레인 설계·생산·현장관리·영업 분야 상시 지원 가능." },
+  { id:1, cat:"시공", badge: s.badgeBlue,   icon:<Megaphone size={13}/>, date:"2024.11.15",
+    title:"그라브 갠트리크레인 350TON 제작·설치 납품 완료",
+    desc:"국내 최대급 그라브 갠트리크레인 시공 실적 달성." },
+  { id:2, cat:"납품", badge: s.badgeGreen,  icon:<Award size={13}/>,     date:"2024.09.03",
+    title:"엘에스일렉트릭㈜ Double Girder 5TON/10TON 크레인 납품",
+    desc:"청주 2공장·수원공장 등 LS Electric 다수 현장 연속 시공." },
+  { id:3, cat:"안내", badge: s.badgePurple, icon:<Newspaper size={13}/>, date:"2024.07.22",
+    title:"방폭 호이스트 Single Girder 3TON 신규 라인업 추가",
+    desc:"위험 Zone 1·2 대응 방폭형 호이스트 제품군 확대." },
+  { id:4, cat:"문의", badge: s.badgeOrange, icon:<Users size={13}/>,     date:"2024.06.10",
+    title:"온라인 견적 문의 시스템 운영 중",
+    desc:"사이트 내 견적문의 페이지를 통해 24시간 접수 가능." },
 ];
 
 const E = [0.22, 1, 0.36, 1] as never;

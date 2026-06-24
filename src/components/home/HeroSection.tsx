@@ -13,10 +13,10 @@ const VIDEOS = [
 ];
 
 const STATS = [
-  { num: "1984", label: "설립" },
-  { num: "500+", label: "납품" },
-  { num: "200T", label: "하중" },
-  { num: "ISO",  label: "인증" },
+  { num: "350T",  label: "최대 하중" },
+  { num: "500+",  label: "시공 실적" },
+  { num: "5종",   label: "제품군" },
+  { num: "전국",  label: "A/S 대응" },
 ];
 
 const E = [0.22, 1, 0.36, 1] as never;
@@ -88,8 +88,8 @@ export default function HeroSection() {
             animate={mounted ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.7, ease: E, delay: 0.5 }}
           >
-            1984년부터 40년. 천장크레인·갠트리크레인·호이스트 전문 제조.<br />
-            현대제철·삼성중공업·포스코 등 국내 주요 산업 현장에 500+ 납품.
+            Wire Hoist · Chain Hoist · Explosion-Proof Hoist · Crane.<br />
+            최대 350TON 하중, 전국 시공·A/S. 엘에스일렉트릭 외 500+ 납품.
           </motion.p>
 
           {/* CTA */}
@@ -100,11 +100,11 @@ export default function HeroSection() {
             transition={{ duration: 0.7, ease: E, delay: 0.62 }}
           >
             <Link href="/support/inquiry" className={s.ctaPrimary}>
-              무료 상담 문의
+              견적 문의
               <ArrowRight size={14} />
             </Link>
             <Link href="/portfolio" className={s.ctaSecondary}>
-              납품 실적 보기
+              시공사례 보기
             </Link>
           </motion.div>
         </div>
@@ -124,9 +124,9 @@ export default function HeroSection() {
               </div>
             ))}
             <div className={s.stripPhone}>
-              <a href="tel:0317771234" className={s.stripPhoneLink}>
+              <a href="tel:0448650801" className={s.stripPhoneLink}>
                 <Phone size={14} />
-                031-777-1234
+                044-865-0801
               </a>
             </div>
           </div>

@@ -10,29 +10,22 @@ import s from "./Header.module.css";
 const NAV = [
   { label: "회사소개", href: "/about",
     sub: [
-      { label: "회사개요", href: "/about" },
-      { label: "연혁",     href: "/about/history" },
-      { label: "조직도",   href: "/about/organization" },
-      { label: "인증현황", href: "/about/certifications" },
+      { label: "인사말",    href: "/about" },
+      { label: "오시는 길", href: "/about/location" },
     ]
   },
-  { label: "사업영역", href: "/business",
+  { label: "제품소개", href: "/business",
     sub: [
-      { label: "천장크레인",  href: "/business/overhead-crane" },
-      { label: "갠트리크레인", href: "/business/gantry-crane" },
-      { label: "호이스트",    href: "/business/hoist" },
-      { label: "특수크레인",  href: "/business/special-crane" },
+      { label: "Wire Hoist",           href: "/business/wire-hoist" },
+      { label: "Chain Hoist",          href: "/business/chain-hoist" },
+      { label: "Explosion-Proof Hoist", href: "/business/explosion-proof-hoist" },
+      { label: "Crane",                href: "/business/crane" },
+      { label: "Hoist & Crane",        href: "/business/hoist-crane" },
     ]
   },
-  { label: "납품실적", href: "/portfolio", sub: [] },
-  { label: "고객지원", href: "/support",
-    sub: [
-      { label: "공지사항", href: "/support/notice" },
-      { label: "묻고답하기", href: "/support/faq" },
-      { label: "견적문의",  href: "/support/inquiry" },
-      { label: "카탈로그",  href: "/support/catalog" },
-    ]
-  },
+  { label: "시공사례", href: "/portfolio", sub: [] },
+  { label: "견적문의", href: "/support/inquiry", sub: [] },
+  { label: "자료실",   href: "/support/catalog", sub: [] },
 ];
 
 export default function Header() {
@@ -50,16 +43,16 @@ export default function Header() {
       {/* 유틸리티 바 */}
       <div className={s.utilBar}>
         <div className={s.utilInner}>
-          <span className={s.utilLeft}>경기도 화성시 삼성1로 1 | 사업자등록번호 123-45-67890</span>
+          <span className={s.utilLeft}>세종특별자치시 부강면 시목부강로 314 | 사업자등록번호 142-88-01261</span>
           <div className={s.utilRight}>
-            <a href="tel:0317771234" className={s.utilLink}>
-              <Phone size={11} /> 031-777-1234
+            <a href="tel:0448650801" className={s.utilLink}>
+              <Phone size={11} /> 044-865-0801
             </a>
-            <a href="mailto:info@sejong-hoist.co.kr" className={s.utilLink}>
-              <ExternalLink size={11} /> 이메일 문의
+            <a href="mailto:sj@sjhoist.com" className={s.utilLink}>
+              <ExternalLink size={11} /> sj@sjhoist.com
             </a>
             <Link href="/support/catalog" className={s.utilLink}>
-              카탈로그 다운로드
+              자료실
             </Link>
           </div>
         </div>
@@ -103,8 +96,8 @@ export default function Header() {
 
           {/* 우측 액션 */}
           <div className={s.actions}>
-            <a href="tel:0317771234" className={s.phoneLinkDesktop}>
-              <Phone size={14} /> 031-777-1234
+            <a href="tel:0448650801" className={s.phoneLinkDesktop}>
+              <Phone size={14} /> 044-865-0801
             </a>
             <Link href="/support/inquiry" className={s.inquiryBtn}>
               견적 문의
@@ -156,8 +149,8 @@ export default function Header() {
                 </div>
               ))}
               <div className={s.mobileActions}>
-                <a href="tel:0317771234" className={s.mobilePhone}>
-                  <Phone size={15} /> 031-777-1234
+                <a href="tel:0448650801" className={s.mobilePhone}>
+                  <Phone size={15} /> 044-865-0801
                 </a>
                 <Link href="/support/inquiry" className={s.mobileInquiry}
                   onClick={() => setMobileOpen(false)}

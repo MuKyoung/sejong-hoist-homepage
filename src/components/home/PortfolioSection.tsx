@@ -8,13 +8,13 @@ import { ArrowRight, ArrowUpRight } from "lucide-react";
 import s from "./PortfolioSection.module.css";
 
 const WORKS = [
-  { id: 1, client: "현대제철",   cat: "천장크레인",  spec: "200T × 2대",    year: "2023", img: "/images/sejong_1.png", large: true },
-  { id: 2, client: "한화솔루션", cat: "갠트리크레인", spec: "80T × 1대",     year: "2023", img: "/images/sejong_2.png", large: false },
-  { id: 3, client: "LG화학",    cat: "특수크레인",  spec: "방폭 30T × 3대", year: "2022", img: "/images/sejong_3.png", large: false },
-  { id: 4, client: "삼성중공업", cat: "갠트리크레인", spec: "120T × 4대",    year: "2022", img: "/images/sejong_4.png", large: true },
+  { id: 1, client: "엘에스일렉트릭㈜",      cat: "Double Girder Crane", spec: "5TON / 10TON",  year: "2024", img: "/images/sejong_1.png", large: true },
+  { id: 2, client: "그라브 갠트리크레인",    cat: "Gantry Crane",        spec: "350TON",        year: "2023", img: "/images/sejong_2.png", large: false },
+  { id: 3, client: "방폭 호이스트 크레인",   cat: "Explosion-Proof",     spec: "3TON Single",   year: "2023", img: "/images/sejong_3.png", large: false },
+  { id: 4, client: "한국자동차연구원",        cat: "Overhead Crane",      spec: "천장크레인",     year: "2022", img: "/images/sejong_4.png", large: true },
 ];
 
-const CLIENTS = ["현대제철","한화솔루션","LG화학","삼성중공업","포스코","기아자동차","한국전력","현대모비스","SK하이닉스","롯데케미칼"];
+const CLIENTS = ["엘에스일렉트릭㈜","한국자동차연구원","자동차부품인증시험센터","여수산업안전체험교육장","항공보안장비시험인증센터","강원특별자치도","㈜JKS","미디어테크","우양","KR 산업"];
 
 const E = [0.22, 1, 0.36, 1] as never;
 
@@ -37,14 +37,14 @@ export default function PortfolioSection() {
               initial={{ opacity: 0, y: 14 }} animate={inView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.65, ease: E, delay: 0.08 }}
             >
-              주요 납품실적
+              시공사례
             </motion.h2>
           </div>
           <motion.div initial={{ opacity: 0 }} animate={inView ? { opacity: 1 } : {}}
             transition={{ duration: 0.5, ease: E, delay: 0.2 }}
           >
             <Link href="/portfolio" className={s.allLink}>
-              전체 실적 보기 <ArrowRight size={12} />
+              전체 시공사례 <ArrowRight size={12} />
             </Link>
           </motion.div>
         </div>
@@ -78,7 +78,7 @@ export default function PortfolioSection() {
           initial={{ opacity: 0, y: 16 }} animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6, ease: E, delay: 0.5 }}
         >
-          <p className={s.clientsLabel}>주요 납품처</p>
+          <p className={s.clientsLabel}>주요 시공처</p>
           <div className={s.marqueeOuter}>
             <div className={s.marqueeInner}>
               {[...CLIENTS, ...CLIENTS].map((name, i) => (

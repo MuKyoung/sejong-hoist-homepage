@@ -9,31 +9,31 @@ import s from "./ValuesSection.module.css";
 
 const VALUES = [
   {
-    id: "quality", icon: <CheckCircle2 size={20} />, tab: "제조 역량",
-    title: "자체 공장 직납,\n품질을 직접 통제합니다",
-    body: "국내 자체 생산 시설을 통해 핵심 부품부터 완성품까지 전 공정을 내재화했습니다. 납기 준수율 99%, ISO 9001 품질관리 시스템으로 일관된 품질을 보장합니다.",
-    metrics: [{ label: "납기 준수율", value: "99%" }, { label: "불량 반품률", value: "0.3%↓" }],
+    id: "wire", icon: <CheckCircle2 size={20} />, tab: "Wire Hoist",
+    title: "중량물 인양의 핵심,\nWire Rope Hoist",
+    body: "와이어 로프 방식의 권상 장치로 0.5T부터 350T까지 폭넓은 하중 범위를 커버합니다. Single·Double Girder 모두 적용 가능하며 엘에스일렉트릭 등 대형 공장에 다수 납품된 검증된 제품입니다.",
+    metrics: [{ label: "최대 하중", value: "350T" }, { label: "시공 실적", value: "500+" }],
     img: "/images/sejong_1.png",
   },
   {
-    id: "design", icon: <Wrench size={20} />, tab: "맞춤 설계",
-    title: "카탈로그가 아닌\n현장 분석에서 시작합니다",
-    body: "단순 규격 제품 납품이 아닌, 고객의 생산 공정·환경·하중 조건을 직접 분석하여 최적 사양을 제안합니다. 방폭·클린룸·내열 등 특수 환경도 대응 가능합니다.",
-    metrics: [{ label: "맞춤 설계 비율", value: "65%" }, { label: "현장 재설계 사례", value: "0건" }],
+    id: "chain", icon: <Wrench size={20} />, tab: "Chain Hoist",
+    title: "소형·경량에 최적화된\nChain Hoist",
+    body: "체인 방식으로 협소한 공간에도 설치할 수 있습니다. 0.25T부터 20T까지 지원하며 모노레일 시스템과 연계한 물류 자동화 환경에도 적합합니다.",
+    metrics: [{ label: "최소 하중", value: "0.25T" }, { label: "설치 높이", value: "Low Head" }],
     img: "/images/sejong_2.png",
   },
   {
-    id: "service", icon: <Timer size={20} />, tab: "A/S 대응",
-    title: "가동 중단 시간을\n최소화하는 빠른 대응",
-    body: "전국 서비스 네트워크로 긴급 요청 시 24시간 이내 현장 출동합니다. 예방 정비 계획 수립을 통해 비계획적 가동 중단을 사전에 방지합니다.",
-    metrics: [{ label: "평균 출동 시간", value: "4.2h" }, { label: "예방정비 계약사", value: "120+" }],
+    id: "explosion", icon: <ShieldCheck size={20} />, tab: "방폭 Hoist",
+    title: "위험 환경을 위한\nExplosion-Proof Hoist",
+    body: "석유화학·가스·도장 공장 등 폭발 위험 환경에서 안전하게 운용할 수 있는 방폭형 호이스트입니다. 위험 Zone 1·2 대응, 내화학성 소재 적용으로 현장 안전을 보장합니다.",
+    metrics: [{ label: "방폭 인증", value: "Ex" }, { label: "Zone 대응", value: "1·2" }],
     img: "/images/sejong_3.png",
   },
   {
-    id: "safety", icon: <ShieldCheck size={20} />, tab: "안전 기준",
-    title: "법정 기준을 초과하는\n안전 설계 원칙",
-    body: "산업안전보건법 기준 대비 130% 이상의 안전계수로 설계합니다. 전 제품 출하 전 125% 부하 테스트 및 전기·기계 안전장치 검증을 의무화합니다.",
-    metrics: [{ label: "안전계수", value: "130%+" }, { label: "출하 전 부하 테스트", value: "125%" }],
+    id: "crane", icon: <Timer size={20} />, tab: "Crane",
+    title: "현장 맞춤 설계로\n만드는 크레인",
+    body: "천장크레인·갠트리크레인·그라브크레인까지 고객 현장의 공간·하중·환경 조건을 직접 분석해 최적 사양을 설계합니다. 최대 350TON 그라브 갠트리크레인까지 제작 가능합니다.",
+    metrics: [{ label: "최대 제작", value: "350T" }, { label: "크레인 종류", value: "5종+" }],
     img: "/images/sejong_4.png",
   },
 ];
@@ -59,15 +59,15 @@ export default function ValuesSection() {
               initial={{ opacity: 0, y: 14 }} animate={inView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.65, ease: E, delay: 0.08 }}
             >
-              선택하는 이유
+              제품 라인업
             </motion.h2>
           </div>
           <motion.p className={s.headerDesc}
             initial={{ opacity: 0 }} animate={inView ? { opacity: 1 } : {}}
             transition={{ duration: 0.6, ease: E, delay: 0.2 }}
           >
-            1984년부터 오직 크레인과 호이스트만을 전문으로 해온 기업.<br />
-            제조부터 A/S까지 일관된 책임으로 고객 현장을 지원합니다.
+            Wire Hoist · Chain Hoist · Explosion-Proof · Crane.<br />
+            현장 조건에 맞는 최적의 제품을 설계·제작·시공합니다.
           </motion.p>
         </div>
 
