@@ -21,7 +21,7 @@ const NEWS = [
     desc:"사이트 내 견적문의 페이지를 통해 24시간 접수 가능." },
 ];
 
-const E = [0.22, 1, 0.36, 1] as never;
+const E = [0.2, 0.6, 0.25, 1] as never;
 
 export default function NewsSection() {
   const ref = useRef<HTMLDivElement>(null);

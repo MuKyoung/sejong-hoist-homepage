@@ -1,24 +1,15 @@
-/* ── PortfolioSection ────────────────────────────────────── */
-.section {
-  background: #ffffff;
-  padding: 80px 0;
-}
-@media (min-width: 1024px) { .section { padding: 112px 0; } }
+/* ── PortfolioSection — surface-alt bg, flat cards 20px ──── */
+.section { background: var(--sj-surface-alt); padding: 80px 0; }
+@media (min-width: 1024px) { .section { padding: 96px 0; } }
 
 .inner {
-  max-width: 1440px;
-  margin: 0 auto;
-  padding: 0 24px;
+  max-width: 1280px; margin: 0 auto; padding: 0 24px;
 }
 @media (min-width: 1024px) { .inner { padding: 0 40px; } }
 @media (min-width: 1280px) { .inner { padding: 0 80px; } }
 
-/* 헤더 */
 .header {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-  margin-bottom: 32px;
+  display: flex; flex-direction: column; gap: 12px; margin-bottom: 32px;
 }
 @media (min-width: 640px) {
   .header { flex-direction: row; align-items: flex-end; justify-content: space-between; }
@@ -26,125 +17,99 @@
 @media (min-width: 1024px) { .header { margin-bottom: 40px; } }
 
 .tag {
+  display: flex; align-items: center; gap: 8px; margin-bottom: 10px;
   font-size: 10.5px; font-weight: 700; letter-spacing: 0.25em;
-  text-transform: uppercase; color: #f97316;
-  display: flex; align-items: center; gap: 8px; margin-bottom: 12px;
+  text-transform: uppercase; color: var(--sj-red);
 }
-.tagLine { display: block; width: 20px; height: 1px; background: #f97316; }
+.tagLine { display: block; width: 16px; height: 1.5px; background: var(--sj-red); }
 
 .sectionTitle {
-  font-size: clamp(2rem, 4.5vw, 3.5rem);
-  font-weight: 900; color: #0b1e4e; letter-spacing: -0.04em; line-height: 1; margin: 0;
+  font-size: clamp(1.75rem, 4vw, 2.875rem);
+  font-weight: 700; line-height: 1.21; letter-spacing: -0.025em;
+  color: var(--sj-navy); margin: 0;
 }
 
 .allLink {
-  display: inline-flex; align-items: center; gap: 8px;
-  font-size: 12.5px; font-weight: 700; color: #64748b;
-  text-decoration: none; transition: color 0.2s ease; white-space: nowrap;
+  display: inline-flex; align-items: center; gap: 6px;
+  font-size: 13px; font-weight: 700; color: var(--sj-muted);
+  transition: color var(--motion-fast); white-space: nowrap;
 }
-.allLink:hover { color: #0b1e4e; }
+.allLink:hover { color: var(--sj-navy); }
 
 /* 그리드 */
 .grid {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 16px;
+  display: grid; grid-template-columns: 1fr; gap: 12px;
 }
-@media (min-width: 640px) {
-  .grid { grid-template-columns: 1fr 1fr; gap: 16px; }
-}
-@media (min-width: 1024px) { .grid { gap: 20px; } }
+@media (min-width: 640px) { .grid { grid-template-columns: 1fr 1fr; gap: 14px; } }
+@media (min-width: 1024px) { .grid { gap: 16px; } }
 
-/* 카드 */
+/* 카드 — flat, 20px radius */
 .card {
-  position: relative;
-  overflow: hidden;
-  background: #e2e8f0;
-  cursor: pointer;
+  position: relative; overflow: hidden;
+  background: var(--sj-surface); cursor: pointer;
+  border-radius: var(--r-xl);
+  border: 1px solid var(--sj-hairline);
 }
 .cardLarge  { aspect-ratio: 4 / 3; }
 .cardSquare { aspect-ratio: 1 / 1; }
 
-.cardImg {
-  transition: transform 0.7s ease;
-  object-fit: cover;
-}
-.card:hover .cardImg { transform: scale(1.05); }
+.cardImg { transition: transform 0.65s ease; object-fit: cover; }
+.card:hover .cardImg { transform: scale(1.04); }
 
 .cardOverlay {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(to top, rgba(0,0,0,0.78) 0%, rgba(0,0,0,0.18) 55%, transparent 100%);
+  position: absolute; inset: 0;
+  background: linear-gradient(
+    to top,
+    rgba(27, 41, 82, 0.80) 0%,
+    rgba(27, 41, 82, 0.15) 55%,
+    transparent 100%
+  );
+  border-radius: var(--r-xl);
 }
 
+/* DESIGN.md stat chip style for badge */
 .badge {
-  position: absolute;
-  top: 16px; left: 16px;
-  background: #f97316;
-  color: #ffffff;
-  font-size: 9.5px; font-weight: 700; letter-spacing: 0.1em;
-  text-transform: uppercase;
-  padding: 4px 10px;
+  position: absolute; top: 14px; left: 14px;
+  background: var(--sj-tint);
+  color: var(--sj-navy);
+  font-size: 10px; font-weight: 700;
+  padding: 4px 12px; border-radius: var(--r-full);
 }
 
 .cardInfo {
-  position: absolute;
-  bottom: 0; left: 0; right: 0;
-  padding: 20px 24px;
-  display: flex;
-  align-items: flex-end;
-  justify-content: space-between;
+  position: absolute; bottom: 0; left: 0; right: 0;
+  padding: 18px 20px;
+  display: flex; align-items: flex-end; justify-content: space-between;
 }
 
-.cardMeta {
-  font-size: 10.5px; font-weight: 700;
-  color: rgba(255,255,255,0.50);
-  letter-spacing: 0.05em; margin-bottom: 4px;
-}
+.cardMeta  { font-size: 10.5px; font-weight: 600; color: rgba(255,255,255,0.45); margin-bottom: 3px; }
 .cardClient {
-  font-size: clamp(1rem, 2vw, 1.35rem);
-  font-weight: 900; color: #ffffff; letter-spacing: -0.01em; line-height: 1.2;
+  font-size: clamp(1rem, 2.2vw, 1.25rem);
+  font-weight: 700; color: #ffffff; letter-spacing: -0.01em; line-height: 1.2;
 }
 
 .cardArrow {
-  width: 36px; height: 36px;
-  background: #f97316;
+  width: 32px; height: 32px;
+  background: var(--sj-red); border-radius: var(--r-sm);
   display: flex; align-items: center; justify-content: center;
-  opacity: 0; transition: opacity 0.3s ease; flex-shrink: 0;
+  opacity: 0; transition: opacity var(--motion-standard); flex-shrink: 0;
 }
 .card:hover .cardArrow { opacity: 1; }
 
-/* 클라이언트 마퀴 */
-.clientsWrap {
-  margin-top: 48px;
-  padding-top: 40px;
-  border-top: 1px solid #f1f5f9;
-}
-
+/* 마퀴 */
+.clientsWrap { margin-top: 48px; padding-top: 40px; border-top: 1px solid var(--sj-hairline); }
 .clientsLabel {
-  font-size: 9.5px; font-weight: 700; letter-spacing: 0.25em;
-  text-transform: uppercase; color: #cbd5e1; text-align: center; margin-bottom: 28px;
+  font-size: 10px; font-weight: 700; letter-spacing: 0.25em;
+  text-transform: uppercase; color: var(--sj-faint); text-align: center; margin-bottom: 24px;
 }
-
-.marqueeOuter {
-  position: relative;
-  overflow: hidden;
-}
-
-@keyframes marquee {
-  from { transform: translateX(0); }
-  to   { transform: translateX(-50%); }
-}
+.marqueeOuter { position: relative; overflow: hidden; }
 
 .marqueeInner {
-  display: flex;
-  align-items: center;
-  gap: 40px;
-  animation: marquee 28s linear infinite;
-  width: max-content;
+  display: flex; align-items: center; gap: 48px;
+  animation: marquee 28s linear infinite; width: max-content;
 }
-@media (min-width: 1024px) { .marqueeInner { gap: 56px; } }
 
 .clientName {
-  font-size: 13px; font-weight: 700; color: #cbd5e1; flex-shrink: 0; white-space: nowrap;
+  font-size: 13px; font-weight: 700; color: var(--sj-faint);
+  flex-shrink: 0; white-space: nowrap;
 }

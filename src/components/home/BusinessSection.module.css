@@ -1,181 +1,106 @@
-/* ── BusinessSection ─────────────────────────────────────── */
-.section {
-  background: #06090f;
-  padding: 80px 0 80px;
-}
-@media (min-width: 1024px) { .section { padding: 112px 0; } }
+/* ── BusinessSection — white canvas, flat cards 20px radius ─ */
+.section { background: var(--sj-canvas); padding: 80px 0; }
+@media (min-width: 1024px) { .section { padding: 96px 0; } }
 
-/* 섹션 헤더 */
 .header {
-  max-width: 1440px;
-  margin: 0 auto;
-  padding: 0 24px;
-  display: flex;
-  align-items: flex-end;
-  justify-content: space-between;
-  gap: 24px;
-  margin-bottom: 40px;
+  max-width: 1280px; margin: 0 auto;
+  padding: 0 24px; margin-bottom: 40px;
+  display: flex; align-items: flex-end; justify-content: space-between; gap: 24px;
 }
 @media (min-width: 1024px) { .header { padding: 0 40px; margin-bottom: 48px; } }
 @media (min-width: 1280px) { .header { padding: 0 80px; } }
 
-.sectionTag {
-  font-size: 10.5px;
-  font-weight: 700;
-  letter-spacing: 0.25em;
-  text-transform: uppercase;
-  color: #f97316;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  margin-bottom: 12px;
+/* 섹션 태그 — hairline left border */
+.tag {
+  display: flex; align-items: center; gap: 8px; margin-bottom: 10px;
+  font-size: 10.5px; font-weight: 700; letter-spacing: 0.25em;
+  text-transform: uppercase; color: var(--sj-red);
 }
-.tagLine {
-  display: block;
-  width: 20px;
-  height: 1px;
-  background: #f97316;
-  flex-shrink: 0;
-}
+.tagLine { display: block; width: 16px; height: 1.5px; background: var(--sj-red); }
 
 .sectionTitle {
-  font-size: clamp(2rem, 4.5vw, 3.5rem);
-  font-weight: 900;
-  color: #ffffff;
-  letter-spacing: -0.04em;
-  line-height: 1;
-  margin: 0;
+  font-size: clamp(1.75rem, 4vw, 2.875rem);
+  font-weight: 700; line-height: 1.21; letter-spacing: -0.025em;
+  color: var(--sj-navy); margin: 0;
 }
 
 .allLink {
-  display: none;
-  align-items: center;
-  gap: 6px;
-  font-size: 12px;
-  font-weight: 700;
-  color: rgba(255,255,255,0.40);
-  text-decoration: none;
-  transition: color 0.2s ease;
-  white-space: nowrap;
-  flex-shrink: 0;
+  display: none; align-items: center; gap: 6px;
+  font-size: 13px; font-weight: 700; color: var(--sj-muted);
+  transition: color var(--motion-fast); white-space: nowrap; flex-shrink: 0;
 }
-.allLink:hover { color: #ffffff; }
+.allLink:hover { color: var(--sj-navy); }
 @media (min-width: 640px) { .allLink { display: flex; } }
 
-/* Swiper 영역 */
-.swiperWrap {
-  padding-left: 24px;
-}
+/* Swiper */
+.swiperWrap { padding-left: 24px; }
 @media (min-width: 1024px) { .swiperWrap { padding-left: 40px; } }
 @media (min-width: 1280px) { .swiperWrap { padding-left: 80px; } }
 
-/* 카드 */
+/* 카드 — flat, 20px radius (DESIGN.md card) */
 .card {
-  position: relative;
-  display: block;
-  overflow: hidden;
-  background: #18181b;
+  position: relative; display: block; overflow: hidden;
+  background: var(--sj-surface-alt);
+  border: 1px solid var(--sj-hairline);
+  border-radius: var(--r-xl);   /* 20px — DESIGN.md card radius */
   aspect-ratio: 3 / 4;
-  text-decoration: none;
 }
 
 .cardVideo {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  opacity: 0.7;
-  transition: transform 0.7s ease, opacity 0.4s ease;
+  position: absolute; inset: 0;
+  width: 100%; height: 100%; object-fit: cover;
+  opacity: 0.55;
+  border-radius: var(--r-xl);
+  transition: transform 0.65s ease, opacity 0.35s ease;
 }
-.card:hover .cardVideo {
-  transform: scale(1.05);
-  opacity: 0.9;
-}
+.card:hover .cardVideo { transform: scale(1.04); opacity: 0.72; }
 
 .cardGrad {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(to top, rgba(0,0,0,0.82) 0%, rgba(0,0,0,0.18) 50%, transparent 100%);
+  position: absolute; inset: 0;
+  background: linear-gradient(
+    to top,
+    rgba(27, 41, 82, 0.90) 0%,
+    rgba(27, 41, 82, 0.20) 55%,
+    transparent 100%
+  );
+  border-radius: var(--r-xl);
 }
 
 .cardNum {
-  position: absolute;
-  top: 20px;
-  right: 20px;
-  font-size: 3.5rem;
-  font-weight: 900;
-  color: rgba(255,255,255,0.12);
-  line-height: 1;
-  letter-spacing: -0.04em;
-  user-select: none;
-  pointer-events: none;
+  position: absolute; top: 18px; right: 18px;
+  font-size: 3rem; font-weight: 700;
+  color: rgba(255,255,255,0.10);
+  line-height: 1; letter-spacing: -0.05em; user-select: none;
 }
 
-.cardBody {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  padding: 24px;
-}
-@media (min-width: 1024px) { .cardBody { padding: 28px; } }
+.cardBody { position: absolute; bottom: 0; left: 0; right: 0; padding: 20px; }
+@media (min-width: 1024px) { .cardBody { padding: 24px; } }
 
 .cardEn {
-  font-size: 10px;
-  font-weight: 700;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  color: #fb923c;
-  margin-bottom: 8px;
+  font-size: 9.5px; font-weight: 700; letter-spacing: 0.2em;
+  text-transform: uppercase; color: var(--sj-red); margin-bottom: 6px;
 }
-
 .cardName {
-  font-size: 1.4rem;
-  font-weight: 900;
-  color: #ffffff;
-  letter-spacing: -0.02em;
-  line-height: 1.15;
-  margin: 0 0 12px;
+  font-size: 1.2rem; font-weight: 700; color: #ffffff;
+  letter-spacing: -0.02em; line-height: 1.2; margin: 0 0 10px;
 }
-
 .cardDesc {
-  font-size: 12.5px;
-  color: rgba(255,255,255,0.55);
-  line-height: 1.7;
-  margin: 0 0 16px;
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
+  font-size: 12px; color: rgba(255,255,255,0.55);
+  line-height: 1.6; margin: 0 0 12px;
+  display: -webkit-box; -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical; overflow: hidden;
 }
-
-.cardSpecs {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 6px;
-  margin-bottom: 20px;
-}
+.cardSpecs { display: flex; flex-wrap: wrap; gap: 5px; margin-bottom: 16px; }
 .cardSpec {
-  font-size: 10px;
-  font-weight: 600;
-  color: rgba(255,255,255,0.60);
+  font-size: 10px; font-weight: 600;
+  color: rgba(255,255,255,0.55);
   border: 1px solid rgba(255,255,255,0.20);
-  padding: 2px 8px;
+  padding: 2px 8px; border-radius: var(--r-sm);
 }
-
 .cardCta {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  font-size: 11.5px;
-  font-weight: 700;
-  color: #fb923c;
-  opacity: 0;
-  transform: translateY(8px);
-  transition: opacity 0.3s ease, transform 0.3s ease;
+  display: flex; align-items: center; gap: 5px;
+  font-size: 11.5px; font-weight: 700; color: var(--sj-red);
+  opacity: 0; transform: translateY(6px);
+  transition: opacity var(--motion-standard), transform var(--motion-standard);
 }
-.card:hover .cardCta {
-  opacity: 1;
-  transform: translateY(0);
-}
+.card:hover .cardCta { opacity: 1; transform: translateY(0); }

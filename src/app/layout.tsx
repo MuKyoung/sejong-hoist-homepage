@@ -25,7 +25,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="ko" className={inter.variable}>
+    <html lang="ko">
       <head>
         {/* Pretendard: 한국어 최적화, 상업용 무료 */}
         <link

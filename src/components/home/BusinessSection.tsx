@@ -52,7 +52,7 @@ const PRODUCTS = [
   },
 ];
 
-const E = [0.22, 1, 0.36, 1] as never;
+const E = [0.2, 0.6, 0.25, 1] as never;
 
 export default function BusinessSection() {
   const ref = useRef<HTMLDivElement>(null);

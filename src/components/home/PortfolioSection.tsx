@@ -16,7 +16,7 @@ const WORKS = [
 
 const CLIENTS = ["엘에스일렉트릭㈜","한국자동차연구원","자동차부품인증시험센터","여수산업안전체험교육장","항공보안장비시험인증센터","강원특별자치도","㈜JKS","미디어테크","우양","KR 산업"];
 
-const E = [0.22, 1, 0.36, 1] as never;
+const E = [0.2, 0.6, 0.25, 1] as never;
 
 export default function PortfolioSection() {
   const ref = useRef<HTMLDivElement>(null);

@@ -11,7 +11,7 @@ const STATS = [
   { number: 24,  suffix: "h",  label: "긴급 A/S 대응",   sub: "전국 출동 서비스" },
 ];
 
-const E = [0.22, 1, 0.36, 1] as never;
+const E = [0.2, 0.6, 0.25, 1] as never;
 
 function Counter({ to, suffix, trigger }: { to: number; suffix: string; trigger: boolean }) {
   const [val, setVal] = useState(0);

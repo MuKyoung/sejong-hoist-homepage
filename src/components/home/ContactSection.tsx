@@ -15,7 +15,7 @@ const CONTACTS = [
     sub: "시목부강로 314", href: "https://map.kakao.com/?q=세종특별자치시+부강면+시목부강로+314" },
 ];
 
-const E = [0.22, 1, 0.36, 1] as never;
+const E = [0.2, 0.6, 0.25, 1] as never;
 
 export default function ContactSection() {
   const ref = useRef<HTMLDivElement>(null);
