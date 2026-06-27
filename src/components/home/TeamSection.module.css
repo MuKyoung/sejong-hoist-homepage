@@ -1,0 +1,66 @@
+/* Section 3 — Team (kcd.co.kr Team KCD) */
+.section {
+  padding: 80px 0;
+  background: var(--canvas);
+}
+@media (min-width: 1024px) { .section { padding: 96px 0; } }
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 48px;
+  align-items: center;
+}
+@media (min-width: 1024px) {
+  .grid { grid-template-columns: 1fr 1fr; gap: 64px; }
+}
+
+.eyebrow {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--muted);
+  margin-bottom: 20px;
+}
+
+.headline {
+  font-size: clamp(1.75rem, 4vw, 2.875rem);
+  font-weight: 700;
+  line-height: 1.35;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+  margin-bottom: 24px;
+}
+
+.body {
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.75;
+  color: var(--body);
+  margin-bottom: 32px;
+  max-width: 520px;
+}
+
+.ghostBtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 51px;
+  padding: 15px 32px;
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--ink);
+  border: 1px solid var(--ink);
+  border-radius: var(--r-sm);
+  transition: background var(--motion-fast), color var(--motion-fast);
+}
+.ghostBtn:hover { background: var(--ink); color: var(--canvas); }
+
+.visual {
+  position: relative;
+  aspect-ratio: 4 / 3;
+  border-radius: var(--r-xl);
+  overflow: hidden;
+  background: var(--surface-alt);
+}
+
+.image { object-fit: cover; }

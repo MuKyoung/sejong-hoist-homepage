@@ -1,42 +1,26 @@
 @import "tailwindcss";
 
-/* ═══════════════════════════════════════════════════════════
-   SEJONG HOIST & CRANE — Design Tokens
-   Based on: DESIGN.md (KCD flat system) + sjhoist.com logo palette
-   ═══════════════════════════════════════════════════════════ */
-
+/* DESIGN.md — KCD flat system (kcd.co.kr) */
 :root {
-  /* Brand */
-  --sj-navy:          #2b3e8c;  /* logo SEJONG text - primary heading */
-  --sj-navy-dark:     #1a2952;  /* deeper navy for max contrast */
-  --sj-ink:           #1e2a5e;  /* corporate ink (navy-dark) */
-  --sj-ink-deep:      #0f1a3a;  /* near-black */
+  --primary:       #2d91ff;
+  --primary-deep:  #0257d7;
+  --navy:          #192d82;
+  --ink:           #1e2137;
+  --ink-deep:      #0c1120;
+  --body:          #44546f;
+  --muted:         #728094;
+  --faint:         #a4aeba;
+  --canvas:        #ffffff;
+  --surface:       #f4f7f9;
+  --surface-alt:   #f9fbfc;
+  --tint:          #e2f3ff;
+  --tint-strong:   #cae7ff;
+  --pale:          #f3faff;
+  --hairline:      #eeeeee;
+  --on-primary:    #ffffff;
 
-  /* Action - single saturated color (logo red accent) */
-  --sj-red:           #c8272d;  /* action / CTA - reserved */
-  --sj-red-pressed:   #a31f23;  /* pressed state */
+  --header-h:      72px;
 
-  /* Text scale */
-  --sj-body:          #44546f;
-  --sj-muted:         #728094;
-  --sj-faint:         #a4aeba;
-
-  /* Surfaces (flat, no elevation) */
-  --sj-canvas:        #ffffff;
-  --sj-surface:       #f4f7f9;  /* section separation */
-  --sj-surface-alt:   #f9fbfc;  /* card surface */
-  --sj-tint:          #eaedfa;  /* light navy tint - highlight card */
-  --sj-tint-strong:   #d5dcf5;  /* stronger navy tint */
-  --sj-red-tint:      #fdf0f0;  /* very light red tint */
-
-  /* Separation */
-  --sj-hairline:      #eeeeee;  /* thin dividers - primary separation device */
-
-  /* On-color */
-  --sj-on-navy:       #ffffff;
-  --sj-on-red:        #ffffff;
-
-  /* Spacing (8px base) */
   --sp-xs:  4px;
   --sp-sm:  8px;
   --sp-md:  12px;
@@ -46,14 +30,12 @@
   --sp-2xl: 48px;
   --sp-3xl: 64px;
 
-  /* Radius (DESIGN.md scale) */
-  --r-sm:   6px;   /* corporate ghost buttons */
-  --r-md:   12px;  /* inputs, compact elements */
-  --r-lg:   16px;  /* product CTAs */
-  --r-xl:   20px;  /* cards — the workhorse */
+  --r-sm:   6px;
+  --r-md:   12px;
+  --r-lg:   16px;
+  --r-xl:   20px;
   --r-full: 9999px;
 
-  /* Motion */
   --motion-fast:     120ms;
   --motion-standard: 200ms;
   --motion-slow:     320ms;
@@ -62,15 +44,7 @@
   --ease-std:    cubic-bezier(0.25, 0.1, 0.25, 1);
 }
 
-/* ═══════════════════════════════════════════════════════════
-   RESET & BASE
-   ═══════════════════════════════════════════════════════════ */
-
-*, *::before, *::after {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 html {
   font-size: 16px;
@@ -79,7 +53,6 @@ html {
 }
 
 body {
-  /* Pretendard first (DESIGN.md spec) — Inter as Latin fallback */
   font-family:
     "Pretendard Variable", Pretendard,
     -apple-system, BlinkMacSystemFont,
@@ -88,114 +61,23 @@ body {
   font-size: 16px;
   font-weight: 400;
   line-height: 1.5;
-  color: var(--sj-body);
-  background: var(--sj-canvas);
+  color: var(--body);
+  background: var(--canvas);
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
   word-break: keep-all;
 }
 
 img, video { display: block; max-width: 100%; }
 a { color: inherit; text-decoration: none; }
-button { cursor: pointer; }
-
-/* ═══════════════════════════════════════════════════════════
-   TYPOGRAPHY UTILITIES (DESIGN.md scale)
-   ═══════════════════════════════════════════════════════════ */
-
-.t-display-hero {
-  font-size: clamp(2.5rem, 7vw, 4.5rem);
-  font-weight: 700;
-  line-height: 1.10;
-  letter-spacing: -0.03em;
-  color: var(--sj-navy);
-}
-.t-display {
-  font-size: clamp(2rem, 5vw, 3.5rem);
-  font-weight: 700;
-  line-height: 1.21;
-  letter-spacing: -0.025em;
-  color: var(--sj-navy);
-}
-.t-heading {
-  font-size: clamp(1.75rem, 4vw, 2.875rem);
-  font-weight: 700;
-  line-height: 1.35;
-  letter-spacing: -0.02em;
-  color: var(--sj-navy);
-}
-.t-title {
-  font-size: 1.5rem;
-  font-weight: 600;
-  line-height: 1.21;
-  color: var(--sj-navy);
-}
-.t-body  { font-size: 1rem;    font-weight: 400; line-height: 1.5; color: var(--sj-body); }
-.t-muted { font-size: 0.875rem; font-weight: 400; color: var(--sj-muted); }
-.t-faint { font-size: 0.75rem;  font-weight: 400; color: var(--sj-faint); }
-
-/* ═══════════════════════════════════════════════════════════
-   BUTTON UTILITIES (DESIGN.md patterns)
-   ═══════════════════════════════════════════════════════════ */
-
-/* Solid CTA (red fill) */
-.btn-primary {
-  display: inline-flex; align-items: center; gap: 8px;
-  background: var(--sj-red);
-  color: var(--sj-on-red);
-  font-size: 16px; font-weight: 700; line-height: 1;
-  padding: 15px 32px;
-  border: none;
-  border-radius: var(--r-sm);
-  transition: background var(--motion-fast) var(--ease-enter);
-}
-.btn-primary:hover { background: var(--sj-red-pressed); }
-
-/* Ghost corporate */
-.btn-ghost {
-  display: inline-flex; align-items: center; gap: 8px;
-  background: transparent;
-  color: var(--sj-ink);
-  font-size: 16px; font-weight: 700; line-height: 1;
-  padding: 15px 32px;
-  border: 1px solid var(--sj-ink);
-  border-radius: var(--r-sm);
-  transition: background var(--motion-fast), color var(--motion-fast);
-}
-.btn-ghost:hover { background: var(--sj-ink); color: #ffffff; }
-
-/* Soft CTA (surface fill, red label) */
-.btn-soft {
-  display: inline-flex; align-items: center; gap: 8px;
-  background: var(--sj-surface);
-  color: var(--sj-red);
-  font-size: 19px; font-weight: 700; line-height: 1;
-  padding: 0 16px;
-  height: 48px;
-  border: none;
-  border-radius: var(--r-lg);
-  transition: background var(--motion-fast);
-}
-.btn-soft:hover { background: var(--sj-tint); }
-
-/* ═══════════════════════════════════════════════════════════
-   LAYOUT
-   ═══════════════════════════════════════════════════════════ */
+button { cursor: pointer; font-family: inherit; }
 
 .container {
-  max-width: 1280px;
-  margin-left: auto;
-  margin-right: auto;
-  padding-left: clamp(1rem, 4vw, 5rem);
-  padding-right: clamp(1rem, 4vw, 5rem);
+  max-width: 1200px;
+  margin: 0 auto;
+  padding-left: clamp(20px, 5vw, 80px);
+  padding-right: clamp(20px, 5vw, 80px);
 }
-
-.section-pad { padding-top: clamp(4rem, 8vw, 6rem); padding-bottom: clamp(4rem, 8vw, 6rem); }
-
-/* ═══════════════════════════════════════════════════════════
-   ANIMATIONS
-   ═══════════════════════════════════════════════════════════ */
 
 @keyframes marquee {
   from { transform: translateX(0); }
@@ -204,13 +86,9 @@ button { cursor: pointer; }
 
 @keyframes pulse-flat {
   0%, 100% { opacity: 1; }
-  50%       { opacity: 0.4; }
+  50%       { opacity: 0.45; }
 }
-
-/* ═══════════════════════════════════════════════════════════
-   SCROLLBAR
-   ═══════════════════════════════════════════════════════════ */
 
 ::-webkit-scrollbar       { width: 4px; }
 ::-webkit-scrollbar-track { background: transparent; }
-::-webkit-scrollbar-thumb { background: var(--sj-navy); border-radius: 2px; }
+::-webkit-scrollbar-thumb { background: var(--hairline); border-radius: 2px; }
