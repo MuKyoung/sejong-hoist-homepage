@@ -1,14 +1,20 @@
-/* KCD corporate header — white, 18px/700 nav, no shadow */
+/* Header — transparent overlay on hero, solid on scroll / subpages */
 .header {
   position: fixed;
   top: 0; left: 0; right: 0;
   z-index: 100;
   height: var(--header-h);
-  background: var(--canvas);
+  background: transparent;
   border-bottom: 1px solid transparent;
-  transition: border-color var(--motion-standard) var(--ease-std);
+  transition:
+    background var(--motion-standard) var(--ease-std),
+    border-color var(--motion-standard) var(--ease-std);
 }
-.headerScrolled { border-bottom-color: var(--hairline); }
+
+.headerSolid {
+  background: var(--canvas);
+  border-bottom-color: var(--hairline);
+}
 
 .inner {
   max-width: 1200px;
@@ -21,7 +27,20 @@
   gap: 32px;
 }
 
-.logoLink { display: flex; align-items: center; flex-shrink: 0; }
+.logoLink {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+  background: #ffffff;
+  padding: 6px 12px;
+  border-radius: var(--r-sm);
+  transition: background var(--motion-standard);
+}
+
+.headerSolid .logoLink {
+  background: transparent;
+  padding: 0;
+}
 
 .nav {
   display: none;
@@ -37,10 +56,11 @@
   font-size: 18px;
   font-weight: 700;
   line-height: 1.2;
-  color: var(--ink);
+  color: #ffffff;
   transition: color var(--motion-fast) var(--ease-enter);
   white-space: nowrap;
 }
+.headerSolid .navLink { color: var(--ink); }
 .navLink:hover,
 .navLinkActive { color: var(--primary); }
 
@@ -50,13 +70,14 @@
   display: none;
   font-size: 14px;
   font-weight: 700;
-  color: var(--muted);
+  color: rgba(255, 255, 255, 0.75);
   transition: color var(--motion-fast);
 }
-.phone:hover { color: var(--ink); }
+.phone:hover { color: #ffffff; }
+.headerSolid .phone { color: var(--muted); }
+.headerSolid .phone:hover { color: var(--ink); }
 @media (min-width: 1024px) { .phone { display: block; } }
 
-/* corporate ghost CTA */
 .cta {
   display: none;
   align-items: center;
@@ -65,13 +86,24 @@
   padding: 15px 32px;
   font-size: 16px;
   font-weight: 700;
-  color: var(--ink);
-  border: 1px solid var(--ink);
+  color: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.65);
   border-radius: var(--r-sm);
-  transition: background var(--motion-fast), color var(--motion-fast);
+  transition: background var(--motion-fast), color var(--motion-fast), border-color var(--motion-fast);
   white-space: nowrap;
 }
-.cta:hover { background: var(--ink); color: var(--canvas); }
+.cta:hover {
+  background: rgba(255, 255, 255, 0.12);
+  border-color: #ffffff;
+}
+.headerSolid .cta {
+  color: var(--ink);
+  border-color: var(--ink);
+}
+.headerSolid .cta:hover {
+  background: var(--ink);
+  color: var(--canvas);
+}
 @media (min-width: 1024px) { .cta { display: inline-flex; } }
 
 .menuBtn {
@@ -89,9 +121,10 @@
 .menuBar {
   display: block;
   height: 1.5px;
-  background: var(--ink);
+  background: #ffffff;
   transition: all var(--motion-standard);
 }
+.headerSolid .menuBar { background: var(--ink); }
 .menuBarTop    { width: 22px; }
 .menuBarMid    { width: 16px; margin-left: auto; }
 .menuBarBot    { width: 22px; }

@@ -17,9 +17,21 @@ export default function StorySection() {
 
   return (
     <section className={s.section} aria-label="Our Story">
-      <div className="container">
-        <div className={s.grid}>
-          <div>
+      <video
+        autoPlay
+        muted
+        loop
+        playsInline
+        className={s.bgVideo}
+        aria-hidden
+      >
+        <source src="/videos/4763-179741146_medium.mp4" type="video/mp4" />
+      </video>
+      <div className={s.bgOverlay} aria-hidden />
+
+      <div className={s.content}>
+        <div className="container">
+          <div className={s.grid}>
             <p className={s.eyebrow}>Our Story</p>
             <p className={s.sectionLabel}>Our Story</p>
             <h2 className={s.headline}>
@@ -49,19 +61,6 @@ export default function StorySection() {
                 제품 보기
               </Link>
             </div>
-          </div>
-
-          <div className={s.visual}>
-            <video
-              autoPlay
-              muted
-              loop
-              playsInline
-              className={s.video}
-            >
-              <source src="/videos/4763-179741146_medium.mp4" type="video/mp4" />
-            </video>
-            <div className={s.visualOverlay} />
           </div>
         </div>
       </div>

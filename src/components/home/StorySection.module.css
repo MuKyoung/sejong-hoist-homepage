@@ -1,24 +1,52 @@
-/* Section 1 — Our Story (kcd.co.kr) */
+/* Full-bleed video hero — header overlays on top */
 .section {
-  padding-top: calc(var(--header-h) + 64px);
-  padding-bottom: 64px;
-  background: var(--canvas);
+  position: relative;
+  min-height: 100svh;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+}
+
+/* Background video */
+.bgVideo {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 0;
+}
+
+/* Readability overlay */
+.bgOverlay {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: linear-gradient(
+    105deg,
+    rgba(12, 17, 32, 0.88) 0%,
+    rgba(12, 17, 32, 0.62) 45%,
+    rgba(12, 17, 32, 0.35) 100%
+  );
+}
+
+.content {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  padding: calc(var(--header-h) + 48px) 0 80px;
 }
 @media (min-width: 1024px) {
-  .section { padding-top: calc(var(--header-h) + 96px); padding-bottom: 96px; }
+  .content { padding: calc(var(--header-h) + 64px) 0 96px; }
 }
 
 .grid {
   display: grid;
   grid-template-columns: 1fr;
-  gap: 48px;
-  align-items: center;
-}
-@media (min-width: 1024px) {
-  .grid { grid-template-columns: 1fr 1fr; gap: 64px; }
+  gap: 40px;
+  max-width: 720px;
 }
 
-/* Left copy */
 .eyebrow {
   font-size: 13px;
   font-weight: 700;
@@ -31,23 +59,20 @@
 .sectionLabel {
   font-size: 15px;
   font-weight: 700;
-  color: var(--muted);
+  color: rgba(255, 255, 255, 0.55);
   margin-bottom: 20px;
 }
 
 .headline {
-  font-size: clamp(1.75rem, 4vw, 2.875rem);
+  font-size: clamp(1.75rem, 4.5vw, 2.875rem);
   font-weight: 700;
   line-height: 1.35;
   letter-spacing: -0.02em;
-  color: var(--ink);
+  color: #ffffff;
   margin-bottom: 40px;
 }
 
-/* Product block */
-.productBlock {
-  margin-bottom: 32px;
-}
+.productBlock {}
 
 .productBadge {
   font-size: 12px;
@@ -59,17 +84,16 @@
 .productName {
   font-size: clamp(2rem, 5vw, 3rem);
   font-weight: 700;
-  color: var(--navy);
+  color: #ffffff;
   letter-spacing: -0.03em;
   line-height: 1.1;
   margin-bottom: 20px;
 }
 
-/* Pill marquee — KCD service tabs style */
 .pillTrack {
   overflow: hidden;
   margin-bottom: 28px;
-  mask-image: linear-gradient(to right, transparent, black 8%, black 92%, transparent);
+  mask-image: linear-gradient(to right, transparent, black 6%, black 94%, transparent);
 }
 
 .pillRow {
@@ -85,18 +109,19 @@
   padding: 10px 20px;
   font-size: 15px;
   font-weight: 600;
-  color: var(--ink);
-  background: var(--surface);
+  color: rgba(255, 255, 255, 0.85);
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.18);
   border-radius: var(--r-full);
   white-space: nowrap;
 }
 
 .pillActive {
-  background: var(--tint);
-  color: var(--navy);
+  background: rgba(45, 145, 255, 0.25);
+  border-color: rgba(45, 145, 255, 0.45);
+  color: #ffffff;
 }
 
-/* corporate ghost button */
 .ghostBtn {
   display: inline-flex;
   align-items: center;
@@ -105,34 +130,12 @@
   padding: 15px 32px;
   font-size: 16px;
   font-weight: 700;
-  color: var(--ink);
-  border: 1px solid var(--ink);
+  color: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.65);
   border-radius: var(--r-sm);
-  transition: background var(--motion-fast), color var(--motion-fast);
+  transition: background var(--motion-fast), border-color var(--motion-fast);
 }
-.ghostBtn:hover { background: var(--ink); color: var(--canvas); }
-
-/* Right visual */
-.visual {
-  position: relative;
-  aspect-ratio: 4 / 3;
-  border-radius: var(--r-xl);
-  overflow: hidden;
-  background: var(--surface-alt);
-}
-
-.video {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-.visualOverlay {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(
-    135deg,
-    rgba(25, 45, 130, 0.15) 0%,
-    transparent 60%
-  );
+.ghostBtn:hover {
+  background: rgba(255, 255, 255, 0.12);
+  border-color: #ffffff;
 }

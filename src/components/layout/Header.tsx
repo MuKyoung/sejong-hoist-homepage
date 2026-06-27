@@ -15,24 +15,33 @@ const NAV = [
   { label: "새 소식", href: "/support/notice" },
 ];
 
+const SCROLL_THRESHOLD = 48;
+
 export default function Header() {
   const pathname = usePathname();
+  const isHome = pathname === "/";
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 4);
+    const onScroll = () => setScrolled(window.scrollY > SCROLL_THRESHOLD);
+    onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  useEffect(() => { setOpen(false); }, [pathname]);
+  useEffect(() => {
+    setOpen(false);
+    setScrolled(window.scrollY > SCROLL_THRESHOLD);
+  }, [pathname]);
+
+  const isSolid = !isHome || scrolled || open;
 
   const isActive = (href: string) =>
     href === "/" ? pathname === "/" : pathname?.startsWith(href);
 
   return (
-    <header className={`${s.header} ${scrolled ? s.headerScrolled : ""}`}>
+    <header className={`${s.header} ${isSolid ? s.headerSolid : ""}`}>
       <div className={s.inner}>
         <Link href="/" className={s.logoLink} aria-label="세종호이스트크레인 홈">
           <Image
@@ -40,7 +49,7 @@ export default function Header() {
             alt="세종호이스트크레인"
             width={180}
             height={44}
-            style={{ width: "auto", height: "32px", objectFit: "contain" }}
+            style={{ width: "auto", height: "28px", objectFit: "contain" }}
             priority
           />
         </Link>
