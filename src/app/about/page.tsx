@@ -1,135 +1,143 @@
+import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
+import PageHero from "@/components/subpage/PageHero";
+import SubNav from "@/components/subpage/SubNav";
+import ContactBand from "@/components/subpage/ContactBand";
+import { COMPANY } from "@/data/site";
+import s from "@/styles/subpage.module.css";
 
-const subNav = [
+export const metadata: Metadata = {
+  title: "회사소개 | (주)세종호이스트크레인",
+  description: "Wire Hoist·Chain Hoist·Crane 전문 제조기업 (주)세종호이스트크레인을 소개합니다.",
+};
+
+const ABOUT_NAV = [
   { label: "기업개요", href: "/about" },
-  { label: "CEO 인사말", href: "/about/ceo" },
-  { label: "연혁", href: "/about/history" },
-  { label: "찾아오시는 길", href: "/about/location" },
+  { label: "오시는 길", href: "/about/location" },
+];
+
+const VALUES = [
+  {
+    num: "01",
+    title: "안전 최우선",
+    desc: "모든 설비는 현장 안전 기준을 충족하도록 설계·제작합니다. 고객과 작업자의 안전이 최우선입니다.",
+  },
+  {
+    num: "02",
+    title: "기술 혁신",
+    desc: "지속적인 기술 개발과 현장 피드백을 반영해 더 정밀하고 견고한 운반하역 설비를 만듭니다.",
+  },
+  {
+    num: "03",
+    title: "고객 신뢰",
+    desc: "설계부터 납품·시공·A/S까지 투명한 소통과 책임감 있는 서비스로 신뢰를 쌓아갑니다.",
+  },
 ];
 
 export default function AboutPage() {
   return (
     <>
-      {/* 페이지 히어로 */}
-      <section className="relative bg-[#0a1f5c] pt-32 pb-16">
-        <div className="absolute inset-0 opacity-10"
-          style={{
-            backgroundImage: "repeating-linear-gradient(45deg, white 0, white 1px, transparent 0, transparent 50%)",
-            backgroundSize: "20px 20px",
-          }}
-        />
-        <div className="max-w-[1400px] mx-auto px-6 relative z-10">
-          <p className="text-orange-400 text-xs font-bold tracking-widest uppercase mb-4">ABOUT</p>
-          <h1 className="text-white text-5xl font-bold mb-4">회사소개</h1>
-          <p className="text-white/50">세종호이스트크레인을 소개합니다</p>
-        </div>
-      </section>
+      <PageHero
+        eyebrow="About"
+        title="회사소개"
+        desc="운반하역 현장의 안전과 품질을 책임지는 (주)세종호이스트크레인입니다."
+      />
+      <SubNav items={ABOUT_NAV} />
 
-      {/* 서브 네비게이션 */}
-      <div className="bg-white border-b border-gray-200 sticky top-20 z-40">
-        <div className="max-w-[1400px] mx-auto px-6">
-          <nav className="flex gap-8 overflow-x-auto">
-            {subNav.map((item) => (
-              <Link
-                key={item.href}
-                href={item.href}
-                className="py-4 text-sm font-semibold whitespace-nowrap border-b-2 border-[#0a1f5c] text-[#0a1f5c]"
-              >
-                {item.label}
-              </Link>
-            ))}
-          </nav>
-        </div>
-      </div>
-
-      {/* 기업개요 콘텐츠 */}
-      <section className="py-24 bg-white">
-        <div className="max-w-[1400px] mx-auto px-6">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
+      <section className={`${s.section} ${s.sectionWhite}`}>
+        <div className="container">
+          <div className={s.twoCol}>
             <div>
-              <p className="section-label mb-4">COMPANY OVERVIEW</p>
-              <h2 className="text-4xl font-bold text-[#0a1f5c] mb-8 leading-tight title-line">
-                산업의 심장,<br />크레인을 만드는 기업
+              <p className={s.eyebrow}>Company Overview</p>
+              <h2 className={`${s.headline} ${s.headlineNavy}`}>
+                현장의 하중과 안전을
+                <br />
+                설계와 제작으로 풀어냅니다
               </h2>
-              <p className="text-gray-600 leading-relaxed mb-6">
-                세종호이스트크레인은 1984년 창립 이래 40년 이상의 기술력을 바탕으로 천장크레인, 갠트리크레인, 호이스트 분야의 전문 제조기업으로 성장해왔습니다.
+              <p className={s.body}>
+                (주)세종호이스트크레인은 Wire Hoist, Chain Hoist, Explosion-Proof Hoist,
+                Crane 등 운반하역 기계를 전문으로 제조·시공하는 기업입니다.
               </p>
-              <p className="text-gray-600 leading-relaxed mb-6">
-                반도체, 자동차, 철강, 조선, 발전 등 국내 주요 산업 현장에 세종의 크레인이 설치되어 있으며, 정밀한 설계와 견고한 제작, 철저한 품질관리로 고객의 신뢰를 얻어왔습니다.
+              <p className={s.body}>
+                반도체, 자동차, 철강, 중공업, 공공 시설 등 다양한 산업 현장에
+                맞춤형 설비를 납품해 왔으며, 최대 350TON급 그라브 갠트리크레인 시공
+                실적을 보유하고 있습니다.
               </p>
-              <p className="text-gray-600 leading-relaxed mb-10">
-                앞으로도 지속적인 기술 개발과 고객 중심의 서비스로 산업 현장의 안전과 효율을 책임지는 기업이 되겠습니다.
+              <p className={s.body}>
+                설계·제작·설치·A/S까지 원스톱으로 대응하며, 현장 중심의 기술력으로
+                고객의 생산성과 안전을 함께 높입니다.
               </p>
 
-              <div className="grid grid-cols-2 gap-6">
-                {[
-                  { label: "설립", value: "1984년" },
-                  { label: "업종", value: "산업용 크레인 제조" },
-                  { label: "대표이사", value: "홍길동" },
-                  { label: "소재지", value: "경기도 안산시" },
-                ].map((info) => (
-                  <div key={info.label} className="border-l-2 border-orange-500 pl-4">
-                    <p className="text-gray-400 text-xs mb-1">{info.label}</p>
-                    <p className="text-[#0a1f5c] font-bold">{info.value}</p>
-                  </div>
-                ))}
+              <div className={s.infoGrid}>
+                <div className={s.infoItem}>
+                  <p className={s.infoLabel}>대표이사</p>
+                  <p className={s.infoValue}>{COMPANY.ceo}</p>
+                </div>
+                <div className={s.infoItem}>
+                  <p className={s.infoLabel}>업종</p>
+                  <p className={s.infoValue}>호이스트·크레인 제조</p>
+                </div>
+                <div className={s.infoItem}>
+                  <p className={s.infoLabel}>소재지</p>
+                  <p className={s.infoValue}>{COMPANY.address}</p>
+                </div>
+                <div className={s.infoItem}>
+                  <p className={s.infoLabel}>사업자번호</p>
+                  <p className={s.infoValue}>{COMPANY.bizNo}</p>
+                </div>
               </div>
             </div>
 
-            <div className="relative">
-              <div className="relative aspect-square rounded-none overflow-hidden">
-                <Image
-                  src="/images/sejong_2.png"
-                  alt="세종호이스트크레인 시공 현장"
-                  fill
-                  className="object-cover"
-                />
-              </div>
-              {/* 강조 카드 */}
-              <div className="absolute -bottom-8 -left-8 bg-[#0a1f5c] text-white p-8 shadow-2xl">
-                <p className="text-4xl font-black text-orange-400">40+</p>
-                <p className="text-sm text-white/70 mt-1">Years of<br />Excellence</p>
+            <div className={s.visual} style={{ marginBottom: 40 }}>
+              <Image
+                src="/images/sejong_2.png"
+                alt="세종호이스트크레인 시공 현장"
+                fill
+                className={s.image}
+                sizes="(max-width: 1024px) 100vw, 50vw"
+              />
+              <div className={s.statCard}>
+                <p className={s.statNum}>350T</p>
+                <p className={s.statLabel}>최대 시공 하중<br />그라브 갠트리크레인</p>
               </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* 핵심 가치 */}
-      <section className="py-24 bg-gray-50">
-        <div className="max-w-[1400px] mx-auto px-6">
-          <div className="text-center mb-16">
-            <p className="section-label mb-3">CORE VALUES</p>
-            <h2 className="text-3xl font-bold text-[#0a1f5c]">세종이 추구하는 가치</h2>
+      <section className={`${s.section} ${s.sectionAlt}`}>
+        <div className="container">
+          <div className={s.centerHeader}>
+            <p className={s.eyebrow}>Core Values</p>
+            <h2 className={s.headline}>세종이 추구하는 가치</h2>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {[
-              {
-                num: "01",
-                title: "안전 최우선",
-                desc: "모든 크레인은 최고 수준의 안전 기준을 충족하도록 설계하고 제작합니다. 고객의 안전이 세종의 최우선 가치입니다.",
-              },
-              {
-                num: "02",
-                title: "기술 혁신",
-                desc: "지속적인 R&D 투자와 기술 개발로 더 강하고 더 정밀한 크레인을 만들어 갑니다.",
-              },
-              {
-                num: "03",
-                title: "고객 신뢰",
-                desc: "납품 전 과정에서 투명한 소통과 책임감 있는 서비스로 고객의 신뢰를 쌓아갑니다.",
-              },
-            ].map((value) => (
-              <div key={value.num} className="bg-white p-10 group hover:shadow-xl transition-shadow duration-300">
-                <p className="text-orange-500/20 font-black text-6xl mb-4">{value.num}</p>
-                <h3 className="text-[#0a1f5c] text-xl font-bold mb-4 group-hover:text-orange-500 transition-colors">{value.title}</h3>
-                <p className="text-gray-500 leading-relaxed text-sm">{value.desc}</p>
-              </div>
+          <div className={s.cardGrid}>
+            {VALUES.map((v) => (
+              <article key={v.num} className={s.valueCard}>
+                <p className={s.valueNum}>{v.num}</p>
+                <h3 className={s.valueTitle}>{v.title}</h3>
+                <p className={s.valueDesc}>{v.desc}</p>
+              </article>
             ))}
           </div>
         </div>
       </section>
+
+      <section className={`${s.section} ${s.sectionWhite}`}>
+        <div className="container" style={{ textAlign: "center" }}>
+          <p className={s.eyebrow}>Location</p>
+          <h2 className={s.headline}>오시는 길</h2>
+          <p className={s.body} style={{ maxWidth: 480, margin: "0 auto 24px" }}>
+            {COMPANY.address}
+          </p>
+          <Link href="/about/location" className={s.ghostBtn}>
+            상세 위치 보기
+          </Link>
+        </div>
+      </section>
+
+      <ContactBand />
     </>
   );
 }

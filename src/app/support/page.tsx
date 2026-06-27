@@ -1,160 +1,139 @@
+import type { Metadata } from "next";
 import Link from "next/link";
+import PageHero from "@/components/subpage/PageHero";
+import SubNav from "@/components/subpage/SubNav";
+import ContactBand from "@/components/subpage/ContactBand";
+import { COMPANY } from "@/data/site";
+import s from "@/styles/subpage.module.css";
 
-const subNav = [
+export const metadata: Metadata = {
+  title: "고객지원 | (주)세종호이스트크레인",
+  description: "공지사항, 견적 문의, A/S 안내. TEL 044-865-0801",
+};
+
+const SUPPORT_NAV = [
+  { label: "고객지원", href: "/support" },
   { label: "공지사항", href: "/support/notice" },
-  { label: "온라인 문의", href: "/support/inquiry" },
-  { label: "AS 시스템", href: "https://sejong-hoist.vercel.app", external: true },
+  { label: "견적 문의", href: "/support/inquiry" },
+];
+
+const CARDS = [
+  {
+    title: "공지사항",
+    desc: "납품 실적, 제품 소식, 회사 안내 등 최신 소식을 확인하세요.",
+    href: "/support/notice",
+    label: "공지사항 보기",
+    external: false,
+    icon: (
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" aria-hidden>
+        <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z" />
+        <polyline points="14 2 14 8 20 8" />
+        <line x1="16" y1="13" x2="8" y2="13" />
+        <line x1="16" y1="17" x2="8" y2="17" />
+      </svg>
+    ),
+  },
+  {
+    title: "견적 문의",
+    desc: "제품 견적, 기술 상담, 납품·시공 문의를 온라인으로 접수할 수 있습니다.",
+    href: "/support/inquiry",
+    label: "문의하기",
+    external: false,
+    icon: (
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" aria-hidden>
+        <path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z" />
+      </svg>
+    ),
+  },
+  {
+    title: "기존 홈페이지",
+    desc: "제품 카탈로그 및 추가 자료는 기존 홈페이지에서 확인하실 수 있습니다.",
+    href: "https://www.sjhoist.com/",
+    label: "sjhoist.com",
+    external: true,
+    icon: (
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" aria-hidden>
+        <path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6" />
+        <polyline points="15 3 21 3 21 9" />
+        <line x1="10" y1="14" x2="21" y2="3" />
+      </svg>
+    ),
+  },
 ];
 
 export default function SupportPage() {
   return (
     <>
-      {/* 페이지 히어로 */}
-      <section className="relative bg-[#0a1f5c] pt-32 pb-16">
-        <div className="absolute inset-0 opacity-10"
-          style={{
-            backgroundImage: "repeating-linear-gradient(45deg, white 0, white 1px, transparent 0, transparent 50%)",
-            backgroundSize: "20px 20px",
-          }}
-        />
-        <div className="max-w-[1400px] mx-auto px-6 relative z-10">
-          <p className="text-orange-400 text-xs font-bold tracking-widest uppercase mb-4">SUPPORT</p>
-          <h1 className="text-white text-5xl font-bold mb-4">고객지원</h1>
-          <p className="text-white/50">세종호이스트크레인 고객지원 센터</p>
-        </div>
-      </section>
+      <PageHero
+        eyebrow="Support"
+        title="고객지원"
+        desc="견적·기술 문의와 공지사항을 통해 빠르게 도와드립니다."
+      />
+      <SubNav items={SUPPORT_NAV} />
 
-      {/* 서브 네비게이션 */}
-      <div className="bg-white border-b border-gray-200 sticky top-20 z-40">
-        <div className="max-w-[1400px] mx-auto px-6">
-          <nav className="flex gap-8 overflow-x-auto">
-            {subNav.map((item) => (
-              "external" in item && item.external ? (
-                <a
-                  key={item.href}
-                  href={item.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="py-4 text-sm font-semibold whitespace-nowrap border-b-2 border-transparent text-gray-400 hover:text-gray-700 flex items-center gap-1"
-                >
-                  {item.label} ↗
-                </a>
-              ) : (
-                <Link
-                  key={item.href}
-                  href={item.href}
-                  className="py-4 text-sm font-semibold whitespace-nowrap border-b-2 border-transparent text-gray-400 hover:text-gray-700"
-                >
-                  {item.label}
-                </Link>
-              )
-            ))}
-          </nav>
-        </div>
-      </div>
-
-      {/* 지원 옵션 */}
-      <section className="py-24 bg-white">
-        <div className="max-w-[1400px] mx-auto px-6">
-          <div className="text-center mb-16">
-            <p className="section-label mb-3">CUSTOMER SUPPORT</p>
-            <h2 className="text-3xl font-bold text-[#0a1f5c]">무엇을 도와드릴까요?</h2>
+      <section className={`${s.section} ${s.sectionWhite}`}>
+        <div className="container">
+          <div className={s.centerHeader}>
+            <p className={s.eyebrow}>Customer Support</p>
+            <h2 className={s.headline}>무엇을 도와드릴까요?</h2>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {[
-              {
-                icon: (
-                  <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
-                    <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/>
-                    <polyline points="14 2 14 8 20 8"/>
-                    <line x1="16" y1="13" x2="8" y2="13"/>
-                    <line x1="16" y1="17" x2="8" y2="17"/>
-                  </svg>
-                ),
-                title: "공지사항",
-                desc: "세종호이스트크레인의 최신 소식과 공지사항을 확인하세요.",
-                href: "/support/notice",
-                label: "공지사항 보기",
-                external: false,
-              },
-              {
-                icon: (
-                  <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
-                    <path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/>
-                  </svg>
-                ),
-                title: "온라인 문의",
-                desc: "제품 구입, 견적, 기술 상담 등 궁금한 점을 문의해 주세요.",
-                href: "/support/inquiry",
-                label: "문의하기",
-                external: false,
-              },
-              {
-                icon: (
-                  <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
-                    <path d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3.77-3.77a6 6 0 01-7.94 7.94l-6.91 6.91a2.12 2.12 0 01-3-3l6.91-6.91a6 6 0 017.94-7.94l-3.76 3.76z"/>
-                  </svg>
-                ),
-                title: "AS 시스템",
-                desc: "현장 AS 보고서 작성, 장비 현황 조회, 관리자 승인을 처리합니다.",
-                href: "https://sejong-hoist.vercel.app",
-                label: "AS 시스템 접속",
-                external: true,
-              },
-            ].map((card) => (
-              <div key={card.title} className="bg-gray-50 p-10 group hover:bg-[#0a1f5c] transition-colors duration-300 cursor-pointer">
-                <div className="text-[#0a1f5c] group-hover:text-orange-400 transition-colors mb-6">
-                  {card.icon}
-                </div>
-                <h3 className="text-[#0a1f5c] group-hover:text-white text-xl font-bold mb-3 transition-colors">{card.title}</h3>
-                <p className="text-gray-500 group-hover:text-white/50 text-sm leading-relaxed mb-8 transition-colors">{card.desc}</p>
+          <div className={s.supportGrid}>
+            {CARDS.map((card) => (
+              <article key={card.title} className={s.supportCard}>
+                <div className={s.supportIcon}>{card.icon}</div>
+                <h3 className={s.supportTitle}>{card.title}</h3>
+                <p className={s.supportDesc}>{card.desc}</p>
                 {card.external ? (
                   <a
                     href={card.href}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 text-sm font-semibold text-[#0a1f5c] group-hover:text-orange-400 transition-colors border-b border-current pb-0.5"
+                    className={s.supportLink}
                   >
                     {card.label} ↗
                   </a>
                 ) : (
-                  <Link
-                    href={card.href}
-                    className="inline-flex items-center gap-2 text-sm font-semibold text-[#0a1f5c] group-hover:text-orange-400 transition-colors border-b border-current pb-0.5"
-                  >
+                  <Link href={card.href} className={s.supportLink}>
                     {card.label} →
                   </Link>
                 )}
-              </div>
+              </article>
             ))}
           </div>
         </div>
       </section>
 
-      {/* 연락처 */}
-      <section className="py-20 bg-[#060f30]">
-        <div className="max-w-[1400px] mx-auto px-6 text-center">
-          <p className="text-orange-400 text-xs font-bold tracking-widest uppercase mb-4">CONTACT</p>
-          <h2 className="text-white text-3xl font-bold mb-8">직접 연락하세요</h2>
-          <div className="flex flex-wrap justify-center gap-8 text-white/50 text-sm">
-            <div className="text-center">
-              <p className="text-white/30 text-xs mb-1">대표번호</p>
-              <a href="tel:0317771234" className="text-white text-xl font-bold hover:text-orange-400 transition-colors">031-777-1234</a>
+      <section className={`${s.section} ${s.sectionAlt}`}>
+        <div className="container">
+          <div className={s.centerHeader}>
+            <p className={s.eyebrow}>Contact</p>
+            <h2 className={s.headline}>직접 연락하기</h2>
+          </div>
+          <div className={s.contactGrid}>
+            <div>
+              <p className={s.contactItemLabel}>대표전화</p>
+              <a href={`tel:${COMPANY.tel.replace(/-/g, "")}`} className={s.contactItemValue}>
+                {COMPANY.tel}
+              </a>
             </div>
-            <div className="w-px bg-white/10 hidden md:block" />
-            <div className="text-center">
-              <p className="text-white/30 text-xs mb-1">팩스</p>
-              <p className="text-white text-xl font-bold">031-777-5678</p>
+            <div>
+              <p className={s.contactItemLabel}>휴대전화</p>
+              <a href={`tel:${COMPANY.mobile.replace(/-/g, "")}`} className={s.contactItemValue}>
+                {COMPANY.mobile}
+              </a>
             </div>
-            <div className="w-px bg-white/10 hidden md:block" />
-            <div className="text-center">
-              <p className="text-white/30 text-xs mb-1">이메일</p>
-              <a href="mailto:info@sejong-hoist.com" className="text-white text-xl font-bold hover:text-orange-400 transition-colors">info@sejong-hoist.com</a>
+            <div>
+              <p className={s.contactItemLabel}>이메일</p>
+              <a href={`mailto:${COMPANY.email}`} className={s.contactItemValue}>
+                {COMPANY.email}
+              </a>
             </div>
           </div>
         </div>
       </section>
+
+      <ContactBand />
     </>
   );
 }
