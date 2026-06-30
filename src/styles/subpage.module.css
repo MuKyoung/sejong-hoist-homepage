@@ -298,6 +298,22 @@
   padding: 16px 0;
 }
 
+.filterGroup {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 0;
+}
+.filterGroup + .filterGroup { border-top: 1px solid var(--hairline); }
+
+.filterLabel {
+  flex-shrink: 0;
+  width: 48px;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--faint);
+}
+
 .filterRow {
   display: flex;
   gap: 8px;
@@ -333,18 +349,34 @@
 @media (min-width: 1024px) { .portfolioGrid { grid-template-columns: repeat(3, 1fr); } }
 
 .portfolioCard {
+  display: block;
   background: var(--canvas);
   border: 1px solid var(--hairline);
   border-radius: var(--r-xl);
   overflow: hidden;
-  transition: border-color var(--motion-fast);
+  transition: border-color var(--motion-fast), box-shadow var(--motion-fast);
 }
-.portfolioCard:hover { border-color: var(--tint-strong); }
+.portfolioCard:hover {
+  border-color: var(--tint-strong);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
+}
 
 .portfolioThumb {
   position: relative;
   aspect-ratio: 4 / 3;
   background: var(--surface-alt);
+}
+
+.capacityBadge {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  padding: 5px 12px;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--on-primary);
+  background: var(--navy);
+  border-radius: var(--r-full);
 }
 
 .portfolioBody { padding: 24px; }
@@ -762,3 +794,35 @@
   margin-bottom: 24px;
 }
 .breadcrumb a:hover { color: var(--primary); }
+
+/* Portfolio detail — gallery & scope */
+.galleryRow {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  margin-top: 12px;
+}
+
+.galleryThumb {
+  position: relative;
+  aspect-ratio: 4 / 3;
+  border-radius: var(--r-md);
+  overflow: hidden;
+  background: var(--surface-alt);
+}
+
+.scopeList {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.scopeItem {
+  padding: 8px 16px;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--navy);
+  background: var(--surface);
+  border-radius: var(--r-full);
+}
