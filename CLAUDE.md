@@ -53,6 +53,19 @@ Never read these (no value, large): `node_modules/`, `.next/`, `dist/`,
 - Styling via CSS Modules (`*.module.css`) co-located with components; Tailwind v4 available.
 - Site content/copy lives in `src/data/site.ts` — no external data fetching layer.
 
+### Design system (LS ELECTRIC language — style only, no LS content)
+
+All design tokens are CSS custom properties in `app/globals.css` `:root`. Style via
+these tokens — never hardcode colors/radii/shadows. Reference: `DESIGN_LSelectric.md`.
+- Color: `--primary` (#388dee, interactive only) / `--primary-deep` (hover) / `--primary-press`;
+  deep navy `--navy` for dark sections + headings; neutral gray text `--ink`/`--body`/`--muted`/`--faint`
+  (avoid pure black/white); surfaces `--canvas`/`--surface`/`--surface-alt`; tints `--tint`/`--tint-strong`.
+- Geometry (architectural precision): `--r-sm`→`--r-xl` (4→12px), `--r-full` for **pill CTAs**.
+- Elevation (subtle): `--shadow-sm` (resting cards) / `--shadow-md` (hover, primary buttons) / `--shadow-lg`.
+- Type: Noto Sans KR (loaded in `app/layout.tsx`). Motion: `--motion-*` + `--ease-std`.
+- Dead/unused modules (legacy `--sj-*` vars, not imported): `home/{HeroSection,BusinessSection,
+  ValuesSection,PortfolioSection,ContactSection,StatsSection}.module.css` — ignore.
+
 ## How to work (keep context small)
 
 - Be terse. No preamble, no "I'll now…", no recap of unchanged code.

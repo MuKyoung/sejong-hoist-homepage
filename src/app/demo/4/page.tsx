@@ -147,13 +147,13 @@ export default function Authority() {
 
             <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1.1 }}
               className="flex flex-wrap gap-3">
-              <a href="/business" className="px-6 sm:px-7 py-3 sm:py-3.5 font-bold text-[12px] hover:opacity-80 transition-opacity"
-                style={{ background: "#f47c20", color: "#fff" }}>제품 보기</a>
-              <a href="/portfolio" className="px-6 sm:px-7 py-3 sm:py-3.5 font-semibold text-[12px] transition-all"
+              <Link href="/business" className="px-6 sm:px-7 py-3 sm:py-3.5 font-bold text-[12px] hover:opacity-80 transition-opacity"
+                style={{ background: "#f47c20", color: "#fff" }}>제품 보기</Link>
+              <Link href="/portfolio" className="px-6 sm:px-7 py-3 sm:py-3.5 font-semibold text-[12px] transition-all"
                 style={{ border: "1px solid rgba(255,255,255,0.2)", color: "rgba(255,255,255,0.65)" }}
                 onMouseEnter={e => (e.currentTarget.style.borderColor = "rgba(255,255,255,0.45)")}
                 onMouseLeave={e => (e.currentTarget.style.borderColor = "rgba(255,255,255,0.2)")}
-              >납품실적</a>
+              >납품실적</Link>
             </motion.div>
           </div>
 
@@ -264,13 +264,13 @@ export default function Authority() {
                 </div>
 
                 <div className="flex flex-wrap gap-3">
-                  <a href="/business" className="px-5 sm:px-6 py-3 text-[12px] font-bold hover:opacity-80 transition-opacity"
-                    style={{ background: "#0f172a", color: "#fff" }}>상세 보기</a>
-                  <a href="/support/inquiry" className="px-5 sm:px-6 py-3 text-[12px] font-semibold transition-all"
+                  <Link href="/business" className="px-5 sm:px-6 py-3 text-[12px] font-bold hover:opacity-80 transition-opacity"
+                    style={{ background: "#0f172a", color: "#fff" }}>상세 보기</Link>
+                  <Link href="/support/inquiry" className="px-5 sm:px-6 py-3 text-[12px] font-semibold transition-all"
                     style={{ border: "1px solid rgba(15,23,42,0.18)", color: "#0f172a" }}
                     onMouseEnter={e => (e.currentTarget.style.background = "#f4f6f9")}
                     onMouseLeave={e => (e.currentTarget.style.background = "transparent")}
-                  >견적 문의</a>
+                  >견적 문의</Link>
                 </div>
               </div>
             </motion.div>

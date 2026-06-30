@@ -190,12 +190,12 @@ export default function Apex() {
                 대한민국 핵심 산업 523개 현장.<br />
                 40년, 한 가지 일만 해왔습니다.
               </p>
-              <a href="/business"
+              <Link href="/business"
                 className="group flex items-center gap-3 text-[11px] sm:text-[12px] font-bold tracking-wide uppercase w-fit"
                 style={{ color: "#e8721a" }}>
                 <span className="block h-px w-7 group-hover:w-14 transition-all duration-300" style={{ background: "#e8721a" }} />
                 제품 보기
-              </a>
+              </Link>
             </motion.div>
           </div>
         </motion.div>

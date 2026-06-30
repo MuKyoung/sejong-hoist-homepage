@@ -48,12 +48,12 @@
   padding: 15px 32px;
   font-size: 16px;
   font-weight: 700;
-  color: var(--ink);
-  border: 1px solid var(--ink);
-  border-radius: var(--r-sm);
-  transition: background var(--motion-fast), color var(--motion-fast);
+  color: var(--primary);
+  border: 2px solid var(--primary);
+  border-radius: var(--r-full);
+  transition: background var(--motion-standard) var(--ease-std), color var(--motion-standard) var(--ease-std);
 }
-.ghostBtn:hover { background: var(--ink); color: var(--canvas); }
+.ghostBtn:hover { background: var(--tint); color: var(--primary-deep); }
 
 .visual {
   position: relative;

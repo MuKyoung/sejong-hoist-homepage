@@ -1,22 +1,41 @@
 @import "tailwindcss";
 
-/* DESIGN.md — KCD flat system (kcd.co.kr) */
+/* DESIGN — LS ELECTRIC design language (professional minimalism)
+   Style only — no LS content/logos/imagery. Dark navy + white per client brief. */
 :root {
-  --primary:       #2d91ff;
-  --primary-deep:  #0257d7;
-  --navy:          #192d82;
-  --ink:           #1e2137;
-  --ink-deep:      #0c1120;
-  --body:          #44546f;
-  --muted:         #728094;
-  --faint:         #a4aeba;
+  /* Professional blue — interactive elements only (CTAs, links, focus) */
+  --primary:       #388dee;
+  --primary-deep:  #2a6bc4;   /* hover */
+  --primary-press: #1f4fa0;   /* active */
+
+  /* Deep corporate navy — dark sections (hero/footer/banner) + headings */
+  --navy:          #15243f;
+  --navy-deep:     #0d1730;
+
+  /* Neutral gray text hierarchy (LS: avoid pure black) */
+  --ink:           #1a1a1a;   /* near-black — darkest UI/text, dark fills */
+  --ink-deep:      #111111;
+  --body:          #333333;   /* primary body copy */
+  --muted:         #6f6f6f;   /* secondary text */
+  --faint:         #9a9a9a;   /* tertiary/captions */
+
+  /* Surfaces — clean neutral grays */
   --canvas:        #ffffff;
-  --surface:       #f4f7f9;
-  --surface-alt:   #f9fbfc;
-  --tint:          #e2f3ff;
-  --tint-strong:   #cae7ff;
-  --pale:          #f3faff;
-  --hairline:      #eeeeee;
+  --surface:       #f5f5f5;
+  --surface-alt:   #fafafa;
+  --surface-2:     #f0f0f0;
+
+  /* Primary container tints (LS) */
+  --tint:          #e5eef7;
+  --tint-strong:   #c6d9f0;
+  --pale:          #f3f8fd;
+
+  /* Status accent — teal (LS tertiary), used sparingly */
+  --success:       #14bc7e;
+  --success-tint:  #e7f8f2;
+
+  --hairline:      #e4e4e4;   /* subtle dividers / card borders */
+  --line:          #dcdcdc;   /* stronger dividers */
   --on-primary:    #ffffff;
 
   --header-h:      72px;
@@ -30,11 +49,17 @@
   --sp-2xl: 48px;
   --sp-3xl: 64px;
 
-  --r-sm:   6px;
-  --r-md:   12px;
-  --r-lg:   16px;
-  --r-xl:   20px;
+  /* Architectural precision — sharper geometry, pill CTAs */
+  --r-sm:   4px;
+  --r-md:   6px;
+  --r-lg:   10px;
+  --r-xl:   12px;
   --r-full: 9999px;
+
+  /* Elevation — restrained, subtle (LS) */
+  --shadow-sm: 0 1px 2px rgba(16, 24, 40, 0.05);
+  --shadow-md: 0 4px 12px rgba(16, 24, 40, 0.08);
+  --shadow-lg: 0 12px 28px rgba(16, 24, 40, 0.12);
 
   --motion-fast:     120ms;
   --motion-standard: 200ms;
@@ -54,9 +79,10 @@ html {
 
 body {
   font-family:
+    var(--font-noto-sans-kr), "Noto Sans KR",
     "Pretendard Variable", Pretendard,
     -apple-system, BlinkMacSystemFont,
-    "Apple SD Gothic Neo", "Noto Sans KR",
+    "Apple SD Gothic Neo",
     system-ui, sans-serif;
   font-size: 16px;
   font-weight: 400;

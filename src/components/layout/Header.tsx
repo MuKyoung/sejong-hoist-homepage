@@ -23,16 +23,12 @@ export default function Header() {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
 
+  // Re-subscribe + recompute on route change so `scrolled` is fresh after client nav.
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > SCROLL_THRESHOLD);
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
-  }, []);
-
-  useEffect(() => {
-    setOpen(false);
-    setScrolled(window.scrollY > SCROLL_THRESHOLD);
   }, [pathname]);
 
   const isSolid = !isHome || scrolled || open;
@@ -94,11 +90,22 @@ export default function Header() {
           >
             <div className={s.mobileInner}>
               {NAV.map((item) => (
-                <Link key={item.href} href={item.href} className={s.mobileLink}>
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  className={s.mobileLink}
+                  onClick={() => setOpen(false)}
+                >
                   {item.label}
                 </Link>
               ))}
-              <Link href="/support/inquiry" className={s.mobileCta}>견적 문의</Link>
+              <Link
+                href="/support/inquiry"
+                className={s.mobileCta}
+                onClick={() => setOpen(false)}
+              >
+                견적 문의
+              </Link>
             </div>
           </motion.div>
         )}

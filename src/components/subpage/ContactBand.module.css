@@ -69,11 +69,12 @@
   padding: 15px 32px;
   font-size: 16px;
   font-weight: 700;
-  color: var(--ink);
-  background: var(--canvas);
-  border: 1px solid var(--ink);
-  border-radius: var(--r-sm);
-  transition: background var(--motion-fast), color var(--motion-fast);
+  color: var(--on-primary);
+  background: var(--primary);
+  border: none;
+  border-radius: var(--r-full);
+  box-shadow: var(--shadow-md);
+  transition: background var(--motion-standard) var(--ease-std);
   white-space: nowrap;
 }
-.btn:hover { background: var(--ink); color: var(--canvas); }
+.btn:hover { background: var(--primary-deep); }

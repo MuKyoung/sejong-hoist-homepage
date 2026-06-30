@@ -167,13 +167,13 @@ export default function Nexus() {
 
               <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1.1 }}
                 className="flex flex-wrap gap-3">
-                <a href="/support/inquiry" className="px-6 sm:px-7 py-3 sm:py-3.5 font-bold text-[12px] tracking-wide hover:opacity-80 transition-opacity"
-                  style={{ background: "#f47c20", color: "#fff" }}>무료 상담 신청</a>
-                <a href="/portfolio" className="px-6 sm:px-7 py-3 sm:py-3.5 font-semibold text-[12px] tracking-wide transition-all"
+                <Link href="/support/inquiry" className="px-6 sm:px-7 py-3 sm:py-3.5 font-bold text-[12px] tracking-wide hover:opacity-80 transition-opacity"
+                  style={{ background: "#f47c20", color: "#fff" }}>무료 상담 신청</Link>
+                <Link href="/portfolio" className="px-6 sm:px-7 py-3 sm:py-3.5 font-semibold text-[12px] tracking-wide transition-all"
                   style={{ border: "1px solid rgba(255,255,255,0.18)", color: "rgba(255,255,255,0.6)" }}
                   onMouseEnter={e => (e.currentTarget.style.borderColor = "rgba(255,255,255,0.45)")}
                   onMouseLeave={e => (e.currentTarget.style.borderColor = "rgba(255,255,255,0.18)")}
-                >납품실적 →</a>
+                >납품실적 →</Link>
               </motion.div>
             </div>
 
@@ -246,11 +246,11 @@ export default function Nexus() {
                     </li>
                   ))}
                 </ul>
-                <a href="/business"
+                <Link href="/business"
                   className="group/l inline-flex items-center gap-3 text-[12px] font-bold text-white hover:text-[#f47c20] transition-colors">
                   <span className="h-px w-6 group-hover/l:w-12 transition-all duration-300"
                     style={{ background: "currentColor" }} />더 보기
-                </a>
+                </Link>
               </div>
             </div>
           </div>
