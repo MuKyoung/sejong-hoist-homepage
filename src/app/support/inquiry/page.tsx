@@ -4,6 +4,8 @@ import { useState } from "react";
 import PageHero from "@/components/subpage/PageHero";
 import SubNav from "@/components/subpage/SubNav";
 import { COMPANY } from "@/data/site";
+import { createClient } from "@/lib/supabase/client";
+import { isSupabaseConfigured } from "@/lib/supabase/env";
 import s from "@/styles/subpage.module.css";
 
 const SUPPORT_NAV = [
@@ -24,10 +26,40 @@ export default function InquiryPage() {
     agree: false,
   });
   const [submitted, setSubmitted] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setSubmitted(true);
+    setError(null);
+
+    // Before Supabase is configured, keep the legacy confirmation UX.
+    if (!isSupabaseConfigured) {
+      setSubmitted(true);
+      return;
+    }
+
+    setSubmitting(true);
+    try {
+      const supabase = createClient();
+      const { error: insertError } = await supabase.from("inquiries").insert({
+        name: form.name,
+        company: form.company || null,
+        phone: form.phone || null,
+        email: form.email || null,
+        product_category: form.category || null,
+        message: `[${form.title}]\n\n${form.content}`,
+      });
+      if (insertError) {
+        setError("접수 중 오류가 발생했습니다. 잠시 후 다시 시도하거나 전화로 문의해 주세요.");
+        return;
+      }
+      setSubmitted(true);
+    } catch {
+      setError("접수 중 오류가 발생했습니다. 잠시 후 다시 시도해 주세요.");
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   return (
@@ -154,9 +186,14 @@ export default function InquiryPage() {
                   </label>
                 </div>
 
-                <button type="submit" className={s.submitBtn}>
-                  문의 접수하기
+                <button type="submit" className={s.submitBtn} disabled={submitting}>
+                  {submitting ? "접수 중…" : "문의 접수하기"}
                 </button>
+                {error && (
+                  <p style={{ marginTop: 12, fontSize: 14, color: "#b0102f", textAlign: "center" }}>
+                    {error}
+                  </p>
+                )}
               </form>
             )}
           </div>

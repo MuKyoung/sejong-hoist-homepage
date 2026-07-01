@@ -20,11 +20,25 @@ Run only when needed. Never start long-lived / watch processes.
 Trust this map. Do not scan the file tree to rediscover structure.
 
 - `src/app/`        — routes, layouts, server components (App Router); also `globals.css`
-- `src/components/` — UI by area: `home/`, `layout/`, `subpage/`, `demo/`, `providers/` (each with co-located `*.module.css`)
-- `src/lib/`        — helpers (`utils.ts`)
+- `src/app/admin/`  — CMS (Supabase). `login/` (public) + `(protected)/` route group
+  (guarded by `middleware.ts` + layout). Server Actions in `(protected)/actions.ts`.
+- `src/components/` — UI by area: `home/`, `layout/`, `subpage/`, `admin/`, `demo/`, `providers/` (co-located `*.module.css`)
+- `src/lib/`        — helpers (`utils.ts`); `supabase/` clients (`client`/`server`/`middleware`), `env`, `types`
 - `src/data/`       — static site content (`site.ts`)
 - `src/styles/`     — shared CSS Modules (`subpage.module.css`)
+- `supabase/`       — `schema.sql` (tables + RLS). Setup: `CMS_SETUP.md`
 - `public/`         — static assets: `images/`, `videos/`, svg icons
+
+### CMS / Supabase (see `CMS_SETUP.md`)
+
+- Auth = Supabase Auth (httpOnly cookie session). `middleware.ts` guards `/admin`
+  (matcher-scoped, so marketing pages stay static). Access control = **RLS** in
+  `supabase/schema.sql` — never trust the client. Roles: `admin` (members/roles)
+  vs `editor` (content). Helpers `is_admin()` / `is_staff()`.
+- Admin pages are `dynamic = "force-dynamic"` (use cookies). Mutations via Server
+  Actions under the user session. Env-guarded: builds/works without Supabase env
+  (`isSupabaseConfigured`), showing a "not configured" state.
+- Public inquiry form (`support/inquiry`) inserts into `inquiries` (anon INSERT-only).
 
 ### Domain data (single source: `src/data/site.ts`)
 

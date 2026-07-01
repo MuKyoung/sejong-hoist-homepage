@@ -6,9 +6,10 @@ import Footer from "./Footer";
 
 export default function ConditionalLayout({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
-  const isDemo = pathname?.startsWith("/demo");
+  // Bare routes render without the marketing header/footer.
+  const isBare = pathname?.startsWith("/demo") || pathname?.startsWith("/admin");
 
-  if (isDemo) return <>{children}</>;
+  if (isBare) return <>{children}</>;
 
   return (
     <>

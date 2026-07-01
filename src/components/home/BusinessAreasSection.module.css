@@ -1,0 +1,107 @@
+/* 사업영역 — 아이콘 중심 카드 (LS design language) */
+.section {
+  padding: 80px 0;
+  background: var(--canvas);
+}
+@media (min-width: 1024px) { .section { padding: 112px 0; } }
+
+.header {
+  max-width: 640px;
+  margin-bottom: 56px;
+}
+
+.eyebrow {
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--primary);
+  margin-bottom: 16px;
+}
+
+.headline {
+  font-size: clamp(1.875rem, 4vw, 2.75rem);
+  font-weight: 700;
+  line-height: 1.25;
+  letter-spacing: -0.03em;
+  color: var(--navy);
+  margin-bottom: 16px;
+}
+
+.lead {
+  font-size: 16px;
+  line-height: 1.7;
+  color: var(--muted);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+}
+@media (min-width: 640px) { .grid { grid-template-columns: repeat(2, 1fr); } }
+@media (min-width: 1024px) { .grid { grid-template-columns: repeat(4, 1fr); gap: 20px; } }
+
+.card {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 32px 28px;
+  background: var(--canvas);
+  border: 1px solid var(--hairline);
+  border-radius: var(--r-xl);
+  box-shadow: var(--shadow-sm);
+  transition: border-color var(--motion-standard) var(--ease-std),
+    box-shadow var(--motion-standard) var(--ease-std),
+    transform var(--motion-standard) var(--ease-std);
+}
+.card:hover {
+  border-color: var(--tint-strong);
+  box-shadow: var(--shadow-md);
+  transform: translateY(-3px);
+}
+
+.icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 56px;
+  height: 56px;
+  margin-bottom: 24px;
+  color: var(--primary);
+  background: var(--tint);
+  border-radius: var(--r-lg);
+  transition: background var(--motion-standard) var(--ease-std), color var(--motion-standard) var(--ease-std);
+}
+.card:hover .icon { background: var(--primary); color: var(--on-primary); }
+
+.cardTitle {
+  font-size: 1.1875rem;
+  font-weight: 700;
+  color: var(--navy);
+  margin-bottom: 4px;
+}
+
+.cardEn {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: var(--faint);
+  margin-bottom: 16px;
+}
+
+.cardDesc {
+  font-size: 14px;
+  line-height: 1.65;
+  color: var(--muted);
+  margin-bottom: 24px;
+  flex: 1;
+}
+
+.more {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--primary);
+  transition: color var(--motion-fast);
+}
+.card:hover .more { color: var(--primary-deep); }

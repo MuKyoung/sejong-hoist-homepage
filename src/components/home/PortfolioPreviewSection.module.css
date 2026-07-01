@@ -1,0 +1,112 @@
+/* 핵심 시공사례 프리뷰 — 사진 카드 갤러리 */
+.section {
+  padding: 80px 0;
+  background: var(--surface);
+}
+@media (min-width: 1024px) { .section { padding: 112px 0; } }
+
+.header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 24px;
+  margin-bottom: 40px;
+}
+
+.eyebrow {
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--primary);
+  margin-bottom: 12px;
+}
+
+.headline {
+  font-size: clamp(1.875rem, 4vw, 2.75rem);
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: -0.03em;
+  color: var(--navy);
+}
+
+.moreLink {
+  flex-shrink: 0;
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--primary);
+  transition: color var(--motion-fast);
+  white-space: nowrap;
+}
+.moreLink:hover { color: var(--primary-deep); }
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+}
+@media (min-width: 640px) { .grid { grid-template-columns: repeat(2, 1fr); } }
+@media (min-width: 1024px) { .grid { grid-template-columns: repeat(4, 1fr); gap: 20px; } }
+
+.card {
+  display: block;
+  background: var(--canvas);
+  border: 1px solid var(--hairline);
+  border-radius: var(--r-xl);
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+  transition: border-color var(--motion-standard) var(--ease-std),
+    box-shadow var(--motion-standard) var(--ease-std),
+    transform var(--motion-standard) var(--ease-std);
+}
+.card:hover {
+  border-color: var(--tint-strong);
+  box-shadow: var(--shadow-lg);
+  transform: translateY(-3px);
+}
+
+.thumb {
+  position: relative;
+  aspect-ratio: 4 / 3;
+  background: var(--surface-alt);
+}
+
+.image { object-fit: cover; }
+
+.badge {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  padding: 5px 12px;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--on-primary);
+  background: var(--navy);
+  border-radius: var(--r-full);
+}
+
+.body { padding: 20px; }
+
+.industry {
+  display: inline-block;
+  padding: 4px 10px;
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--navy);
+  background: var(--tint);
+  border-radius: var(--r-full);
+  margin-bottom: 12px;
+}
+
+.title {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--navy);
+  line-height: 1.4;
+  margin-bottom: 6px;
+}
+
+.client {
+  font-size: 13px;
+  color: var(--muted);
+}

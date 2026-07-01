@@ -80,6 +80,51 @@ export const PRODUCTS = [
 
 export type ProductSlug = (typeof PRODUCTS)[number]["slug"];
 
+/* 홈 랜딩 — 사업영역 바로가기 (아이콘 중심) */
+export type BusinessAreaIcon = "crane" | "gantry" | "maintenance" | "steel";
+
+export const BUSINESS_AREAS: {
+  icon: BusinessAreaIcon;
+  title: string;
+  en: string;
+  desc: string;
+  image: string;
+  href: string;
+}[] = [
+  {
+    icon: "crane",
+    title: "호이스트·크레인",
+    en: "Hoist & Crane",
+    desc: "와이어·체인·방폭 호이스트부터 천장크레인까지, 현장 조건에 맞춰 설계·제작·설치합니다.",
+    image: "/images/sejong_2.png",
+    href: "/business",
+  },
+  {
+    icon: "gantry",
+    title: "그랩·갠트리 크레인",
+    en: "Grab & Gantry Crane",
+    desc: "옥외 야적장·중공업 현장을 위한 대형 갠트리·그랩 크레인. 최대 350TON 시공 실적.",
+    image: "/images/sejong_3.png",
+    href: "/business",
+  },
+  {
+    icon: "maintenance",
+    title: "유지보수·이전설치",
+    en: "Maintenance & Relocation",
+    desc: "정기 점검, 노후 설비 개보수, 크레인 이전설치까지 신속한 A/S로 가동률을 지킵니다.",
+    image: "/images/sejong_1.png",
+    href: "/business",
+  },
+  {
+    icon: "steel",
+    title: "철구조물 제작",
+    en: "Steel Structure",
+    desc: "구조 해석 기반의 철구조물 설계·제작. 크레인 거더·주행로 등 맞춤 구조물을 공급합니다.",
+    image: "/images/sejong_4.png",
+    href: "/business",
+  },
+];
+
 /* 시공사례 필터 축 — 업종(industry) · 용량(capacityBucket) */
 export const PORTFOLIO_INDUSTRIES = [
   "전체",
