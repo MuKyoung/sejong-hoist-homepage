@@ -80,6 +80,14 @@ export const PRODUCTS = [
 
 export type ProductSlug = (typeof PRODUCTS)[number]["slug"];
 
+/* 홈 랜딩 — 회사 개요 바로가기 그리드 (LS Company Overview 형태) */
+export const HOME_QUICKNAV = [
+  { no: "01", title: "회사소개", en: "About Us", desc: "운반하역 외길, 세종호이스트크레인의 여정", href: "/about" },
+  { no: "02", title: "사업영역", en: "Business", desc: "호이스트·크레인 설계·제작·설치·유지보수", href: "/business" },
+  { no: "03", title: "시공사례", en: "Portfolio", desc: "업종·용량별 납품·시공 실적", href: "/portfolio" },
+  { no: "04", title: "견적·문의", en: "Contact", desc: "온라인 견적 요청 및 기술 상담", href: "/support/inquiry" },
+] as const;
+
 /* 홈 랜딩 — 사업영역 바로가기 (아이콘 중심) */
 export type BusinessAreaIcon = "crane" | "gantry" | "maintenance" | "steel";
 

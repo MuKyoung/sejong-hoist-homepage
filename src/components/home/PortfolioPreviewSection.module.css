@@ -1,7 +1,7 @@
 /* 핵심 시공사례 프리뷰 — 사진 카드 갤러리 */
 .section {
   padding: 80px 0;
-  background: var(--surface);
+  background: var(--canvas);
 }
 @media (min-width: 1024px) { .section { padding: 112px 0; } }
 

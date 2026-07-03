@@ -1,7 +1,7 @@
 /* 사업영역 — 아이콘 중심 카드 (LS design language) */
 .section {
   padding: 80px 0;
-  background: var(--canvas);
+  background: var(--surface);
 }
 @media (min-width: 1024px) { .section { padding: 112px 0; } }
 

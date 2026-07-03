@@ -1,0 +1,83 @@
+/* 회사 개요 바로가기 — LS Company Overview 형태 (플랫, 상단 룰 강조) */
+.section {
+  padding: 72px 0;
+  background: var(--canvas);
+}
+@media (min-width: 1024px) { .section { padding: 96px 0; } }
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0;
+  border-top: 1px solid var(--hairline);
+  border-left: 1px solid var(--hairline);
+}
+@media (min-width: 1024px) { .grid { grid-template-columns: repeat(4, 1fr); } }
+
+.card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-height: 260px;
+  padding: 32px 28px;
+  border-right: 1px solid var(--hairline);
+  border-bottom: 1px solid var(--hairline);
+  background: var(--canvas);
+  transition: background var(--motion-standard) var(--ease-std);
+}
+/* Top accent rule grows on hover (LS kinetic highlight) */
+.card::before {
+  content: "";
+  position: absolute;
+  top: -1px; left: -1px;
+  height: 3px; width: 0;
+  background: var(--primary);
+  transition: width var(--motion-slow) var(--ease-std);
+}
+.card:hover { background: var(--surface-alt); }
+.card:hover::before { width: calc(100% + 2px); }
+
+.no {
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: var(--faint);
+}
+
+.body { flex: 1; padding-top: 28px; }
+
+.en {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--primary);
+  margin-bottom: 10px;
+}
+
+.title {
+  font-size: 1.375rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--navy);
+  margin-bottom: 12px;
+}
+
+.desc {
+  font-size: 13px;
+  line-height: 1.65;
+  color: var(--muted);
+}
+
+.more {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 24px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: var(--ink);
+  transition: color var(--motion-fast), gap var(--motion-standard) var(--ease-std);
+}
+.card:hover .more { color: var(--primary); gap: 12px; }
