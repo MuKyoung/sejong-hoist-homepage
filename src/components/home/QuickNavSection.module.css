@@ -1,4 +1,4 @@
-/* 회사 개요 바로가기 — LS Company Overview 형태 (플랫, 상단 룰 강조) */
+/* 회사 개요 바로가기 — LS 4칸 배치 · KCD 라운드 카드 스타일 */
 .section {
   padding: 72px 0;
   background: var(--canvas);
@@ -8,51 +8,54 @@
 .grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 0;
-  border-top: 1px solid var(--hairline);
-  border-left: 1px solid var(--hairline);
+  gap: 16px;
 }
-@media (min-width: 1024px) { .grid { grid-template-columns: repeat(4, 1fr); } }
+@media (min-width: 1024px) { .grid { grid-template-columns: repeat(4, 1fr); gap: 20px; } }
 
 .card {
   position: relative;
   display: flex;
   flex-direction: column;
-  min-height: 260px;
-  padding: 32px 28px;
-  border-right: 1px solid var(--hairline);
-  border-bottom: 1px solid var(--hairline);
+  min-height: 240px;
+  padding: 28px 26px;
   background: var(--canvas);
-  transition: background var(--motion-standard) var(--ease-std);
+  border: 1px solid var(--hairline);
+  border-radius: var(--r-xl);
+  box-shadow: var(--shadow-sm);
+  transition: box-shadow var(--motion-standard) var(--ease-std),
+    transform var(--motion-standard) var(--ease-std),
+    border-color var(--motion-standard) var(--ease-std);
 }
-/* Top accent rule grows on hover (LS kinetic highlight) */
-.card::before {
-  content: "";
-  position: absolute;
-  top: -1px; left: -1px;
-  height: 3px; width: 0;
-  background: var(--primary);
-  transition: width var(--motion-slow) var(--ease-std);
+.card:hover {
+  box-shadow: var(--shadow-md);
+  transform: translateY(-4px);
+  border-color: var(--tint-strong);
 }
-.card:hover { background: var(--surface-alt); }
-.card:hover::before { width: calc(100% + 2px); }
 
 .no {
-  font-size: 13px;
-  font-weight: 700;
-  letter-spacing: 0.04em;
-  color: var(--faint);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  font-size: 14px;
+  font-weight: 800;
+  color: var(--primary);
+  background: var(--tint);
+  border-radius: var(--r-full);
+  transition: background var(--motion-standard) var(--ease-std), color var(--motion-standard) var(--ease-std);
 }
+.card:hover .no { background: var(--primary); color: var(--on-primary); }
 
-.body { flex: 1; padding-top: 28px; }
+.body { flex: 1; padding-top: 22px; }
 
 .en {
   font-size: 12px;
-  font-weight: 600;
+  font-weight: 700;
   letter-spacing: 0.04em;
   text-transform: uppercase;
   color: var(--primary);
-  margin-bottom: 10px;
+  margin-bottom: 8px;
 }
 
 .title {
@@ -60,7 +63,7 @@
   font-weight: 700;
   letter-spacing: -0.02em;
   color: var(--navy);
-  margin-bottom: 12px;
+  margin-bottom: 10px;
 }
 
 .desc {
@@ -73,10 +76,10 @@
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  margin-top: 24px;
+  margin-top: 22px;
   font-size: 12px;
   font-weight: 700;
-  letter-spacing: 0.04em;
+  letter-spacing: 0.03em;
   color: var(--ink);
   transition: color var(--motion-fast), gap var(--motion-standard) var(--ease-std);
 }

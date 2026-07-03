@@ -67,16 +67,20 @@ Never read these (no value, large): `node_modules/`, `.next/`, `dist/`,
 - Styling via CSS Modules (`*.module.css`) co-located with components; Tailwind v4 available.
 - Site content/copy lives in `src/data/site.ts` — no external data fetching layer.
 
-### Design system (LS ELECTRIC language — style only, no LS content)
+### Design system (KCD style + LS ELECTRIC layout — style only, no external content)
 
-All design tokens are CSS custom properties in `app/globals.css` `:root`. Style via
-these tokens — never hardcode colors/radii/shadows. Reference: `DESIGN_LSelectric.md`.
-- Color: `--primary` (#388dee, interactive only) / `--primary-deep` (hover) / `--primary-press`;
-  deep navy `--navy` for dark sections + headings; neutral gray text `--ink`/`--body`/`--muted`/`--faint`
-  (avoid pure black/white); surfaces `--canvas`/`--surface`/`--surface-alt`; tints `--tint`/`--tint-strong`.
-- Geometry (architectural precision): `--r-sm`→`--r-xl` (4→12px), `--r-full` for **pill CTAs**.
-- Elevation (subtle): `--shadow-sm` (resting cards) / `--shadow-md` (hover, primary buttons) / `--shadow-lg`.
-- Type: Noto Sans KR (loaded in `app/layout.tsx`). Motion: `--motion-*` + `--ease-std`.
+Visual style follows 한국신용데이터(KCD, kcd.co.kr): friendly, rounded, airy, soft
+shadows. Layout/section composition references LS ELECTRIC. All tokens are CSS custom
+properties in `app/globals.css` `:root` — style via tokens, never hardcode.
+- Color: `--primary` (#2d8cff KCD blue, interactive only) / `--primary-deep` / `--primary-press`;
+  deep indigo-navy `--navy` for dark sections + headings; text `--ink`/`--body`/`--muted`/`--faint`;
+  surfaces `--canvas`/`--surface`/`--surface-alt`; tints `--tint`/`--tint-strong`; mint `--success`.
+- Geometry (rounded/friendly): `--r-sm`→`--r-xl` (8→24px), `--r-full` for **pill CTAs**.
+- Elevation (soft): `--shadow-sm` (resting cards) / `--shadow-md` (hover, primary buttons) / `--shadow-lg`.
+- Type: Pretendard (CDN `<link>` in `app/layout.tsx`). Motion: `--motion-*` + `--ease-std`.
+- Home = LS section flow: `StorySection` (Sejong image slideshow hero, no video) →
+  `QuickNavSection` (4-card overview) → `BusinessAreasSection` → `PortfolioPreviewSection`
+  → `NewsSection` → `InquiryBannerSection`. `MissionStatsSection`/`TeamSection` unused but kept.
 - Dead/unused modules (legacy `--sj-*` vars, not imported): `home/{HeroSection,BusinessSection,
   ValuesSection,PortfolioSection,ContactSection,StatsSection}.module.css` — ignore.
 
