@@ -3,7 +3,7 @@
   padding: 80px 0;
   background: var(--surface);
 }
-@media (min-width: 1024px) { .section { padding: 112px 0; } }
+@media (min-width: 1024px) { .section { padding: 96px 0; } }
 
 .header {
   max-width: 640px;

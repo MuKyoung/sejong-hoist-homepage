@@ -1,6 +1,6 @@
 /* 회사 개요 바로가기 — LS 4칸 배치 · KCD 라운드 카드 스타일 */
 .section {
-  padding: 72px 0;
+  padding: 80px 0;
   background: var(--canvas);
 }
 @media (min-width: 1024px) { .section { padding: 96px 0; } }
