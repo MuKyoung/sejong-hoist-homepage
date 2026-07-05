@@ -28,12 +28,12 @@
 }
 .image { object-fit: cover; }
 
-/* Flat 30% scrim + subtle bottom gradient for control legibility */
+/* Navy-tinted scrim (Sejong variation of the LS flat black 30%) */
 .overlay {
   position: absolute;
   inset: 0;
-  background-color: rgba(0, 0, 0, 0.3);
-  background-image: linear-gradient(180deg, rgba(0, 0, 0, 0) 60%, rgba(0, 0, 0, 0.25) 100%);
+  background-color: rgba(18, 30, 48, 0.38);
+  background-image: linear-gradient(180deg, rgba(10, 18, 30, 0) 60%, rgba(10, 18, 30, 0.32) 100%);
 }
 
 /* Content — perfectly centered on both axes */

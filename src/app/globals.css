@@ -4,21 +4,22 @@
    White canvas, flat cards + #EEEEEE hairlines, corporate blue blocks,
    #388DEE interactive pills, #2E373E slate headings/footer. */
 :root {
-  /* Interactive blue (Picton) — buttons, links, focus only */
-  --primary:       #388dee;
-  --primary-deep:  #2a6bc4;   /* hover */
-  --primary-press: #1f4fa0;   /* active */
-  --link:          #296dba;   /* inline text links */
+  /* Interactive blue — buttons, links, focus only (Sejong shift: indigo-leaning) */
+  --primary:       #2563eb;
+  --primary-deep:  #1d4fbf;   /* hover */
+  --primary-press: #17409c;   /* active */
+  --link:          #2458a6;   /* inline text links */
 
-  /* Corporate blue family — structural color blocks & circles */
-  --brand:         #0667b2;   /* Endeavour */
-  --brand-deep:    #003777;   /* Regal Blue */
-  --brand-bright:  #0094cc;   /* Pacific */
-  --brand-cobalt:  #004ba2;   /* Cobalt */
+  /* Corporate steel-navy family — structural color blocks & circles
+     (Sejong variation of the LS blue family — same genre, own hues) */
+  --brand:         #1c64a6;
+  --brand-deep:    #16345e;
+  --brand-bright:  #2c89b0;
+  --brand-cobalt:  #23508f;
 
-  /* Slate — headings + dark sections (never pure black) */
-  --navy:          #2e373d;   /* Outer Space — headings */
-  --navy-deep:     #232a2f;
+  /* Navy-slate — headings + dark sections (never pure black) */
+  --navy:          #233140;
+  --navy-deep:     #1a242f;
 
   /* Text hierarchy */
   --ink:           #333333;   /* nav/titles (Mine Shaft) */
@@ -27,16 +28,16 @@
   --muted:         #757575;   /* secondary (Boulder) */
   --faint:         #888888;   /* tertiary (Gray) */
 
-  /* Surfaces — white-first, flat grays */
+  /* Surfaces — white-first, cool-tinted flat grays */
   --canvas:        #ffffff;
-  --surface:       #f7f7f7;   /* Wild Sand */
-  --surface-alt:   #fafafa;
-  --surface-2:     #efefef;
+  --surface:       #f6f7f9;
+  --surface-alt:   #fafbfc;
+  --surface-2:     #eef0f3;
 
   /* Light blue containers */
-  --tint:          #e5eef7;
-  --tint-strong:   #c6d9f0;
-  --pale:          #f0f7fc;
+  --tint:          #e7effb;
+  --tint-strong:   #c9dbf5;
+  --pale:          #f2f7fd;
 
   /* Status accent — teal, used sparingly */
   --success:       #14bc7e;
@@ -46,12 +47,12 @@
   --line:          #dbdbdb;   /* stronger dividers (Alto) */
   --on-primary:    #ffffff;
 
-  /* Footer (dark slate) */
-  --footer-bg:     #2e373e;
-  --footer-line:   #515b62;
-  --footer-link:   #777d81;
-  --footer-muted:  #aeaeae;
-  --footer-box:    #232a2f;
+  /* Footer (dark navy-slate) */
+  --footer-bg:     #222b3a;
+  --footer-line:   #465364;
+  --footer-link:   #8a93a3;
+  --footer-muted:  #b3bac6;
+  --footer-box:    #1a2230;
 
   --header-h:      64px;
 
@@ -64,11 +65,11 @@
   --sp-2xl: 48px;
   --sp-3xl: 64px;
 
-  /* Near-sharp geometry (LS) — pills/circles are the only full rounds */
+  /* Geometry — Sejong variation: soft 12px structural cards (LS is sharp) */
   --r-sm:   2px;
   --r-md:   4px;
-  --r-lg:   6px;
-  --r-xl:   8px;
+  --r-lg:   8px;
+  --r-xl:   12px;
   --r-full: 9999px;
 
   /* Flat-first elevation (LS): no resting shadows; hover lift subtle */

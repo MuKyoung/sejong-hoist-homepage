@@ -1,10 +1,22 @@
-# DESIGN.md — Sejong Hoist Crane (LS ELECTRIC design language)
+# DESIGN.md — Sejong Hoist Crane (LS ELECTRIC design language, Sejong variation)
 
 Canonical design reference for this project. Derived from the LS ELECTRIC Korean
 homepage (www.ls-electric.com/ko/) via Figma import (html.to.design, frame
 `102:401`, extracted 2026-07-05) plus the live site. **Style only** — LS ELECTRIC
 content, copy, logos, photography, and icons are strictly prohibited. All content,
 images, and copy are Sejong Hoist Crane's own (`public/images/sejong_*.png`).
+
+**Sejong variation (2026-07-05):** section composition stays LS, but the skin is
+deliberately shifted so it does not read as an LS clone:
+- Palette: LS cyan-blues → Sejong **steel-navy family** (see §2); interactive blue
+  `#2563EB` (indigo-leaning, not LS `#388DEE`); footer navy-slate `#222B3A`.
+- Geometry: structural cards are **soft 12px** (`--r-xl`) with 16px gaps — LS is
+  sharp gap-0. Circles are **tangent with gaps**, never overlapped (-30px is LS's
+  signature; we don't copy it).
+- Hero scrim is **navy-tinted** rgba(18,30,48,.38), not neutral black.
+- Home section headers carry a small uppercase **English eyebrow** in `--primary`
+  above the centered title (About Us / Business …).
+- News panel title rule: 2px `--primary` accent (LS uses a dark 1px rule).
 
 All values below exist as CSS custom properties in `src/app/globals.css` `:root`.
 Style via tokens; hardcode a hex only where this file specifies it (e.g. circle fills).
@@ -21,39 +33,44 @@ except pill buttons and the signature circles.
 
 ## 2. Color tokens
 
-| Token | Hex | Role (source name in Figma) |
-|---|---|---|
-| `--canvas` | `#FFFFFF` | Page/card background |
-| `--surface` | `#F7F7F7` | Light gray block (Wild Sand), alt sections |
-| `--surface-alt` | `#FAFAFA` | Subtle alternate surface |
-| `--surface-2` | `#EFEFEF` | Deeper gray (admin chips etc.) |
-| `--navy` | `#2E373D` | Headings (Outer Space) + dark text on light |
-| `--navy-deep` | `#232A2F` | Darkest slate (footer boxes) |
-| `--ink` | `#333333` | Nav/titles (Mine Shaft) |
-| `--body` | `#717171` | Body copy (Dove Gray) |
-| `--muted` | `#757575` | Secondary text (Boulder) |
-| `--faint` | `#888888` | Tertiary/captions (Gray) |
-| `--hairline` | `#EEEEEE` | Card borders, dividers (Gallery) |
-| `--line` | `#DBDBDB` | Stronger dividers (Alto); `#E5E5E5` (Mercury) OK inline |
-| `--brand` | `#0667B2` | Corporate blue block (Endeavour) |
-| `--brand-deep` | `#003777` | Deep blue block (Regal Blue) |
-| `--brand-bright` | `#0094CC` | Bright cyan-blue (Pacific) — circle 1 |
-| `--brand-cobalt` | `#004BA2` | Cobalt — circle 3 |
-| `--primary` | `#388DEE` | Interactive only: buttons, links, focus (Picton) |
-| `--primary-deep` | `#2A6BC4` | Button hover |
-| `--primary-press` | `#1F4FA0` | Button active |
-| `--link` | `#296DBA` | Inline text links (underlined) |
-| `--tint` / `--tint-strong` | `#E5EEF7` / `#C6D9F0` | Light blue containers |
-| `--success` / `--success-tint` | `#14BC7E` / `#E7F8F2` | Status accent, sparing |
-| `--footer-bg` | `#2E373E` | Footer background |
-| `--footer-line` | `#515B62` | Footer dividers (Trout) |
-| `--footer-link` | `#777D81` | Footer links (Rolling Stone) |
-| `--footer-muted` | `#AEAEAE` | Footer emphasized util (Silver Chalice) |
-| `--footer-box` | `#232A2F` | Footer select/box background |
+Project tokens (Sejong variation). "LS source" documents the Figma-extracted LS
+value we deliberately shifted away from — never ship the LS hex where a Sejong
+hex exists.
 
-Hero scrim: flat `rgba(0,0,0,0.3)` overlay (Figma "Black 30%"); a soft bottom
-gradient may be added for slide-control legibility. Circle fills at 90% opacity:
-`rgba(0,148,204,.9)`, `rgba(6,104,179,.9)`, `rgba(0,75,162,.9)`, `rgba(0,55,119,.9)`.
+| Token | Hex (Sejong) | Role | LS source (Figma) |
+|---|---|---|---|
+| `--canvas` | `#FFFFFF` | Page/card background | `#FFFFFF` |
+| `--surface` | `#F6F7F9` | Light cool-gray band | Wild Sand `#F7F7F7` |
+| `--surface-alt` | `#FAFBFC` | Subtle alternate surface | `#FAFAFA` |
+| `--surface-2` | `#EEF0F3` | Deeper gray (admin chips etc.) | `#EFEFEF` |
+| `--navy` | `#233140` | Headings + dark text on light | Outer Space `#2E373D` |
+| `--navy-deep` | `#1A242F` | Darkest slate | `#232A2F` |
+| `--ink` | `#333333` | Nav/titles | Mine Shaft `#333333` |
+| `--body` | `#717171` | Body copy | Dove Gray `#717171` |
+| `--muted` | `#757575` | Secondary text | Boulder `#757575` |
+| `--faint` | `#888888` | Tertiary/captions | Gray `#888888` |
+| `--hairline` | `#EEEEEE` | Card borders, dividers | Gallery `#EEEEEE` |
+| `--line` | `#DBDBDB` | Stronger dividers | Alto `#DBDBDB` |
+| `--brand` | `#1C64A6` | Corporate block blue | Endeavour `#0667B2` |
+| `--brand-deep` | `#16345E` | Deep block blue | Regal Blue `#003777` |
+| `--brand-bright` | `#2C89B0` | Bright steel-cyan — circle 1 | Pacific `#0094CC` |
+| `--brand-cobalt` | `#23508F` | Cobalt — circle 3 | `#004BA2` |
+| `--primary` | `#2563EB` | Interactive only: buttons, links, focus | Picton `#388DEE` |
+| `--primary-deep` | `#1D4FBF` | Button hover | `#2A6BC4` |
+| `--primary-press` | `#17409C` | Button active | `#1F4FA0` |
+| `--link` | `#2458A6` | Inline text links (underlined) | `#296DBA` |
+| `--tint` / `--tint-strong` | `#E7EFFB` / `#C9DBF5` | Light blue containers | `#E5EEF7` / `#C6D9F0` |
+| `--success` / `--success-tint` | `#14BC7E` / `#E7F8F2` | Status accent, sparing | — |
+| `--footer-bg` | `#222B3A` | Footer background | `#2E373E` |
+| `--footer-line` | `#465364` | Footer dividers | Trout `#515B62` |
+| `--footer-link` | `#8A93A3` | Footer links | Rolling Stone `#777D81` |
+| `--footer-muted` | `#B3BAC6` | Footer emphasized util | Silver Chalice `#AEAEAE` |
+| `--footer-box` | `#1A2230` | Footer select/box background | `#232A2F` |
+
+Hero scrim: navy-tinted `rgba(18,30,48,0.38)` + bottom gradient to
+`rgba(10,18,30,0.32)` for slide-control legibility (LS uses flat black 30%).
+Circle fills at 92% opacity: `rgba(44,137,176,.92)`, `rgba(28,100,166,.92)`,
+`rgba(35,80,143,.92)`, `rgba(22,52,94,.92)`.
 
 ## 3. Typography
 
@@ -81,9 +98,10 @@ import shows Inter — a Latin placeholder; LS ships Noto Sans KR for Korean.)
 - Header `--header-h: 64px`, **always solid white**, bottom 1px `--hairline`. No transparent overlay mode.
 - Section rhythm: 80px top padding; 40–50px between section header and content.
 - Support strip runs narrower: max-width 1000px inside the container.
-- Home mosaic row (≥1024): `256px 1fr 1fr 522px` grid, 280px tall; stacked halves 140px each. <1024: 2-col / stacked.
-- Sharp corners on structural cards (`border-radius: 0` in home mosaic/strip);
-  tokens `--r-sm..--r-xl` = 2/4/6/8 for inputs & soft cards; `--r-full` for pills/circles.
+- Home mosaic row (≥1024): `256px 1fr 1fr 522px` grid, 280px tall, **16px gaps**;
+  stacked halves flex evenly. <1024: 2-col / stacked.
+- Sejong geometry: structural cards use `--r-xl` (12px) + 16px gaps (LS is sharp
+  gap-0 — do not revert); tokens `--r-sm..--r-xl` = 2/4/8/12; `--r-full` pills/circles.
 
 ## 5. Depth & elevation
 
@@ -109,7 +127,7 @@ pages offset content by `--header-h`.
 ### Hero (KV)
 Full-width image band, `margin-top: var(--header-h)`, height
 `calc(100svh - var(--header-h))` clamped 560–860px. Sejong equipment photo
-slideshow (crossfade, **no video**). Flat `rgba(0,0,0,.3)` scrim. Text centered:
+slideshow (crossfade, **no video**). Navy-tinted `rgba(18,30,48,.38)` scrim. Text centered:
 headline + one sub line (§3). Controls bottom-center: 8px dots (active = 28px
 `--primary` pill) + `01 / 04` tabular counter.
 
@@ -125,16 +143,19 @@ label 500/21–22px + small arrow glyph; the whole block is a link; hover =
 subtle brightness/underline — no lift, no radius.
 
 ### Business circles (home §3 — "사업영역")
-Centered header, then overlapping 300px circles (`--r-full`), fills = the 90%
-blue alphas in order (bright → brand → cobalt → deep), `margin-left: -30px`
-overlap (first none). Inside, centered white: 700/24px title + 400/15px one-word
-sub. <1024: 2×2 grid, no overlap, ~220px circles. Circle is a link.
+Centered header (with eyebrow), then 300px circles (`--r-full`) laid out
+**tangent with `clamp(16px→28px)` gaps — never overlapped** (overlap is LS's
+signature; Sejong keeps distance). Fills = the 92% steel-navy alphas in order
+(bright → brand → cobalt → deep). Inside, centered white: 700/24px title +
+400/14px EN sub. Hover: scale 1.05 + `0 0 0 6px var(--tint)` ring. <1024: 2×2
+grid, ~220px circles. Circle is a link.
 
 ### Support strip (home §4)
-Max-width 1000, 4 equal cells 240px tall, separated by 1px `#E5E5E5` borders
-(outer edges included). Cell 1: two stacked 700/22px links split by a hairline.
-Cells 2–4: 700/22px title + 400/14px `--body` two-line description, content
-top-left padded ~33–40px. Whole cell links; hover: title → `--primary`.
+Max-width 1000, 4 equal cells 240px tall as **gapped rounded cards** (16px gap,
+1px `--hairline` border, `--r-xl`; LS's connected divider strip is not copied).
+Cell 1: two stacked 700/20px links split by a hairline. Cells 2–4: 700/22px
+title + 400/14px `--body` two-line description, content top-left padded ~32–36px.
+Whole cell links; hover: title → `--primary`, border `--tint-strong` + `--shadow-md`.
 
 ### Footer
 `--footer-bg`, ~70px top padding. Left: white text wordmark (never a dark logo
@@ -171,7 +192,8 @@ No parallax. Numbers may count up once on first view (Sejong stats band).
 - **Never use LS ELECTRIC images, logos, icons, copy, or product names.**
 - No pure black text/backgrounds — darkest is `#232A2F`/`#2E373D`.
 - No resting card shadows; no glassmorphism; no gradients except the hero scrim.
-- No rounded corners on mosaic/strip cells (pills & circles are the exceptions).
+- No LS-exact skin: don't revert to LS hexes, sharp gap-0 cells, overlapped
+  circles, or the neutral-black scrim — the Sejong variation is intentional.
 - No video backgrounds — Sejong equipment photos only.
 
 ## 9. Agent guide

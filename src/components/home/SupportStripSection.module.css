@@ -1,4 +1,4 @@
-/* 고객지원 스트립 — LS 4셀 라인 그리드 (#E5E5E5 구분선은 DESIGN.md 허용 인라인) */
+/* 고객지원 스트립 — Sejong variation: 간격 카드 (LS는 붙은 라인 그리드) */
 .section {
   padding: 56px 0 88px;
   background: var(--canvas);
@@ -9,15 +9,20 @@
   margin: 0 auto;
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  border-left: 1px solid #e5e5e5;
+  gap: 16px;
 }
 
 .cell {
   height: 240px;
   display: block;
   padding: 32px 0 0 36px;
-  border-right: 1px solid #e5e5e5;
-  border-radius: 0;
+  border: 1px solid var(--hairline);
+  border-radius: var(--r-xl);
+  transition: border-color var(--motion-standard) var(--ease-std), box-shadow var(--motion-standard) var(--ease-std);
+}
+.cell:hover {
+  border-color: var(--tint-strong);
+  box-shadow: var(--shadow-md);
 }
 
 /* Cell 1 — two stacked half-height links */
@@ -31,7 +36,7 @@
   flex: 1;
   padding: 28px 0 0 36px;
 }
-.half + .half { border-top: 1px solid #e5e5e5; }
+.half + .half { border-top: 1px solid var(--hairline); }
 
 .halfTitle {
   font-size: 20px;
@@ -65,11 +70,9 @@
 @media (max-width: 1023.98px) {
   .strip {
     grid-template-columns: repeat(2, 1fr);
-    border-top: 1px solid #e5e5e5;
   }
   .cell {
     height: 200px;
-    border-bottom: 1px solid #e5e5e5;
   }
 }
 

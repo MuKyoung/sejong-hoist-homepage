@@ -11,7 +11,7 @@
   padding: 40px;
   background: var(--surface);
   border: 1px solid var(--hairline);
-  border-radius: 0;
+  border-radius: var(--r-xl);
 }
 @media (min-width: 768px) {
   .card {

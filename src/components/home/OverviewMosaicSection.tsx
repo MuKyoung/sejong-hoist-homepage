@@ -25,6 +25,7 @@ export default function OverviewMosaicSection() {
     <section className={s.section} aria-label="회사소개">
       <div className="container">
         <div className={s.header}>
+          <p className={s.eyebrow}>About Us</p>
           <h2 className={s.title}>회사소개</h2>
           <p className={s.subtitle}>
             운반하역 현장의 안전과 품질을 책임지는 세종호이스트크레인입니다.

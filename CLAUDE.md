@@ -73,12 +73,13 @@ Never read these (no value, large): `node_modules/`, `.next/`, `dist/`,
 style only — LS content/logos/images strictly forbidden). All tokens are CSS custom
 properties in `app/globals.css` `:root` — style via tokens, never hardcode (exceptions
 listed in DESIGN.md: circle alphas, #E5E5E5 strip dividers, hero scrim/text-shadow).
-- Color: white canvas; `--primary` #388dee (interactive only) + corporate blocks
-  `--brand` #0667b2 / `--brand-deep` #003777 / `--brand-bright` / `--brand-cobalt`;
-  slate `--navy` #2e373d headings, `--footer-*` dark footer; text `--ink`/`--body`/`--muted`/`--faint`.
-- Geometry: near-sharp (`--r-sm..xl` = 2/4/6/8); `--r-full` only for pill CTAs + circles;
-  home mosaic/strip cells are radius 0. Elevation: flat (`--shadow-sm: none`), hairline
-  borders instead of shadows; `--shadow-md` hover only.
+- Color (Sejong variation — LS hexes deliberately shifted, don't revert): white canvas;
+  `--primary` #2563eb (interactive only) + steel-navy blocks `--brand` #1c64a6 /
+  `--brand-deep` #16345e / `--brand-bright` / `--brand-cobalt`; `--navy` #233140
+  headings, `--footer-*` navy-slate footer; text `--ink`/`--body`/`--muted`/`--faint`.
+- Geometry: soft structural cards (`--r-sm..xl` = 2/4/8/12) with 16px gaps (NOT LS's
+  sharp gap-0); circles tangent, never overlapped; `--r-full` pills + circles.
+  Elevation: flat (`--shadow-sm: none`), hairline borders; `--shadow-md` hover only.
 - Type: Noto Sans KR via `next/font` (`app/layout.tsx`); centered section headers
   (700/42px `--navy` + 15px `--body` sub). Header: solid white, fixed, `--header-h` 64px.
 - Home = LS flow: `StorySection` (Sejong image KV) → `OverviewMosaicSection` (mosaic +

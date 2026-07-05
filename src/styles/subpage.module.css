@@ -93,7 +93,7 @@
   left: -24px;
   padding: 24px 28px;
   background: var(--brand);
-  border-radius: 0;
+  border-radius: var(--r-xl);
 }
 @media (min-width: 768px) {
   .statCard { bottom: -32px; left: -32px; padding: 28px 32px; }

@@ -9,6 +9,7 @@ export default function BusinessCirclesSection() {
     <section className={s.section} aria-label="사업영역">
       <div className="container">
         <div className={s.header}>
+          <p className={s.eyebrow}>Business</p>
           <h2 className={s.title}>사업영역</h2>
           <p className={s.subtitle}>
             설계부터 제작·설치·유지보수까지 운반하역 설비의 전 과정을 함께합니다.
