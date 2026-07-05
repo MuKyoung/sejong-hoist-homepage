@@ -35,13 +35,18 @@
 @media (min-width: 1024px) { .nav { display: flex; } }
 
 .navLink {
-  padding: 8px 18px;
-  font-size: 18px;
+  padding: 8px 12px;
+  font-size: 16px;
   font-weight: 700;
   line-height: 1.2;
   color: var(--ink);
   transition: color var(--motion-fast) var(--ease-std);
   white-space: nowrap;
+}
+/* Full LS sizing only when the row has room (1024–1279px is too tight
+   for 5 items + utils) */
+@media (min-width: 1280px) {
+  .navLink { padding: 8px 18px; font-size: 18px; }
 }
 .navLink:hover,
 .navLinkActive { color: var(--primary); }
@@ -56,7 +61,8 @@
   transition: color var(--motion-fast) var(--ease-std);
 }
 .phone:hover { color: var(--ink); }
-@media (min-width: 1024px) { .phone { display: block; } }
+/* Phone util needs the wide layout — below 1280 the nav + CTA fill the row */
+@media (min-width: 1280px) { .phone { display: block; } }
 
 /* Secondary pill CTA (LS signature) */
 .cta {
