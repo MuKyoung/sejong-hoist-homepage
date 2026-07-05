@@ -73,12 +73,12 @@ Never read these (no value, large): `node_modules/`, `.next/`, `dist/`,
 style only — LS content/logos/images strictly forbidden). All tokens are CSS custom
 properties in `app/globals.css` `:root` — style via tokens, never hardcode (exceptions
 listed in DESIGN.md: circle alphas, #E5E5E5 strip dividers, hero scrim/text-shadow).
-- Color (Sejong variation — LS hexes deliberately shifted, don't revert): white canvas;
-  `--primary` #2563eb (interactive only) + steel-navy blocks `--brand` #1c64a6 /
-  `--brand-deep` #16345e / `--brand-bright` / `--brand-cobalt`; `--navy` #233140
+- Color (Sejong variation): **NO BLUE — navy ramp only** (#3e5c80→#16273c). White
+  canvas; `--primary` #2c4a6e navy (interactive only, = `--brand`); blocks/circles
+  from `--brand-bright/--brand/--brand-cobalt/--brand-deep`; `--navy` #233140
   headings, `--footer-*` navy-slate footer; text `--ink`/`--body`/`--muted`/`--faint`.
-- Geometry: soft structural cards (`--r-sm..xl` = 2/4/8/12) with 16px gaps (NOT LS's
-  sharp gap-0); circles tangent, never overlapped; `--r-full` pills + circles.
+- Geometry: **sharp** structural cards (`--r-lg/xl` = 0) with 16px gaps (LS is gap-0);
+  circles tangent, never overlapped; `--r-full` pills + circles; inputs 2–4px.
   Elevation: flat (`--shadow-sm: none`), hairline borders; `--shadow-md` hover only.
 - Type: Noto Sans KR via `next/font` (`app/layout.tsx`); centered section headers
   (700/42px `--navy` + 15px `--body` sub). Header: solid white, fixed, `--header-h` 64px.

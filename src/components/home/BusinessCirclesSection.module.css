@@ -60,11 +60,11 @@
   box-shadow: 0 0 0 6px var(--tint);
 }
 
-/* Circle fills — Sejong steel-navy family (bright → brand → cobalt → deep) */
-.c1 { background: rgba(44, 137, 176, 0.92); }
-.c2 { background: rgba(28, 100, 166, 0.92); }
-.c3 { background: rgba(35, 80, 143, 0.92); }
-.c4 { background: rgba(22, 52, 94, 0.92); }
+/* Circle fills — single navy ramp, light → deep (simple monochrome) */
+.c1 { background: rgba(62, 92, 128, 0.95); }
+.c2 { background: rgba(44, 74, 110, 0.95); }
+.c3 { background: rgba(33, 57, 86, 0.95); }
+.c4 { background: rgba(22, 39, 60, 0.95); }
 
 .circleTitle {
   font-size: clamp(20px, 1.8vw, 24px);

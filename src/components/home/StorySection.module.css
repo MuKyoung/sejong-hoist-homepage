@@ -89,8 +89,8 @@
   transition: width var(--motion-standard) var(--ease-std), background var(--motion-standard) var(--ease-std);
 }
 .dot:hover { background: rgba(255, 255, 255, 0.6); }
-.dotActive { width: 28px; background: var(--primary); }
-.dotActive:hover { background: var(--primary); }
+.dotActive { width: 28px; background: #ffffff; }
+.dotActive:hover { background: #ffffff; }
 
 .counter {
   font-size: 14px;

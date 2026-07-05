@@ -1,21 +1,20 @@
 @import "tailwindcss";
 
-/* DESIGN.md — LS ELECTRIC design language (style only; content is Sejong's).
-   White canvas, flat cards + #EEEEEE hairlines, corporate blue blocks,
-   #388DEE interactive pills, #2E373E slate headings/footer. */
+/* DESIGN.md — LS ELECTRIC design language, Sejong variation (style only).
+   White canvas, flat sharp cards + #EEEEEE hairlines, navy-ramp color blocks,
+   navy interactive pills. NO blue — navy only. */
 :root {
-  /* Interactive blue — buttons, links, focus only (Sejong shift: indigo-leaning) */
-  --primary:       #2563eb;
-  --primary-deep:  #1d4fbf;   /* hover */
-  --primary-press: #17409c;   /* active */
-  --link:          #2458a6;   /* inline text links */
+  /* Interactive navy — buttons, links, focus only (NO blue anywhere — navy only) */
+  --primary:       #2c4a6e;
+  --primary-deep:  #213956;   /* hover */
+  --primary-press: #16273c;   /* active */
+  --link:          #35567c;   /* inline text links */
 
-  /* Corporate steel-navy family — structural color blocks & circles
-     (Sejong variation of the LS blue family — same genre, own hues) */
-  --brand:         #1c64a6;
-  --brand-deep:    #16345e;
-  --brand-bright:  #2c89b0;
-  --brand-cobalt:  #23508f;
+  /* Navy ramp — structural color blocks & circles (single family, simple) */
+  --brand-bright:  #3e5c80;
+  --brand:         #2c4a6e;
+  --brand-cobalt:  #213956;
+  --brand-deep:    #16273c;
 
   /* Navy-slate — headings + dark sections (never pure black) */
   --navy:          #233140;
@@ -34,10 +33,10 @@
   --surface-alt:   #fafbfc;
   --surface-2:     #eef0f3;
 
-  /* Light blue containers */
-  --tint:          #e7effb;
-  --tint-strong:   #c9dbf5;
-  --pale:          #f2f7fd;
+  /* Light navy-gray containers */
+  --tint:          #e8edf3;
+  --tint-strong:   #d2dbe5;
+  --pale:          #f2f5f8;
 
   /* Status accent — teal, used sparingly */
   --success:       #14bc7e;
@@ -65,11 +64,11 @@
   --sp-2xl: 48px;
   --sp-3xl: 64px;
 
-  /* Geometry — Sejong variation: soft 12px structural cards (LS is sharp) */
+  /* Geometry — LS sharp: structural cards square; tiny rounds on inputs only */
   --r-sm:   2px;
   --r-md:   4px;
-  --r-lg:   8px;
-  --r-xl:   12px;
+  --r-lg:   0px;
+  --r-xl:   0px;
   --r-full: 9999px;
 
   /* Flat-first elevation (LS): no resting shadows; hover lift subtle */

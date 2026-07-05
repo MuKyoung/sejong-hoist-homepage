@@ -120,7 +120,7 @@
   justify-content: space-between;
   gap: 16px;
   padding-bottom: 15px;
-  border-bottom: 2px solid var(--primary);
+  border-bottom: 1px solid var(--navy);
 }
 
 .newsTitle {

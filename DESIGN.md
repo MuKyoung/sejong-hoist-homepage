@@ -6,17 +6,20 @@ homepage (www.ls-electric.com/ko/) via Figma import (html.to.design, frame
 content, copy, logos, photography, and icons are strictly prohibited. All content,
 images, and copy are Sejong Hoist Crane's own (`public/images/sejong_*.png`).
 
-**Sejong variation (2026-07-05):** section composition stays LS, but the skin is
-deliberately shifted so it does not read as an LS clone:
-- Palette: LS cyan-blues → Sejong **steel-navy family** (see §2); interactive blue
-  `#2563EB` (indigo-leaning, not LS `#388DEE`); footer navy-slate `#222B3A`.
-- Geometry: structural cards are **soft 12px** (`--r-xl`) with 16px gaps — LS is
-  sharp gap-0. Circles are **tangent with gaps**, never overlapped (-30px is LS's
-  signature; we don't copy it).
-- Hero scrim is **navy-tinted** rgba(18,30,48,.38), not neutral black.
+**Sejong variation (updated 2026-07-06):** section composition and the sharp LS
+geometry stay; the palette is what differentiates us:
+- **NO BLUE, navy only.** The entire chromatic range is a single navy ramp
+  (`#3E5C80 → #16273C`) + white + neutral grays. Interactive color = navy
+  `--primary #2C4A6E`. LS's blues (#388DEE/#0667B2/#0094CC…) are forbidden.
+- Geometry: **sharp** structural cards (radius 0) like LS, but cells are
+  **separated by 16px gaps** (LS is gap-0 connected). Pills (`--r-full`) remain
+  the only full rounds besides circles; inputs keep 2–4px.
+- Circles are **tangent with gaps**, never overlapped (-30px is LS's signature;
+  we don't copy it). Fills = the navy ramp at 95%.
+- Hero scrim is **navy-tinted** rgba(18,30,48,.38), not neutral black; active
+  slide dot is **white** (navy is invisible on the dark KV).
 - Home section headers carry a small uppercase **English eyebrow** in `--primary`
-  above the centered title (About Us / Business …).
-- News panel title rule: 2px `--primary` accent (LS uses a dark 1px rule).
+  (navy) above the centered title (About Us / Business …).
 
 All values below exist as CSS custom properties in `src/app/globals.css` `:root`.
 Style via tokens; hardcode a hex only where this file specifies it (e.g. circle fills).
@@ -51,15 +54,15 @@ hex exists.
 | `--faint` | `#888888` | Tertiary/captions | Gray `#888888` |
 | `--hairline` | `#EEEEEE` | Card borders, dividers | Gallery `#EEEEEE` |
 | `--line` | `#DBDBDB` | Stronger dividers | Alto `#DBDBDB` |
-| `--brand` | `#1C64A6` | Corporate block blue | Endeavour `#0667B2` |
-| `--brand-deep` | `#16345E` | Deep block blue | Regal Blue `#003777` |
-| `--brand-bright` | `#2C89B0` | Bright steel-cyan — circle 1 | Pacific `#0094CC` |
-| `--brand-cobalt` | `#23508F` | Cobalt — circle 3 | `#004BA2` |
-| `--primary` | `#2563EB` | Interactive only: buttons, links, focus | Picton `#388DEE` |
-| `--primary-deep` | `#1D4FBF` | Button hover | `#2A6BC4` |
-| `--primary-press` | `#17409C` | Button active | `#1F4FA0` |
-| `--link` | `#2458A6` | Inline text links (underlined) | `#296DBA` |
-| `--tint` / `--tint-strong` | `#E7EFFB` / `#C9DBF5` | Light blue containers | `#E5EEF7` / `#C6D9F0` |
+| `--brand-bright` | `#3E5C80` | Navy ramp — lightest block/circle 1 | Pacific `#0094CC` |
+| `--brand` | `#2C4A6E` | Navy ramp — block/circle 2 | Endeavour `#0667B2` |
+| `--brand-cobalt` | `#213956` | Navy ramp — circle 3 | `#004BA2` |
+| `--brand-deep` | `#16273C` | Navy ramp — deepest block/circle 4 | Regal Blue `#003777` |
+| `--primary` | `#2C4A6E` | Interactive only: buttons, links, focus (= `--brand`) | Picton `#388DEE` |
+| `--primary-deep` | `#213956` | Button hover | `#2A6BC4` |
+| `--primary-press` | `#16273C` | Button active | `#1F4FA0` |
+| `--link` | `#35567C` | Inline text links (underlined) | `#296DBA` |
+| `--tint` / `--tint-strong` | `#E8EDF3` / `#D2DBE5` | Light navy-gray containers | `#E5EEF7` / `#C6D9F0` |
 | `--success` / `--success-tint` | `#14BC7E` / `#E7F8F2` | Status accent, sparing | — |
 | `--footer-bg` | `#222B3A` | Footer background | `#2E373E` |
 | `--footer-line` | `#465364` | Footer dividers | Trout `#515B62` |
@@ -69,8 +72,8 @@ hex exists.
 
 Hero scrim: navy-tinted `rgba(18,30,48,0.38)` + bottom gradient to
 `rgba(10,18,30,0.32)` for slide-control legibility (LS uses flat black 30%).
-Circle fills at 92% opacity: `rgba(44,137,176,.92)`, `rgba(28,100,166,.92)`,
-`rgba(35,80,143,.92)`, `rgba(22,52,94,.92)`.
+Circle fills at 95% opacity (navy ramp): `rgba(62,92,128,.95)`,
+`rgba(44,74,110,.95)`, `rgba(33,57,86,.95)`, `rgba(22,39,60,.95)`.
 
 ## 3. Typography
 
@@ -100,8 +103,8 @@ import shows Inter — a Latin placeholder; LS ships Noto Sans KR for Korean.)
 - Support strip runs narrower: max-width 1000px inside the container.
 - Home mosaic row (≥1024): `256px 1fr 1fr 522px` grid, 280px tall, **16px gaps**;
   stacked halves flex evenly. <1024: 2-col / stacked.
-- Sejong geometry: structural cards use `--r-xl` (12px) + 16px gaps (LS is sharp
-  gap-0 — do not revert); tokens `--r-sm..--r-xl` = 2/4/8/12; `--r-full` pills/circles.
+- Geometry: structural cards **sharp** (`--r-lg`/`--r-xl` = 0) with 16px gaps;
+  tokens `--r-sm/--r-md` = 2/4 for inputs/chips; `--r-full` pills/circles only.
 
 ## 5. Depth & elevation
 
@@ -129,7 +132,7 @@ Full-width image band, `margin-top: var(--header-h)`, height
 `calc(100svh - var(--header-h))` clamped 560–860px. Sejong equipment photo
 slideshow (crossfade, **no video**). Navy-tinted `rgba(18,30,48,.38)` scrim. Text centered:
 headline + one sub line (§3). Controls bottom-center: 8px dots (active = 28px
-`--primary` pill) + `01 / 04` tabular counter.
+**white** pill — navy is invisible on the dark KV) + `01 / 04` tabular counter.
 
 ### Overview mosaic (home §2 — "회사소개")
 Centered section header, then a 4-part row: ① photo card (Sejong image bg +
@@ -145,14 +148,14 @@ subtle brightness/underline — no lift, no radius.
 ### Business circles (home §3 — "사업영역")
 Centered header (with eyebrow), then 300px circles (`--r-full`) laid out
 **tangent with `clamp(16px→28px)` gaps — never overlapped** (overlap is LS's
-signature; Sejong keeps distance). Fills = the 92% steel-navy alphas in order
+signature; Sejong keeps distance). Fills = the 95% navy-ramp alphas in order
 (bright → brand → cobalt → deep). Inside, centered white: 700/24px title +
 400/14px EN sub. Hover: scale 1.05 + `0 0 0 6px var(--tint)` ring. <1024: 2×2
 grid, ~220px circles. Circle is a link.
 
 ### Support strip (home §4)
-Max-width 1000, 4 equal cells 240px tall as **gapped rounded cards** (16px gap,
-1px `--hairline` border, `--r-xl`; LS's connected divider strip is not copied).
+Max-width 1000, 4 equal cells 240px tall as **gapped square cards** (16px gap,
+1px `--hairline` border, radius 0; LS's connected divider strip is not copied).
 Cell 1: two stacked 700/20px links split by a hairline. Cells 2–4: 700/22px
 title + 400/14px `--body` two-line description, content top-left padded ~32–36px.
 Whole cell links; hover: title → `--primary`, border `--tint-strong` + `--shadow-md`.
@@ -169,8 +172,8 @@ lines + copyright 300/12 right-aligned. Optional boxed items: `--footer-box` bg,
 PageHero: **centered** — eyebrow 13px `--primary` caps → title 700/42 `--navy` →
 15px `--body` sub; `--surface` band, hairline bottom, offset by `--header-h`.
 SubNav: white, hairline, active = 2px `--primary` underline. Cards: white,
-hairline, radius ≤ 8, no resting shadow. Forms: inputs `--r-sm/md`, focus
-`--primary` border + `0 0 0 3px rgba(56,141,238,.12)` ring.
+hairline, sharp corners, no resting shadow. Forms: inputs `--r-sm/md`, focus
+`--primary` border + `0 0 0 3px rgba(44,74,110,.15)` ring.
 
 ## 7. Motion
 
@@ -183,17 +186,19 @@ No parallax. Numbers may count up once on first view (Sejong stats band).
 **Do**
 - Keep the canvas white; use `--surface` sparingly for alternating bands.
 - Center every home section header (title + small gray sub).
-- Use solid blue blocks (`--brand`, `--brand-deep`) as color anchors with white text.
-- Reserve `--primary` #388DEE for interactive elements.
-- Separate flat cells with 1px hairlines; sharp corners on structural cards.
+- Use solid navy blocks (`--brand`, `--brand-deep`) as color anchors with white text.
+- Reserve `--primary` (navy #2C4A6E) for interactive elements.
+- Separate flat cells with 1px hairlines + 16px gaps; sharp corners on structural cards.
 - Use Noto Sans KR everywhere; 700 headings/nav, 400 body.
 
 **Don't**
 - **Never use LS ELECTRIC images, logos, icons, copy, or product names.**
 - No pure black text/backgrounds — darkest is `#232A2F`/`#2E373D`.
 - No resting card shadows; no glassmorphism; no gradients except the hero scrim.
-- No LS-exact skin: don't revert to LS hexes, sharp gap-0 cells, overlapped
-  circles, or the neutral-black scrim — the Sejong variation is intentional.
+- **No blue anywhere** — navy ramp only (`#3E5C80..#16273C`). Never reintroduce
+  LS blues (#388DEE/#0667B2/#0094CC/#004BA2) or any saturated blue.
+- No gap-0 connected cells, no overlapped circles, no neutral-black scrim —
+  the Sejong variation (gaps, tangent circles, navy scrim) is intentional.
 - No video backgrounds — Sejong equipment photos only.
 
 ## 9. Agent guide

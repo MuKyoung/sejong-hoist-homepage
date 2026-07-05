@@ -48,11 +48,11 @@ const INDUSTRIES = [
 ];
 
 const PRODUCTS = [
-  { name: "Wire Hoist", pct: 35, color: "#2d91ff" },
-  { name: "Crane", pct: 30, color: "#192d82" },
-  { name: "Chain Hoist", pct: 15, color: "#0257d7" },
-  { name: "방폭 Hoist", pct: 12, color: "#728094" },
-  { name: "부품", pct: 8, color: "#cae7ff" },
+  { name: "Wire Hoist", pct: 35, color: "#3e5c80" },
+  { name: "Crane", pct: 30, color: "#16273c" },
+  { name: "Chain Hoist", pct: 15, color: "#2c4a6e" },
+  { name: "방폭 Hoist", pct: 12, color: "#757575" },
+  { name: "부품", pct: 8, color: "#d2dbe5" },
 ];
 
 const MAX_YEAR = Math.max(...YEARLY.map((y) => y.value));
