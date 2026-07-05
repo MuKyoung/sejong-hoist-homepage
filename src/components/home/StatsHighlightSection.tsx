@@ -4,9 +4,9 @@ import { useEffect, useRef, useState } from "react";
 import s from "./StatsHighlightSection.module.css";
 
 const STATS = [
-  { label: "업력", value: 40, suffix: "년+", desc: "운반하역 외길, 축적된 시공 노하우", bars: [45, 60, 72, 86, 100] },
-  { label: "누적 시공", value: 520, suffix: "건+", desc: "전국 현장의 납품·설치 실적", bars: [35, 52, 68, 84, 100] },
-  { label: "최대 하중", value: 350, suffix: "TON", desc: "그라브 갠트리크레인 시공 실적", bars: [30, 50, 70, 88, 100] },
+  { label: "업력", value: 40, suffix: "년+", desc: "운반하역 외길, 축적된 시공 노하우" },
+  { label: "누적 시공", value: 520, suffix: "건+", desc: "전국 현장의 납품·설치 실적" },
+  { label: "최대 하중", value: 350, suffix: "TON", desc: "그라브 갠트리크레인 시공 실적" },
 ];
 
 function CountUp({ target, run }: { target: number; run: boolean }) {
@@ -52,31 +52,15 @@ export default function StatsHighlightSection() {
   return (
     <section className={s.section} aria-label="주요 실적" ref={ref}>
       <div className="container">
-        <div className={s.header}>
-          <p className={s.eyebrow}>Performance</p>
-          <h2 className={s.headline}>숫자로 보는 세종호이스트크레인</h2>
-        </div>
-
         <div className={s.grid}>
           {STATS.map((st) => (
-            <div key={st.label} className={s.card}>
-              <div className={s.top}>
-                <p className={s.cardLabel}>{st.label}</p>
-                <p className={s.number}>
-                  <CountUp target={st.value} run={visible} />
-                  <span className={s.suffix}>{st.suffix}</span>
-                </p>
-                <p className={s.cardDesc}>{st.desc}</p>
-              </div>
-              <div className={s.bars} aria-hidden>
-                {st.bars.map((h, i) => (
-                  <span
-                    key={i}
-                    className={s.bar}
-                    style={{ height: visible ? `${h}%` : "0%", transitionDelay: `${i * 90}ms` }}
-                  />
-                ))}
-              </div>
+            <div key={st.label} className={s.cell}>
+              <p className={s.label}>{st.label}</p>
+              <p className={s.number}>
+                <CountUp target={st.value} run={visible} />
+                <span className={s.suffix}>{st.suffix}</span>
+              </p>
+              <p className={s.desc}>{st.desc}</p>
             </div>
           ))}
         </div>

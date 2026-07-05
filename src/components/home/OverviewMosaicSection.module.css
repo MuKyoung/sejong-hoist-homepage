@@ -1,0 +1,178 @@
+/* 회사소개 — LS 오버뷰 모자이크 (사진 카드 · 컬러 블록 · 뉴스 패널) */
+.section {
+  padding: 80px 0;
+  background: var(--canvas);
+}
+
+/* Centered section header */
+.header {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.title {
+  font-size: clamp(1.75rem, 3vw, 2.625rem);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--navy);
+}
+
+.subtitle {
+  margin-top: 10px;
+  font-size: 15px;
+  font-weight: 400;
+  color: var(--body);
+}
+
+/* Mosaic grid */
+.grid {
+  display: grid;
+  grid-template-columns: 256px 1fr 1fr 522px;
+  height: 280px;
+  gap: 0;
+}
+
+/* ① Photo card */
+.photoCard {
+  position: relative;
+  display: block;
+  overflow: hidden;
+  border-radius: 0;
+}
+.photoImg { object-fit: cover; }
+.photoOverlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.35);
+  transition: background var(--motion-standard) var(--ease-std);
+}
+.photoCard:hover .photoOverlay { background: rgba(0, 0, 0, 0.5); }
+.photoLabel {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  font-size: 15px;
+  font-weight: 500;
+  color: #fff;
+  text-align: center;
+  word-break: keep-all;
+}
+
+/* ②③ Stacked color blocks */
+.blockCol {
+  display: flex;
+  flex-direction: column;
+}
+
+.block {
+  height: 140px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  border-radius: 0;
+  text-align: center;
+}
+.blockLabel {
+  font-size: 21px;
+  font-weight: 500;
+}
+.block:hover .blockLabel { text-decoration: underline; }
+
+.blockBrand { background: var(--brand); color: #fff; }
+.blockWhite {
+  background: var(--canvas);
+  border: 1px solid var(--hairline);
+  color: var(--ink);
+}
+.blockSurface { background: var(--surface); color: var(--ink); }
+.blockDeep { background: var(--brand-deep); color: #fff; }
+
+/* ④ News panel */
+.news {
+  background: var(--canvas);
+  border: 1px solid var(--hairline);
+  border-radius: 0;
+  padding: 30px 36px 36px;
+  overflow: hidden;
+}
+
+.newsHead {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 16px;
+  padding-bottom: 15px;
+  border-bottom: 1px solid var(--navy);
+}
+
+.newsTitle {
+  font-size: 22px;
+  font-weight: 500;
+  color: var(--ink);
+}
+
+.newsMore {
+  flex-shrink: 0;
+  font-size: 13px;
+  color: var(--muted);
+  transition: color var(--motion-fast) var(--ease-std);
+}
+.newsMore:hover { color: var(--primary); }
+
+.newsList { list-style: none; }
+
+.newsRow {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  padding: 18px 0;
+  border-bottom: 1px solid var(--hairline);
+}
+.newsList li:last-child .newsRow { border-bottom: none; }
+
+.newsCat {
+  flex-shrink: 0;
+  font-size: 15px;
+  font-weight: 400;
+  color: var(--faint);
+}
+
+.newsRowTitle {
+  min-width: 0;
+  font-size: 16px;
+  font-weight: 400;
+  color: var(--muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  transition: color var(--motion-fast) var(--ease-std);
+}
+.newsRow:hover .newsRowTitle { color: var(--ink); }
+
+/* Responsive */
+@media (max-width: 1023.98px) {
+  .grid {
+    grid-template-columns: 1fr 1fr;
+    height: auto;
+  }
+  .photoCard {
+    grid-column: span 2;
+    height: 280px;
+  }
+  .news { grid-column: span 2; }
+}
+
+@media (max-width: 639.98px) {
+  .grid { grid-template-columns: 1fr; }
+  .photoCard,
+  .news { grid-column: auto; }
+  .photoCard { height: 240px; }
+  .news { padding: 24px 20px 28px; }
+}

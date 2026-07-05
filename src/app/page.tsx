@@ -1,21 +1,17 @@
 import StorySection from "@/components/home/StorySection";
+import OverviewMosaicSection from "@/components/home/OverviewMosaicSection";
+import BusinessCirclesSection from "@/components/home/BusinessCirclesSection";
 import StatsHighlightSection from "@/components/home/StatsHighlightSection";
-import QuickNavSection from "@/components/home/QuickNavSection";
-import BusinessAreasSection from "@/components/home/BusinessAreasSection";
-import PortfolioPreviewSection from "@/components/home/PortfolioPreviewSection";
-import NewsSection from "@/components/home/NewsSection";
-import InquiryBannerSection from "@/components/home/InquiryBannerSection";
+import SupportStripSection from "@/components/home/SupportStripSection";
 
 export default function HomePage() {
   return (
     <>
       <StorySection />
+      <OverviewMosaicSection />
+      <BusinessCirclesSection />
       <StatsHighlightSection />
-      <QuickNavSection />
-      <BusinessAreasSection />
-      <PortfolioPreviewSection />
-      <NewsSection />
-      <InquiryBannerSection />
+      <SupportStripSection />
     </>
   );
 }

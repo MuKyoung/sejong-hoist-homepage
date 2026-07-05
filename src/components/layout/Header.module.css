@@ -1,26 +1,18 @@
-/* Header — transparent overlay on hero, solid on scroll / subpages */
+/* Header — always-solid white LS chrome (DESIGN.md §6) */
 .header {
   position: fixed;
   top: 0; left: 0; right: 0;
   z-index: 100;
   height: var(--header-h);
-  background: transparent;
-  border-bottom: 1px solid transparent;
-  transition:
-    background var(--motion-standard) var(--ease-std),
-    border-color var(--motion-standard) var(--ease-std);
-}
-
-.headerSolid {
   background: var(--canvas);
-  border-bottom-color: var(--hairline);
+  border-bottom: 1px solid var(--hairline);
 }
 
 .inner {
-  max-width: 1200px;
+  max-width: 1280px;
   margin: 0 auto;
   height: 100%;
-  padding: 0 clamp(20px, 5vw, 80px);
+  padding: 0 clamp(20px, 5vw, 40px);
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -31,15 +23,6 @@
   display: flex;
   align-items: center;
   flex-shrink: 0;
-  background: #ffffff;
-  padding: 6px 12px;
-  border-radius: var(--r-sm);
-  transition: background var(--motion-standard);
-}
-
-.headerSolid .logoLink {
-  background: transparent;
-  padding: 0;
 }
 
 .nav {
@@ -56,54 +39,42 @@
   font-size: 18px;
   font-weight: 700;
   line-height: 1.2;
-  color: #ffffff;
-  transition: color var(--motion-fast) var(--ease-enter);
+  color: var(--ink);
+  transition: color var(--motion-fast) var(--ease-std);
   white-space: nowrap;
 }
-.headerSolid .navLink { color: var(--ink); }
 .navLink:hover,
 .navLinkActive { color: var(--primary); }
 
-.right { display: flex; align-items: center; gap: 12px; flex-shrink: 0; }
+.right { display: flex; align-items: center; gap: 16px; flex-shrink: 0; }
 
 .phone {
   display: none;
-  font-size: 14px;
-  font-weight: 700;
-  color: rgba(255, 255, 255, 0.75);
-  transition: color var(--motion-fast);
+  font-size: 13px;
+  font-weight: 400;
+  color: var(--muted);
+  transition: color var(--motion-fast) var(--ease-std);
 }
-.phone:hover { color: #ffffff; }
-.headerSolid .phone { color: var(--muted); }
-.headerSolid .phone:hover { color: var(--ink); }
+.phone:hover { color: var(--ink); }
 @media (min-width: 1024px) { .phone { display: block; } }
 
+/* Secondary pill CTA (LS signature) */
 .cta {
   display: none;
   align-items: center;
   justify-content: center;
-  height: 51px;
-  padding: 15px 32px;
-  font-size: 16px;
+  height: 40px;
+  padding: 0 22px;
+  font-size: 14px;
   font-weight: 700;
-  color: #ffffff;
-  border: 1px solid rgba(255, 255, 255, 0.65);
+  color: var(--primary);
+  background: var(--canvas);
+  border: 2px solid var(--primary);
   border-radius: var(--r-full);
-  transition: background var(--motion-fast), color var(--motion-fast), border-color var(--motion-fast);
+  transition: background var(--motion-fast) var(--ease-std);
   white-space: nowrap;
 }
-.cta:hover {
-  background: rgba(255, 255, 255, 0.12);
-  border-color: #ffffff;
-}
-.headerSolid .cta {
-  color: var(--ink);
-  border-color: var(--ink);
-}
-.headerSolid .cta:hover {
-  background: var(--ink);
-  color: var(--canvas);
-}
+.cta:hover { background: var(--tint); }
 @media (min-width: 1024px) { .cta { display: inline-flex; } }
 
 .menuBtn {
@@ -121,10 +92,9 @@
 .menuBar {
   display: block;
   height: 1.5px;
-  background: #ffffff;
-  transition: all var(--motion-standard);
+  background: var(--ink);
+  transition: all var(--motion-standard) var(--ease-std);
 }
-.headerSolid .menuBar { background: var(--ink); }
 .menuBarTop    { width: 22px; }
 .menuBarMid    { width: 16px; margin-left: auto; }
 .menuBarBot    { width: 22px; }
@@ -157,14 +127,17 @@
 .mobileLink:hover { color: var(--primary); }
 
 .mobileCta {
-  display: block;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   margin-top: 20px;
-  text-align: center;
-  height: 51px;
-  line-height: 51px;
-  font-size: 16px;
+  height: 48px;
+  font-size: 15px;
   font-weight: 700;
-  color: var(--ink);
-  border: 1px solid var(--ink);
+  color: var(--primary);
+  background: var(--canvas);
+  border: 2px solid var(--primary);
   border-radius: var(--r-full);
+  transition: background var(--motion-fast) var(--ease-std);
 }
+.mobileCta:hover { background: var(--tint); }

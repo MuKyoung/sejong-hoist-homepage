@@ -1,96 +1,57 @@
-/* 주요 실적 — 수치 + 미니 바 그래프 (KCD 스타일) */
+/* 주요 실적 — LS 플랫 숫자 밴드 (헤어라인 구분) */
 .section {
-  padding: 80px 0;
+  padding: 64px 0;
   background: var(--surface);
-}
-@media (min-width: 1024px) { .section { padding: 96px 0; } }
-
-.header {
-  max-width: 640px;
-  margin-bottom: 40px;
-}
-
-.eyebrow {
-  font-size: 13px;
-  font-weight: 700;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--primary);
-  margin-bottom: 12px;
-}
-
-.headline {
-  font-size: clamp(1.75rem, 4vw, 2.5rem);
-  font-weight: 700;
-  line-height: 1.25;
-  letter-spacing: -0.03em;
-  color: var(--navy);
+  border-top: 1px solid var(--hairline);
+  border-bottom: 1px solid var(--hairline);
 }
 
 .grid {
   display: grid;
-  grid-template-columns: 1fr;
-  gap: 16px;
-}
-@media (min-width: 768px) { .grid { grid-template-columns: repeat(3, 1fr); gap: 20px; } }
-
-.card {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  gap: 28px;
-  min-height: 240px;
-  padding: 32px 30px;
-  background: var(--canvas);
-  border: 1px solid var(--hairline);
-  border-radius: var(--r-xl);
-  box-shadow: var(--shadow-sm);
+  grid-template-columns: repeat(3, 1fr);
 }
 
-.cardLabel {
+.cell {
+  text-align: center;
+  padding: 8px 16px;
+  border-left: 1px solid var(--line);
+}
+.cell:first-child { border-left: none; }
+
+.label {
   font-size: 14px;
-  font-weight: 700;
+  font-weight: 500;
   color: var(--muted);
-  margin-bottom: 14px;
 }
 
 .number {
-  font-size: clamp(2.75rem, 6vw, 3.5rem);
-  font-weight: 800;
+  margin-top: 10px;
+  font-size: clamp(2.25rem, 4vw, 3rem);
+  font-weight: 700;
   line-height: 1;
-  letter-spacing: -0.04em;
+  letter-spacing: -0.02em;
   color: var(--navy);
   font-variant-numeric: tabular-nums;
 }
 
 .suffix {
-  margin-left: 6px;
-  font-size: 1.25rem;
+  margin-left: 4px;
+  font-size: 1.125rem;
   font-weight: 700;
-  color: var(--primary);
-  letter-spacing: -0.02em;
+  color: var(--brand);
 }
 
-.cardDesc {
-  margin-top: 12px;
-  font-size: 14px;
-  line-height: 1.6;
-  color: var(--muted);
+.desc {
+  margin-top: 8px;
+  font-size: 13px;
+  font-weight: 400;
+  color: var(--faint);
 }
 
-/* Mini ascending bar chart */
-.bars {
-  display: flex;
-  align-items: flex-end;
-  gap: 8px;
-  height: 64px;
+@media (max-width: 639.98px) {
+  .grid {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+  .cell { border-left: none; }
 }
-
-.bar {
-  flex: 1;
-  min-height: 4px;
-  background: var(--tint-strong);
-  border-radius: var(--r-sm) var(--r-sm) 0 0;
-  transition: height 0.9s var(--ease-std);
-}
-.bar:last-child { background: var(--primary); }

@@ -1,9 +1,13 @@
-/* Hero — Sejong 장비 이미지 슬라이드쇼 (LS 레이아웃 · KCD 스타일) */
+/* Hero KV — Sejong 장비 이미지 슬라이드쇼 (LS ELECTRIC 스타일) */
 .section {
   position: relative;
-  min-height: 100svh;
+  margin-top: var(--header-h);
+  height: calc(100svh - var(--header-h));
+  min-height: 560px;
+  max-height: 860px;
   display: flex;
   align-items: center;
+  justify-content: center;
   overflow: hidden;
   background: var(--navy-deep);
 }
@@ -24,111 +28,49 @@
 }
 .image { object-fit: cover; }
 
+/* Flat 30% scrim + subtle bottom gradient for control legibility */
 .overlay {
   position: absolute;
   inset: 0;
-  background:
-    linear-gradient(180deg, rgba(18, 26, 61, 0.55) 0%, rgba(18, 26, 61, 0.35) 40%, rgba(18, 26, 61, 0.75) 100%),
-    linear-gradient(90deg, rgba(18, 26, 61, 0.45) 0%, rgba(18, 26, 61, 0.15) 100%);
+  background-color: rgba(0, 0, 0, 0.3);
+  background-image: linear-gradient(180deg, rgba(0, 0, 0, 0) 60%, rgba(0, 0, 0, 0.25) 100%);
 }
 
-/* Content — centered (LS hero) */
+/* Content — perfectly centered on both axes */
 .content {
   position: relative;
   z-index: 2;
-  width: 100%;
-  padding-top: calc(var(--header-h) + 40px);
-  padding-bottom: 120px;
-}
-
-.inner {
-  max-width: 760px;
-  margin: 0 auto;
+  padding: 0 clamp(20px, 3.3vw, 40px);
   text-align: center;
 }
 
-.tag {
-  display: inline-block;
-  padding: 7px 16px;
-  margin-bottom: 24px;
-  font-size: 13px;
-  font-weight: 700;
-  letter-spacing: 0.04em;
-  color: #fff;
-  background: rgba(255, 255, 255, 0.14);
-  border: 1px solid rgba(255, 255, 255, 0.22);
-  border-radius: var(--r-full);
-  backdrop-filter: blur(6px);
-  -webkit-backdrop-filter: blur(6px);
-}
-
 .headline {
-  font-size: clamp(2rem, 5.5vw, 3.75rem);
-  font-weight: 800;
-  line-height: 1.22;
-  letter-spacing: -0.03em;
+  font-size: clamp(2rem, 4.5vw, 3.4375rem);
+  font-weight: 700;
+  line-height: 1.3;
+  letter-spacing: -0.05em;
   color: #fff;
-  margin-bottom: 24px;
+  text-shadow: 0 0 20px rgba(0, 0, 0, 0.1), 1px 1px 0 rgba(0, 0, 0, 0.3);
   word-break: keep-all;
 }
 .headlineLine { display: block; }
 
 .sub {
-  max-width: 560px;
-  margin: 0 auto 36px;
-  font-size: clamp(0.95rem, 1.6vw, 1.125rem);
-  line-height: 1.7;
-  color: rgba(255, 255, 255, 0.78);
-}
-
-.ctas {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 12px;
-}
-
-.primaryBtn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  height: 52px;
-  padding: 0 32px;
-  font-size: 16px;
-  font-weight: 700;
-  color: var(--on-primary);
-  background: var(--primary);
-  border-radius: var(--r-full);
-  box-shadow: var(--shadow-md);
-  transition: background var(--motion-standard) var(--ease-std), transform var(--motion-standard) var(--ease-std);
-}
-.primaryBtn:hover { background: var(--primary-deep); transform: translateY(-2px); }
-
-.ghostBtn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  height: 52px;
-  padding: 0 32px;
-  font-size: 16px;
-  font-weight: 700;
+  margin-top: 18px;
+  font-size: clamp(1rem, 1.6vw, 1.25rem);
+  font-weight: 400;
   color: #fff;
-  border: 1.5px solid rgba(255, 255, 255, 0.55);
-  border-radius: var(--r-full);
-  transition: background var(--motion-fast), border-color var(--motion-fast);
+  text-shadow: 0 0 20px rgba(0, 0, 0, 0.1), 1px 1px 0 rgba(0, 0, 0, 0.3);
+  word-break: keep-all;
 }
-.ghostBtn:hover { background: rgba(255, 255, 255, 0.12); border-color: #fff; }
 
-/* Slide controls (LS counter + dots) */
+/* Slide controls — bottom center */
 .controls {
   position: absolute;
   left: 0;
   right: 0;
-  bottom: 40px;
+  bottom: 32px;
   z-index: 2;
-}
-
-.controlsInner {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -152,7 +94,7 @@
 
 .counter {
   font-size: 14px;
-  font-weight: 600;
+  font-weight: 400;
   color: rgba(255, 255, 255, 0.55);
   font-variant-numeric: tabular-nums;
   letter-spacing: 0.04em;

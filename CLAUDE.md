@@ -67,22 +67,26 @@ Never read these (no value, large): `node_modules/`, `.next/`, `dist/`,
 - Styling via CSS Modules (`*.module.css`) co-located with components; Tailwind v4 available.
 - Site content/copy lives in `src/data/site.ts` — no external data fetching layer.
 
-### Design system (KCD style + LS ELECTRIC layout — style only, no external content)
+### Design system (LS ELECTRIC language — canonical spec: `DESIGN.md`)
 
-Visual style follows 한국신용데이터(KCD, kcd.co.kr): friendly, rounded, airy, soft
-shadows. Layout/section composition references LS ELECTRIC. All tokens are CSS custom
-properties in `app/globals.css` `:root` — style via tokens, never hardcode.
-- Color: `--primary` (#2d8cff KCD blue, interactive only) / `--primary-deep` / `--primary-press`;
-  deep indigo-navy `--navy` for dark sections + headings; text `--ink`/`--body`/`--muted`/`--faint`;
-  surfaces `--canvas`/`--surface`/`--surface-alt`; tints `--tint`/`--tint-strong`; mint `--success`.
-- Geometry (rounded/friendly): `--r-sm`→`--r-xl` (8→24px), `--r-full` for **pill CTAs**.
-- Elevation (soft): `--shadow-sm` (resting cards) / `--shadow-md` (hover, primary buttons) / `--shadow-lg`.
-- Type: Pretendard (CDN `<link>` in `app/layout.tsx`). Motion: `--motion-*` + `--ease-std`.
-- Home = LS section flow: `StorySection` (Sejong image slideshow hero, no video) →
-  `QuickNavSection` (4-card overview) → `BusinessAreasSection` → `PortfolioPreviewSection`
-  → `NewsSection` → `InquiryBannerSection`. `MissionStatsSection`/`TeamSection` unused but kept.
-- Dead/unused modules (legacy `--sj-*` vars, not imported): `home/{HeroSection,BusinessSection,
-  ValuesSection,PortfolioSection,ContactSection,StatsSection}.module.css` — ignore.
+**Read `DESIGN.md` before any UI work.** Style is LS ELECTRIC (Figma-extracted,
+style only — LS content/logos/images strictly forbidden). All tokens are CSS custom
+properties in `app/globals.css` `:root` — style via tokens, never hardcode (exceptions
+listed in DESIGN.md: circle alphas, #E5E5E5 strip dividers, hero scrim/text-shadow).
+- Color: white canvas; `--primary` #388dee (interactive only) + corporate blocks
+  `--brand` #0667b2 / `--brand-deep` #003777 / `--brand-bright` / `--brand-cobalt`;
+  slate `--navy` #2e373d headings, `--footer-*` dark footer; text `--ink`/`--body`/`--muted`/`--faint`.
+- Geometry: near-sharp (`--r-sm..xl` = 2/4/6/8); `--r-full` only for pill CTAs + circles;
+  home mosaic/strip cells are radius 0. Elevation: flat (`--shadow-sm: none`), hairline
+  borders instead of shadows; `--shadow-md` hover only.
+- Type: Noto Sans KR via `next/font` (`app/layout.tsx`); centered section headers
+  (700/42px `--navy` + 15px `--body` sub). Header: solid white, fixed, `--header-h` 64px.
+- Home = LS flow: `StorySection` (Sejong image KV) → `OverviewMosaicSection` (mosaic +
+  news panel) → `BusinessCirclesSection` (overlapping circles) → `StatsHighlightSection`
+  (flat numbers band) → `SupportStripSection`. Footer = dark slate LS form.
+- Unused-but-kept home modules: QuickNav/BusinessAreas/PortfolioPreview/News/InquiryBanner/
+  MissionStats/Team + legacy `--sj-*` modules (HeroSection, BusinessSection, ValuesSection,
+  PortfolioSection, ContactSection, StatsSection) — not imported; ignore.
 
 ## How to work (keep context small)
 

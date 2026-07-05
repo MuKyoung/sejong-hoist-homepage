@@ -1,5 +1,11 @@
 import Link from "next/link";
+import { COMPANY } from "@/data/site";
 import s from "./Footer.module.css";
+
+const UTIL_LINKS = [
+  { label: "개인정보처리방침", href: "/privacy" },
+  { label: "이용약관", href: "/terms" },
+];
 
 const COLUMNS = [
   {
@@ -7,6 +13,7 @@ const COLUMNS = [
     links: [
       { label: "인사말", href: "/about" },
       { label: "오시는 길", href: "/about/location" },
+      { label: "기존 홈페이지", href: "https://www.sjhoist.com/" },
     ],
   },
   {
@@ -26,74 +33,77 @@ const COLUMNS = [
   {
     title: "고객지원",
     links: [
+      { label: "고객지원", href: "/support" },
       { label: "견적문의", href: "/support/inquiry" },
-      { label: "자료실", href: "/support/catalog" },
       { label: "공지사항", href: "/support/notice" },
-    ],
-  },
-  {
-    title: "문의",
-    links: [
-      { label: "견적 문의", href: "/support/inquiry" },
       { label: "이메일 문의", href: "mailto:sj@sjhoist.com" },
     ],
   },
-  {
-    title: "관련 링크",
-    links: [
-      { label: "기존 홈페이지", href: "https://www.sjhoist.com/" },
-    ],
-  },
 ];
+
+function ColLink({ label, href }: { label: string; href: string }) {
+  if (href.startsWith("/")) {
+    return <Link href={href} className={s.colLink}>{label}</Link>;
+  }
+  const external = href.startsWith("http");
+  return (
+    <a
+      href={href}
+      className={s.colLink}
+      {...(external ? { target: "_blank", rel: "noreferrer" } : {})}
+    >
+      {label}
+    </a>
+  );
+}
 
 export default function Footer() {
   return (
     <footer className={s.footer}>
       <div className={s.inner}>
-        <div className={s.columns}>
-          {COLUMNS.map((col) => (
-            <div key={col.title}>
-              <p className={s.colTitle}>{col.title}</p>
-              {col.links.map((link) => (
-                <Link key={link.href} href={link.href} className={s.colLink}>
+        <div className={s.top}>
+          <div className={s.brand}>
+            <p className={s.wordmark}>{COMPANY.name}</p>
+            <p className={s.wordmarkEn}>SEJONG HOIST CRANE</p>
+            <div className={s.utils}>
+              {UTIL_LINKS.map((link, i) => (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  className={i === 0 ? s.utilPrimary : s.utilLink}
+                >
                   {link.label}
                 </Link>
               ))}
             </div>
-          ))}
+          </div>
+
+          <div className={s.columns}>
+            {COLUMNS.map((col) => (
+              <div key={col.title}>
+                <p className={s.colTitle}>{col.title}</p>
+                {col.links.map((link) => (
+                  <ColLink key={link.href} label={link.label} href={link.href} />
+                ))}
+              </div>
+            ))}
+          </div>
         </div>
 
-        <div className={s.company}>
-          <p className={s.companyName}>(주)세종호이스트크레인</p>
-          <p className={s.companyMeta}>
-            사업자등록번호 142-88-01261 | 대표이사 김승용<br />
-            세종특별자치시 부강면 시목부강로 314
+        <div className={s.meta}>
+          <p>
+            {COMPANY.address}
+            <br />
+            대표이사 {COMPANY.ceo} | 사업자등록번호 {COMPANY.bizNo}
+            <br />
+            TEL {COMPANY.tel} | FAX {COMPANY.fax} | E-mail {COMPANY.email}
           </p>
-
-          <div className={s.infoGrid}>
-            <div className={s.infoItem}>
-              <p className={s.infoLabel}>이메일</p>
-              <a href="mailto:sj@sjhoist.com" className={s.infoValue}>sj@sjhoist.com</a>
-            </div>
-            <div className={s.infoItem}>
-              <p className={s.infoLabel}>고객센터</p>
-              <a href="tel:0448650801" className={s.infoValue}>044-865-0801</a>
-            </div>
-            <div className={s.infoItem}>
-              <p className={s.infoLabel}>팩스</p>
-              <p className={s.infoValue}>044-865-0108</p>
-            </div>
-          </div>
         </div>
 
         <div className={s.bottom}>
           <p className={s.copy}>
-            Copyright (c) (주)세종호이스트크레인. All rights reserved.
+            Copyright (c) {COMPANY.name}. All rights reserved.
           </p>
-          <div className={s.legal}>
-            <Link href="/privacy" className={s.legalLink}>개인정보처리방침</Link>
-            <Link href="/terms" className={s.legalLink}>이용약관</Link>
-          </div>
         </div>
       </div>
     </footer>

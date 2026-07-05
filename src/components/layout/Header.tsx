@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
@@ -15,29 +15,15 @@ const NAV = [
   { label: "새 소식", href: "/support/notice" },
 ];
 
-const SCROLL_THRESHOLD = 48;
-
 export default function Header() {
   const pathname = usePathname();
-  const isHome = pathname === "/";
-  const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
-
-  // Re-subscribe + recompute on route change so `scrolled` is fresh after client nav.
-  useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > SCROLL_THRESHOLD);
-    onScroll();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
-  }, [pathname]);
-
-  const isSolid = !isHome || scrolled || open;
 
   const isActive = (href: string) =>
     href === "/" ? pathname === "/" : pathname?.startsWith(href);
 
   return (
-    <header className={`${s.header} ${isSolid ? s.headerSolid : ""}`}>
+    <header className={s.header}>
       <div className={s.inner}>
         <Link href="/" className={s.logoLink} aria-label="세종호이스트크레인 홈">
           <Image

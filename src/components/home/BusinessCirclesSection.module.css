@@ -1,0 +1,103 @@
+/* 사업영역 — LS 시그니처 오버랩 서클 */
+.section {
+  padding: 80px 0 96px;
+  background: var(--canvas);
+}
+
+/* Centered section header */
+.header {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.title {
+  font-size: clamp(1.75rem, 3vw, 2.625rem);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--navy);
+}
+
+.subtitle {
+  margin-top: 10px;
+  font-size: 15px;
+  font-weight: 400;
+  color: var(--body);
+}
+
+/* Overlapping circles */
+.circles {
+  display: flex;
+  justify-content: center;
+}
+
+.circle {
+  position: relative;
+  width: 300px;
+  height: 300px;
+  border-radius: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 0 32px;
+  text-align: center;
+  transition: transform var(--motion-standard) var(--ease-std);
+}
+.circle + .circle { margin-left: -30px; }
+.circle:hover {
+  transform: scale(1.05);
+  z-index: 2;
+}
+
+/* Circle fills — DESIGN.md 90% alphas (bright → brand → cobalt → deep) */
+.c1 { background: rgba(0, 148, 204, 0.9); }
+.c2 { background: rgba(6, 104, 179, 0.9); }
+.c3 { background: rgba(0, 75, 162, 0.9); }
+.c4 { background: rgba(0, 55, 119, 0.9); }
+
+.circleTitle {
+  font-size: clamp(20px, 1.8vw, 24px);
+  font-weight: 700;
+  line-height: 1.3;
+  color: #fff;
+  word-break: keep-all;
+}
+
+.circleEn {
+  font-size: 14px;
+  font-weight: 400;
+  color: rgba(255, 255, 255, 0.85);
+}
+
+/* Responsive */
+@media (max-width: 1023.98px) {
+  .circles {
+    display: grid;
+    grid-template-columns: repeat(2, 220px);
+    gap: 16px;
+    justify-content: center;
+  }
+  .circle {
+    width: 220px;
+    height: 220px;
+    padding: 0 20px;
+  }
+  .circle + .circle { margin-left: 0; }
+}
+
+@media (max-width: 479.98px) {
+  .circles {
+    grid-template-columns: repeat(2, minmax(0, 170px));
+    gap: 12px;
+  }
+  .circle {
+    width: 100%;
+    max-width: 170px;
+    height: auto;
+    aspect-ratio: 1 / 1;
+    padding: 0 14px;
+  }
+  .circleTitle { font-size: 16px; }
+  .circleEn { font-size: 12px; }
+}

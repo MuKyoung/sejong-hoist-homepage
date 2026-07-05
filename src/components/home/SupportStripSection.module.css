@@ -1,0 +1,84 @@
+/* 고객지원 스트립 — LS 4셀 라인 그리드 (#E5E5E5 구분선은 DESIGN.md 허용 인라인) */
+.section {
+  padding: 56px 0 88px;
+  background: var(--canvas);
+}
+
+.strip {
+  max-width: 1000px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  border-left: 1px solid #e5e5e5;
+}
+
+.cell {
+  height: 240px;
+  display: block;
+  padding: 32px 0 0 36px;
+  border-right: 1px solid #e5e5e5;
+  border-radius: 0;
+}
+
+/* Cell 1 — two stacked half-height links */
+.splitCell {
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.half {
+  flex: 1;
+  padding: 28px 0 0 36px;
+}
+.half + .half { border-top: 1px solid #e5e5e5; }
+
+.halfTitle {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--navy);
+  transition: color var(--motion-fast) var(--ease-std);
+}
+.half:hover .halfTitle { color: var(--primary); }
+
+/* Cells 2–4 */
+.cellTitle {
+  display: block;
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--navy);
+  transition: color var(--motion-fast) var(--ease-std);
+}
+.cell:hover .cellTitle { color: var(--primary); }
+
+.cellDesc {
+  display: block;
+  margin-top: 14px;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 20px;
+  color: var(--body);
+  white-space: pre-line;
+}
+
+/* Responsive */
+@media (max-width: 1023.98px) {
+  .strip {
+    grid-template-columns: repeat(2, 1fr);
+    border-top: 1px solid #e5e5e5;
+  }
+  .cell {
+    height: 200px;
+    border-bottom: 1px solid #e5e5e5;
+  }
+}
+
+@media (max-width: 639.98px) {
+  .strip { grid-template-columns: 1fr; }
+  .cell {
+    height: auto;
+    min-height: 140px;
+    padding: 24px 20px 24px 28px;
+  }
+  .half { padding: 20px 0 20px 28px; }
+}
