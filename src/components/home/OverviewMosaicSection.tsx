@@ -39,7 +39,7 @@ export default function OverviewMosaicSection() {
               alt=""
               fill
               className={s.photoImg}
-              sizes="(min-width: 1024px) 256px, 100vw"
+              sizes="(min-width: 1024px) 40vw, 100vw"
             />
             <span className={s.photoOverlay} aria-hidden />
             <span className={s.photoLabel}>
@@ -69,25 +69,26 @@ export default function OverviewMosaicSection() {
               <ArrowGlyph />
             </Link>
           </div>
+        </div>
 
-          <div className={s.news}>
-            <div className={s.newsHead}>
-              <h3 className={s.newsTitle}>뉴스 및 공지</h3>
-              <Link href="/support/notice" className={s.newsMore}>
-                더보기 +
-              </Link>
-            </div>
-            <ul className={s.newsList}>
-              {NOTICES.slice(0, 3).map((n) => (
-                <li key={n.id}>
-                  <Link href={`/support/notice/${n.id}`} className={s.newsRow}>
-                    <span className={s.newsCat}>[{n.category}]</span>
-                    <span className={s.newsRowTitle}>{n.title}</span>
-                  </Link>
-                </li>
-              ))}
-            </ul>
+        <div className={s.newsBand}>
+          <div className={s.newsHead}>
+            <h3 className={s.newsTitle}>뉴스 및 공지</h3>
+            <Link href="/support/notice" className={s.newsMore}>
+              더보기 +
+            </Link>
           </div>
+          <ul className={s.newsCols}>
+            {NOTICES.slice(0, 3).map((n) => (
+              <li key={n.id} className={s.newsCol}>
+                <Link href={`/support/notice/${n.id}`} className={s.newsItem}>
+                  <span className={s.newsCat}>[{n.category}]</span>
+                  <span className={s.newsItemTitle}>{n.title}</span>
+                  <span className={s.newsDate}>{n.date}</span>
+                </Link>
+              </li>
+            ))}
+          </ul>
         </div>
       </div>
     </section>

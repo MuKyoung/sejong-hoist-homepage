@@ -135,23 +135,28 @@ headline + one sub line (§3). Controls bottom-center: 8px dots (active = 28px
 **white** pill — navy is invisible on the dark KV) + `01 / 04` tabular counter.
 
 ### Overview mosaic (home §2 — "회사소개")
-Centered section header, then a 4-part row: ① photo card (Sejong image bg +
-`rgba(0,0,0,.35)` overlay, white 15px label + arrow →, links /about) ② stacked
-solid blocks: `--brand` white-text block over white hairline-bordered block
-③ stacked: `--surface` block over `--brand-deep` white-text block ④ **news
-panel**: white, 1px hairline border, title 500/22 with a 1px `#2E373E` rule
-under the title row, rows of `[분류]` gray prefix + 16px `--muted` title, 20px
-row padding, hairline row dividers, "더보기" 13px top-right. Block anatomy:
-label 500/21–22px + small arrow glyph; the whole block is a link; hover =
-subtle brightness/underline — no lift, no radius.
+Centered section header, then a 3-part row (`1.4fr 1fr 1fr`, 280px, 16px gaps):
+① photo card (Sejong image bg + `rgba(0,0,0,.35)` overlay, white 15px label +
+arrow →, links /about) ② stacked solid blocks: `--brand` white-text block over
+white hairline-bordered block ③ stacked: `--surface` block over `--brand-deep`
+white-text block. Block anatomy: label 500/21–22px + small arrow glyph; the
+whole block is a link; hover = subtle underline — no lift, no radius.
+**News band** sits BELOW the mosaic as its own full-width panel (never beside
+the blocks): 1px hairline box, header row (title 500/20 + "더보기 +" 13px)
+with 1px `--navy` rule, then **3 hairline-divided columns**, each item =
+`[분류]` 13px `--faint` / 15px `--body` single-line title / 13px date.
+<640: columns stack with top hairlines.
 
 ### Business circles (home §3 — "사업영역")
-Centered header (with eyebrow), then 300px circles (`--r-full`) laid out
-**tangent with `clamp(16px→28px)` gaps — never overlapped** (overlap is LS's
-signature; Sejong keeps distance). Fills = the 95% navy-ramp alphas in order
-(bright → brand → cobalt → deep). Inside, centered white: 700/24px title +
-400/14px EN sub. Hover: scale 1.05 + `0 0 0 6px var(--tint)` ring. <1024: 2×2
-grid, ~220px circles. Circle is a link.
+Centered header (with eyebrow), then circles sized `clamp(200px→264px)`
+(never wider than the container) laid out **tangent with `clamp(20px→28px)`
+gaps — never overlapped** (overlap is LS's signature; Sejong keeps distance).
+Fills = the 95% navy-ramp alphas in order (bright → brand → cobalt → deep).
+Depth kit (anti-flat): soft radial highlight at 30%/24%, inset 1px white/14%
+inner ring, and an **offset outer ring** (`::after`, inset -8px, 1px
+`--tint-strong`; hover → `--brand-bright`). Inside, centered white: 30px line
+icon (BUSINESS_AREAS `icon`) + 700/22px title + 400/13px EN sub. Hover: scale
+1.04. <1024: 2×2 grid, 220px circles. Circle is a link.
 
 ### Support strip (home §4)
 Max-width 1000, 4 equal cells 240px tall as **gapped square cards** (16px gap,

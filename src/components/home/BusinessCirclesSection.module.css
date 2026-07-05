@@ -33,41 +33,65 @@
   color: var(--body);
 }
 
-/* Circles — Sejong variation: tangent with gaps (LS overlaps -30px) */
+/* Circles — tangent with gaps (LS overlaps -30px); sized to never overflow */
 .circles {
   display: flex;
   justify-content: center;
-  gap: clamp(16px, 2.5vw, 28px);
+  gap: clamp(20px, 2vw, 28px);
+  padding: 10px 0;
 }
 
 .circle {
   position: relative;
-  width: 300px;
-  height: 300px;
+  width: clamp(200px, 19.5vw, 264px);
+  aspect-ratio: 1 / 1;
   border-radius: 50%;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 8px;
-  padding: 0 32px;
+  gap: 6px;
+  padding: 0 26px;
   text-align: center;
+  /* Inner hairline ring + soft top-left highlight for depth */
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.14);
+  background-image: radial-gradient(
+    circle at 30% 24%,
+    rgba(255, 255, 255, 0.16),
+    rgba(255, 255, 255, 0) 55%
+  );
   transition: transform var(--motion-standard) var(--ease-std);
 }
+
+/* Offset outer ring */
+.circle::after {
+  content: "";
+  position: absolute;
+  inset: -8px;
+  border: 1px solid var(--tint-strong);
+  border-radius: 50%;
+  transition: border-color var(--motion-standard) var(--ease-std);
+}
 .circle:hover {
-  transform: scale(1.05);
+  transform: scale(1.04);
   z-index: 2;
-  box-shadow: 0 0 0 6px var(--tint);
+}
+.circle:hover::after { border-color: var(--brand-bright); }
+
+/* Circle fills — single navy ramp, light → deep (radial highlight overlays) */
+.c1 { background-color: rgba(62, 92, 128, 0.95); }
+.c2 { background-color: rgba(44, 74, 110, 0.95); }
+.c3 { background-color: rgba(33, 57, 86, 0.95); }
+.c4 { background-color: rgba(22, 39, 60, 0.95); }
+
+.circleIcon {
+  display: inline-flex;
+  margin-bottom: 6px;
+  color: rgba(255, 255, 255, 0.9);
 }
 
-/* Circle fills — single navy ramp, light → deep (simple monochrome) */
-.c1 { background: rgba(62, 92, 128, 0.95); }
-.c2 { background: rgba(44, 74, 110, 0.95); }
-.c3 { background: rgba(33, 57, 86, 0.95); }
-.c4 { background: rgba(22, 39, 60, 0.95); }
-
 .circleTitle {
-  font-size: clamp(20px, 1.8vw, 24px);
+  font-size: clamp(18px, 1.7vw, 22px);
   font-weight: 700;
   line-height: 1.3;
   color: #fff;
@@ -75,9 +99,9 @@
 }
 
 .circleEn {
-  font-size: 14px;
+  font-size: 13px;
   font-weight: 400;
-  color: rgba(255, 255, 255, 0.85);
+  color: rgba(255, 255, 255, 0.8);
 }
 
 /* Responsive */
@@ -85,29 +109,28 @@
   .circles {
     display: grid;
     grid-template-columns: repeat(2, 220px);
-    gap: 16px;
+    gap: 20px;
     justify-content: center;
   }
   .circle {
     width: 220px;
-    height: 220px;
     padding: 0 20px;
   }
-  .circle + .circle { margin-left: 0; }
 }
 
 @media (max-width: 479.98px) {
   .circles {
     grid-template-columns: repeat(2, minmax(0, 170px));
-    gap: 12px;
+    gap: 14px;
   }
   .circle {
     width: 100%;
     max-width: 170px;
-    height: auto;
-    aspect-ratio: 1 / 1;
     padding: 0 14px;
   }
-  .circleTitle { font-size: 16px; }
-  .circleEn { font-size: 12px; }
+  .circle::after { inset: -6px; }
+  .circleTitle { font-size: 15px; }
+  .circleEn { font-size: 11px; }
+  .circleIcon { margin-bottom: 2px; }
+  .circleIcon svg { width: 24px; height: 24px; }
 }
