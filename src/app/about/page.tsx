@@ -4,16 +4,18 @@ import Link from "next/link";
 import PageHero from "@/components/subpage/PageHero";
 import SubNav from "@/components/subpage/SubNav";
 import ContactBand from "@/components/subpage/ContactBand";
-import { COMPANY } from "@/data/site";
+import { COMPANY, GREETING } from "@/data/site";
 import s from "@/styles/subpage.module.css";
 
 export const metadata: Metadata = {
   title: "회사소개 | (주)세종호이스트크레인",
-  description: "Wire Hoist·Chain Hoist·Crane 전문 제조기업 (주)세종호이스트크레인을 소개합니다.",
+  description: "인사말·기업개요 — 운반하역기계 전문 제조기업 (주)세종호이스트크레인을 소개합니다.",
 };
 
 const ABOUT_NAV = [
-  { label: "기업개요", href: "/about" },
+  { label: "인사말", href: "/about" },
+  { label: "연혁", href: "/about/history" },
+  { label: "조직도", href: "/about/organization" },
   { label: "오시는 길", href: "/about/location" },
 ];
 
@@ -49,24 +51,19 @@ export default function AboutPage() {
         <div className="container">
           <div className={s.twoCol}>
             <div>
-              <p className={s.eyebrow}>Company Overview</p>
+              <p className={s.eyebrow}>Greeting</p>
               <h2 className={`${s.headline} ${s.headlineNavy}`}>
-                현장의 하중과 안전을
+                {GREETING.headline[0]}
                 <br />
-                설계와 제작으로 풀어냅니다
+                {GREETING.headline[1]}
               </h2>
-              <p className={s.body}>
-                (주)세종호이스트크레인은 Wire Hoist, Chain Hoist, Explosion-Proof Hoist,
-                Crane 등 운반하역 기계를 전문으로 제조·시공하는 기업입니다.
-              </p>
-              <p className={s.body}>
-                반도체, 자동차, 철강, 중공업, 공공 시설 등 다양한 산업 현장에
-                맞춤형 설비를 납품해 왔으며, 최대 350TON급 그라브 갠트리크레인 시공
-                실적을 보유하고 있습니다.
-              </p>
-              <p className={s.body}>
-                설계·제작·설치·A/S까지 원스톱으로 대응하며, 현장 중심의 기술력으로
-                고객의 생산성과 안전을 함께 높입니다.
+              {GREETING.paragraphs.map((p) => (
+                <p key={p.slice(0, 12)} className={s.body}>
+                  {p}
+                </p>
+              ))}
+              <p className={s.body} style={{ fontWeight: 700, color: "var(--navy)" }}>
+                {GREETING.sign}
               </p>
 
               <div className={s.infoGrid}>

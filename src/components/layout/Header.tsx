@@ -9,10 +9,10 @@ import s from "./Header.module.css";
 
 const NAV = [
   { label: "회사소개", href: "/about" },
-  { label: "제품소개", href: "/business" },
+  { label: "사업영역", href: "/business" },
   { label: "시공사례", href: "/portfolio" },
-  { label: "견적문의", href: "/support/inquiry" },
-  { label: "새 소식", href: "/support/notice" },
+  { label: "기술·인증", href: "/technology" },
+  { label: "견적·문의", href: "/support/inquiry" },
 ];
 
 export default function Header() {

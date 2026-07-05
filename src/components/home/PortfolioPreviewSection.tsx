@@ -10,13 +10,9 @@ export default function PortfolioPreviewSection() {
     <section className={s.section} aria-label="핵심 시공사례">
       <div className="container">
         <div className={s.header}>
-          <div>
-            <p className={s.eyebrow}>Portfolio</p>
-            <h2 className={s.headline}>현장이 증명하는 시공 실적</h2>
-          </div>
-          <Link href="/portfolio" className={s.moreLink}>
-            전체 시공사례 →
-          </Link>
+          <p className={s.eyebrow}>Portfolio</p>
+          <h2 className={s.headline}>핵심 시공사례</h2>
+          <p className={s.subtitle}>현장에서 검증된 세종호이스트크레인의 대표 실적입니다.</p>
         </div>
 
         <div className={s.grid}>
@@ -39,6 +35,12 @@ export default function PortfolioPreviewSection() {
               </div>
             </Link>
           ))}
+        </div>
+
+        <div className={s.moreWrap}>
+          <Link href="/portfolio" className={s.moreBtn}>
+            전체 시공사례 보기
+          </Link>
         </div>
       </div>
     </section>

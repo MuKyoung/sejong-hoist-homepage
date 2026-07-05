@@ -12,29 +12,34 @@ const COLUMNS = [
     title: "회사소개",
     links: [
       { label: "인사말", href: "/about" },
+      { label: "연혁", href: "/about/history" },
+      { label: "조직도", href: "/about/organization" },
       { label: "오시는 길", href: "/about/location" },
       { label: "기존 홈페이지", href: "https://www.sjhoist.com/" },
     ],
   },
   {
-    title: "제품소개",
+    title: "사업영역",
     links: [
-      { label: "Wire Hoist", href: "/business/wire-hoist" },
-      { label: "Chain Hoist", href: "/business/chain-hoist" },
-      { label: "Explosion-Proof", href: "/business/explosion-proof-hoist" },
-      { label: "Crane", href: "/business/crane" },
-      { label: "Hoist & Crane", href: "/business/hoist-crane" },
+      { label: "호이스트 크레인", href: "/business#hoist" },
+      { label: "그랩·갠트리 크레인", href: "/business#gantry" },
+      { label: "유지보수·이전설치", href: "/business#maintenance" },
+      { label: "철구조물 제작", href: "/business#steel" },
+      { label: "제품 라인업", href: "/business" },
     ],
   },
   {
-    title: "시공사례",
-    links: [{ label: "전체 시공사례", href: "/portfolio" }],
+    title: "시공사례·기술",
+    links: [
+      { label: "전체 시공사례", href: "/portfolio" },
+      { label: "기술·인증", href: "/technology" },
+    ],
   },
   {
     title: "고객지원",
     links: [
       { label: "고객지원", href: "/support" },
-      { label: "견적문의", href: "/support/inquiry" },
+      { label: "견적·문의", href: "/support/inquiry" },
       { label: "공지사항", href: "/support/notice" },
       { label: "이메일 문의", href: "mailto:sj@sjhoist.com" },
     ],

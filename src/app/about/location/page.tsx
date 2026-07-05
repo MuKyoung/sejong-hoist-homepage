@@ -12,7 +12,9 @@ export const metadata: Metadata = {
 };
 
 const ABOUT_NAV = [
-  { label: "기업개요", href: "/about" },
+  { label: "인사말", href: "/about" },
+  { label: "연혁", href: "/about/history" },
+  { label: "조직도", href: "/about/organization" },
   { label: "오시는 길", href: "/about/location" },
 ];
 

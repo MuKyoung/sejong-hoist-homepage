@@ -26,7 +26,7 @@ export default function SupportStripSection() {
         <div className={s.strip}>
           <div className={`${s.cell} ${s.splitCell}`}>
             <Link href="/business" className={s.half}>
-              <span className={s.halfTitle}>제품소개</span>
+              <span className={s.halfTitle}>사업영역</span>
             </Link>
             <Link href="/portfolio" className={s.half}>
               <span className={s.halfTitle}>시공사례</span>

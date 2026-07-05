@@ -53,8 +53,8 @@ export default function OverviewMosaicSection() {
               <span className={s.blockLabel}>시공사례</span>
               <ArrowGlyph />
             </Link>
-            <Link href="/business" className={`${s.block} ${s.blockWhite}`}>
-              <span className={s.blockLabel}>제품소개</span>
+            <Link href="/technology" className={`${s.block} ${s.blockWhite}`}>
+              <span className={s.blockLabel}>기술·인증</span>
               <ArrowGlyph />
             </Link>
           </div>

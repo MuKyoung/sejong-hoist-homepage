@@ -199,6 +199,36 @@ export default function InquiryPage() {
           </div>
         </div>
       </section>
+
+      <section className={`${s.section} ${s.sectionWhite}`}>
+        <div className="container">
+          <div className={s.centerHeader}>
+            <p className={s.eyebrow}>Contact</p>
+            <h2 className={s.headline}>담당자 연락처</h2>
+            <p className={s.body}>급하신 문의는 아래 연락처로 직접 연락 주세요.</p>
+          </div>
+          <div className={s.contactGrid}>
+            <div>
+              <p className={s.contactItemLabel}>대표전화</p>
+              <a href={`tel:${COMPANY.tel.replace(/-/g, "")}`} className={s.contactItemValue}>
+                {COMPANY.tel}
+              </a>
+            </div>
+            <div>
+              <p className={s.contactItemLabel}>휴대전화</p>
+              <a href={`tel:${COMPANY.mobile.replace(/-/g, "")}`} className={s.contactItemValue}>
+                {COMPANY.mobile}
+              </a>
+            </div>
+            <div>
+              <p className={s.contactItemLabel}>이메일</p>
+              <a href={`mailto:${COMPANY.email}`} className={s.contactItemValue}>
+                {COMPANY.email}
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
     </>
   );
 }
