@@ -1,103 +1,166 @@
-/* Hero KV — Sejong 장비 이미지 슬라이드쇼 (LS ELECTRIC 스타일) */
+/* Hero — 컴팩트 스플릿 (좌 텍스트 / 우 소형 이미지 카드).
+   저해상도 원본 이미지를 작게 렌더해 품질 문제를 완화 (풀블리드 금지). */
 .section {
-  position: relative;
   margin-top: var(--header-h);
-  height: calc(100svh - var(--header-h));
-  min-height: 560px;
-  max-height: 860px;
-  display: flex;
+  padding: 56px 0 64px;
+  background: var(--surface);
+  border-bottom: 1px solid var(--hairline);
+}
+@media (min-width: 1024px) { .section { padding: 88px 0 96px; } }
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 40px;
   align-items: center;
-  justify-content: center;
-  overflow: hidden;
-  background: var(--navy-deep);
+}
+@media (min-width: 1024px) {
+  .grid { grid-template-columns: 1fr 1.05fr; gap: 64px; }
 }
 
-.slides { position: absolute; inset: 0; z-index: 0; }
-
-.slide {
-  position: absolute;
-  inset: 0;
-  opacity: 0;
-  transform: scale(1.06);
-  transition: opacity 1.1s var(--ease-std);
-}
-.slideActive {
-  opacity: 1;
-  transform: scale(1);
-  transition: opacity 1.1s var(--ease-std), transform 7s ease-out;
-}
-.image { object-fit: cover; }
-
-/* Navy-tinted scrim (Sejong variation of the LS flat black 30%) */
-.overlay {
-  position: absolute;
-  inset: 0;
-  background-color: rgba(18, 30, 48, 0.38);
-  background-image: linear-gradient(180deg, rgba(10, 18, 30, 0) 60%, rgba(10, 18, 30, 0.32) 100%);
-}
-
-/* Content — perfectly centered on both axes */
-.content {
-  position: relative;
-  z-index: 2;
-  padding: 0 clamp(20px, 3.3vw, 40px);
-  text-align: center;
+/* Copy */
+.eyebrow {
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--primary);
+  margin-bottom: 16px;
 }
 
 .headline {
-  font-size: clamp(2rem, 4.5vw, 3.4375rem);
+  font-size: clamp(1.75rem, 4.5vw, 2.875rem);
   font-weight: 700;
-  line-height: 1.3;
-  letter-spacing: -0.05em;
-  color: #fff;
-  text-shadow: 0 0 20px rgba(0, 0, 0, 0.1), 1px 1px 0 rgba(0, 0, 0, 0.3);
+  line-height: 1.28;
+  letter-spacing: -0.03em;
+  color: var(--navy);
   word-break: keep-all;
 }
 .headlineLine { display: block; }
 
 .sub {
   margin-top: 18px;
-  font-size: clamp(1rem, 1.6vw, 1.25rem);
-  font-weight: 400;
-  color: #fff;
-  text-shadow: 0 0 20px rgba(0, 0, 0, 0.1), 1px 1px 0 rgba(0, 0, 0, 0.3);
+  max-width: 480px;
+  font-size: clamp(0.9375rem, 1.4vw, 1.0625rem);
+  line-height: 1.7;
+  color: var(--body);
   word-break: keep-all;
 }
 
-/* Slide controls — bottom center */
-.controls {
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 32px;
-  z-index: 2;
+.ctas {
   display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 32px;
+}
+
+.primaryBtn {
+  display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 24px;
+  height: 50px;
+  padding: 0 30px;
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--on-primary);
+  background: var(--primary);
+  border-radius: var(--r-full);
+  transition: background var(--motion-standard) var(--ease-std);
+}
+.primaryBtn:hover { background: var(--primary-deep); }
+.primaryBtn:active { background: var(--primary-press); }
+
+.ghostBtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 50px;
+  padding: 0 30px;
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--primary);
+  background: var(--canvas);
+  border: 2px solid var(--primary);
+  border-radius: var(--r-full);
+  transition: background var(--motion-standard) var(--ease-std);
+}
+.ghostBtn:hover { background: var(--tint); }
+
+/* Visual — 4:3 카드 + 네이비 오프셋 플레이트 */
+.visualWrap {
+  position: relative;
+  min-width: 0;
+}
+.visualWrap::before {
+  content: "";
+  position: absolute;
+  top: 14px;
+  left: 14px;
+  right: -14px;
+  bottom: -14px;
+  background: var(--brand-deep);
+}
+@media (max-width: 639.98px) {
+  .visualWrap::before { top: 10px; left: 10px; right: -10px; bottom: -10px; }
 }
 
-.dots { display: flex; align-items: center; gap: 8px; }
+.visual {
+  position: relative;
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  background: var(--surface-alt);
+  border: 1px solid var(--hairline);
+}
+
+.slide {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity 0.8s var(--ease-std);
+}
+.slideActive { opacity: 1; }
+.image { object-fit: cover; }
+
+/* Controls — 카드 아래, 터치 타겟 확장(시각 8px / 히트 24px) */
+.controls {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-top: 26px;
+}
+@media (max-width: 639.98px) { .controls { margin-top: 22px; } }
+
+.dots { display: flex; align-items: center; }
 
 .dot {
+  box-sizing: content-box;
   width: 8px;
   height: 8px;
-  padding: 0;
+  padding: 8px;
   border: none;
   border-radius: var(--r-full);
-  background: rgba(255, 255, 255, 0.35);
-  transition: width var(--motion-standard) var(--ease-std), background var(--motion-standard) var(--ease-std);
+  background-color: var(--tint-strong);
+  background-clip: content-box;
+  transition: width var(--motion-standard) var(--ease-std),
+    background-color var(--motion-standard) var(--ease-std);
 }
-.dot:hover { background: rgba(255, 255, 255, 0.6); }
-.dotActive { width: 28px; background: #ffffff; }
-.dotActive:hover { background: #ffffff; }
+.dot:hover { background-color: var(--faint); }
+.dotActive { width: 28px; background-color: var(--primary); }
+.dotActive:hover { background-color: var(--primary); }
 
 .counter {
   font-size: 14px;
   font-weight: 400;
-  color: rgba(255, 255, 255, 0.55);
+  color: var(--muted);
   font-variant-numeric: tabular-nums;
   letter-spacing: 0.04em;
 }
-.counterNow { color: #fff; font-weight: 700; }
+.counterNow { color: var(--navy); font-weight: 700; }
 .counterSep { opacity: 0.5; }
+
+@media (prefers-reduced-motion: reduce) {
+  .slide { transition: none; }
+  .dot { transition: none; }
+}

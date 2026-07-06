@@ -38,7 +38,7 @@
 .label { display: block; font-size: 13px; font-weight: 700; color: var(--ink); margin-bottom: 6px; }
 .input {
   width: 100%;
-  font-family: inherit; font-size: 15px;
+  font-family: inherit; font-size: 16px; /* prevents iOS focus zoom */
   color: var(--ink); background: var(--surface-alt);
   border: 1px solid var(--hairline); border-radius: var(--r-md);
   padding: 12px 14px;

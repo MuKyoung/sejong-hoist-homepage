@@ -1,0 +1,41 @@
+/* 우측 하단 플로팅 견적 문의 — LS FAB 패턴 (iOS/Android 세이프에어리어 대응) */
+.fab {
+  position: fixed;
+  right: calc(20px + env(safe-area-inset-right, 0px));
+  bottom: calc(20px + env(safe-area-inset-bottom, 0px));
+  z-index: 90;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  height: 52px;
+  padding: 0 22px;
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--on-primary);
+  background: var(--primary);
+  border-radius: var(--r-full);
+  box-shadow: var(--shadow-float);
+  white-space: nowrap;
+  transition: background var(--motion-standard) var(--ease-std),
+    transform var(--motion-standard) var(--ease-std);
+}
+.fab:hover {
+  background: var(--primary-deep);
+  transform: translateY(-2px);
+}
+.fab:active { background: var(--primary-press); transform: none; }
+
+@media (max-width: 639.98px) {
+  .fab {
+    height: 48px;
+    padding: 0 18px;
+    font-size: 14px;
+    right: calc(16px + env(safe-area-inset-right, 0px));
+    bottom: calc(16px + env(safe-area-inset-bottom, 0px));
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fab { transition: none; }
+  .fab:hover { transform: none; }
+}

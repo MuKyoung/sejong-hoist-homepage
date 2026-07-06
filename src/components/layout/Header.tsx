@@ -50,7 +50,6 @@ export default function Header() {
 
         <div className={s.right}>
           <a href="tel:0448650801" className={s.phone}>044-865-0801</a>
-          <Link href="/support/inquiry" className={s.cta}>견적 문의</Link>
           <button
             type="button"
             className={s.menuBtn}

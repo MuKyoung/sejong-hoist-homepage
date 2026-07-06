@@ -87,9 +87,11 @@ listed in DESIGN.md: circle alphas, #E5E5E5 strip dividers, hero scrim/text-shad
   Elevation: flat (`--shadow-sm: none`), hairline borders; `--shadow-md` hover only.
 - Type: Noto Sans KR via `next/font` (`app/layout.tsx`); centered section headers
   (700/42px `--navy` + 15px `--body` sub). Header: solid white, fixed, `--header-h` 64px.
-- Home = LS flow: `StorySection` (Sejong image KV) → `OverviewMosaicSection` (mosaic +
-  news panel) → `BusinessCirclesSection` (overlapping circles) → `StatsHighlightSection`
-  (flat numbers band) → `SupportStripSection`. Footer = dark slate LS form.
+- Home = LS flow: `StorySection` (compact split hero — small 4:3 image card, NO
+  full-bleed: assets are low-res) → `OverviewMosaicSection` (mosaic + news band) →
+  `PortfolioPreviewSection` → `BusinessCirclesSection` → `StatsHighlightSection` →
+  `SupportStripSection`. Footer = dark slate LS form. 견적 CTA = `FloatingCta` FAB
+  (bottom-right, safe-area offsets), not in the header.
 - Unused-but-kept home modules: QuickNav/BusinessAreas/PortfolioPreview/News/InquiryBanner/
   MissionStats/Team + legacy `--sj-*` modules (HeroSection, BusinessSection, ValuesSection,
   PortfolioSection, ContactSection, StatsSection) — not imported; ignore.

@@ -115,10 +115,16 @@ Hover may lift with `--shadow-md: 0 0 10px rgba(0,0,0,.08)`. Floating elements o
 ## 6. Components
 
 ### Header
-White bg, 64px, hairline bottom. Logo left. Center-right GNB: 700/18px `--ink`,
-hover/active → `--primary`. Right utils: phone 13px `--muted` + compact secondary
-pill CTA. Mobile: hamburger → white panel list. Header is `position: fixed`;
-pages offset content by `--header-h`.
+White bg, 64px, hairline bottom. Logo left. Center-right GNB: 700/18px `--ink`
+(16px at 1024–1279), hover/active → `--primary`. Right util: phone 13px `--muted`
+(≥1024). **No header CTA** — the 견적 문의 CTA is the floating FAB (below).
+Mobile: hamburger → white panel list (panel keeps its own CTA pill). Header is
+`position: fixed`; pages offset content by `--header-h`.
+
+### Floating CTA (견적 문의 FAB)
+Fixed bottom-right on all marketing pages (`FloatingCta` in `ConditionalLayout`;
+not on /demo or /admin): `--primary` pill, 52px (48px mobile), chat icon + label,
+`--shadow-float`, offsets `calc(16–20px + env(safe-area-inset-*))` for iOS/Android.
 
 ### Buttons
 - **Primary**: bg `--primary`, white text, height 48 (52 hero), padding 0 32,
@@ -127,12 +133,19 @@ pages offset content by `--header-h`.
   `--primary`, `--r-full`, height 48. Hover: bg `--tint`. (From LS language pills.)
 - Text link: `--primary` → `--primary-deep`; inline body links `--link` underlined.
 
-### Hero (KV)
-Full-width image band, `margin-top: var(--header-h)`, height
-`calc(100svh - var(--header-h))` clamped 560–860px. Sejong equipment photo
-slideshow (crossfade, **no video**). Navy-tinted `rgba(18,30,48,.38)` scrim. Text centered:
-headline + one sub line (§3). Controls bottom-center: 8px dots (active = 28px
-**white** pill — navy is invisible on the dark KV) + `01 / 04` tabular counter.
+### Hero (compact split — replaces the full-bleed KV)
+**Why:** the available Sejong photos are low-resolution; rendered full-screen
+they look degraded. The hero therefore renders images SMALL. Never go back to
+full-bleed until high-res photography arrives.
+`--surface` band under the header (`margin-top: var(--header-h)`), hairline
+bottom, auto height (~88px padding desktop). Two columns ≥1024 (`1fr 1.05fr`,
+stack on mobile): left = eyebrow (13px `--primary` caps) + headline
+700/clamp(28→46px) `--navy` (switches per slide) + sub `--body` + pill CTAs
+(primary 견적 문의 / ghost 사업영역). Right = **4:3 image card** (hairline
+border, sharp) with crossfade slideshow, over a `--brand-deep` offset plate
+(+14px bottom-right; 10px mobile). Controls under the card: 8px dots on light
+(`--tint-strong`, active 28px `--primary`, hit area padded to 24px) + `01 / 04`
+counter. `prefers-reduced-motion` disables the crossfade.
 
 ### Overview mosaic (home §2 — "회사소개")
 Centered section header, then a 3-part row (`1.4fr 1fr 1fr`, 280px, 16px gaps):
@@ -202,9 +215,12 @@ No parallax. Numbers may count up once on first view (Sejong stats band).
 - No resting card shadows; no glassmorphism; no gradients except the hero scrim.
 - **No blue anywhere** — navy ramp only (`#3E5C80..#16273C`). Never reintroduce
   LS blues (#388DEE/#0667B2/#0094CC/#004BA2) or any saturated blue.
-- No gap-0 connected cells, no overlapped circles, no neutral-black scrim —
-  the Sejong variation (gaps, tangent circles, navy scrim) is intentional.
-- No video backgrounds — Sejong equipment photos only.
+- No gap-0 connected cells, no overlapped circles — the Sejong variation
+  (gaps, tangent circles) is intentional.
+- No video backgrounds — Sejong equipment photos only. **No full-bleed photo
+  rendering anywhere** (current assets are low-res; display ≤ ~640px wide).
+- Forms: inputs never below 16px font (iOS focus-zoom). Fixed/floating elements
+  must offset by `env(safe-area-inset-*)`.
 
 ## 9. Agent guide
 

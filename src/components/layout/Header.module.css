@@ -61,27 +61,8 @@
   transition: color var(--motion-fast) var(--ease-std);
 }
 .phone:hover { color: var(--ink); }
-/* Phone util needs the wide layout — below 1280 the nav + CTA fill the row */
-@media (min-width: 1280px) { .phone { display: block; } }
-
-/* Secondary pill CTA (LS signature) */
-.cta {
-  display: none;
-  align-items: center;
-  justify-content: center;
-  height: 40px;
-  padding: 0 22px;
-  font-size: 14px;
-  font-weight: 700;
-  color: var(--primary);
-  background: var(--canvas);
-  border: 2px solid var(--primary);
-  border-radius: var(--r-full);
-  transition: background var(--motion-fast) var(--ease-std);
-  white-space: nowrap;
-}
-.cta:hover { background: var(--tint); }
-@media (min-width: 1024px) { .cta { display: inline-flex; } }
+/* CTA moved to the floating FAB (FloatingCta) — phone fits from 1024 again */
+@media (min-width: 1024px) { .phone { display: block; } }
 
 .menuBtn {
   display: flex;

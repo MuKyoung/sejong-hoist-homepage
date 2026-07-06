@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Image from "next/image";
+import Link from "next/link";
 import s from "./StorySection.module.css";
 
 const SLIDES = [
@@ -40,51 +41,69 @@ export default function StorySection() {
   const active = SLIDES[idx];
 
   return (
-    <section className={s.section} aria-label="세종호이스트크레인 대표 이미지">
-      <div className={s.slides} aria-hidden>
-        {SLIDES.map((slide, i) => (
-          <div key={slide.image + i} className={`${s.slide} ${i === idx ? s.slideActive : ""}`}>
-            <Image
-              src={slide.image}
-              alt=""
-              fill
-              className={s.image}
-              sizes="100vw"
-              priority={i === 0}
-            />
+    <section className={s.section} aria-label="세종호이스트크레인 소개">
+      <div className="container">
+        <div className={s.grid}>
+          <div className={s.copy}>
+            <p className={s.eyebrow}>Sejong Hoist Crane</p>
+            <h1 className={s.headline}>
+              {active.title.map((line, i) => (
+                <span key={i} className={s.headlineLine}>{line}</span>
+              ))}
+            </h1>
+            <p className={s.sub}>{active.sub}</p>
+            <div className={s.ctas}>
+              <Link href="/support/inquiry" className={s.primaryBtn}>
+                견적 문의
+              </Link>
+              <Link href="/business" className={s.ghostBtn}>
+                사업영역 보기
+              </Link>
+            </div>
           </div>
-        ))}
-        <div className={s.overlay} />
-      </div>
 
-      <div className={s.content}>
-        <h1 className={s.headline}>
-          {active.title.map((line, i) => (
-            <span key={i} className={s.headlineLine}>{line}</span>
-          ))}
-        </h1>
-        <p className={s.sub}>{active.sub}</p>
-      </div>
+          <div className={s.visualWrap}>
+            <div className={s.visual}>
+              {SLIDES.map((slide, i) => (
+                <div
+                  key={slide.image + i}
+                  className={`${s.slide} ${i === idx ? s.slideActive : ""}`}
+                  aria-hidden={i !== idx}
+                >
+                  <Image
+                    src={slide.image}
+                    alt=""
+                    fill
+                    className={s.image}
+                    sizes="(min-width: 1024px) 50vw, 100vw"
+                    priority={i === 0}
+                  />
+                </div>
+              ))}
+            </div>
 
-      <div className={s.controls}>
-        <div className={s.dots} role="tablist" aria-label="슬라이드 선택">
-          {SLIDES.map((slide, i) => (
-            <button
-              key={slide.image + i}
-              type="button"
-              role="tab"
-              aria-selected={i === idx}
-              aria-label={`${i + 1}번 슬라이드`}
-              className={`${s.dot} ${i === idx ? s.dotActive : ""}`}
-              onClick={() => setIdx(i)}
-            />
-          ))}
+            <div className={s.controls}>
+              <div className={s.dots} role="tablist" aria-label="슬라이드 선택">
+                {SLIDES.map((slide, i) => (
+                  <button
+                    key={slide.image + i}
+                    type="button"
+                    role="tab"
+                    aria-selected={i === idx}
+                    aria-label={`${i + 1}번 슬라이드`}
+                    className={`${s.dot} ${i === idx ? s.dotActive : ""}`}
+                    onClick={() => setIdx(i)}
+                  />
+                ))}
+              </div>
+              <p className={s.counter}>
+                <span className={s.counterNow}>{pad(idx + 1)}</span>
+                <span className={s.counterSep}> / </span>
+                {pad(SLIDES.length)}
+              </p>
+            </div>
+          </div>
         </div>
-        <p className={s.counter}>
-          <span className={s.counterNow}>{pad(idx + 1)}</span>
-          <span className={s.counterSep}> / </span>
-          {pad(SLIDES.length)}
-        </p>
       </div>
     </section>
   );
