@@ -35,7 +35,7 @@ export default function OverviewMosaicSection() {
         <div className={s.grid}>
           <Link href="/about" className={s.photoCard}>
             <Image
-              src="/images/sejong_1.png"
+              src="/images/about-02.jpg"
               alt=""
               fill
               className={s.photoImg}

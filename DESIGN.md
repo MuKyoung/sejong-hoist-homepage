@@ -134,9 +134,10 @@ not on /demo or /admin): `--primary` pill, 52px (48px mobile), chat icon + label
 - Text link: `--primary` → `--primary-deep`; inline body links `--link` underlined.
 
 ### Hero (compact split — replaces the full-bleed KV)
-**Why:** the available Sejong photos are low-resolution; rendered full-screen
-they look degraded. The hero therefore renders images SMALL. Never go back to
-full-bleed until high-res photography arrives.
+High-res site photography landed 2026-07 (`hero-*.jpg`, `pf-*.jpg` — 1920px
+optimized), so image quality no longer constrains layout; the compact split
+remains the chosen design. Full-bleed is allowed again only as a deliberate
+redesign decision.
 `--surface` band under the header (`margin-top: var(--header-h)`), hairline
 bottom, auto height (~88px padding desktop). Two columns ≥1024 (`1fr 1.05fr`,
 stack on mobile): left = eyebrow (13px `--primary` caps) + headline
@@ -217,8 +218,9 @@ No parallax. Numbers may count up once on first view (Sejong stats band).
   LS blues (#388DEE/#0667B2/#0094CC/#004BA2) or any saturated blue.
 - No gap-0 connected cells, no overlapped circles — the Sejong variation
   (gaps, tangent circles) is intentional.
-- No video backgrounds — Sejong equipment photos only. **No full-bleed photo
-  rendering anywhere** (current assets are low-res; display ≤ ~640px wide).
+- No video backgrounds — Sejong site photos only (`public/images`, 1920px
+  optimized set from the 2026-07 client delivery; legacy low-res `sejong_*.png`
+  stays only for /demo).
 - Forms: inputs never below 16px font (iOS focus-zoom). Fixed/floating elements
   must offset by `env(safe-area-inset-*)`.
 

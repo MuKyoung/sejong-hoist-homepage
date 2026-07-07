@@ -88,8 +88,8 @@ export default function AboutPage() {
 
             <div className={s.visual} style={{ marginBottom: 40 }}>
               <Image
-                src="/images/sejong_2.png"
-                alt="세종호이스트크레인 시공 현장"
+                src="/images/about-01.jpg"
+                alt="세종호이스트크레인 사옥 전경"
                 fill
                 className={s.image}
                 sizes="(max-width: 1024px) 100vw, 50vw"

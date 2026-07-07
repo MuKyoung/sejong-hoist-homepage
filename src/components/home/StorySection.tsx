@@ -7,24 +7,24 @@ import s from "./StorySection.module.css";
 
 const SLIDES = [
   {
-    image: "/images/sejong_2.png",
-    title: ["현장의 하중과 안전을", "설계와 제작으로 풉니다"],
-    sub: "와이어·체인·방폭 호이스트를 현장 조건에 맞춰 설계·제작합니다.",
-  },
-  {
-    image: "/images/sejong_3.png",
+    image: "/images/hero-02.jpg",
     title: ["최대 350TON,", "검증된 시공 실적"],
-    sub: "대형 갠트리·그랩 크레인까지 전국 현장에서 검증된 시공 품질입니다.",
+    sub: "350TON 겐트리 크레인 — 설계부터 설치·안전인증까지 직접 수행했습니다.",
   },
   {
-    image: "/images/sejong_1.png",
-    title: ["정밀 제어와 견고한 구조의", "운반하역 솔루션"],
-    sub: "천장크레인과 호이스트로 생산 현장의 효율을 높입니다.",
+    image: "/images/hero-04.jpg",
+    title: ["현장의 하중과 안전을", "설계와 제작으로 풉니다"],
+    sub: "350/50TON 그라브 크레인 — 옥외 대형 설비까지 책임집니다.",
   },
   {
-    image: "/images/sejong_4.png",
-    title: ["설계부터 유지보수까지", "원스톱으로 책임집니다"],
-    sub: "정기 점검과 신속한 A/S로 설비 가동률을 지킵니다.",
+    image: "/images/hero-03.jpg",
+    title: ["대형 그라브 크레인의", "설계·제작·설치"],
+    sub: "250/50TON 그라브 크레인을 현장 조건에 맞춰 시공했습니다.",
+  },
+  {
+    image: "/images/pf-ceiling30.jpg",
+    title: ["옥내 천장크레인부터", "유지보수·A/S까지"],
+    sub: "30TON 천장크레인 설치 — 정기 점검과 신속한 A/S로 가동률을 지킵니다.",
   },
 ];
 

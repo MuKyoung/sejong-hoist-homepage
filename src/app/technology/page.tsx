@@ -45,7 +45,7 @@ export default function TechnologyPage() {
             <p className={s.eyebrow}>Certification</p>
             <h2 className={s.headline}>보유 인증</h2>
             <p className={s.body}>
-              인증서 원본 이미지는 자료 취합 후 게시될 예정입니다.
+              크레인 안전인증서와 서면심사도서 원본을 보유하고 있습니다.
             </p>
           </div>
 
@@ -57,7 +57,7 @@ export default function TechnologyPage() {
                 </div>
                 <h3 className={s.supportTitle}>{cert.title}</h3>
                 <p className={s.supportDesc}>{cert.issuer}</p>
-                <span className={s.portfolioCat}>인증서 이미지 준비 중</span>
+                <span className={s.portfolioCat}>인증서 원본 보유</span>
               </article>
             ))}
           </div>
@@ -69,8 +69,8 @@ export default function TechnologyPage() {
           <div className={s.twoCol}>
             <div className={s.visual}>
               <Image
-                src="/images/sejong_3.png"
-                alt="구조해석 기반 크레인 설계"
+                src="/images/tech-analysis.jpg"
+                alt="350TON 크레인 와이어 로프 위빙 작업"
                 fill
                 className={s.image}
                 sizes="(max-width: 1024px) 100vw, 50vw"
