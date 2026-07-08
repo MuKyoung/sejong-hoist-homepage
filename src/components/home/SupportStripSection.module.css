@@ -1,7 +1,8 @@
 /* 고객지원 스트립 — Sejong variation: 간격 카드 (LS는 붙은 라인 그리드) */
 .section {
-  padding: 56px 0 88px;
-  background: var(--canvas);
+  padding: 64px 0 88px;
+  background: var(--surface);
+  border-top: 1px solid var(--hairline);
 }
 
 .strip {
@@ -16,6 +17,7 @@
   height: 240px;
   display: block;
   padding: 32px 0 0 36px;
+  background: var(--canvas);
   border: 1px solid var(--hairline);
   border-radius: var(--r-xl);
   transition: border-color var(--motion-standard) var(--ease-std), box-shadow var(--motion-standard) var(--ease-std);

@@ -1,10 +1,9 @@
-/* 주요 실적 — LS 플랫 숫자 밴드 (헤어라인 구분) */
+/* 주요 실적 — 네이비 다크 밴드 (바로 아래 시공사례가 '증거'로 이어짐) */
 .section {
-  padding: 64px 0;
-  background: var(--surface);
-  border-top: 1px solid var(--hairline);
-  border-bottom: 1px solid var(--hairline);
+  padding: 72px 0;
+  background: var(--navy);
 }
+@media (min-width: 1024px) { .section { padding: 88px 0; } }
 
 .grid {
   display: grid;
@@ -14,14 +13,14 @@
 .cell {
   text-align: center;
   padding: 8px 16px;
-  border-left: 1px solid var(--line);
+  border-left: 1px solid rgba(255, 255, 255, 0.16);
 }
 .cell:first-child { border-left: none; }
 
 .label {
   font-size: 14px;
   font-weight: 500;
-  color: var(--muted);
+  color: rgba(255, 255, 255, 0.62);
 }
 
 .number {
@@ -30,7 +29,7 @@
   font-weight: 700;
   line-height: 1;
   letter-spacing: -0.02em;
-  color: var(--navy);
+  color: #ffffff;
   font-variant-numeric: tabular-nums;
 }
 
@@ -38,14 +37,14 @@
   margin-left: 4px;
   font-size: 1.125rem;
   font-weight: 700;
-  color: var(--brand);
+  color: rgba(255, 255, 255, 0.75);
 }
 
 .desc {
   margin-top: 8px;
   font-size: 13px;
   font-weight: 400;
-  color: var(--faint);
+  color: rgba(255, 255, 255, 0.45);
 }
 
 @media (max-width: 639.98px) {

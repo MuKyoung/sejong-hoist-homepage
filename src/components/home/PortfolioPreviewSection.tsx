@@ -12,7 +12,7 @@ export default function PortfolioPreviewSection() {
         <div className={s.header}>
           <p className={s.eyebrow}>Portfolio</p>
           <h2 className={s.headline}>핵심 시공사례</h2>
-          <p className={s.subtitle}>현장에서 검증된 세종호이스트크레인의 대표 실적입니다.</p>
+          <p className={s.subtitle}>위의 숫자를 만든 현장을 사진으로 확인하세요.</p>
         </div>
 
         <div className={s.grid}>

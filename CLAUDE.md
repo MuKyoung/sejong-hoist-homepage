@@ -90,9 +90,10 @@ listed in DESIGN.md: circle alphas, #E5E5E5 strip dividers, hero scrim/text-shad
 - Type: Noto Sans KR via `next/font` (`app/layout.tsx`); centered section headers
   (700/42px `--navy` + 15px `--body` sub). Header: solid white, fixed, `--header-h` 64px.
 - Home = LS flow: `StorySection` (compact split hero — small 4:3 image card, NO
-  full-bleed: assets are low-res) → `OverviewMosaicSection` (mosaic + news band) →
-  `PortfolioPreviewSection` → `BusinessCirclesSection` → `StatsHighlightSection` →
-  `SupportStripSection`. Footer = dark slate LS form. 견적 CTA = `FloatingCta` FAB
+  full-bleed/wide photo backgrounds) → `OverviewMosaicSection` (mosaic + news band)
+  → `BusinessCirclesSection` → `StatsHighlightSection` (navy dark band) →
+  `PortfolioPreviewSection` (proof under the numbers) → `SupportStripSection`.
+  Footer = dark slate LS form. 견적 CTA = `FloatingCta` FAB
   (bottom-right, safe-area offsets), not in the header.
 - Unused-but-kept home modules: QuickNav/BusinessAreas/PortfolioPreview/News/InquiryBanner/
   MissionStats/Team + legacy `--sj-*` modules (HeroSection, BusinessSection, ValuesSection,

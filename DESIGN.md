@@ -249,10 +249,11 @@ No parallax. Numbers may count up once on first view (Sejong stats band).
 
 ## 9. Agent guide
 
-Home section order: `StorySection` (image KV) → `OverviewMosaicSection` (회사소개
-mosaic + news panel) → `BusinessCirclesSection` (사업영역 circles) →
-`StatsHighlightSection` (실적 numbers band — flat, hairline-divided; Sejong
-addition, keep) → `SupportStripSection` (support strip) → footer. Data lives in
+Home section order: `StorySection` (split hero, surface) → `OverviewMosaicSection`
+(white) → `BusinessCirclesSection` (surface) → `StatsHighlightSection` (**navy
+dark band** — white numbers, white/16 dividers) → `PortfolioPreviewSection`
+(white — the "proof" directly under the numbers) → `SupportStripSection`
+(surface, white cells) → footer. Data lives in
 `src/data/site.ts` (`BUSINESS_AREAS`, `NOTICES`, `PRODUCTS`, `PORTFOLIO`).
 Buttons/pills/forms come from `src/styles/subpage.module.css`. When adding UI:
 tokens over hex, hairlines over shadows, centered headers, sharp corners, pill CTAs.

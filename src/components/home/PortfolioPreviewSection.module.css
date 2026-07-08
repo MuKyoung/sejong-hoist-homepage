@@ -1,7 +1,7 @@
-/* 핵심 시공사례 — 홈 레퍼런스 요약 (LS 스타일, 중앙 헤더) */
+/* 핵심 시공사례 — 실적 수치 밴드 바로 아래, 숫자의 '증거' 역할 */
 .section {
   padding: 80px 0;
-  background: var(--surface);
+  background: var(--canvas);
 }
 @media (min-width: 1024px) { .section { padding: 96px 0; } }
 

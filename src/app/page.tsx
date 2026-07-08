@@ -10,9 +10,9 @@ export default function HomePage() {
     <>
       <StorySection />
       <OverviewMosaicSection />
-      <PortfolioPreviewSection />
       <BusinessCirclesSection />
       <StatsHighlightSection />
+      <PortfolioPreviewSection />
       <SupportStripSection />
     </>
   );

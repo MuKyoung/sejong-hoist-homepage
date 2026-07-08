@@ -1,7 +1,7 @@
-/* 사업영역 — LS 시그니처 오버랩 서클 */
+/* 사업영역 — 서클 (탄젠트 배치) */
 .section {
   padding: 80px 0 96px;
-  background: var(--canvas);
+  background: var(--surface);
 }
 
 /* Centered section header */
