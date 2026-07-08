@@ -210,8 +210,12 @@ hairline, sharp corners, no resting shadow. Forms: inputs `--r-sm/md`, focus
   centered eyebrow + headline + quote (`--muted`), hairline rule, left-aligned
   plain paragraphs (lead 700 `--navy`; NO highlight boxes — client removed the
   proof-box), then RIGHT-aligned sign block: role 13px `--muted` over name
-  20px/700 letter-spaced + signature image slot. 사옥 photo + statCard live in
-  the 기업개요 band (twoCol). Copy rule: no em-dash (—) in prose sentences.
+  20px/700 letter-spaced + signature image slot. 사옥 photo lives in the
+  기업개요 band (twoCol): clean hairline-framed image + 13px `--muted` caption
+  BELOW the frame. Copy rule: no em-dash (—) in prose sentences.
+- **No overlay/overhang badges on photos** (the old corner statCard is
+  retired): information belongs in the text column or a caption under the
+  frame, never stuck onto the image.
 
 ## 7. Motion
 

@@ -94,18 +94,17 @@ export default function AboutPage() {
       <section className={`${s.section} ${s.sectionAlt}`}>
         <div className="container">
           <div className={s.twoCol}>
-            <div className={s.visual} style={{ marginBottom: 40 }}>
-              <Image
-                src="/images/about-01.jpg"
-                alt="세종호이스트크레인 사옥 전경"
-                fill
-                className={s.image}
-                sizes="(max-width: 1024px) 100vw, 50vw"
-              />
-              <div className={s.statCard}>
-                <p className={s.statNum}>350T</p>
-                <p className={s.statLabel}>최대 시공 하중<br />겐트리 크랩 크레인</p>
+            <div>
+              <div className={s.visual}>
+                <Image
+                  src="/images/about-01.jpg"
+                  alt="세종호이스트크레인 사옥 전경"
+                  fill
+                  className={s.image}
+                  sizes="(max-width: 1024px) 100vw, 50vw"
+                />
               </div>
+              <p className={s.visualCaption}>세종호이스트크레인 사옥 전경</p>
             </div>
             <div>
               <p className={s.eyebrow}>Company</p>
