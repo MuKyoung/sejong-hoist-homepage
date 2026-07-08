@@ -199,6 +199,17 @@ PageHero: **centered** — eyebrow 13px `--primary` caps → title 700/42 `--nav
 SubNav: white, hairline, active = 2px `--primary` underline. Cards: white,
 hairline, sharp corners, no resting shadow. Forms: inputs `--r-sm/md`, focus
 `--primary` border + `0 0 0 3px rgba(44,74,110,.15)` ring.
+- **/business (LS product-category form):** left sticky sidebar (232px, hairline
+  box; 12px caps group titles + 14px links with 2px left accent on hover) +
+  right column of ① 사업영역 horizontal cards (photo 320px left / body right,
+  hairline box) and ② `#products` 3-col product card grid (4:3 thumb with
+  bottom hairline, EN caps 12px `--faint`, name 17px `--navy` → `--primary` on
+  hover, first spec line, "자세히 보기 →").
+- **/about greeting (LS CEO form):** centered narrow column (max 780px):
+  centered eyebrow + headline + quote (`--muted`), hairline rule, left-aligned
+  paragraphs (lead 700 `--navy`, tint proof-box with 3px `--brand` rule), then
+  RIGHT-aligned sign block: role 13px `--muted` over name 20px/700 letter-spaced
+  + signature image slot. 사옥 photo + statCard live in the 기업개요 band (twoCol).
 
 ## 7. Motion
 

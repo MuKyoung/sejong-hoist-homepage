@@ -54,48 +54,35 @@ export default function AboutPage() {
 
       <section className={`${s.section} ${s.sectionWhite}`}>
         <div className="container">
-          <div className={s.greetGrid}>
-            <div>
-              <p className={s.eyebrow}>CEO Greeting</p>
-              <h2 className={s.greetHeadline}>
-                {GREETING.headline[0]}
-                <br />
-                {GREETING.headline[1]}
-              </h2>
-              <p className={s.greetQuote}>“{GREETING.quote}”</p>
+          <div className={s.greetWrap}>
+            <p className={s.eyebrow}>CEO Greeting</p>
+            <h2 className={s.greetHeadline}>
+              {GREETING.headline[0]}
+              <br />
+              {GREETING.headline[1]}
+            </h2>
+            <p className={s.greetQuoteC}>“{GREETING.quote}”</p>
 
-              <div className={s.greetPhoto}>
-                <Image
-                  src="/images/about-01.jpg"
-                  alt="세종호이스트크레인 사옥 전경"
-                  fill
-                  className={s.image}
-                  sizes="(max-width: 1024px) 100vw, 40vw"
-                />
-                <div className={s.statCard}>
-                  <p className={s.statNum}>350T</p>
-                  <p className={s.statLabel}>최대 시공 하중<br />겐트리 크랩 크레인</p>
-                </div>
-              </div>
-            </div>
-
-            <div>
+            <div className={s.greetBody}>
               <p className={s.greetLead}>{GREETING.paragraphs[0]}</p>
               <p className={s.body} style={{ marginTop: 20 }}>
                 {GREETING.paragraphs[1]}
               </p>
               <div className={s.greetProof}>{GREETING.paragraphs[2]}</div>
               <p className={s.body}>{GREETING.paragraphs[3]}</p>
+            </div>
 
-              <div className={s.greetSignRow}>
-                <p className={s.greetSign}>{GREETING.sign}</p>
+            <div className={s.greetSignBlock}>
+              <p className={s.greetRole}>(주)세종호이스트크레인 대표이사</p>
+              <div className={s.greetNameRow}>
+                <p className={s.greetName}>김 승 용</p>
                 {hasSign && (
                   <Image
                     src="/images/ceo-sign.png"
                     alt="대표이사 김승용 서명"
                     width={140}
                     height={56}
-                    style={{ height: 44, width: "auto" }}
+                    style={{ height: 46, width: "auto" }}
                   />
                 )}
               </div>
@@ -106,26 +93,45 @@ export default function AboutPage() {
 
       <section className={`${s.section} ${s.sectionAlt}`}>
         <div className="container">
-          <div className={s.centerHeader}>
-            <p className={s.eyebrow}>Company</p>
-            <h2 className={s.headline}>기업개요</h2>
-          </div>
-          <div className={s.infoGrid} style={{ maxWidth: 760, margin: "0 auto" }}>
-            <div className={s.infoItem}>
-              <p className={s.infoLabel}>대표이사</p>
-              <p className={s.infoValue}>{COMPANY.ceo}</p>
+          <div className={s.twoCol}>
+            <div className={s.visual} style={{ marginBottom: 40 }}>
+              <Image
+                src="/images/about-01.jpg"
+                alt="세종호이스트크레인 사옥 전경"
+                fill
+                className={s.image}
+                sizes="(max-width: 1024px) 100vw, 50vw"
+              />
+              <div className={s.statCard}>
+                <p className={s.statNum}>350T</p>
+                <p className={s.statLabel}>최대 시공 하중<br />겐트리 크랩 크레인</p>
+              </div>
             </div>
-            <div className={s.infoItem}>
-              <p className={s.infoLabel}>업종</p>
-              <p className={s.infoValue}>호이스트·크레인 제조</p>
-            </div>
-            <div className={s.infoItem}>
-              <p className={s.infoLabel}>소재지</p>
-              <p className={s.infoValue}>{COMPANY.address}</p>
-            </div>
-            <div className={s.infoItem}>
-              <p className={s.infoLabel}>사업자번호</p>
-              <p className={s.infoValue}>{COMPANY.bizNo}</p>
+            <div>
+              <p className={s.eyebrow}>Company</p>
+              <h2 className={`${s.headline} ${s.headlineNavy}`}>기업개요</h2>
+              <p className={s.body}>
+                1999년 설립 이후 운반하역 설비 한길을 걸어온 크레인·호이스트
+                전문 기업입니다.
+              </p>
+              <div className={s.infoGrid}>
+                <div className={s.infoItem}>
+                  <p className={s.infoLabel}>대표이사</p>
+                  <p className={s.infoValue}>{COMPANY.ceo}</p>
+                </div>
+                <div className={s.infoItem}>
+                  <p className={s.infoLabel}>업종</p>
+                  <p className={s.infoValue}>호이스트·크레인 제조</p>
+                </div>
+                <div className={s.infoItem}>
+                  <p className={s.infoLabel}>소재지</p>
+                  <p className={s.infoValue}>{COMPANY.address}</p>
+                </div>
+                <div className={s.infoItem}>
+                  <p className={s.infoLabel}>사업자번호</p>
+                  <p className={s.infoValue}>{COMPANY.bizNo}</p>
+                </div>
+              </div>
             </div>
           </div>
         </div>

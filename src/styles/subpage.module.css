@@ -206,6 +206,171 @@
 }
 .softBtn:hover { background: var(--tint); }
 
+/* Business — LS 카테고리형: 좌 사이드바 + 우 영역 카드/제품 그리드 */
+.prodLayout {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 40px;
+  align-items: start;
+}
+@media (min-width: 1024px) {
+  .prodLayout { grid-template-columns: 232px 1fr; gap: 48px; }
+}
+
+.sideNav {
+  display: none;
+}
+@media (min-width: 1024px) {
+  .sideNav {
+    display: block;
+    position: sticky;
+    top: calc(var(--header-h) + 24px);
+    padding: 10px 0 14px;
+    background: var(--canvas);
+    border: 1px solid var(--hairline);
+  }
+}
+
+.sideTitle {
+  padding: 14px 20px 6px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--faint);
+}
+
+.sideLink {
+  display: block;
+  padding: 10px 20px;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--body);
+  border-left: 2px solid transparent;
+  transition: color var(--motion-fast), background var(--motion-fast), border-color var(--motion-fast);
+}
+.sideLink:hover {
+  color: var(--primary);
+  background: var(--surface);
+  border-left-color: var(--primary);
+}
+
+.prodMain { min-width: 0; }
+
+/* 사업영역 카드 (사진 좌 · 내용 우, 사진 표시폭 ≤ 320px) */
+.areaCard {
+  display: grid;
+  grid-template-columns: 1fr;
+  border: 1px solid var(--hairline);
+  background: var(--canvas);
+}
+.areaCard + .areaCard { margin-top: 16px; }
+@media (min-width: 768px) {
+  .areaCard { grid-template-columns: 320px 1fr; }
+}
+
+.areaPhoto {
+  position: relative;
+  min-height: 220px;
+  background: var(--surface-alt);
+}
+@media (max-width: 767.98px) {
+  .areaPhoto { aspect-ratio: 4 / 3; min-height: 0; }
+}
+
+.areaBody { padding: 26px 30px 28px; }
+
+.areaEn {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--primary);
+  margin-bottom: 8px;
+}
+
+.areaTitle {
+  font-size: 1.375rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--navy);
+  margin-bottom: 10px;
+}
+
+.areaDesc {
+  font-size: 15px;
+  line-height: 1.7;
+  color: var(--body);
+  margin-bottom: 18px;
+  word-break: keep-all;
+}
+
+/* 제품 라인업 그리드 (LS product cards) */
+.prodHead {
+  margin: 56px 0 24px;
+}
+.prodHead .headline { margin-bottom: 8px; }
+
+.prodGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+}
+@media (min-width: 640px) { .prodGrid { grid-template-columns: repeat(2, 1fr); } }
+@media (min-width: 1024px) { .prodGrid { grid-template-columns: repeat(3, 1fr); } }
+
+.prodCard {
+  display: block;
+  background: var(--canvas);
+  border: 1px solid var(--hairline);
+  overflow: hidden;
+  transition: border-color var(--motion-standard) var(--ease-std), box-shadow var(--motion-standard) var(--ease-std);
+}
+.prodCard:hover {
+  border-color: var(--tint-strong);
+  box-shadow: var(--shadow-md);
+}
+
+.prodThumb {
+  position: relative;
+  aspect-ratio: 4 / 3;
+  background: var(--surface-alt);
+  border-bottom: 1px solid var(--hairline);
+}
+
+.prodBody { padding: 20px 22px 22px; }
+
+.prodEn {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--faint);
+}
+
+.prodName {
+  margin-top: 4px;
+  font-size: 1.0625rem;
+  font-weight: 700;
+  color: var(--navy);
+  transition: color var(--motion-fast);
+}
+.prodCard:hover .prodName { color: var(--primary); }
+
+.prodSpec {
+  margin-top: 8px;
+  font-size: 13px;
+  color: var(--muted);
+}
+
+.prodMore {
+  display: inline-block;
+  margin-top: 14px;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--primary);
+}
+
 /* Business alternating rows */
 .bizRow {
   display: grid;
@@ -843,14 +1008,11 @@
   border-radius: var(--r-full);
 }
 
-/* CEO Greeting (인사말) */
-.greetGrid {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 48px;
-}
-@media (min-width: 1024px) {
-  .greetGrid { grid-template-columns: 5fr 7fr; gap: 72px; align-items: start; }
+/* CEO Greeting (인사말) — LS CEO형: 중앙 좁은 칼럼 + 우측 서명 블록 */
+.greetWrap {
+  max-width: 780px;
+  margin: 0 auto;
+  text-align: center;
 }
 
 .greetHeadline {
@@ -862,26 +1024,21 @@
   word-break: keep-all;
 }
 
-.greetQuote {
-  margin-top: 20px;
-  padding-left: 16px;
-  border-left: 3px solid var(--brand);
+.greetQuoteC {
+  margin-top: 16px;
   font-size: 15px;
   font-weight: 500;
   line-height: 1.7;
-  color: var(--body);
+  color: var(--muted);
   word-break: keep-all;
 }
 
-.greetPhoto {
-  position: relative;
-  aspect-ratio: 4 / 3;
-  margin-top: 36px;
-  margin-bottom: 28px; /* statCard 오버행 여유 */
-  border: 1px solid var(--hairline);
-  background: var(--surface-alt);
+.greetBody {
+  margin-top: 40px;
+  padding-top: 36px;
+  border-top: 1px solid var(--hairline);
+  text-align: left;
 }
-.greetPhoto :global(img) { object-fit: cover; }
 
 .greetLead {
   font-size: 1.0625rem;
@@ -902,19 +1059,29 @@
   word-break: keep-all;
 }
 
-.greetSignRow {
-  display: flex;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 14px;
-  margin-top: 32px;
-  padding-top: 24px;
-  border-top: 1px solid var(--hairline);
+.greetSignBlock {
+  margin-top: 40px;
+  text-align: right;
 }
 
-.greetSign {
-  font-size: 15px;
+.greetRole {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--muted);
+}
+
+.greetNameRow {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 14px;
+  margin-top: 8px;
+}
+
+.greetName {
+  font-size: 1.25rem;
   font-weight: 700;
+  letter-spacing: 0.1em;
   color: var(--navy);
 }
 
