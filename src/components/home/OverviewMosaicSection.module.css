@@ -142,6 +142,11 @@
   grid-template-columns: repeat(3, 1fr);
 }
 
+/* grid item은 기본 min-width:auto — nowrap 자식이 칼럼을 밀어내지 않도록 0 강제 */
+.newsCol {
+  min-width: 0;
+  overflow: hidden;
+}
 .newsCol + .newsCol { border-left: 1px solid var(--hairline); }
 
 .newsItem {
