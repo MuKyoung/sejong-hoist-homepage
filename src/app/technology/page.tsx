@@ -39,7 +39,7 @@ export default function TechnologyPage() {
         desc="구조해석 기반의 설계 역량과 안전관리 체계로 신뢰를 증명합니다."
       />
 
-      <section className={`${s.section} ${s.sectionWhite}`}>
+      <section id="certs" className={`${s.section} ${s.sectionWhite}`}>
         <div className="container">
           <div className={s.centerHeader}>
             <p className={s.eyebrow}>Certification</p>
@@ -65,7 +65,7 @@ export default function TechnologyPage() {
         </div>
       </section>
 
-      <section className={`${s.section} ${s.sectionAlt}`}>
+      <section id="analysis" className={`${s.section} ${s.sectionAlt}`}>
         <div className="container">
           <div className={s.twoCol}>
             <div className={s.visual}>
@@ -95,7 +95,7 @@ export default function TechnologyPage() {
         </div>
       </section>
 
-      <section className={`${s.section} ${s.sectionWhite}`}>
+      <section id="safety" className={`${s.section} ${s.sectionWhite}`}>
         <div className="container">
           <div className={s.centerHeader}>
             <p className={s.eyebrow}>Safety</p>

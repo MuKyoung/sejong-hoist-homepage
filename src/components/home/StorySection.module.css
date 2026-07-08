@@ -1,49 +1,77 @@
-/* Hero — 컴팩트 스플릿 (좌 텍스트 / 우 소형 이미지 카드).
-   저해상도 원본 이미지를 작게 렌더해 품질 문제를 완화 (풀블리드 금지). */
+/* Hero — 와이드 KV 밴드 (고해상 현장 사진, 좌측 정렬 + 하단 프로젝트 캡션 바).
+   풀스크린이 아닌 높이 제한 밴드; 2026-07 수신 1920px 실사진 기준. */
 .section {
+  position: relative;
   margin-top: var(--header-h);
-  padding: 56px 0 64px;
-  background: var(--surface);
-  border-bottom: 1px solid var(--hairline);
-}
-@media (min-width: 1024px) { .section { padding: 88px 0 96px; } }
-
-.grid {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 40px;
+  height: clamp(500px, 64vh, 700px);
+  display: flex;
   align-items: center;
+  overflow: hidden;
+  background: var(--navy-deep);
 }
-@media (min-width: 1024px) {
-  .grid { grid-template-columns: 1fr 1.05fr; gap: 64px; }
+@media (max-width: 639.98px) {
+  .section { height: clamp(460px, 72vh, 560px); }
 }
 
-/* Copy */
+.slides { position: absolute; inset: 0; z-index: 0; }
+
+.slide {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity 1s var(--ease-std);
+}
+.slideActive { opacity: 1; }
+.image { object-fit: cover; }
+
+/* 좌측 텍스트 가독용 네이비 스크림 (좌→우로 옅어짐) */
+.overlay {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(90deg, rgba(13, 21, 33, 0.62) 0%, rgba(13, 21, 33, 0.34) 46%, rgba(13, 21, 33, 0.12) 100%),
+    linear-gradient(180deg, rgba(13, 21, 33, 0) 62%, rgba(13, 21, 33, 0.55) 100%);
+}
+
+/* Content — 좌측 정렬 */
+.content {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  padding-bottom: 48px;
+}
+
+.inner {
+  max-width: 620px;
+}
+
 .eyebrow {
   font-size: 13px;
   font-weight: 700;
-  letter-spacing: 0.12em;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: var(--primary);
-  margin-bottom: 16px;
+  color: rgba(255, 255, 255, 0.72);
+  margin-bottom: 18px;
 }
 
 .headline {
-  font-size: clamp(1.75rem, 4.5vw, 2.875rem);
+  font-size: clamp(1.875rem, 4.2vw, 3rem);
   font-weight: 700;
-  line-height: 1.28;
+  line-height: 1.24;
   letter-spacing: -0.03em;
-  color: var(--navy);
+  color: #fff;
+  text-shadow: 0 0 20px rgba(0, 0, 0, 0.12), 1px 1px 0 rgba(0, 0, 0, 0.3);
   word-break: keep-all;
 }
 .headlineLine { display: block; }
 
 .sub {
-  margin-top: 18px;
-  max-width: 480px;
+  margin-top: 16px;
+  max-width: 520px;
   font-size: clamp(0.9375rem, 1.4vw, 1.0625rem);
   line-height: 1.7;
-  color: var(--body);
+  color: rgba(255, 255, 255, 0.88);
+  text-shadow: 0 0 16px rgba(0, 0, 0, 0.2);
   word-break: keep-all;
 }
 
@@ -51,9 +79,10 @@
   display: flex;
   flex-wrap: wrap;
   gap: 12px;
-  margin-top: 32px;
+  margin-top: 30px;
 }
 
+/* 다크 사진 위 버튼 — 화이트 필 + 네이비 텍스트 / 화이트 아웃라인 */
 .primaryBtn {
   display: inline-flex;
   align-items: center;
@@ -62,13 +91,12 @@
   padding: 0 30px;
   font-size: 15px;
   font-weight: 700;
-  color: var(--on-primary);
-  background: var(--primary);
+  color: var(--navy);
+  background: #ffffff;
   border-radius: var(--r-full);
-  transition: background var(--motion-standard) var(--ease-std);
+  transition: background var(--motion-standard) var(--ease-std), color var(--motion-standard) var(--ease-std);
 }
-.primaryBtn:hover { background: var(--primary-deep); }
-.primaryBtn:active { background: var(--primary-press); }
+.primaryBtn:hover { background: var(--tint); color: var(--primary-deep); }
 
 .ghostBtn {
   display: inline-flex;
@@ -78,62 +106,51 @@
   padding: 0 30px;
   font-size: 15px;
   font-weight: 700;
-  color: var(--primary);
-  background: var(--canvas);
-  border: 2px solid var(--primary);
+  color: #fff;
+  border: 2px solid rgba(255, 255, 255, 0.65);
   border-radius: var(--r-full);
-  transition: background var(--motion-standard) var(--ease-std);
+  transition: background var(--motion-fast), border-color var(--motion-fast);
 }
-.ghostBtn:hover { background: var(--tint); }
+.ghostBtn:hover { background: rgba(255, 255, 255, 0.12); border-color: #fff; }
 
-/* Visual — 4:3 카드 + 네이비 오프셋 플레이트 */
-.visualWrap {
-  position: relative;
+/* 하단 캡션 바 — 프로젝트 라벨(좌) + 컨트롤(우) */
+.bottomBar {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 2;
+  border-top: 1px solid rgba(255, 255, 255, 0.22);
+}
+
+.bottomInner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 14px 0;
+}
+
+.caption {
   min-width: 0;
-}
-.visualWrap::before {
-  content: "";
-  position: absolute;
-  top: 14px;
-  left: 14px;
-  right: -14px;
-  bottom: -14px;
-  background: var(--brand-deep);
-}
-@media (max-width: 639.98px) {
-  .visualWrap::before { top: 10px; left: 10px; right: -10px; bottom: -10px; }
-}
-
-.visual {
-  position: relative;
-  aspect-ratio: 4 / 3;
+  font-size: 13px;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.78);
+  white-space: nowrap;
   overflow: hidden;
-  background: var(--surface-alt);
-  border: 1px solid var(--hairline);
+  text-overflow: ellipsis;
 }
 
-.slide {
-  position: absolute;
-  inset: 0;
-  opacity: 0;
-  transition: opacity 0.8s var(--ease-std);
-}
-.slideActive { opacity: 1; }
-.image { object-fit: cover; }
-
-/* Controls — 카드 아래, 터치 타겟 확장(시각 8px / 히트 24px) */
 .controls {
-  position: relative;
-  z-index: 1;
   display: flex;
   align-items: center;
   gap: 16px;
-  margin-top: 26px;
+  flex-shrink: 0;
 }
-@media (max-width: 639.98px) { .controls { margin-top: 22px; } }
 
 .dots { display: flex; align-items: center; }
 
+/* 시각 8px / 히트 24px 터치 타겟 */
 .dot {
   box-sizing: content-box;
   width: 8px;
@@ -141,26 +158,32 @@
   padding: 8px;
   border: none;
   border-radius: var(--r-full);
-  background-color: var(--tint-strong);
+  background-color: rgba(255, 255, 255, 0.4);
   background-clip: content-box;
   transition: width var(--motion-standard) var(--ease-std),
     background-color var(--motion-standard) var(--ease-std);
 }
-.dot:hover { background-color: var(--faint); }
-.dotActive { width: 28px; background-color: var(--primary); }
-.dotActive:hover { background-color: var(--primary); }
+.dot:hover { background-color: rgba(255, 255, 255, 0.7); }
+.dotActive { width: 26px; background-color: #ffffff; }
+.dotActive:hover { background-color: #ffffff; }
 
 .counter {
-  font-size: 14px;
+  font-size: 13px;
   font-weight: 400;
-  color: var(--muted);
+  color: rgba(255, 255, 255, 0.6);
   font-variant-numeric: tabular-nums;
   letter-spacing: 0.04em;
 }
-.counterNow { color: var(--navy); font-weight: 700; }
+.counterNow { color: #fff; font-weight: 700; }
 .counterSep { opacity: 0.5; }
 
+@media (max-width: 639.98px) {
+  .content { padding-bottom: 64px; }
+  .caption { display: none; }
+  .bottomInner { justify-content: center; }
+}
+
 @media (prefers-reduced-motion: reduce) {
-  .slide { transition: none; }
+  .slide,
   .dot { transition: none; }
 }

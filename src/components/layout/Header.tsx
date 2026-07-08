@@ -7,12 +7,50 @@ import { usePathname } from "next/navigation";
 import { AnimatePresence, motion } from "framer-motion";
 import s from "./Header.module.css";
 
-const NAV = [
-  { label: "회사소개", href: "/about" },
-  { label: "사업영역", href: "/business" },
+type NavChild = { label: string; href: string };
+type NavItem = { label: string; href: string; children?: NavChild[] };
+
+const NAV: NavItem[] = [
+  {
+    label: "회사소개",
+    href: "/about",
+    children: [
+      { label: "인사말", href: "/about" },
+      { label: "연혁", href: "/about/history" },
+      { label: "조직도", href: "/about/organization" },
+      { label: "오시는 길", href: "/about/location" },
+    ],
+  },
+  {
+    label: "사업영역",
+    href: "/business",
+    children: [
+      { label: "호이스트 크레인", href: "/business#hoist" },
+      { label: "그랩·갠트리 크레인", href: "/business#gantry" },
+      { label: "유지보수·이전설치", href: "/business#maintenance" },
+      { label: "철구조물 제작", href: "/business#steel" },
+      { label: "제품 라인업", href: "/business" },
+    ],
+  },
   { label: "시공사례", href: "/portfolio" },
-  { label: "기술·인증", href: "/technology" },
-  { label: "견적·문의", href: "/support/inquiry" },
+  {
+    label: "기술·인증",
+    href: "/technology",
+    children: [
+      { label: "보유 인증", href: "/technology#certs" },
+      { label: "구조해석 역량", href: "/technology#analysis" },
+      { label: "안전관리 체계", href: "/technology#safety" },
+    ],
+  },
+  {
+    label: "견적·문의",
+    href: "/support/inquiry",
+    children: [
+      { label: "견적 문의", href: "/support/inquiry" },
+      { label: "공지사항", href: "/support/notice" },
+      { label: "고객지원", href: "/support" },
+    ],
+  },
 ];
 
 export default function Header() {
@@ -38,13 +76,26 @@ export default function Header() {
 
         <nav className={s.nav} aria-label="주요 메뉴">
           {NAV.map((item) => (
-            <Link
+            <div
               key={item.href}
-              href={item.href}
-              className={`${s.navLink} ${isActive(item.href) ? s.navLinkActive : ""}`}
+              className={`${s.navItem} ${isActive(item.href) ? s.navItemActive : ""}`}
             >
-              {item.label}
-            </Link>
+              <Link
+                href={item.href}
+                className={`${s.navLink} ${isActive(item.href) ? s.navLinkActive : ""}`}
+              >
+                {item.label}
+              </Link>
+              {item.children && (
+                <div className={s.dropdown}>
+                  {item.children.map((child) => (
+                    <Link key={child.href} href={child.href} className={s.dropLink}>
+                      {child.label}
+                    </Link>
+                  ))}
+                </div>
+              )}
+            </div>
           ))}
         </nav>
 

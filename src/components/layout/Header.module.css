@@ -27,12 +27,35 @@
 
 .nav {
   display: none;
-  align-items: center;
+  align-items: stretch;
+  align-self: stretch;
   gap: 4px;
   flex: 1;
   justify-content: center;
 }
 @media (min-width: 1024px) { .nav { display: flex; } }
+
+/* Nav item — hosts the hover underline + dropdown */
+.navItem {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+.navItem::after {
+  content: "";
+  position: absolute;
+  left: 12px;
+  right: 12px;
+  bottom: 0;
+  height: 2px;
+  background: var(--primary);
+  transform: scaleX(0);
+  transform-origin: center;
+  transition: transform var(--motion-standard) var(--ease-std);
+}
+.navItem:hover::after,
+.navItem:focus-within::after,
+.navItemActive::after { transform: scaleX(1); }
 
 .navLink {
   padding: 8px 12px;
@@ -47,9 +70,54 @@
    for 5 items + utils) */
 @media (min-width: 1280px) {
   .navLink { padding: 8px 18px; font-size: 18px; }
+  .navItem::after { left: 18px; right: 18px; }
 }
 .navLink:hover,
 .navLinkActive { color: var(--primary); }
+
+/* Dropdown — opens on hover/focus, flush to the header bottom */
+.dropdown {
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  min-width: 176px;
+  padding: 8px 0;
+  background: var(--canvas);
+  border: 1px solid var(--hairline);
+  box-shadow: var(--shadow-md);
+  opacity: 0;
+  visibility: hidden;
+  transform: translate(-50%, 6px);
+  transition: opacity var(--motion-fast) var(--ease-std),
+    transform var(--motion-fast) var(--ease-std),
+    visibility var(--motion-fast);
+  z-index: 110;
+}
+.navItem:hover .dropdown,
+.navItem:focus-within .dropdown {
+  opacity: 1;
+  visibility: visible;
+  transform: translate(-50%, 0);
+}
+
+.dropLink {
+  display: block;
+  padding: 9px 18px;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--body);
+  white-space: nowrap;
+  transition: color var(--motion-fast), background var(--motion-fast);
+}
+.dropLink:hover {
+  color: var(--primary);
+  background: var(--surface);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .navItem::after,
+  .dropdown { transition: none; }
+}
 
 .right { display: flex; align-items: center; gap: 16px; flex-shrink: 0; }
 

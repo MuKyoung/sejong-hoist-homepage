@@ -116,9 +116,14 @@ Hover may lift with `--shadow-md: 0 0 10px rgba(0,0,0,.08)`. Floating elements o
 
 ### Header
 White bg, 64px, hairline bottom. Logo left. Center-right GNB: 700/18px `--ink`
-(16px at 1024–1279), hover/active → `--primary`. Right util: phone 13px `--muted`
+(16px at 1024–1279), hover/active → `--primary` **plus a 2px `--primary` underline
+bar** at the header's bottom edge (scaleX 0→1 on hover/focus/active). Items with
+sub-pages open a **hover/focus dropdown** flush under the header: white panel,
+hairline border, `--shadow-md`, sharp corners, 14px/500 links (hover `--primary`
++ `--surface` bg). Anchor children (`/business#hoist`, `/technology#certs`…) rely
+on the global `[id] { scroll-margin-top }` rule. Right util: phone 13px `--muted`
 (≥1024). **No header CTA** — the 견적 문의 CTA is the floating FAB (below).
-Mobile: hamburger → white panel list (panel keeps its own CTA pill). Header is
+Mobile: hamburger → white panel list (flat, no dropdowns). Header is
 `position: fixed`; pages offset content by `--header-h`.
 
 ### Floating CTA (견적 문의 FAB)
@@ -133,20 +138,19 @@ not on /demo or /admin): `--primary` pill, 52px (48px mobile), chat icon + label
   `--primary`, `--r-full`, height 48. Hover: bg `--tint`. (From LS language pills.)
 - Text link: `--primary` → `--primary-deep`; inline body links `--link` underlined.
 
-### Hero (compact split — replaces the full-bleed KV)
-High-res site photography landed 2026-07 (`hero-*.jpg`, `pf-*.jpg` — 1920px
-optimized), so image quality no longer constrains layout; the compact split
-remains the chosen design. Full-bleed is allowed again only as a deliberate
-redesign decision.
-`--surface` band under the header (`margin-top: var(--header-h)`), hairline
-bottom, auto height (~88px padding desktop). Two columns ≥1024 (`1fr 1.05fr`,
-stack on mobile): left = eyebrow (13px `--primary` caps) + headline
-700/clamp(28→46px) `--navy` (switches per slide) + sub `--body` + pill CTAs
-(primary 견적 문의 / ghost 사업영역). Right = **4:3 image card** (hairline
-border, sharp) with crossfade slideshow, over a `--brand-deep` offset plate
-(+14px bottom-right; 10px mobile). Controls under the card: 8px dots on light
-(`--tint-strong`, active 28px `--primary`, hit area padded to 24px) + `01 / 04`
-counter. `prefers-reduced-motion` disables the crossfade.
+### Hero (wide KV band — redesigned 2026-07 on the high-res photo set)
+Full-width image band under the header (`margin-top: var(--header-h)`), height
+`clamp(500px, 64vh, 700px)` (mobile `clamp(460px, 72vh, 560px)`) — bounded, not
+full-screen. Crossfade slideshow of real site photos (`hero-*.jpg`, 1920px).
+Scrim: navy left-to-right gradient (`rgba(13,21,33,.62) → .12`) + bottom fade
+for the caption bar. Content LEFT-aligned in the container (max 620px): eyebrow
+(13px white/72 caps, letter-spaced) + headline 700/clamp(30→48px) white with the
+LS text-shadow (switches per slide) + sub white/88 + CTAs for dark ground
+(**primary = white pill + `--navy` text**, ghost = 2px white/65 outline).
+Bottom caption bar (1px white/22 top rule): per-slide project label 13px
+white/78 (hidden <640) + dots (white, active 26px pill, 24px hit area) +
+`01 / 04` counter. `prefers-reduced-motion` disables the crossfade.
+The compact-split hero is retired; the low-res constraint no longer applies.
 
 ### Overview mosaic (home §2 — "회사소개")
 Centered section header, then a 3-part row (`1.4fr 1fr 1fr`, 280px, 16px gaps):
