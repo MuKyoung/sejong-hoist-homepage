@@ -9,7 +9,7 @@ import s from "@/styles/subpage.module.css";
 export const metadata: Metadata = {
   title: "사업영역 | (주)세종호이스트크레인",
   description:
-    "호이스트 크레인, 그랩·갠트리 크레인, 유지보수·이전설치, 철구조물 제작 — 운반하역 설비의 전 과정을 책임집니다.",
+    "호이스트 크레인, 그랩·갠트리 크레인, 유지보수·이전설치, 철구조물 제작까지 운반하역 설비의 전 과정을 책임집니다.",
 };
 
 export default function BusinessPage() {

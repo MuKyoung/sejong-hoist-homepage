@@ -19,7 +19,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   if (!doc) return { title: "기술·인증" };
   return {
     title: `${doc.title} | (주)세종호이스트크레인`,
-    description: `${doc.desc} — 전체 ${doc.pageCount}페이지 원본`,
+    description: `${doc.desc} (전체 ${doc.pageCount}페이지 원본)`,
     robots: { index: false },
   };
 }
@@ -48,7 +48,7 @@ export default async function CertViewerPage({ params }: Props) {
               <figure key={n} className={s.docPage}>
                 <Image
                   src={certPage(doc, n)}
-                  alt={`${doc.title} — ${n}페이지`}
+                  alt={`${doc.title} ${n}페이지`}
                   width={1100}
                   height={1556}
                   style={{ width: "100%", height: "auto" }}

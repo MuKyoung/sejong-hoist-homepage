@@ -14,7 +14,7 @@ const hasSign = existsSync(join(process.cwd(), "public", "images", "ceo-sign.png
 
 export const metadata: Metadata = {
   title: "회사소개 | (주)세종호이스트크레인",
-  description: "인사말·기업개요 — 운반하역기계 전문 제조기업 (주)세종호이스트크레인을 소개합니다.",
+  description: "인사말과 기업개요로 운반하역기계 전문 제조기업 (주)세종호이스트크레인을 소개합니다.",
 };
 
 const ABOUT_NAV = [

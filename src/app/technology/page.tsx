@@ -8,7 +8,7 @@ import s from "@/styles/subpage.module.css";
 
 export const metadata: Metadata = {
   title: "기술·인증 | (주)세종호이스트크레인",
-  description: "보유 인증, 구조해석 역량, 안전관리 체계 — 세종호이스트크레인의 기술 기반입니다.",
+  description: "보유 인증, 구조해석 역량, 안전관리 체계로 세종호이스트크레인의 기술 기반을 소개합니다.",
 };
 
 export default function TechnologyPage() {
@@ -53,7 +53,7 @@ export default function TechnologyPage() {
           </div>
 
           <div className={s.docHead}>
-            <h3 className={s.docHeadTitle}>서면심사도서 — 크레인 구조 심사 11권</h3>
+            <h3 className={s.docHeadTitle}>크레인 구조 서면심사도서 11권</h3>
             <p className={s.body}>
               구조 계산·도면으로 구성된 심사 도서입니다. 표지를 게시하며, 본문은
               요청 시 열람하실 수 있습니다.

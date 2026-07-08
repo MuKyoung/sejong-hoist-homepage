@@ -220,7 +220,9 @@ hairline, sharp corners, no resting shadow. Forms: inputs `--r-sm/md`, focus
   proof-box), then RIGHT-aligned sign block: role 13px `--muted` over name
   20px/700 letter-spaced + signature image slot. 사옥 photo lives in the
   기업개요 band (twoCol): clean hairline-framed image + 13px `--muted` caption
-  BELOW the frame. Copy rule: no em-dash (—) in prose sentences.
+  BELOW the frame. Copy rule: **no em-dash (—) anywhere in UI copy** (prose,
+  labels, titles, meta descriptions alike; the client reads it as AI-generated).
+  Use natural phrasing or the site's `·` separator instead.
 - **No overlay/overhang badges on photos** (the old corner statCard is
   retired): information belongs in the text column or a caption under the
   frame, never stuck onto the image.
