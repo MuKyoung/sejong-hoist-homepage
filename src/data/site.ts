@@ -181,39 +181,67 @@ export const ORG_UNITS: { name: string; en: string; desc: string }[] = [
   { name: "생산부", en: "Production", desc: "설계부 · 제조부 · 자재부 (생산·설치·시운전)" },
 ];
 
-/* 기술·인증 — 보유 인증 (2026-07 수신 PDF 1페이지를 이미지로 변환해 노출.
-   발급기관: 한국승강기안전공단 KCs 심사결과 통지서(적합) — cert-01에서 확인) */
-export const CERTIFICATIONS: { title: string; issuer: string; image: string }[] = [
+/* 기술·인증 — 안전인증서 5권 (전 페이지를 /images/certs/{slug}/pNN.jpg 로 렌더,
+   /technology/certs/[slug] 뷰어에서 전권 열람). 발급: 한국승강기안전공단 KCs 적합 */
+export type CertDoc = {
+  slug: string;
+  title: string;
+  desc: string;
+  pageCount: number;
+};
+
+export const CERT_DOCS: CertDoc[] = [
   {
-    title: "안전인증 — 갠트리크레인 350TON 외",
-    issuer: "한국승강기안전공단 · KCs 개별 제품심사 적합 (350/50T·250/50T 그라브 포함)",
-    image: "/images/cert-01.jpg",
+    slug: "cert-1",
+    title: "안전인증 — 갠트리 350TON · 그라브 350/50T·250/50T",
+    desc: "한국승강기안전공단 · KCs 개별 제품심사 적합",
+    pageCount: 9,
   },
   {
+    slug: "cert-2",
     title: "안전인증 — 콘덴스룸 크레인 3TON",
-    issuer: "한국승강기안전공단 · KCs 개별 제품심사 적합",
-    image: "/images/cert-02.jpg",
+    desc: "한국승강기안전공단 · KCs 개별 제품심사 적합",
+    pageCount: 4,
   },
   {
+    slug: "cert-3",
     title: "안전인증 — 크레인 12대 일괄",
-    issuer: "한국승강기안전공단 · KCs 개별 제품심사 적합",
-    image: "/images/cert-03.jpg",
+    desc: "한국승강기안전공단 · KCs 개별 제품심사 적합",
+    pageCount: 28,
   },
   {
+    slug: "cert-4",
     title: "안전인증 — 크레인 10대 일괄",
-    issuer: "한국승강기안전공단 · KCs 개별 제품심사 적합",
-    image: "/images/cert-04.jpg",
+    desc: "한국승강기안전공단 · KCs 개별 제품심사 적합",
+    pageCount: 26,
   },
   {
+    slug: "cert-5",
     title: "안전인증 — 크레인 9대 일괄",
-    issuer: "한국승강기안전공단 · KCs 개별 제품심사 적합",
-    image: "/images/cert-05.jpg",
+    desc: "한국승강기안전공단 · KCs 개별 제품심사 적합",
+    pageCount: 22,
   },
-  {
-    title: "서면심사도서 — 크레인 구조 심사 11건",
-    issuer: "총조립·옥외동·시험실 외 (대표 도서 1건 게시)",
-    image: "/images/cert-doc-01.jpg",
-  },
+];
+
+export const certCover = (doc: CertDoc) => `/images/certs/${doc.slug}/p01.jpg`;
+export const certPage = (doc: CertDoc, n: number) =>
+  `/images/certs/${doc.slug}/p${String(n).padStart(2, "0")}.jpg`;
+export const getCertDocBySlug = (slug: string) =>
+  CERT_DOCS.find((d) => d.slug === slug);
+
+/* 기술·인증 — 서면심사도서 11권 (표지만 게시; 본문은 수백 페이지 기술도서) */
+export const REVIEW_DOCS: { title: string; pages: number; image: string }[] = [
+  { title: "총조립 30TON (SJ-30-26400)", pages: 88, image: "/images/certs/docs/doc-01.jpg" },
+  { title: "총조립 350/50TON (SJ-350-50-28300)", pages: 327, image: "/images/certs/docs/doc-02.jpg" },
+  { title: "본체조립 30TON (SJ-30-26400)", pages: 89, image: "/images/certs/docs/doc-03.jpg" },
+  { title: "본체조립 250/50TON (SJ-250-50-28300)", pages: 322, image: "/images/certs/docs/doc-04.jpg" },
+  { title: "자재창고 5TON (SJ-5-15800)", pages: 88, image: "/images/certs/docs/doc-05.jpg" },
+  { title: "옥내창고 30TON (SJ-30-24100)", pages: 88, image: "/images/certs/docs/doc-06.jpg" },
+  { title: "시험실 5TON (SJ-5-26800)", pages: 88, image: "/images/certs/docs/doc-07.jpg" },
+  { title: "시험실 20TON (SJ-20-26800)", pages: 88, image: "/images/certs/docs/doc-08.jpg" },
+  { title: "포장장 5TON (SJ-5-14900)", pages: 88, image: "/images/certs/docs/doc-09.jpg" },
+  { title: "옥외동 350TON (SJ-350-21000)", pages: 303, image: "/images/certs/docs/doc-10.jpg" },
+  { title: "콘덴서룸 3TON (SJ-3-17900)", pages: 88, image: "/images/certs/docs/doc-11.jpg" },
 ];
 
 /* 기술·인증 — 구조해석 역량 */

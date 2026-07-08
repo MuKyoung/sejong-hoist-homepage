@@ -1069,6 +1069,65 @@
   color: var(--primary);
 }
 
+/* 서면심사도서 카드 그리드 (표지, 밀도 높은 4열) */
+.docHead {
+  margin: 56px auto 20px;
+  max-width: 640px;
+  text-align: center;
+}
+
+.docHeadTitle {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--navy);
+  margin-bottom: 8px;
+}
+
+.docGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+}
+@media (min-width: 768px) { .docGrid { grid-template-columns: repeat(3, 1fr); } }
+@media (min-width: 1024px) { .docGrid { grid-template-columns: repeat(4, 1fr); gap: 16px; } }
+
+.docCardBody { padding: 14px 16px 16px; }
+
+.docCardTitle {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--navy);
+  line-height: 1.45;
+}
+
+.docCardMeta {
+  margin-top: 4px;
+  font-size: 12px;
+  color: var(--faint);
+}
+
+/* 인증서 문서 뷰어 (/technology/certs/[slug]) */
+.docViewer {
+  max-width: 880px;
+  margin: 0 auto;
+}
+
+.docPage {
+  margin-top: 16px;
+  border: 1px solid var(--line);
+  background: var(--canvas);
+}
+.docPage img { display: block; }
+
+.docPageNum {
+  padding: 10px 0 12px;
+  text-align: center;
+  font-size: 13px;
+  color: var(--muted);
+  font-variant-numeric: tabular-nums;
+  border-top: 1px solid var(--hairline);
+}
+
 /* CEO Greeting (인사말) — LS CEO형: 중앙 좁은 칼럼 + 우측 서명 블록 */
 .greetWrap {
   max-width: 780px;

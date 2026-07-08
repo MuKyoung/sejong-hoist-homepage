@@ -46,8 +46,10 @@ All page content/copy lives here — edit data, not markup, for content changes.
 - `COMPANY`, `PRODUCTS` (+ `ProductSlug`, drives `/business/[slug]`)
 - `BUSINESS_AREAS` (slug/icon/points; drives home circles + `/business` rows via
   `#slug` anchors). `GREETING`/`HISTORY`/`ORG_UNITS` drive `/about`, `/about/history`,
-  `/about/organization`. `CERTIFICATIONS`/`TECH_CAPABILITY`/`SAFETY_STEPS` drive
-  `/technology`. ※ 인사말/연혁/조직도/인증서는 더미 — 실제 자료 수신 시 교체.
+  `/about/organization` (2026-07 클라이언트 확정 실데이터).
+- `CERT_DOCS` (안전인증서 5권, 전 페이지 이미지 `/images/certs/{slug}/pNN.jpg`,
+  뷰어 `/technology/certs/[slug]`) + `REVIEW_DOCS` (서면심사도서 11권 표지) +
+  `TECH_CAPABILITY`/`SAFETY_STEPS` drive `/technology`.
 - Top nav (client categories): 회사소개 / 사업영역 / 시공사례 / 기술·인증 / 견적·문의.
 - `PORTFOLIO: PortfolioItem[]` drives `/portfolio` + `/portfolio/[slug]`.
   Item: `slug, src, gallery[], title, client, category(제품유형 라벨), industry(업종),

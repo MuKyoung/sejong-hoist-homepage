@@ -1,8 +1,9 @@
 import type { Metadata } from "next";
 import Image from "next/image";
+import Link from "next/link";
 import PageHero from "@/components/subpage/PageHero";
 import ContactBand from "@/components/subpage/ContactBand";
-import { CERTIFICATIONS, TECH_CAPABILITY, SAFETY_STEPS } from "@/data/site";
+import { CERT_DOCS, certCover, REVIEW_DOCS, TECH_CAPABILITY, SAFETY_STEPS } from "@/data/site";
 import s from "@/styles/subpage.module.css";
 
 export const metadata: Metadata = {
@@ -31,27 +32,55 @@ export default function TechnologyPage() {
           </div>
 
           <div className={s.certGrid}>
-            {CERTIFICATIONS.map((cert) => (
-              <a
-                key={cert.title}
-                href={cert.image}
-                target="_blank"
-                rel="noreferrer"
-                className={s.certCard}
-              >
+            {CERT_DOCS.map((doc) => (
+              <Link key={doc.slug} href={`/technology/certs/${doc.slug}`} className={s.certCard}>
                 <div className={s.certThumb}>
                   <Image
-                    src={cert.image}
-                    alt={cert.title}
+                    src={certCover(doc)}
+                    alt={doc.title}
                     fill
                     className={s.certImg}
                     sizes="(max-width: 639px) 100vw, (max-width: 1023px) 50vw, 380px"
                   />
                 </div>
                 <div className={s.certBody}>
-                  <h3 className={s.certTitle}>{cert.title}</h3>
-                  <p className={s.certIssuer}>{cert.issuer}</p>
-                  <span className={s.certZoom}>원본 크게 보기 →</span>
+                  <h3 className={s.certTitle}>{doc.title}</h3>
+                  <p className={s.certIssuer}>{doc.desc}</p>
+                  <span className={s.certZoom}>전체 {doc.pageCount}페이지 보기 →</span>
+                </div>
+              </Link>
+            ))}
+          </div>
+
+          <div className={s.docHead}>
+            <h3 className={s.docHeadTitle}>서면심사도서 — 크레인 구조 심사 11권</h3>
+            <p className={s.body}>
+              구조 계산·도면으로 구성된 심사 도서입니다. 표지를 게시하며, 본문은
+              요청 시 열람하실 수 있습니다.
+            </p>
+          </div>
+
+          <div className={s.docGrid}>
+            {REVIEW_DOCS.map((doc) => (
+              <a
+                key={doc.title}
+                href={doc.image}
+                target="_blank"
+                rel="noreferrer"
+                className={s.certCard}
+              >
+                <div className={s.certThumb}>
+                  <Image
+                    src={doc.image}
+                    alt={doc.title}
+                    fill
+                    className={s.certImg}
+                    sizes="(max-width: 639px) 50vw, (max-width: 1023px) 33vw, 280px"
+                  />
+                </div>
+                <div className={s.docCardBody}>
+                  <h4 className={s.docCardTitle}>{doc.title}</h4>
+                  <p className={s.docCardMeta}>표지 게시 · 총 {doc.pages}p</p>
                 </div>
               </a>
             ))}
