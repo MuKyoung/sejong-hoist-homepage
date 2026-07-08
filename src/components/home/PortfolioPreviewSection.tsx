@@ -36,12 +36,6 @@ export default function PortfolioPreviewSection() {
             </Link>
           ))}
         </div>
-
-        <div className={s.moreWrap}>
-          <Link href="/portfolio" className={s.moreBtn}>
-            전체 시공사례 보기
-          </Link>
-        </div>
       </div>
     </section>
   );

@@ -99,23 +99,3 @@
   color: var(--muted);
 }
 
-.moreWrap {
-  margin-top: 36px;
-  text-align: center;
-}
-
-.moreBtn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  height: 48px;
-  padding: 0 32px;
-  font-size: 15px;
-  font-weight: 600;
-  color: var(--primary);
-  background: var(--canvas);
-  border: 2px solid var(--primary);
-  border-radius: var(--r-full);
-  transition: background var(--motion-standard) var(--ease-std);
-}
-.moreBtn:hover { background: var(--tint); }

@@ -141,12 +141,13 @@ not on /demo or /admin): `--primary` pill, 52px (48px mobile), chat icon + label
 ### Hero (compact split v2 — photos are NEVER a wide background)
 **Client directive (2026-07): photos must not spread as a background** — the
 source photos read as low-quality at large sizes. Max photo display width
-site-wide ≈ 640px. The hero is a split layout on a `--surface` band
-(`margin-top: var(--header-h)`, hairline bottom, padding 56→88px):
-- Left: eyebrow (13px `--primary` caps, letter-spaced) + headline
-  700/clamp(28→44px) `--navy` (switches per slide) + sub `--body` + pill CTAs
-  (primary navy fill / ghost 2px `--primary` outline).
-- Right: **4:3 image card** (~600px max, hairline border, sharp) with crossfade
+site-wide ≈ 640px. The hero is a COMPACT split layout on a `--surface` band
+(`margin-top: var(--header-h)`, hairline bottom, padding 40→64px, grid
+`1fr 0.95fr` gap 48):
+- Left: eyebrow (12px `--primary` caps, letter-spaced) + headline
+  700/clamp(26→38px) `--navy` (switches per slide) + sub `--body` + 46px pill
+  CTAs (primary navy fill / ghost 2px `--primary` outline).
+- Right: **4:3 image card** (~560px max, hairline border, sharp) with crossfade
   slideshow over a `--brand-deep` offset plate (+14px right, plate stops above
   the control row). Below the card one row: per-slide project caption 13px
   `--muted` (ellipsis) + dots (`--tint-strong`, active 26px `--primary`, 24px
