@@ -45,7 +45,8 @@ export default function TechnologyPage() {
             <p className={s.eyebrow}>Certification</p>
             <h2 className={s.headline}>보유 인증</h2>
             <p className={s.body}>
-              크레인 안전인증서와 서면심사도서 원본을 보유하고 있습니다.
+              LS ELECTRIC 부산공장 크레인 13대 전수 안전인증 합격
+              (적합률 100%, 부적합 0건) — 안전인증서·서면심사도서 원본을 보유하고 있습니다.
             </p>
           </div>
 

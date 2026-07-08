@@ -1,4 +1,6 @@
 import type { Metadata } from "next";
+import { existsSync } from "fs";
+import { join } from "path";
 import Image from "next/image";
 import Link from "next/link";
 import PageHero from "@/components/subpage/PageHero";
@@ -6,6 +8,9 @@ import SubNav from "@/components/subpage/SubNav";
 import ContactBand from "@/components/subpage/ContactBand";
 import { COMPANY, GREETING } from "@/data/site";
 import s from "@/styles/subpage.module.css";
+
+// 대표 서명 이미지가 준비되면(public/images/ceo-sign.png) 자동 표시
+const hasSign = existsSync(join(process.cwd(), "public", "images", "ceo-sign.png"));
 
 export const metadata: Metadata = {
   title: "회사소개 | (주)세종호이스트크레인",
@@ -62,9 +67,20 @@ export default function AboutPage() {
                   {p}
                 </p>
               ))}
-              <p className={s.body} style={{ fontWeight: 700, color: "var(--navy)" }}>
-                {GREETING.sign}
-              </p>
+              <div style={{ display: "flex", alignItems: "center", gap: 14, flexWrap: "wrap" }}>
+                <p className={s.body} style={{ fontWeight: 700, color: "var(--navy)" }}>
+                  {GREETING.sign}
+                </p>
+                {hasSign && (
+                  <Image
+                    src="/images/ceo-sign.png"
+                    alt="대표이사 김승용 서명"
+                    width={140}
+                    height={56}
+                    style={{ height: 44, width: "auto" }}
+                  />
+                )}
+              </div>
 
               <div className={s.infoGrid}>
                 <div className={s.infoItem}>

@@ -51,3 +51,4 @@ next-env.d.ts
 
 # 클라이언트 원본 자료 (290MB — 최적화본만 public/images에 커밋)
 /홈페이지용 사진/
+/*.pptx

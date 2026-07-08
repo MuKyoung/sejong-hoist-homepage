@@ -143,41 +143,41 @@ export const BUSINESS_AREAS: {
   },
 ];
 
-/* 회사소개 — 인사말 (※ 더미 초안: 대표 확인 후 실제 문구로 교체) */
+/* 회사소개 — 인사말 (2026-07 클라이언트 확정: PPTX Version 1 임팩트 톤 +
+   "안 1) 리스크 통제(안전+납기)" 수정 문구 반영) */
 export const GREETING = {
-  headline: ["현장의 안전과 신뢰를", "가장 무겁게 들어 올립니다"],
+  headline: ["350톤의 무게,", "우리는 실패를 허용하지 않습니다."],
   paragraphs: [
     "안녕하십니까. (주)세종호이스트크레인 대표이사 김승용입니다.",
-    "저희는 운반하역 기계 한 길을 걸어오며 와이어로프·체인·방폭 호이스트와 천장·갠트리 크레인을 설계부터 제작·설치·유지보수까지 원스톱으로 공급해 왔습니다. 최대 350TON급 그라브 갠트리크레인 시공 실적은 축적된 기술력과 현장 경험의 결과라고 자부합니다.",
-    "무거운 하중을 다루는 일은 곧 사람의 안전을 다루는 일입니다. 세종호이스트크레인은 한 번의 납품이 아니라 설비의 전 생애주기를 함께하는 파트너로서, 고객의 생산 현장이 멈추지 않도록 끝까지 책임지겠습니다.",
+    "초대형 크레인에 실패란 없습니다. 단 한 번의 오차도, 단 한 번의 타협도 용납되지 않는 영역, 그것이 바로 저희가 서 있는 현장입니다. 350톤급 초대형 크레인은 설비가 아니라 '리스크 관리 시스템'입니다. 저희는 안전 계수 미달, 납기 지연이라는 두 가지 리스크를 설계 단계부터 수치로 통제합니다.",
+    "저희 (주)세종호이스트크레인은 25년간 이 현장을 지켜왔습니다. 그리고 2026년, 법인 체제의 책임 경영 시스템을 갖추고 대형 프로젝트를 정면으로 수행할 준비를 마쳤습니다. LS ELECTRIC 부산공장 13대 전수 안전인증 합격(적합률 100%), 부적합 0건이 그 증거입니다.",
+    "LS ELECTRIC, 두산중공업, 현대위아 — 대한민국을 대표하는 기업들이 350톤급 초대형 프로젝트의 파트너로 당사를 선택했습니다. 세종호이스트크레인은 귀사의 비즈니스를 정상까지 들어 올릴 단 하나의 기술 파트너가 되겠습니다.",
   ],
-  sign: "(주)세종호이스트크레인 대표이사 김승용",
+  sign: "(주)세종호이스트크레인 대표이사 김 승 용 올림",
 };
 
-/* 회사소개 — 연혁 (※ 더미: 실제 연혁 자료 수신 시 교체) */
+/* 회사소개 — 연혁 (2026-07 클라이언트 PPTX 확정 자료) */
 export const HISTORY: { year: string; items: string[] }[] = [
-  { year: "2025", items: ["반도체 클린룸 크레인 5TON 납품", "온라인 견적 시스템 운영 개시"] },
   {
-    year: "2024",
+    year: "2025",
     items: [
-      "그라브 갠트리크레인 350TON 제작·설치 (최대 실적)",
-      "엘에스일렉트릭㈜ Double Girder 5T/10T 크레인 납품",
-      "방폭 호이스트 Single Girder 3TON 라인업 추가",
+      "LS ELECTRIC 부산사업장 350TON 겐트리 크랩 크레인 등 대형 크레인 11대 시공",
+      "대표자 현장 엔지니어로 직접 참여 (2025.06~)",
+      "신축공장 이전 (2025.08 예정)",
     ],
   },
-  { year: "2023", items: ["갠트리크레인 80TON 설치", "물류센터 30TON 더블거더 공급"] },
-  { year: "2019", items: ["방폭 호이스트 제품군 확대 (Zone 1·2 대응)"] },
-  { year: "2008", items: ["법인 전환 — (주)세종호이스트크레인"] },
-  { year: "1985", items: ["세종호이스트 창업, 운반하역기계 사업 개시"] },
+  { year: "2024", items: ["상호 변경 — (주)세종호이스트크레인 (2024.12)"] },
+  { year: "2019", items: ["(주)SJ테크널 사업분야 분리·확장 (2019.05)"] },
+  { year: "2015", items: ["상호 변경 — 세종호이스트, 대표자 변경 (2015.08)"] },
+  { year: "2006", items: ["공장 준공 — 금산군 추부면 (2006.06)"] },
+  { year: "1999", items: ["회사 설립 — 정원기계 (1999.08)"] },
 ];
 
-/* 회사소개 — 조직도 (※ 더미: 실제 조직 구성 수신 시 교체) */
+/* 회사소개 — 조직도 (2026-07 클라이언트 PPTX 확정: 대표이사–총괄이사·전무–3부) */
 export const ORG_UNITS: { name: string; en: string; desc: string }[] = [
-  { name: "경영지원", en: "Management", desc: "경영기획·재무·구매" },
-  { name: "설계·기술", en: "Engineering", desc: "구조 설계·해석, 도면" },
-  { name: "생산·제작", en: "Production", desc: "가공·용접·조립·검사" },
-  { name: "시공·설치", en: "Installation", desc: "현장 설치·시운전" },
-  { name: "A/S·안전", en: "Service & Safety", desc: "정기점검·긴급 출동·안전관리" },
+  { name: "관리부", en: "Administration", desc: "경영지원 · 인사총무" },
+  { name: "영업부", en: "Sales", desc: "국내영업 · 해외영업 · 영업관리" },
+  { name: "생산부", en: "Production", desc: "설계부 · 제조부 · 자재부 (생산·설치·시운전)" },
 ];
 
 /* 기술·인증 — 보유 인증 (2026-07 수신 안전인증서·서면심사도서 PDF 기반.
@@ -213,10 +213,8 @@ export const SAFETY_STEPS: { num: string; title: string; desc: string }[] = [
 /* 시공사례 필터 축 — 업종(industry) · 용량(capacityBucket) */
 export const PORTFOLIO_INDUSTRIES = [
   "전체",
-  "철강·중공업",
+  "전기·전자",
   "자동차",
-  "반도체·전자",
-  "화학·플랜트",
   "물류",
 ] as const;
 
@@ -244,16 +242,17 @@ export type PortfolioItem = {
 };
 
 export const PORTFOLIO: PortfolioItem[] = [
-  /* ※ 실제 현장 사진 기반 (2026-07 수신). 고객사명·업종·연도·기간은 추정치 —
-     클라이언트 확정값 수신 시 교체 */
+  /* ※ 실제 현장 사진 기반 (2026-07 수신). 부산 6건은 클라이언트 PPTX 실적표로
+     고객사(LS ELECTRIC 부산사업장)·연도(2025) 확정. 모노레일·윈치 건의
+     고객사·기간은 추정 — 확정값 수신 시 교체 */
   {
     slug: "gantry-350",
     src: "/images/pf-gantry350.jpg",
     gallery: ["/images/pf-gantry350.jpg", "/images/pf-gantry350-2.jpg", "/images/pf-gantry350-3.jpg"],
     title: "겐트리 크레인 350TON",
-    client: "부산 생산공장",
+    client: "LS ELECTRIC 부산사업장",
     category: "겐트리",
-    industry: "철강·중공업",
+    industry: "전기·전자",
     capacity: "350T",
     capacityBucket: "50T+",
     year: "2025",
@@ -274,9 +273,9 @@ export const PORTFOLIO: PortfolioItem[] = [
     src: "/images/pf-grab350.jpg",
     gallery: ["/images/pf-grab350.jpg", "/images/area-gantry.jpg", "/images/pf-grab350-2.jpg"],
     title: "그라브 크레인 350/50TON",
-    client: "부산 생산공장",
+    client: "LS ELECTRIC 부산사업장",
     category: "그라브",
-    industry: "철강·중공업",
+    industry: "전기·전자",
     capacity: "350T / 50T",
     capacityBucket: "50T+",
     year: "2025",
@@ -297,9 +296,9 @@ export const PORTFOLIO: PortfolioItem[] = [
     src: "/images/pf-grab250.jpg",
     gallery: ["/images/pf-grab250.jpg", "/images/area-steel.jpg", "/images/pf-grab250-2.jpg"],
     title: "그라브 크레인 250/50TON",
-    client: "부산 생산공장",
+    client: "LS ELECTRIC 부산사업장",
     category: "그라브",
-    industry: "철강·중공업",
+    industry: "전기·전자",
     capacity: "250T / 50T",
     capacityBucket: "50T+",
     year: "2025",
@@ -320,12 +319,12 @@ export const PORTFOLIO: PortfolioItem[] = [
     src: "/images/pf-ceiling30.jpg",
     gallery: ["/images/pf-ceiling30.jpg", "/images/pf-ceiling30-2.jpg", "/images/pf-ceiling30-3.jpg"],
     title: "천장크레인 30TON",
-    client: "부산 생산공장",
+    client: "LS ELECTRIC 부산사업장",
     category: "천장크레인",
-    industry: "철강·중공업",
+    industry: "전기·전자",
     capacity: "30T",
     capacityBucket: "20~50T",
-    year: "2024",
+    year: "2025",
     location: "부산 총조립반·옥내창고",
     period: "기간 확인 중",
     scope: ["제작", "거더 양중·설치", "시운전"],
@@ -343,12 +342,12 @@ export const PORTFOLIO: PortfolioItem[] = [
     src: "/images/pf-test20.jpg",
     gallery: ["/images/pf-test20.jpg", "/images/pf-test20-2.jpg", "/images/pf-test20-3.jpg"],
     title: "시험실 천장크레인 20TON",
-    client: "부산 생산공장",
+    client: "LS ELECTRIC 부산사업장",
     category: "천장크레인",
-    industry: "철강·중공업",
+    industry: "전기·전자",
     capacity: "20T",
     capacityBucket: "5~20T",
-    year: "2024",
+    year: "2025",
     location: "부산 시험실",
     period: "기간 확인 중",
     scope: ["주행레일 설치", "거더 출하·설치", "시운전"],
@@ -366,12 +365,12 @@ export const PORTFOLIO: PortfolioItem[] = [
     src: "/images/pf-cond3.jpg",
     gallery: ["/images/pf-cond3.jpg"],
     title: "콘덴스룸 크레인 3TON",
-    client: "부산 생산공장",
+    client: "LS ELECTRIC 부산사업장",
     category: "천장크레인",
-    industry: "화학·플랜트",
+    industry: "전기·전자",
     capacity: "3T",
     capacityBucket: "~5T",
-    year: "2024",
+    year: "2025",
     location: "부산 콘덴스룸",
     period: "기간 확인 중",
     scope: ["제작", "현장 설치", "안전인증"],

@@ -4,9 +4,9 @@ import { useEffect, useRef, useState } from "react";
 import s from "./StatsHighlightSection.module.css";
 
 const STATS = [
-  { label: "업력", value: 40, suffix: "년+", desc: "운반하역 외길, 축적된 시공 노하우" },
+  { label: "업력", value: 25, suffix: "년+", desc: "1999년 설립, 운반하역 외길" },
   { label: "누적 시공", value: 520, suffix: "건+", desc: "전국 현장의 납품·설치 실적" },
-  { label: "최대 하중", value: 350, suffix: "TON", desc: "그라브 갠트리크레인 시공 실적" },
+  { label: "최대 하중", value: 350, suffix: "TON", desc: "겐트리 크랩 크레인 시공 실적" },
 ];
 
 function CountUp({ target, run }: { target: number; run: boolean }) {

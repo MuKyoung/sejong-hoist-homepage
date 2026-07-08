@@ -34,6 +34,8 @@ export default function OrganizationPage() {
             <p className={s.orgTopSub}>{COMPANY.ceo}</p>
           </div>
           <div className={s.orgStem} aria-hidden />
+          <div className={s.orgMid}>총괄이사 · 전무</div>
+          <div className={s.orgStem} aria-hidden />
           <div className={s.orgGrid}>
             {ORG_UNITS.map((unit) => (
               <div key={unit.name} className={s.orgCard}>
