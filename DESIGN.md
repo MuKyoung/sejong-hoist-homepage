@@ -138,10 +138,12 @@ not on /demo or /admin): `--primary` pill, 52px (48px mobile), chat icon + label
   `--primary`, `--r-full`, height 48. Hover: bg `--tint`. (From LS language pills.)
 - Text link: `--primary` → `--primary-deep`; inline body links `--link` underlined.
 
-### Hero (wide KV band — redesigned 2026-07 on the high-res photo set)
-Full-width image band under the header (`margin-top: var(--header-h)`), height
-`clamp(500px, 64vh, 700px)` (mobile `clamp(460px, 72vh, 560px)`) — bounded, not
-full-screen. Crossfade slideshow of real site photos (`hero-*.jpg`, 1920px).
+### Hero (boxed KV — redesigned 2026-07 on the high-res photo set)
+**Container-bounded** image box (never full-bleed left-right): the KV sits
+inside `.container` with a 20px top gap under the header, height
+`clamp(460px, 58vh, 640px)` (mobile `clamp(420px, 64vh, 520px)`). Inner side
+padding `clamp(24px, 5vw, 64px)`. Crossfade slideshow of real site photos
+(`hero-*.jpg`, 1920px).
 Scrim: navy left-to-right gradient (`rgba(13,21,33,.62) → .12`) + bottom fade
 for the caption bar. Content LEFT-aligned in the container (max 620px): eyebrow
 (13px white/72 caps, letter-spaced) + headline 700/clamp(30→48px) white with the
