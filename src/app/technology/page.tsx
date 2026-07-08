@@ -10,25 +10,6 @@ export const metadata: Metadata = {
   description: "보유 인증, 구조해석 역량, 안전관리 체계 — 세종호이스트크레인의 기술 기반입니다.",
 };
 
-function CertIcon() {
-  return (
-    <svg
-      width="24"
-      height="24"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="1.5"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      aria-hidden
-    >
-      <circle cx="12" cy="9" r="5" />
-      <path d="M9 13.5 7.5 21l4.5-2.5L16.5 21 15 13.5" />
-    </svg>
-  );
-}
-
 export default function TechnologyPage() {
   return (
     <>
@@ -45,20 +26,34 @@ export default function TechnologyPage() {
             <h2 className={s.headline}>보유 인증</h2>
             <p className={s.body}>
               LS ELECTRIC 부산공장 크레인 13대 전수 안전인증 합격
-              (적합률 100%, 부적합 0건) — 안전인증서·서면심사도서 원본을 보유하고 있습니다.
+              (적합률 100%, 부적합 0건) — 카드를 클릭하면 인증서 원본을 확인할 수 있습니다.
             </p>
           </div>
 
-          <div className={s.supportGrid}>
+          <div className={s.certGrid}>
             {CERTIFICATIONS.map((cert) => (
-              <article key={cert.title} className={s.supportCard}>
-                <div className={s.supportIcon}>
-                  <CertIcon />
+              <a
+                key={cert.title}
+                href={cert.image}
+                target="_blank"
+                rel="noreferrer"
+                className={s.certCard}
+              >
+                <div className={s.certThumb}>
+                  <Image
+                    src={cert.image}
+                    alt={cert.title}
+                    fill
+                    className={s.certImg}
+                    sizes="(max-width: 639px) 100vw, (max-width: 1023px) 50vw, 380px"
+                  />
                 </div>
-                <h3 className={s.supportTitle}>{cert.title}</h3>
-                <p className={s.supportDesc}>{cert.issuer}</p>
-                <span className={s.portfolioCat}>인증서 원본 보유</span>
-              </article>
+                <div className={s.certBody}>
+                  <h3 className={s.certTitle}>{cert.title}</h3>
+                  <p className={s.certIssuer}>{cert.issuer}</p>
+                  <span className={s.certZoom}>원본 크게 보기 →</span>
+                </div>
+              </a>
             ))}
           </div>
         </div>

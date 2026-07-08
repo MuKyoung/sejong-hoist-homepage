@@ -1008,6 +1008,67 @@
   border-radius: var(--r-full);
 }
 
+/* Certifications (기술·인증) — 인증서 원본 썸네일 카드 */
+.certGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+}
+@media (min-width: 640px) { .certGrid { grid-template-columns: repeat(2, 1fr); } }
+@media (min-width: 1024px) { .certGrid { grid-template-columns: repeat(3, 1fr); } }
+
+.certCard {
+  display: block;
+  background: var(--canvas);
+  border: 1px solid var(--hairline);
+  overflow: hidden;
+  transition: border-color var(--motion-standard) var(--ease-std), box-shadow var(--motion-standard) var(--ease-std);
+}
+.certCard:hover {
+  border-color: var(--tint-strong);
+  box-shadow: var(--shadow-md);
+}
+
+/* A4 세로 비율 문서 미리보기 (상단부 크롭) */
+.certThumb {
+  position: relative;
+  aspect-ratio: 4 / 3;
+  background: var(--surface-2);
+  border-bottom: 1px solid var(--hairline);
+  overflow: hidden;
+}
+
+.certImg {
+  object-fit: cover;
+  object-position: top;
+}
+
+.certBody { padding: 18px 20px 20px; }
+
+.certTitle {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--navy);
+  transition: color var(--motion-fast);
+}
+.certCard:hover .certTitle { color: var(--primary); }
+
+.certIssuer {
+  margin-top: 6px;
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--muted);
+  word-break: keep-all;
+}
+
+.certZoom {
+  display: inline-block;
+  margin-top: 12px;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--primary);
+}
+
 /* CEO Greeting (인사말) — LS CEO형: 중앙 좁은 칼럼 + 우측 서명 블록 */
 .greetWrap {
   max-width: 780px;

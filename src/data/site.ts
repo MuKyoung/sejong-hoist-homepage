@@ -181,15 +181,39 @@ export const ORG_UNITS: { name: string; en: string; desc: string }[] = [
   { name: "생산부", en: "Production", desc: "설계부 · 제조부 · 자재부 (생산·설치·시운전)" },
 ];
 
-/* 기술·인증 — 보유 인증 (2026-07 수신 안전인증서·서면심사도서 PDF 기반.
-   발급기관 공식 표기는 확인 중 — 확정 시 issuer 문구 갱신) */
-export const CERTIFICATIONS: { title: string; issuer: string }[] = [
-  { title: "안전인증서 — 350TON 겐트리 크레인", issuer: "350/50T·250/50T 그라브 포함" },
-  { title: "안전인증서 — 콘덴스룸 3TON 크레인", issuer: "크레인 안전인증" },
-  { title: "안전인증서 — 크레인 12대", issuer: "일괄 안전인증" },
-  { title: "안전인증서 — 크레인 10대", issuer: "일괄 안전인증" },
-  { title: "안전인증서 — 크레인 9대", issuer: "일괄 안전인증" },
-  { title: "서면심사도서 11건", issuer: "크레인 구조 서면심사 (총조립·옥외동·시험실 외)" },
+/* 기술·인증 — 보유 인증 (2026-07 수신 PDF 1페이지를 이미지로 변환해 노출.
+   발급기관: 한국승강기안전공단 KCs 심사결과 통지서(적합) — cert-01에서 확인) */
+export const CERTIFICATIONS: { title: string; issuer: string; image: string }[] = [
+  {
+    title: "안전인증 — 갠트리크레인 350TON 외",
+    issuer: "한국승강기안전공단 · KCs 개별 제품심사 적합 (350/50T·250/50T 그라브 포함)",
+    image: "/images/cert-01.jpg",
+  },
+  {
+    title: "안전인증 — 콘덴스룸 크레인 3TON",
+    issuer: "한국승강기안전공단 · KCs 개별 제품심사 적합",
+    image: "/images/cert-02.jpg",
+  },
+  {
+    title: "안전인증 — 크레인 12대 일괄",
+    issuer: "한국승강기안전공단 · KCs 개별 제품심사 적합",
+    image: "/images/cert-03.jpg",
+  },
+  {
+    title: "안전인증 — 크레인 10대 일괄",
+    issuer: "한국승강기안전공단 · KCs 개별 제품심사 적합",
+    image: "/images/cert-04.jpg",
+  },
+  {
+    title: "안전인증 — 크레인 9대 일괄",
+    issuer: "한국승강기안전공단 · KCs 개별 제품심사 적합",
+    image: "/images/cert-05.jpg",
+  },
+  {
+    title: "서면심사도서 — 크레인 구조 심사 11건",
+    issuer: "총조립·옥외동·시험실 외 (대표 도서 1건 게시)",
+    image: "/images/cert-doc-01.jpg",
+  },
 ];
 
 /* 기술·인증 — 구조해석 역량 */
