@@ -100,15 +100,6 @@ export default function BusinessPage() {
                   </Link>
                 ))}
               </div>
-
-              <div style={{ marginTop: 40, display: "flex", gap: 12, flexWrap: "wrap" }}>
-                <Link href="/support/inquiry" className={s.primaryBtn}>
-                  견적 문의하기
-                </Link>
-                <Link href="/portfolio" className={s.ghostBtn}>
-                  시공사례 보기
-                </Link>
-              </div>
             </div>
           </div>
         </div>

@@ -241,6 +241,9 @@ No parallax. Numbers may count up once on first view (Sejong stats band).
 - **No wide/background photo rendering anywhere** — client directive: photos
   display at ≤ ~640px width (hero card, mosaic photo card, thumbs). Never
   full-bleed, never container-wide KV.
+- No inline 견적 CTA at the end of page bodies — the floating FAB + ContactBand
+  already close every page (3 CTAs on one screen reads pushy). Contextual CTAs
+  deep in content (e.g. detail-page spec column) are fine.
 - Forms: inputs never below 16px font (iOS focus-zoom). Fixed/floating elements
   must offset by `env(safe-area-inset-*)`.
 

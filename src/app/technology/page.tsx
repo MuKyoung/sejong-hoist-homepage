@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import Image from "next/image";
-import Link from "next/link";
 import PageHero from "@/components/subpage/PageHero";
 import ContactBand from "@/components/subpage/ContactBand";
 import { CERTIFICATIONS, TECH_CAPABILITY, SAFETY_STEPS } from "@/data/site";
@@ -113,11 +112,6 @@ export default function TechnologyPage() {
             ))}
           </div>
 
-          <div style={{ marginTop: 40, textAlign: "center" }}>
-            <Link href="/support/inquiry" className={s.primaryBtn}>
-              기술 상담 문의
-            </Link>
-          </div>
         </div>
       </section>
 
