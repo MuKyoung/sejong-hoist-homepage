@@ -1015,6 +1015,29 @@
   border-radius: var(--r-full);
 }
 
+/* Legal pages (개인정보처리방침 · 이용약관) */
+.legalWrap {
+  max-width: 760px;
+  margin: 0 auto;
+}
+
+.legalBlock { margin-bottom: 32px; }
+
+.legalTitle {
+  font-size: 1.0625rem;
+  font-weight: 700;
+  color: var(--navy);
+  margin-bottom: 10px;
+}
+
+.legalDate {
+  margin-top: 40px;
+  padding-top: 20px;
+  border-top: 1px solid var(--hairline);
+  font-size: 13px;
+  color: var(--muted);
+}
+
 /* Certifications (기술·인증) — 인증서 원본 썸네일 카드 */
 .certGrid {
   display: grid;

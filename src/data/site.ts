@@ -314,7 +314,7 @@ export const PORTFOLIO: PortfolioItem[] = [
     capacityBucket: "50T+",
     year: "2025",
     location: "부산 옥외동",
-    period: "기간 확인 중",
+    period: "",
     scope: ["구조 설계·해석", "제작", "현장 설치", "하중 시험·안전인증"],
     description:
       "국내 최대급 350TON 겐트리 크레인을 설계·제작·설치했습니다. TROLLEY 인양, 와이어 로프 위빙, 웨이트(하중) 시험까지 전 과정을 자체 수행했으며 안전인증을 취득했습니다.",
@@ -337,7 +337,7 @@ export const PORTFOLIO: PortfolioItem[] = [
     capacityBucket: "50T+",
     year: "2025",
     location: "부산 총조립반",
-    period: "기간 확인 중",
+    period: "",
     scope: ["구조 설계·해석", "제작", "현장 설치", "안전인증"],
     description:
       "주권 350TON / 보권 50TON 그라브 크레인입니다. 총조립반 라인에 설치되어 대형 중량물 취급을 담당하며, 안전인증을 취득했습니다.",
@@ -360,7 +360,7 @@ export const PORTFOLIO: PortfolioItem[] = [
     capacityBucket: "50T+",
     year: "2025",
     location: "부산 본체조립반",
-    period: "기간 확인 중",
+    period: "",
     scope: ["제작", "거더·TROLLEY 출하", "현장 설치", "안전인증"],
     description:
       "주권 250TON / 보권 50TON 그라브 크레인입니다. 거더와 TROLLEY를 자체 제작·출하하여 본체조립반에 설치했으며, 안전인증을 취득했습니다.",
@@ -383,7 +383,7 @@ export const PORTFOLIO: PortfolioItem[] = [
     capacityBucket: "20~50T",
     year: "2025",
     location: "부산 총조립반·옥내창고",
-    period: "기간 확인 중",
+    period: "",
     scope: ["제작", "거더 양중·설치", "시운전"],
     description:
       "총조립반과 옥내창고에 30TON 천장크레인을 설치했습니다. 거더·새들 제작부터 양중·설치·시운전까지 원스톱으로 수행했습니다.",
@@ -406,7 +406,7 @@ export const PORTFOLIO: PortfolioItem[] = [
     capacityBucket: "5~20T",
     year: "2025",
     location: "부산 시험실",
-    period: "기간 확인 중",
+    period: "",
     scope: ["주행레일 설치", "거더 출하·설치", "시운전"],
     description:
       "시험실 동에 20TON 천장크레인을 설치했습니다. 주행레일 시공부터 거더 출하·설치까지 일괄 수행했습니다.",
@@ -429,7 +429,7 @@ export const PORTFOLIO: PortfolioItem[] = [
     capacityBucket: "~5T",
     year: "2025",
     location: "부산 콘덴스룸",
-    period: "기간 확인 중",
+    period: "",
     scope: ["제작", "현장 설치", "안전인증"],
     description:
       "콘덴스룸(콘덴서룸) 환경에 3TON 크레인을 설치했습니다. 설비 특성을 고려한 맞춤 사양으로 제작했으며, 안전인증을 취득했습니다.",
@@ -475,7 +475,7 @@ export const PORTFOLIO: PortfolioItem[] = [
     capacityBucket: "~5T",
     year: "2024",
     location: "생산 현장",
-    period: "기간 확인 중",
+    period: "",
     scope: ["기존 설비 이설", "재설치·시운전"],
     description:
       "기존 0.5TON 윈치를 신규 위치로 이동 설치했습니다. 소형 설비의 이설·재설치도 신속하게 대응합니다.",
@@ -495,16 +495,16 @@ export function getPortfolioBySlug(slug: string): PortfolioItem | undefined {
 export const NOTICES = [
   {
     id: 4,
-    date: "2024.11.15",
+    date: "2025.10.02",
     category: "납품실적",
-    title: "그라브 갠트리크레인 350TON 제작·설치 납품 완료",
+    title: "겐트리 크랩 크레인 350TON 제작·설치 및 안전인증 취득",
     important: true,
   },
   {
     id: 3,
-    date: "2024.09.03",
+    date: "2025.06.20",
     category: "납품실적",
-    title: "엘에스일렉트릭㈜ Double Girder 5TON/10TON 크레인 납품",
+    title: "LS ELECTRIC 부산사업장 Double Girder 30TON 크레인 5대 납품",
     important: false,
   },
   {

@@ -93,10 +93,14 @@ export default async function PortfolioDetailPage({ params }: Props) {
                 ))}
               </div>
 
-              <p className={s.specLabel} style={{ marginTop: 32, marginBottom: 12 }}>
-                공사기간
-              </p>
-              <p className={s.body}>{item.period}</p>
+              {item.period && (
+                <>
+                  <p className={s.specLabel} style={{ marginTop: 32, marginBottom: 12 }}>
+                    공사기간
+                  </p>
+                  <p className={s.body}>{item.period}</p>
+                </>
+              )}
 
               <p className={s.specLabel} style={{ marginTop: 24, marginBottom: 12 }}>
                 작업범위

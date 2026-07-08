@@ -11,13 +11,18 @@ const notoSansKr = Noto_Sans_KR({
 });
 
 export const metadata: Metadata = {
-  title: "(주)세종호이스트크레인 | Wire Hoist · Chain Hoist · Crane 전문 제조",
-  description: "Wire Hoist, Chain Hoist, Explosion-Proof Hoist, Crane 전문 제조기업. 최대 350TON. 세종특별자치시 부강면. 044-865-0801",
-  keywords: "세종호이스트크레인, Wire Hoist, Chain Hoist, 방폭호이스트, 천장크레인, 갠트리크레인, 크레인제조, 호이스트",
+  metadataBase: new URL("https://sejong-hoist-homepage.vercel.app"),
+  title: "(주)세종호이스트크레인 | 350TON급 크레인·호이스트 설계·제작·설치",
+  description:
+    "1999년 설립, 운반하역 설비 전문기업. 350TON 겐트리 크랩 크레인 시공, KCs 안전인증 취득. 설계·제작·설치·유지보수 원스톱. 044-865-0801",
+  keywords:
+    "세종호이스트크레인, 천장크레인, 갠트리크레인, 그라브크레인, 호이스트, 방폭호이스트, 크레인 제작, 크레인 설치, 크레인 유지보수",
   openGraph: {
-    title: "(주)세종호이스트크레인 | Hoist & Crane 전문 제조",
-    description: "Wire·Chain·방폭 호이스트, 크레인 전문 제조기업. 044-865-0801 / sj@sjhoist.com",
+    title: "(주)세종호이스트크레인 | 350TON급 크레인·호이스트 전문",
+    description:
+      "350TON 겐트리 크랩 크레인 시공 실적, KCs 안전인증. 설계부터 유지보수까지 원스톱. 044-865-0801",
     type: "website",
+    images: [{ url: "/images/hero-02.jpg", width: 1920, height: 897 }],
   },
 };
 

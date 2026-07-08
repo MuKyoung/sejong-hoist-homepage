@@ -8,7 +8,7 @@ const FEATURED = PORTFOLIO.slice(0, 4);
 type Locale = "ko" | "en";
 
 const T: Record<Locale, { title: string; subtitle: string }> = {
-  ko: { title: "핵심 시공사례", subtitle: "위의 숫자를 만든 현장을 사진으로 확인하세요." },
+  ko: { title: "핵심 시공사례", subtitle: "숫자로 증명된 현장을 사진으로 확인하세요." },
   en: { title: "Featured Projects", subtitle: "See the sites behind the numbers above." },
 };
 

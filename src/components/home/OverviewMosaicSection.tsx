@@ -30,8 +30,8 @@ const T: Record<Locale, {
 };
 
 const NOTICE_EN: Record<number, string> = {
-  4: "350TON grab gantry crane fabricated, installed and delivered",
-  3: "Double girder 5/10TON cranes delivered to LS ELECTRIC",
+  4: "350TON gantry crab crane installed and safety-certified",
+  3: "Five double girder 30TON cranes delivered to LS ELECTRIC Busan",
   2: "Explosion-proof single girder 3TON hoist added to lineup",
   1: "Online quotation service in operation",
 };

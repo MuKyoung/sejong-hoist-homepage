@@ -20,6 +20,7 @@ export default function InquiryPage() {
     company: "",
     phone: "",
     email: "",
+    productCat: "",
     category: "",
     title: "",
     content: "",
@@ -47,8 +48,8 @@ export default function InquiryPage() {
         company: form.company || null,
         phone: form.phone || null,
         email: form.email || null,
-        product_category: form.category || null,
-        message: `[${form.title}]\n\n${form.content}`,
+        product_category: form.productCat || null,
+        message: `[${form.category}] ${form.title}\n\n${form.content}`,
       });
       if (insertError) {
         setError("접수 중 오류가 발생했습니다. 잠시 후 다시 시도하거나 전화로 문의해 주세요.");
@@ -120,24 +121,46 @@ export default function InquiryPage() {
                   ))}
                 </div>
 
-                <div className={s.field}>
-                  <label className={s.fieldLabel} htmlFor="category">
-                    문의 유형 <span className={s.required}>*</span>
-                  </label>
-                  <select
-                    id="category"
-                    required
-                    value={form.category}
-                    onChange={(e) => setForm({ ...form, category: e.target.value })}
-                    className={s.fieldSelect}
-                  >
-                    <option value="">문의 유형을 선택하세요</option>
-                    <option value="견적">견적 문의</option>
-                    <option value="기술">기술 상담</option>
-                    <option value="AS">A/S 문의</option>
-                    <option value="납품">납품·시공 문의</option>
-                    <option value="기타">기타</option>
-                  </select>
+                <div className={s.formGrid}>
+                  <div className={s.field}>
+                    <label className={s.fieldLabel} htmlFor="productCat">
+                      제품 카테고리 <span className={s.required}>*</span>
+                    </label>
+                    <select
+                      id="productCat"
+                      required
+                      value={form.productCat}
+                      onChange={(e) => setForm({ ...form, productCat: e.target.value })}
+                      className={s.fieldSelect}
+                    >
+                      <option value="">제품 카테고리를 선택하세요</option>
+                      <option value="호이스트 크레인">호이스트 크레인</option>
+                      <option value="그랩·갠트리 크레인">그랩·갠트리 크레인</option>
+                      <option value="유지보수·이전설치">유지보수·이전설치</option>
+                      <option value="철구조물 제작">철구조물 제작</option>
+                      <option value="기타">기타</option>
+                    </select>
+                  </div>
+
+                  <div className={s.field}>
+                    <label className={s.fieldLabel} htmlFor="category">
+                      문의 유형 <span className={s.required}>*</span>
+                    </label>
+                    <select
+                      id="category"
+                      required
+                      value={form.category}
+                      onChange={(e) => setForm({ ...form, category: e.target.value })}
+                      className={s.fieldSelect}
+                    >
+                      <option value="">문의 유형을 선택하세요</option>
+                      <option value="견적">견적 문의</option>
+                      <option value="기술">기술 상담</option>
+                      <option value="AS">A/S 문의</option>
+                      <option value="납품">납품·시공 문의</option>
+                      <option value="기타">기타</option>
+                    </select>
+                  </div>
                 </div>
 
                 <div className={s.field}>

@@ -11,10 +11,10 @@ type Props = { params: Promise<{ id: string }> };
 
 const DETAIL: Record<number, { desc: string }> = {
   4: {
-    desc: "국내 최대급 그라브 갠트리크레인 350TON 제작·설치를 완료했습니다. 현장 조건에 맞춘 맞춤 설계와 철저한 품질관리로 납품하였습니다.",
+    desc: "국내 최대급 겐트리 크랩 크레인 350TON의 제작·설치를 완료하고 한국승강기안전공단 안전인증(적합)을 취득했습니다. 350/50TON·250/50TON 그라브 크레인을 포함해 설치 크레인 전수가 안전인증에 합격했습니다.",
   },
   3: {
-    desc: "엘에스일렉트릭㈜ 청주 2공장·수원공장 등 다수 현장에 Double Girder 5TON/10TON 크레인을 연속 납품·시공했습니다.",
+    desc: "LS ELECTRIC 부산사업장에 Double Girder 30TON 크레인 5대를 제작·설치했습니다. 같은 현장에 5TON 2대, 3TON 1대 크레인도 함께 납품했습니다.",
   },
   2: {
     desc: "위험 Zone 1·2 환경에 대응하는 방폭형 Single Girder 3TON 호이스트 라인업을 확대했습니다.",
