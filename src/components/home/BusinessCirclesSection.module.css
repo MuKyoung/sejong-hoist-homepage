@@ -88,7 +88,9 @@
   display: inline-flex;
   margin-bottom: 6px;
   color: rgba(255, 255, 255, 0.9);
+  transition: transform var(--motion-standard) var(--ease-std);
 }
+.circle:hover .circleIcon { transform: translateY(-3px); }
 
 .circleTitle {
   font-size: clamp(18px, 1.7vw, 22px);

@@ -2,6 +2,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { PORTFOLIO } from "@/data/site";
 import s from "./PortfolioPreviewSection.module.css";
+import Reveal from "./Reveal";
 
 const FEATURED = PORTFOLIO.slice(0, 4);
 
@@ -30,12 +31,15 @@ export default function PortfolioPreviewSection({ locale = "ko" }: { locale?: Lo
   return (
     <section className={s.section} aria-label={t.title}>
       <div className="container">
+        <Reveal>
         <div className={s.header}>
           <p className={s.eyebrow}>Portfolio</p>
           <h2 className={s.headline}>{t.title}</h2>
           <p className={s.subtitle}>{t.subtitle}</p>
         </div>
+        </Reveal>
 
+        <Reveal delay={100}>
         <div className={s.grid}>
           {FEATURED.map((item) => (
             <Link key={item.slug} href={`/portfolio/${item.slug}`} className={s.card}>
@@ -63,6 +67,7 @@ export default function PortfolioPreviewSection({ locale = "ko" }: { locale?: Lo
             </Link>
           ))}
         </div>
+        </Reveal>
       </div>
     </section>
   );

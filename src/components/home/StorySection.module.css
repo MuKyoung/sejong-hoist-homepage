@@ -121,7 +121,16 @@
   transition: opacity 0.8s var(--ease-std);
 }
 .slideActive { opacity: 1; }
-.image { object-fit: cover; }
+
+.image {
+  object-fit: cover;
+  transform: scale(1);
+}
+/* 활성 슬라이드 슬로우 줌 (켄번즈) — 소형 카드라 화질 저하 없음 */
+.slideActive .image {
+  transform: scale(1.06);
+  transition: transform 7s ease-out;
+}
 
 /* 캡션 + 컨트롤 행 (카드 아래) */
 .controls {
@@ -183,4 +192,8 @@
 @media (prefers-reduced-motion: reduce) {
   .slide,
   .dot { transition: none; }
+  .slideActive .image {
+    transform: none;
+    transition: none;
+  }
 }

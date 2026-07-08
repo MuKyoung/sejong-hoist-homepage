@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { BUSINESS_AREAS, type BusinessAreaIcon } from "@/data/site";
 import s from "./BusinessCirclesSection.module.css";
+import Reveal from "./Reveal";
 
 function AreaIcon({ name }: { name: BusinessAreaIcon }) {
   const common = {
@@ -74,12 +75,15 @@ export default function BusinessCirclesSection({ locale = "ko" }: { locale?: Loc
   return (
     <section className={s.section} aria-label={t.title}>
       <div className="container">
+        <Reveal>
         <div className={s.header}>
           <p className={s.eyebrow}>Business</p>
           <h2 className={s.title}>{t.title}</h2>
           <p className={s.subtitle}>{t.subtitle}</p>
         </div>
+        </Reveal>
 
+        <Reveal delay={100}>
         <div className={s.circles}>
           {BUSINESS_AREAS.map((area, i) => (
             <Link
@@ -97,6 +101,7 @@ export default function BusinessCirclesSection({ locale = "ko" }: { locale?: Loc
             </Link>
           ))}
         </div>
+        </Reveal>
       </div>
     </section>
   );

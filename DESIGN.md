@@ -229,9 +229,14 @@ hairline, sharp corners, no resting shadow. Forms: inputs `--r-sm/md`, focus
 
 ## 7. Motion
 
-Hover/focus transitions 120–200ms ease. Slideshow crossfade ~1s. Entrance
-animations restrained: fade/translateY ≤ 24px, 0.6–0.8s ease-out, run once.
-No parallax. Numbers may count up once on first view (Sejong stats band).
+Hover/focus transitions 120–200ms ease. Slideshow crossfade ~1s; the hero's
+active slide slow-zooms 1→1.06 over 7s (Ken Burns — fine at card size).
+Entrance: home sections reveal once on scroll via the shared `Reveal` wrapper
+(fade + translateY 20px, 0.7s, header → content staggered 100–200ms).
+Hover micro-interactions: photo thumbs zoom 1.05 (0.6s), arrow glyphs slide
++5px, circle icons lift 3px, strip cells grow a 2px `--primary` top rule
+(scaleX left→right). Numbers count up once on first view (stats band).
+No parallax. Everything respects `prefers-reduced-motion`.
 
 ## 8. Do / Don't
 

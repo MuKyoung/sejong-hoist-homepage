@@ -48,7 +48,19 @@
   overflow: hidden;
   border-radius: var(--r-xl);
 }
-.photoImg { object-fit: cover; }
+.photoImg {
+  object-fit: cover;
+  transition: transform 0.6s var(--ease-std);
+}
+.photoCard:hover .photoImg { transform: scale(1.05); }
+
+/* 화살표 글리프 — 호버 시 우측으로 슬라이드 */
+.photoLabel svg,
+.block svg {
+  transition: transform var(--motion-standard) var(--ease-std);
+}
+.photoCard:hover .photoLabel svg,
+.block:hover svg { transform: translateX(5px); }
 .photoOverlay {
   position: absolute;
   inset: 0;

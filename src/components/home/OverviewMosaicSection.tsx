@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { NOTICES } from "@/data/site";
 import s from "./OverviewMosaicSection.module.css";
+import Reveal from "./Reveal";
 
 type Locale = "ko" | "en";
 
@@ -66,12 +67,15 @@ export default function OverviewMosaicSection({ locale = "ko" }: { locale?: Loca
   return (
     <section className={s.section} aria-label={t.title}>
       <div className="container">
+        <Reveal>
         <div className={s.header}>
           <p className={s.eyebrow}>{t.eyebrow}</p>
           <h2 className={s.title}>{t.title}</h2>
           <p className={s.subtitle}>{t.subtitle}</p>
         </div>
+        </Reveal>
 
+        <Reveal delay={100}>
         <div className={s.grid}>
           <Link href="/about" className={s.photoCard}>
             <Image
@@ -110,7 +114,9 @@ export default function OverviewMosaicSection({ locale = "ko" }: { locale?: Loca
             </Link>
           </div>
         </div>
+        </Reveal>
 
+        <Reveal delay={200}>
         <div className={s.newsBand}>
           <div className={s.newsHead}>
             <h3 className={s.newsTitle}>{t.newsTitle}</h3>
@@ -130,6 +136,7 @@ export default function OverviewMosaicSection({ locale = "ko" }: { locale?: Loca
             ))}
           </ul>
         </div>
+        </Reveal>
       </div>
     </section>
   );

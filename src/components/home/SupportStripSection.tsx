@@ -1,5 +1,6 @@
 import Link from "next/link";
 import s from "./SupportStripSection.module.css";
+import Reveal from "./Reveal";
 
 type Locale = "ko" | "en";
 
@@ -26,6 +27,7 @@ export default function SupportStripSection({ locale = "ko" }: { locale?: Locale
   return (
     <section className={s.section} aria-label={locale === "en" ? "Quick links" : "고객지원 바로가기"}>
       <div className="container">
+        <Reveal>
         <div className={s.strip}>
           <div className={`${s.cell} ${s.splitCell}`}>
             <Link href="/business" className={s.half}>
@@ -43,6 +45,7 @@ export default function SupportStripSection({ locale = "ko" }: { locale?: Locale
             </Link>
           ))}
         </div>
+        </Reveal>
       </div>
     </section>
   );
