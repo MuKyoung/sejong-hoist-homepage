@@ -1167,18 +1167,6 @@
   color: var(--navy);
 }
 
-.greetProof {
-  margin: 24px 0;
-  padding: 18px 20px;
-  background: var(--tint);
-  border-left: 3px solid var(--brand);
-  font-size: 15px;
-  font-weight: 600;
-  line-height: 1.7;
-  color: var(--navy);
-  word-break: keep-all;
-}
-
 .greetSignBlock {
   margin-top: 40px;
   text-align: right;

@@ -27,7 +27,7 @@ export default function TechnologyPage() {
             <h2 className={s.headline}>보유 인증</h2>
             <p className={s.body}>
               LS ELECTRIC 부산공장 크레인 13대 전수 안전인증 합격
-              (적합률 100%, 부적합 0건) — 카드를 클릭하면 인증서 원본을 확인할 수 있습니다.
+              (적합률 100%, 부적합 0건). 카드를 클릭하면 인증서 원본을 확인할 수 있습니다.
             </p>
           </div>
 

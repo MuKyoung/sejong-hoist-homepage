@@ -68,7 +68,7 @@ export default function AboutPage() {
               <p className={s.body} style={{ marginTop: 20 }}>
                 {GREETING.paragraphs[1]}
               </p>
-              <div className={s.greetProof}>{GREETING.paragraphs[2]}</div>
+              <p className={s.body}>{GREETING.paragraphs[2]}</p>
               <p className={s.body}>{GREETING.paragraphs[3]}</p>
             </div>
 

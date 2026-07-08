@@ -208,9 +208,10 @@ hairline, sharp corners, no resting shadow. Forms: inputs `--r-sm/md`, focus
   hover, first spec line, "자세히 보기 →").
 - **/about greeting (LS CEO form):** centered narrow column (max 780px):
   centered eyebrow + headline + quote (`--muted`), hairline rule, left-aligned
-  paragraphs (lead 700 `--navy`, tint proof-box with 3px `--brand` rule), then
-  RIGHT-aligned sign block: role 13px `--muted` over name 20px/700 letter-spaced
-  + signature image slot. 사옥 photo + statCard live in the 기업개요 band (twoCol).
+  plain paragraphs (lead 700 `--navy`; NO highlight boxes — client removed the
+  proof-box), then RIGHT-aligned sign block: role 13px `--muted` over name
+  20px/700 letter-spaced + signature image slot. 사옥 photo + statCard live in
+  the 기업개요 band (twoCol). Copy rule: no em-dash (—) in prose sentences.
 
 ## 7. Motion
 
