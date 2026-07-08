@@ -45,52 +45,50 @@ export default function StorySection() {
   const active = SLIDES[idx];
 
   return (
-    <section className={s.section} aria-label="세종호이스트크레인 대표 프로젝트">
+    <section className={s.section} aria-label="세종호이스트크레인 소개">
       <div className="container">
-        <div className={s.kv}>
-          <div className={s.slides} aria-hidden>
-            {SLIDES.map((slide, i) => (
-              <div
-                key={slide.image}
-                className={`${s.slide} ${i === idx ? s.slideActive : ""}`}
-              >
-                <Image
-                  src={slide.image}
-                  alt=""
-                  fill
-                  className={s.image}
-                  sizes="(min-width: 1280px) 1200px, 100vw"
-                  priority={i === 0}
-                />
-              </div>
-            ))}
-            <div className={s.overlay} />
-          </div>
-
-          <div className={s.content}>
-            <div className={s.inner}>
-              <p className={s.eyebrow}>Sejong Hoist Crane · Since 1999</p>
-              <h1 className={s.headline}>
-                {active.title.map((line, i) => (
-                  <span key={i} className={s.headlineLine}>{line}</span>
-                ))}
-              </h1>
-              <p className={s.sub}>{active.sub}</p>
-              <div className={s.ctas}>
-                <Link href="/support/inquiry" className={s.primaryBtn}>
-                  견적 문의
-                </Link>
-                <Link href="/portfolio" className={s.ghostBtn}>
-                  시공사례 보기
-                </Link>
-              </div>
+        <div className={s.grid}>
+          <div className={s.copy}>
+            <p className={s.eyebrow}>Sejong Hoist Crane · Since 1999</p>
+            <h1 className={s.headline}>
+              {active.title.map((line, i) => (
+                <span key={i} className={s.headlineLine}>{line}</span>
+              ))}
+            </h1>
+            <p className={s.sub}>{active.sub}</p>
+            <div className={s.ctas}>
+              <Link href="/support/inquiry" className={s.primaryBtn}>
+                견적 문의
+              </Link>
+              <Link href="/portfolio" className={s.ghostBtn}>
+                시공사례 보기
+              </Link>
             </div>
           </div>
 
-          <div className={s.bottomBar}>
-            <div className={s.bottomInner}>
+          <div className={s.visualWrap}>
+            <div className={s.visual}>
+              {SLIDES.map((slide, i) => (
+                <div
+                  key={slide.image}
+                  className={`${s.slide} ${i === idx ? s.slideActive : ""}`}
+                  aria-hidden={i !== idx}
+                >
+                  <Image
+                    src={slide.image}
+                    alt=""
+                    fill
+                    className={s.image}
+                    sizes="(min-width: 1024px) 600px, 100vw"
+                    priority={i === 0}
+                  />
+                </div>
+              ))}
+            </div>
+
+            <div className={s.controls}>
               <p className={s.caption}>{active.caption}</p>
-              <div className={s.controls}>
+              <div className={s.controlsRight}>
                 <div className={s.dots} role="tablist" aria-label="슬라이드 선택">
                   {SLIDES.map((slide, i) => (
                     <button

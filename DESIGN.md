@@ -138,21 +138,21 @@ not on /demo or /admin): `--primary` pill, 52px (48px mobile), chat icon + label
   `--primary`, `--r-full`, height 48. Hover: bg `--tint`. (From LS language pills.)
 - Text link: `--primary` → `--primary-deep`; inline body links `--link` underlined.
 
-### Hero (boxed KV — redesigned 2026-07 on the high-res photo set)
-**Container-bounded** image box (never full-bleed left-right): the KV sits
-inside `.container` with a 20px top gap under the header, height
-`clamp(460px, 58vh, 640px)` (mobile `clamp(420px, 64vh, 520px)`). Inner side
-padding `clamp(24px, 5vw, 64px)`. Crossfade slideshow of real site photos
-(`hero-*.jpg`, 1920px).
-Scrim: navy left-to-right gradient (`rgba(13,21,33,.62) → .12`) + bottom fade
-for the caption bar. Content LEFT-aligned in the container (max 620px): eyebrow
-(13px white/72 caps, letter-spaced) + headline 700/clamp(30→48px) white with the
-LS text-shadow (switches per slide) + sub white/88 + CTAs for dark ground
-(**primary = white pill + `--navy` text**, ghost = 2px white/65 outline).
-Bottom caption bar (1px white/22 top rule): per-slide project label 13px
-white/78 (hidden <640) + dots (white, active 26px pill, 24px hit area) +
-`01 / 04` counter. `prefers-reduced-motion` disables the crossfade.
-The compact-split hero is retired; the low-res constraint no longer applies.
+### Hero (compact split v2 — photos are NEVER a wide background)
+**Client directive (2026-07): photos must not spread as a background** — the
+source photos read as low-quality at large sizes. Max photo display width
+site-wide ≈ 640px. The hero is a split layout on a `--surface` band
+(`margin-top: var(--header-h)`, hairline bottom, padding 56→88px):
+- Left: eyebrow (13px `--primary` caps, letter-spaced) + headline
+  700/clamp(28→44px) `--navy` (switches per slide) + sub `--body` + pill CTAs
+  (primary navy fill / ghost 2px `--primary` outline).
+- Right: **4:3 image card** (~600px max, hairline border, sharp) with crossfade
+  slideshow over a `--brand-deep` offset plate (+14px right, plate stops above
+  the control row). Below the card one row: per-slide project caption 13px
+  `--muted` (ellipsis) + dots (`--tint-strong`, active 26px `--primary`, 24px
+  hit area) + `01 / 04` counter.
+Mobile: stack (copy → card → controls), plate offset 10px.
+`prefers-reduced-motion` disables the crossfade.
 
 ### Overview mosaic (home §2 — "회사소개")
 Centered section header, then a 3-part row (`1.4fr 1fr 1fr`, 280px, 16px gaps):
@@ -227,6 +227,9 @@ No parallax. Numbers may count up once on first view (Sejong stats band).
 - No video backgrounds — Sejong site photos only (`public/images`, 1920px
   optimized set from the 2026-07 client delivery; legacy low-res `sejong_*.png`
   stays only for /demo).
+- **No wide/background photo rendering anywhere** — client directive: photos
+  display at ≤ ~640px width (hero card, mosaic photo card, thumbs). Never
+  full-bleed, never container-wide KV.
 - Forms: inputs never below 16px font (iOS focus-zoom). Fixed/floating elements
   must offset by `env(safe-area-inset-*)`.
 
