@@ -51,6 +51,11 @@ All page content/copy lives here — edit data, not markup, for content changes.
   뷰어 `/technology/certs/[slug]`) + `REVIEW_DOCS` (서면심사도서 11권 표지) +
   `TECH_CAPABILITY`/`SAFETY_STEPS` drive `/technology`.
 - Top nav (client categories): 회사소개 / 사업영역 / 시공사례 / 기술·인증 / 견적·문의.
+  Header also hosts a hover KOR/ENG dropdown → `/` ↔ `/en`.
+- i18n (phase 1): `/en` = English HOME only. Home sections + Header/Footer/
+  FloatingCta take `locale?: "ko"|"en"` with co-located dicts (ko default —
+  Korean pages unaffected). Locale is derived from the pathname (`/en...`).
+  Subpage EN + full [lang] routing = next phase (needs client-approved copy).
 - `PORTFOLIO: PortfolioItem[]` drives `/portfolio` + `/portfolio/[slug]`.
   Item: `slug, src, gallery[], title, client, category(제품유형 라벨), industry(업종),
   capacity(표시), capacityBucket(필터), year, location, period, scope[], description, specs[]`.

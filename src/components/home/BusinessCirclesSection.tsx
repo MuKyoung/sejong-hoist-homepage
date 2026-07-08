@@ -54,18 +54,30 @@ function AreaIcon({ name }: { name: BusinessAreaIcon }) {
   }
 }
 
-export default function BusinessCirclesSection() {
+type Locale = "ko" | "en";
+
+const T: Record<Locale, { title: string; subtitle: string }> = {
+  ko: {
+    title: "사업영역",
+    subtitle: "설계부터 제작·설치·유지보수까지 운반하역 설비의 전 과정을 함께합니다.",
+  },
+  en: {
+    title: "Business Areas",
+    subtitle: "From design and fabrication to installation and maintenance, we cover the full lifecycle.",
+  },
+};
+
+export default function BusinessCirclesSection({ locale = "ko" }: { locale?: Locale }) {
   const fills = [s.c1, s.c2, s.c3, s.c4];
+  const t = T[locale];
 
   return (
-    <section className={s.section} aria-label="사업영역">
+    <section className={s.section} aria-label={t.title}>
       <div className="container">
         <div className={s.header}>
           <p className={s.eyebrow}>Business</p>
-          <h2 className={s.title}>사업영역</h2>
-          <p className={s.subtitle}>
-            설계부터 제작·설치·유지보수까지 운반하역 설비의 전 과정을 함께합니다.
-          </p>
+          <h2 className={s.title}>{t.title}</h2>
+          <p className={s.subtitle}>{t.subtitle}</p>
         </div>
 
         <div className={s.circles}>
@@ -78,8 +90,10 @@ export default function BusinessCirclesSection() {
               <span className={s.circleIcon}>
                 <AreaIcon name={area.icon} />
               </span>
-              <span className={s.circleTitle}>{area.title}</span>
-              <span className={s.circleEn}>{area.en}</span>
+              <span className={s.circleTitle}>
+                {locale === "en" ? area.en : area.title}
+              </span>
+              {locale === "ko" && <span className={s.circleEn}>{area.en}</span>}
             </Link>
           ))}
         </div>

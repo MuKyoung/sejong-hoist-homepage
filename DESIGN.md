@@ -121,8 +121,10 @@ bar** at the header's bottom edge (scaleX 0→1 on hover/focus/active). Items wi
 sub-pages open a **hover/focus dropdown** flush under the header: white panel,
 hairline border, `--shadow-md`, sharp corners, 14px/500 links (hover `--primary`
 + `--surface` bg). Anchor children (`/business#hoist`, `/technology#certs`…) rely
-on the global `[id] { scroll-margin-top }` rule. Right util: phone 13px `--muted`
-(≥1024). **No header CTA** — the 견적 문의 CTA is the floating FAB (below).
+on the global `[id] { scroll-margin-top }` rule. Right utils (≥1024): KOR/ENG
+**language dropdown** (13px caps button + chevron, same dropdown anatomy,
+links `/` ↔ `/en`; mobile panel gets two outlined lang buttons) + phone 13px
+`--muted`. **No header CTA** — the 견적 문의 CTA is the floating FAB (below).
 Mobile: hamburger → white panel list (flat, no dropdowns). Header is
 `position: fixed`; pages offset content by `--header-h`.
 
@@ -206,6 +208,12 @@ hairline, sharp corners, no resting shadow. Forms: inputs `--r-sm/md`, focus
   hairline box) and ② `#products` 3-col product card grid (4:3 thumb with
   bottom hairline, EN caps 12px `--faint`, name 17px `--navy` → `--primary` on
   hover, first spec line, "자세히 보기 →").
+- **/about/organization (org chart):** centered spine 대표이사(`--navy` box +
+  sub name) → stem → 총괄이사(`--brand` box) → stem → 전무(white outlined box)
+  → connector: horizontal `--line` across the 3 department columns + per-column
+  stems. Department = `--navy` header (name + 11px EN caps) over a white
+  hairline body listing teams one per line with 6px `--brand` square bullets.
+  Mobile: single column, connectors hidden.
 - **/about greeting (LS CEO form):** centered narrow column (max 780px):
   centered eyebrow + headline + quote (`--muted`), hairline rule, left-aligned
   plain paragraphs (lead 700 `--navy`; NO highlight boxes — client removed the

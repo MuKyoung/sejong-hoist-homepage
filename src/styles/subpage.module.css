@@ -1264,10 +1264,11 @@
   background: var(--line);
 }
 
-.orgMid {
-  width: 180px;
+/* 2단계(총괄이사) — 브랜드 네이비 강조 */
+.orgLv2 {
+  width: 200px;
   margin: 0 auto;
-  padding: 12px 16px;
+  padding: 13px 16px;
   text-align: center;
   font-size: 14px;
   font-weight: 700;
@@ -1275,29 +1276,103 @@
   background: var(--brand);
 }
 
-.orgGrid {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 12px;
-  border-top: 1px solid var(--line);
-  padding-top: 32px;
-}
-@media (min-width: 640px) { .orgGrid { grid-template-columns: repeat(2, 1fr); } }
-@media (min-width: 1024px) { .orgGrid { grid-template-columns: repeat(5, 1fr); gap: 16px; } }
-
-.orgCard {
-  padding: 22px 18px;
+/* 3단계(전무) — 화이트 아웃라인 */
+.orgLv3 {
+  width: 160px;
+  margin: 0 auto;
+  padding: 12px 16px;
   text-align: center;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--navy);
   background: var(--canvas);
-  border: 1px solid var(--hairline);
+  border: 1px solid var(--line);
 }
-.orgName { font-size: 15px; font-weight: 700; color: var(--navy); }
-.orgEn {
-  margin-top: 2px;
+
+/* 3부서 브랜치 — 중앙 정렬 + 커넥터 라인 */
+.orgBranch {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  max-width: 920px;
+  margin: 0 auto;
+}
+/* 가로 연결선 (첫/끝 칼럼 중심 사이) */
+.orgBranch::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 16.67%;
+  right: 16.67%;
+  height: 1px;
+  background: var(--line);
+}
+
+.orgCol {
+  position: relative;
+  padding-top: 28px;
+}
+/* 칼럼별 세로 스템 */
+.orgCol::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 1px;
+  height: 28px;
+  background: var(--line);
+}
+
+.orgDeptHead {
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  gap: 8px;
+  padding: 14px 16px;
+  text-align: center;
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--on-primary);
+  background: var(--navy);
+}
+
+.orgDeptEn {
   font-size: 11px;
   font-weight: 600;
-  letter-spacing: 0.04em;
+  letter-spacing: 0.05em;
   text-transform: uppercase;
-  color: var(--faint);
+  color: rgba(255, 255, 255, 0.55);
 }
-.orgDesc { margin-top: 10px; font-size: 13px; line-height: 1.55; color: var(--muted); }
+
+.orgDeptBody {
+  list-style: none;
+  padding: 14px 20px 16px;
+  background: var(--canvas);
+  border: 1px solid var(--hairline);
+  border-top: none;
+}
+
+.orgTeam {
+  position: relative;
+  padding: 8px 0 8px 16px;
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--body);
+}
+.orgTeam::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 15px;
+  width: 6px;
+  height: 6px;
+  background: var(--brand);
+}
+
+@media (max-width: 767.98px) {
+  .orgBranch { grid-template-columns: 1fr; gap: 16px; max-width: 360px; }
+  .orgBranch::before,
+  .orgCol::before { display: none; }
+  .orgCol { padding-top: 0; }
+}

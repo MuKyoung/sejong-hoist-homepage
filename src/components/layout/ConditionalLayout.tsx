@@ -9,6 +9,7 @@ export default function ConditionalLayout({ children }: { children: React.ReactN
   const pathname = usePathname();
   // Bare routes render without the marketing header/footer.
   const isBare = pathname?.startsWith("/demo") || pathname?.startsWith("/admin");
+  const locale = pathname === "/en" || pathname?.startsWith("/en/") ? "en" : "ko";
 
   if (isBare) return <>{children}</>;
 
@@ -16,8 +17,8 @@ export default function ConditionalLayout({ children }: { children: React.ReactN
     <>
       <Header />
       <main>{children}</main>
-      <Footer />
-      <FloatingCta />
+      <Footer locale={locale} />
+      <FloatingCta locale={locale} />
     </>
   );
 }

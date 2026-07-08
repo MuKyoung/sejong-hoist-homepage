@@ -3,11 +3,20 @@
 import { useEffect, useRef, useState } from "react";
 import s from "./StatsHighlightSection.module.css";
 
-const STATS = [
-  { label: "업력", value: 25, suffix: "년+", desc: "1999년 설립, 운반하역 외길" },
-  { label: "누적 시공", value: 520, suffix: "건+", desc: "전국 현장의 납품·설치 실적" },
-  { label: "최대 하중", value: 350, suffix: "TON", desc: "겐트리 크랩 크레인 시공 실적" },
-];
+type Locale = "ko" | "en";
+
+const STATS: Record<Locale, { label: string; value: number; suffix: string; desc: string }[]> = {
+  ko: [
+    { label: "업력", value: 25, suffix: "년+", desc: "1999년 설립, 운반하역 외길" },
+    { label: "누적 시공", value: 520, suffix: "건+", desc: "전국 현장의 납품·설치 실적" },
+    { label: "최대 하중", value: 350, suffix: "TON", desc: "겐트리 크랩 크레인 시공 실적" },
+  ],
+  en: [
+    { label: "Years in Service", value: 25, suffix: "+", desc: "Founded in 1999, cranes only" },
+    { label: "Projects Completed", value: 520, suffix: "+", desc: "Delivered and installed nationwide" },
+    { label: "Max Capacity", value: 350, suffix: "TON", desc: "Gantry crab crane on record" },
+  ],
+};
 
 function CountUp({ target, run }: { target: number; run: boolean }) {
   const [n, setN] = useState(0);
@@ -29,7 +38,7 @@ function CountUp({ target, run }: { target: number; run: boolean }) {
   return <>{n.toLocaleString()}</>;
 }
 
-export default function StatsHighlightSection() {
+export default function StatsHighlightSection({ locale = "ko" }: { locale?: Locale }) {
   const ref = useRef<HTMLDivElement>(null);
   const [visible, setVisible] = useState(false);
 
@@ -50,10 +59,10 @@ export default function StatsHighlightSection() {
   }, []);
 
   return (
-    <section className={s.section} aria-label="주요 실적" ref={ref}>
+    <section className={s.section} aria-label={locale === "en" ? "Key figures" : "주요 실적"} ref={ref}>
       <div className="container">
         <div className={s.grid}>
-          {STATS.map((st) => (
+          {STATS[locale].map((st) => (
             <div key={st.label} className={s.cell}>
               <p className={s.label}>{st.label}</p>
               <p className={s.number}>

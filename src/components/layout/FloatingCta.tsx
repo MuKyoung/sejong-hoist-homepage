@@ -1,7 +1,7 @@
 import Link from "next/link";
 import s from "./FloatingCta.module.css";
 
-export default function FloatingCta() {
+export default function FloatingCta({ locale = "ko" }: { locale?: "ko" | "en" }) {
   return (
     <Link href="/support/inquiry" className={s.fab}>
       <svg
@@ -17,7 +17,7 @@ export default function FloatingCta() {
       >
         <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
       </svg>
-      견적 문의
+      {locale === "en" ? "Get a Quote" : "견적 문의"}
     </Link>
   );
 }

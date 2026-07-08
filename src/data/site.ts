@@ -174,11 +174,15 @@ export const HISTORY: { year: string; items: string[] }[] = [
   { year: "1999", items: ["회사 설립 — 정원기계 (1999.08)"] },
 ];
 
-/* 회사소개 — 조직도 (2026-07 클라이언트 PPTX 확정: 대표이사–총괄이사·전무–3부) */
-export const ORG_UNITS: { name: string; en: string; desc: string }[] = [
-  { name: "관리부", en: "Administration", desc: "경영지원 · 인사총무" },
-  { name: "영업부", en: "Sales", desc: "국내영업 · 해외영업 · 영업관리" },
-  { name: "생산부", en: "Production", desc: "설계부 · 제조부 · 자재부 (생산·설치·시운전)" },
+/* 회사소개 — 조직도 (2026-07 클라이언트 PPTX 확정: 대표이사→총괄이사→전무→3부) */
+export const ORG_UNITS: { name: string; en: string; teams: string[] }[] = [
+  { name: "관리부", en: "Administration", teams: ["경영지원", "인사총무"] },
+  { name: "영업부", en: "Sales", teams: ["국내영업", "해외영업", "영업관리"] },
+  {
+    name: "생산부",
+    en: "Production",
+    teams: ["설계부", "제조부", "자재부", "생산 및 설치시운전"],
+  },
 ];
 
 /* 기술·인증 — 안전인증서 5권 (전 페이지를 /images/certs/{slug}/pNN.jpg 로 렌더,
