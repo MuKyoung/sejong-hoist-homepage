@@ -87,12 +87,14 @@ export default function StorySection({ locale = "ko" }: { locale?: Locale }) {
         <div className={s.grid}>
           <div className={s.copy}>
             <p className={s.eyebrow}>{ui.eyebrow}</p>
-            <h1 className={s.headline}>
-              {active.title.map((line, i) => (
-                <span key={i} className={s.headlineLine}>{line}</span>
-              ))}
-            </h1>
-            <p className={s.sub}>{active.sub}</p>
+            <div key={idx} className={s.textSwap}>
+              <h1 className={s.headline}>
+                {active.title.map((line, i) => (
+                  <span key={i} className={s.headlineLine}>{line}</span>
+                ))}
+              </h1>
+              <p className={s.sub}>{active.sub}</p>
+            </div>
             <div className={s.ctas}>
               <Link href="/support/inquiry" className={s.primaryBtn}>
                 {ui.quote}
