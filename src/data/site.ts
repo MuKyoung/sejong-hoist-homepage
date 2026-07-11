@@ -50,32 +50,6 @@ export const PRODUCTS = [
     ],
     image: "/images/pf-cond3.jpg",
   },
-  {
-    slug: "crane",
-    title: "Crane",
-    titleKr: "크레인",
-    desc: "천장크레인·갠트리크레인·그라브크레인 등 현장 조건에 맞춘 크레인을 설계·제작·설치합니다. 최대 350TON급 시공 실적을 보유하고 있습니다.",
-    specs: [
-      { label: "하중 범위", value: "1T ~ 350T" },
-      { label: "종류", value: "천장·갠트리·그라브" },
-      { label: "스팬", value: "현장 맞춤 설계" },
-      { label: "서비스", value: "설계·제작·설치·AS" },
-    ],
-    image: "/images/pf-gantry350.jpg",
-  },
-  {
-    slug: "hoist-crane",
-    title: "Hoist & Crane",
-    titleKr: "호이스트·크레인 통합",
-    desc: "호이스트와 크레인을 아우르는 통합 운반하역 솔루션. 설계부터 시공·A/S까지 원스톱으로 제공합니다.",
-    specs: [
-      { label: "범위", value: "호이스트 + 크레인" },
-      { label: "하중", value: "최대 350TON" },
-      { label: "대응", value: "설계·납품·시공·AS" },
-      { label: "산업", value: "전자·자동차·철강·공공" },
-    ],
-    image: "/images/pf-grab350-2.jpg",
-  },
 ] as const;
 
 export type ProductSlug = (typeof PRODUCTS)[number]["slug"];
@@ -88,8 +62,17 @@ export const HOME_QUICKNAV = [
   { no: "04", title: "견적·문의", en: "Contact", desc: "온라인 견적 요청 및 기술 상담", href: "/support/inquiry" },
 ] as const;
 
-/* 사업영역 — 홈 서클 + /business 본문 공용 (클라이언트 4대 영역) */
-export type BusinessAreaIcon = "crane" | "gantry" | "maintenance" | "steel";
+/* 사업영역 — 홈 서클 + /business 본문 공용 (2026-07-10 클라이언트 수정안: 6개 체계).
+   photos: 영역별 다중 사진 (첫 장 = 대표) */
+export type BusinessAreaIcon =
+  | "crane"
+  | "gantry"
+  | "maintenance"
+  | "steel"
+  | "monorail"
+  | "suspension"
+  | "jib"
+  | "grab";
 
 export const BUSINESS_AREAS: {
   slug: string;
@@ -99,47 +82,74 @@ export const BUSINESS_AREAS: {
   desc: string;
   points: string[];
   image: string;
+  photos: string[];
   href: string;
 }[] = [
   {
-    slug: "hoist",
+    slug: "overhead",
     icon: "crane",
-    title: "호이스트 크레인",
-    en: "Hoist Crane",
-    desc: "와이어·체인·방폭 호이스트부터 천장크레인까지, 현장 조건에 맞춰 설계·제작·설치합니다.",
-    points: ["와이어·체인·방폭 호이스트", "천장크레인 설계·제작·설치", "인버터 정밀 제어 사양"],
-    image: "/images/pf-mono1.jpg",
-    href: "/business#hoist",
+    title: "오버헤드 크레인",
+    en: "Overhead Crane",
+    desc: "싱글·더블 거더 천장크레인을 현장 조건에 맞춰 설계·제작·설치합니다.",
+    points: ["싱글 거더 크레인", "더블 거더 크레인", "인버터 정밀 제어"],
+    image: "/images/pf-ceiling30.jpg",
+    photos: ["/images/pf-ceiling30.jpg", "/images/pf-test20.jpg", "/images/pf-cond3.jpg"],
+    href: "/business#overhead",
   },
   {
     slug: "gantry",
     icon: "gantry",
-    title: "그랩·갠트리 크레인",
-    en: "Grab & Gantry",
-    desc: "옥외 야적장·중공업 현장을 위한 대형 갠트리·그랩 크레인. 최대 350TON 시공 실적을 보유합니다.",
-    points: ["옥외 갠트리·그랩 크레인", "최대 350TON 시공 실적", "풍하중·구조 해석 반영"],
-    image: "/images/area-gantry.jpg",
+    title: "겐트리 크레인",
+    en: "Gantry Crane",
+    desc: "겐트리 싱글·더블부터 세미 겐트리까지, 옥내외 대형 크레인을 시공합니다.",
+    points: ["겐트리 싱글·더블", "세미 겐트리", "최대 350TON 실적"],
+    image: "/images/pf-gantry350.jpg",
+    photos: ["/images/pf-gantry350.jpg", "/images/hero-02.jpg", "/images/pf-gantry350-2.jpg"],
     href: "/business#gantry",
   },
   {
-    slug: "maintenance",
-    icon: "maintenance",
-    title: "유지보수·이전설치",
-    en: "Maintenance",
-    desc: "정기 점검, 노후 설비 개보수, 크레인 이전설치까지 신속한 A/S로 설비 가동률을 지킵니다.",
-    points: ["정기점검·법정검사 대응", "노후 설비 개보수", "크레인 이전·재설치"],
-    image: "/images/area-maint.jpg",
-    href: "/business#maintenance",
+    slug: "monorail",
+    icon: "monorail",
+    title: "모노레일",
+    en: "Monorail",
+    desc: "생산 라인 동선에 맞춘 모노레일 호이스트 크레인을 신설·이설합니다.",
+    points: ["주행빔·지지 기둥 신설", "라인 맞춤 설계", "설치·시운전 일괄"],
+    image: "/images/pf-mono1.jpg",
+    photos: ["/images/pf-mono1.jpg", "/images/pf-mono1-2.jpg", "/images/pf-mono1-3.jpg"],
+    href: "/business#monorail",
   },
   {
-    slug: "steel",
-    icon: "steel",
-    title: "철구조물 제작",
-    en: "Steel Structure",
-    desc: "구조 해석 기반의 철구조물 설계·제작. 크레인 거더·주행로 등 맞춤 구조물을 공급합니다.",
-    points: ["크레인 거더·주행로 제작", "구조해석 기반 설계", "현장 맞춤 철구조물"],
-    image: "/images/area-steel.jpg",
-    href: "/business#steel",
+    slug: "suspension",
+    icon: "suspension",
+    title: "서스펜션 크레인",
+    en: "Suspension Crane",
+    desc: "천장 하부 현수형 크레인으로 공간 제약이 있는 현장에 대응합니다.",
+    points: ["현수형 설치", "공간 제약 현장 대응", "연구·시험 시설 실적"],
+    image: "/images/prod-hoist.jpg",
+    photos: ["/images/prod-hoist.jpg"],
+    href: "/business#suspension",
+  },
+  {
+    slug: "jib",
+    icon: "jib",
+    title: "지브 크레인",
+    en: "Jib Crane",
+    desc: "지브·월 크레인 등 국소 하역용 회전 크레인을 공급합니다.",
+    points: ["지브 크레인", "월 크레인", "국소 하역 최적화"],
+    image: "/images/pf-winch05.jpg",
+    photos: ["/images/pf-winch05.jpg"],
+    href: "/business#jib",
+  },
+  {
+    slug: "etc",
+    icon: "grab",
+    title: "ETC",
+    en: "Grab & Others",
+    desc: "그라브 크레인을 포함한 특수 크레인과 개조·특주 설비에 대응합니다.",
+    points: ["그라브 크레인", "특수·특주 설비", "350/50TON 실적"],
+    image: "/images/pf-grab350.jpg",
+    photos: ["/images/pf-grab350.jpg", "/images/area-gantry.jpg", "/images/pf-grab250.jpg"],
+    href: "/business#etc",
   },
 ];
 
@@ -248,7 +258,24 @@ export const REVIEW_DOCS: { title: string; pages: number; image: string }[] = [
   { title: "콘덴서룸 3TON (SJ-3-17900)", pages: 88, image: "/images/certs/docs/doc-11.jpg" },
 ];
 
-/* 기술·인증 — 구조해석 역량 */
+/* 기술·인증 — ISO 인증 3건 (2026-07-10 클라이언트 요청. 정확한 표준명·번호 확인 중) */
+export const ISO_CERTS: { title: string; desc: string }[] = [
+  { title: "ISO 9001", desc: "품질경영시스템" },
+  { title: "ISO 14001", desc: "환경경영시스템" },
+  { title: "ISO 45001", desc: "안전보건경영시스템" },
+];
+
+/* 기술·인증 — 보유 자격 인력 (기계·전기·산업안전 국가기술자격 다수 보유) */
+export const QUALIFICATIONS = {
+  desc: "기계·전기·산업안전 분야 국가기술자격을 보유한 엔지니어들이 설계부터 제작·설치·검사까지 직접 수행합니다. 자격을 갖춘 인력이 현장을 지키는 것이 세종호이스트크레인 품질의 기반입니다.",
+  groups: [
+    { field: "기계 분야", desc: "일반기계·용접·크레인 관련 자격 보유 인력" },
+    { field: "전기 분야", desc: "전기공사·전기기기 관련 자격 보유 인력" },
+    { field: "산업안전 분야", desc: "산업안전·크레인 검사 관련 자격 보유 인력" },
+  ],
+};
+
+/* 기술·인증 — 구조해석 역량 (2026-07-10 클라이언트 요청으로 페이지 노출 중단, 데이터 보존) */
 export const TECH_CAPABILITY = {
   desc: "모든 크레인·철구조물은 시공 전에 구조 계산과 해석을 거칩니다. 하중 조건·스팬·주행 환경을 반영한 설계로 처짐과 피로를 관리하고, 옥외 설비는 풍하중까지 검토합니다.",
   points: [
@@ -275,7 +302,17 @@ export const PORTFOLIO_INDUSTRIES = [
   "물류",
 ] as const;
 
-export const PORTFOLIO_CAPACITY_BUCKETS = ["전체", "~5T", "5~20T", "20~50T", "50T+"] as const;
+export const PORTFOLIO_CAPACITY_BUCKETS = [
+  "전체",
+  "1T",
+  "2T",
+  "3T",
+  "5T",
+  "7.5T",
+  "10T",
+  "20T",
+  "30T 이상",
+] as const;
 
 export type PortfolioIndustry = (typeof PORTFOLIO_INDUSTRIES)[number];
 export type PortfolioCapacityBucket = (typeof PORTFOLIO_CAPACITY_BUCKETS)[number];
@@ -311,7 +348,7 @@ export const PORTFOLIO: PortfolioItem[] = [
     category: "겐트리",
     industry: "전기·전자",
     capacity: "350T",
-    capacityBucket: "50T+",
+    capacityBucket: "30T 이상",
     year: "2025",
     location: "부산 옥외동",
     period: "",
@@ -334,7 +371,7 @@ export const PORTFOLIO: PortfolioItem[] = [
     category: "그라브",
     industry: "전기·전자",
     capacity: "350T / 50T",
-    capacityBucket: "50T+",
+    capacityBucket: "30T 이상",
     year: "2025",
     location: "부산 총조립반",
     period: "",
@@ -357,7 +394,7 @@ export const PORTFOLIO: PortfolioItem[] = [
     category: "그라브",
     industry: "전기·전자",
     capacity: "250T / 50T",
-    capacityBucket: "50T+",
+    capacityBucket: "30T 이상",
     year: "2025",
     location: "부산 본체조립반",
     period: "",
@@ -380,7 +417,7 @@ export const PORTFOLIO: PortfolioItem[] = [
     category: "천장크레인",
     industry: "전기·전자",
     capacity: "30T",
-    capacityBucket: "20~50T",
+    capacityBucket: "30T 이상",
     year: "2025",
     location: "부산 총조립반·옥내창고",
     period: "",
@@ -403,7 +440,7 @@ export const PORTFOLIO: PortfolioItem[] = [
     category: "천장크레인",
     industry: "전기·전자",
     capacity: "20T",
-    capacityBucket: "5~20T",
+    capacityBucket: "20T",
     year: "2025",
     location: "부산 시험실",
     period: "",
@@ -426,7 +463,7 @@ export const PORTFOLIO: PortfolioItem[] = [
     category: "천장크레인",
     industry: "전기·전자",
     capacity: "3T",
-    capacityBucket: "~5T",
+    capacityBucket: "3T",
     year: "2025",
     location: "부산 콘덴스룸",
     period: "",
@@ -449,7 +486,7 @@ export const PORTFOLIO: PortfolioItem[] = [
     category: "호이스트",
     industry: "자동차",
     capacity: "1T",
-    capacityBucket: "~5T",
+    capacityBucket: "1T",
     year: "2026",
     location: "생산 라인",
     period: "2026.05",
@@ -472,7 +509,7 @@ export const PORTFOLIO: PortfolioItem[] = [
     category: "호이스트",
     industry: "물류",
     capacity: "0.5T",
-    capacityBucket: "~5T",
+    capacityBucket: "1T",
     year: "2024",
     location: "생산 현장",
     period: "",

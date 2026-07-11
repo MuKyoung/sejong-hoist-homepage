@@ -27,11 +27,13 @@ const NAV: NavItem[] = [
     labelEn: "Business",
     href: "/business",
     children: [
-      { label: "호이스트 크레인", labelEn: "Hoist Crane", href: "/business#hoist" },
-      { label: "그랩·갠트리 크레인", labelEn: "Grab & Gantry", href: "/business#gantry" },
-      { label: "유지보수·이전설치", labelEn: "Maintenance", href: "/business#maintenance" },
-      { label: "철구조물 제작", labelEn: "Steel Structure", href: "/business#steel" },
-      { label: "제품 라인업", labelEn: "Products", href: "/business" },
+      { label: "오버헤드 크레인", labelEn: "Overhead Crane", href: "/business#overhead" },
+      { label: "겐트리 크레인", labelEn: "Gantry Crane", href: "/business#gantry" },
+      { label: "모노레일", labelEn: "Monorail", href: "/business#monorail" },
+      { label: "서스펜션 크레인", labelEn: "Suspension Crane", href: "/business#suspension" },
+      { label: "지브 크레인", labelEn: "Jib Crane", href: "/business#jib" },
+      { label: "ETC", labelEn: "Grab & Others", href: "/business#etc" },
+      { label: "제품 라인업", labelEn: "Products", href: "/business#products" },
     ],
   },
   { label: "시공사례", labelEn: "Projects", href: "/portfolio" },
@@ -41,7 +43,7 @@ const NAV: NavItem[] = [
     href: "/technology",
     children: [
       { label: "보유 인증", labelEn: "Certifications", href: "/technology#certs" },
-      { label: "구조해석 역량", labelEn: "Engineering", href: "/technology#analysis" },
+      { label: "보유 자격 인력", labelEn: "Qualified People", href: "/technology#license" },
       { label: "안전관리 체계", labelEn: "Safety", href: "/technology#safety" },
     ],
   },
@@ -74,7 +76,7 @@ export default function Header() {
             alt="세종호이스트크레인"
             width={180}
             height={44}
-            style={{ width: "auto", height: "28px", objectFit: "contain" }}
+            style={{ width: "auto", height: "36px", objectFit: "contain" }}
             priority
           />
         </Link>

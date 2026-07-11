@@ -33,25 +33,25 @@
   color: var(--body);
 }
 
-/* Circles — tangent with gaps (LS overlaps -30px); sized to never overflow */
+/* Circles — 6개 한 줄 (탄젠트 배치, 오버플로 방지 사이즈) */
 .circles {
   display: flex;
   justify-content: center;
-  gap: clamp(20px, 2vw, 28px);
+  gap: clamp(14px, 1.6vw, 20px);
   padding: 10px 0;
 }
 
 .circle {
   position: relative;
-  width: clamp(200px, 19.5vw, 264px);
+  width: clamp(148px, 13vw, 172px);
   aspect-ratio: 1 / 1;
   border-radius: 50%;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 6px;
-  padding: 0 26px;
+  gap: 4px;
+  padding: 0 16px;
   text-align: center;
   /* Inner hairline ring + soft top-left highlight for depth */
   box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.14);
@@ -86,14 +86,15 @@
 
 .circleIcon {
   display: inline-flex;
-  margin-bottom: 6px;
+  margin-bottom: 4px;
   color: rgba(255, 255, 255, 0.9);
   transition: transform var(--motion-standard) var(--ease-std);
 }
+.circleIcon svg { width: 24px; height: 24px; }
 .circle:hover .circleIcon { transform: translateY(-3px); }
 
 .circleTitle {
-  font-size: clamp(18px, 1.7vw, 22px);
+  font-size: clamp(15px, 1.35vw, 17px);
   font-weight: 700;
   line-height: 1.3;
   color: #fff;
@@ -101,38 +102,36 @@
 }
 
 .circleEn {
-  font-size: 13px;
+  font-size: 11px;
   font-weight: 400;
-  color: rgba(255, 255, 255, 0.8);
+  color: rgba(255, 255, 255, 0.75);
 }
 
-/* Responsive */
+/* Responsive — 6개: 3열(태블릿) → 2열(모바일) */
 @media (max-width: 1023.98px) {
   .circles {
     display: grid;
-    grid-template-columns: repeat(2, 220px);
-    gap: 20px;
+    grid-template-columns: repeat(3, minmax(0, 180px));
+    gap: 18px;
     justify-content: center;
   }
   .circle {
-    width: 220px;
-    padding: 0 20px;
+    width: 100%;
+    max-width: 180px;
+    padding: 0 14px;
   }
 }
 
-@media (max-width: 479.98px) {
+@media (max-width: 599.98px) {
   .circles {
-    grid-template-columns: repeat(2, minmax(0, 170px));
+    grid-template-columns: repeat(2, minmax(0, 160px));
     gap: 14px;
   }
   .circle {
-    width: 100%;
-    max-width: 170px;
-    padding: 0 14px;
+    max-width: 160px;
+    padding: 0 12px;
   }
   .circle::after { inset: -6px; }
-  .circleTitle { font-size: 15px; }
-  .circleEn { font-size: 11px; }
-  .circleIcon { margin-bottom: 2px; }
-  .circleIcon svg { width: 24px; height: 24px; }
+  .circleTitle { font-size: 14px; }
+  .circleEn { font-size: 10px; }
 }

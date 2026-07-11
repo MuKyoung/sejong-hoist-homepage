@@ -52,6 +52,48 @@ function AreaIcon({ name }: { name: BusinessAreaIcon }) {
           <path d="M12 4v17" />
         </svg>
       );
+    case "monorail":
+      return (
+        <svg {...common}>
+          <path d="M2 5h20" />
+          <path d="M12 5v4" />
+          <rect x="9" y="9" width="6" height="5" rx="0.5" />
+          <path d="M12 14v3" />
+          <path d="M10 19h4M12 17v2" />
+        </svg>
+      );
+    case "suspension":
+      return (
+        <svg {...common}>
+          <path d="M4 3v4M20 3v4" />
+          <path d="M2 7h20" />
+          <path d="M8 7v3M16 7v3" />
+          <rect x="6" y="10" width="12" height="4" rx="0.5" />
+          <path d="M12 14v3" />
+          <path d="M12 19a2 2 0 1 0 0.001 0" />
+        </svg>
+      );
+    case "jib":
+      return (
+        <svg {...common}>
+          <path d="M5 21V4" />
+          <path d="M3 21h6" />
+          <path d="M5 5h13" />
+          <path d="M5 9l8-4" />
+          <path d="M16 5v5" />
+          <path d="M14 12h4l-2 3z" />
+        </svg>
+      );
+    case "grab":
+      return (
+        <svg {...common}>
+          <path d="M12 2v5" />
+          <path d="M7 9c0-2 2-3 5-3s5 1 5 3" />
+          <path d="M7 9c-2 1-3 3-2 5l3 4" />
+          <path d="M17 9c2 1 3 3 2 5l-3 4" />
+          <path d="M8 18h8" />
+        </svg>
+      );
   }
 }
 

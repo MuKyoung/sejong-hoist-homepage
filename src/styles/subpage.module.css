@@ -312,6 +312,26 @@
   word-break: keep-all;
 }
 
+/* 사업영역 서브 사진 행 (영역별 다중 사진) */
+.areaThumbs {
+  display: flex;
+  gap: 10px;
+  margin-top: 18px;
+}
+
+.areaThumb {
+  position: relative;
+  width: 132px;
+  aspect-ratio: 4 / 3;
+  border: 1px solid var(--hairline);
+  overflow: hidden;
+  background: var(--surface-alt);
+  flex-shrink: 0;
+}
+@media (max-width: 479.98px) {
+  .areaThumb { width: 104px; }
+}
+
 /* 제품 라인업 그리드 (LS product cards) */
 .prodHead {
   margin: 56px 0 24px;
@@ -1197,9 +1217,12 @@
   color: var(--navy);
 }
 
+/* 서명 블록 — 좌측 정렬 (2026-07-10 클라이언트 요청: 사인 첨부 시 이름 왼쪽정렬) */
 .greetSignBlock {
   margin-top: 40px;
-  text-align: right;
+  padding-top: 24px;
+  border-top: 1px solid var(--hairline);
+  text-align: left;
 }
 
 .greetRole {
@@ -1211,7 +1234,7 @@
 .greetNameRow {
   display: flex;
   align-items: center;
-  justify-content: flex-end;
+  justify-content: flex-start;
   gap: 14px;
   margin-top: 8px;
 }

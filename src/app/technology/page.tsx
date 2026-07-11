@@ -3,7 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import PageHero from "@/components/subpage/PageHero";
 import ContactBand from "@/components/subpage/ContactBand";
-import { CERT_DOCS, certCover, REVIEW_DOCS, TECH_CAPABILITY, SAFETY_STEPS } from "@/data/site";
+import { CERT_DOCS, certCover, REVIEW_DOCS, ISO_CERTS, QUALIFICATIONS, SAFETY_STEPS } from "@/data/site";
 import s from "@/styles/subpage.module.css";
 
 export const metadata: Metadata = {
@@ -53,6 +53,21 @@ export default function TechnologyPage() {
           </div>
 
           <div className={s.docHead}>
+            <h3 className={s.docHeadTitle}>ISO 인증</h3>
+            <p className={s.body}>품질·환경·안전보건 경영시스템 인증을 보유하고 있습니다.</p>
+          </div>
+
+          <div className={s.cardGrid}>
+            {ISO_CERTS.map((iso) => (
+              <article key={iso.title} className={s.valueCard}>
+                <p className={s.valueNum}>{iso.title}</p>
+                <h3 className={s.valueTitle}>{iso.desc}</h3>
+                <p className={s.valueDesc}>인증 보유</p>
+              </article>
+            ))}
+          </div>
+
+          <div className={s.docHead}>
             <h3 className={s.docHeadTitle}>크레인 구조 서면심사도서 11권</h3>
             <p className={s.body}>
               구조 계산·도면으로 구성된 심사 도서입니다. 표지를 게시하며, 본문은
@@ -88,7 +103,7 @@ export default function TechnologyPage() {
         </div>
       </section>
 
-      <section id="analysis" className={`${s.section} ${s.sectionAlt}`}>
+      <section id="license" className={`${s.section} ${s.sectionAlt}`}>
         <div className="container">
           <div className={s.twoCol}>
             <div className={s.visual}>
@@ -101,15 +116,15 @@ export default function TechnologyPage() {
               />
             </div>
             <div>
-              <p className={s.eyebrow}>Engineering</p>
-              <h2 className={`${s.headline} ${s.headlineNavy}`}>구조해석 역량</h2>
-              <p className={s.body}>{TECH_CAPABILITY.desc}</p>
+              <p className={s.eyebrow}>People</p>
+              <h2 className={`${s.headline} ${s.headlineNavy}`}>보유 자격 인력</h2>
+              <p className={s.body}>{QUALIFICATIONS.desc}</p>
 
-              <div className={s.infoGrid}>
-                {TECH_CAPABILITY.points.map((point) => (
-                  <div key={point.label} className={s.infoItem}>
-                    <p className={s.infoLabel}>{point.label}</p>
-                    <p className={s.infoValue}>{point.value}</p>
+              <div className={s.infoGrid} style={{ gridTemplateColumns: "1fr" }}>
+                {QUALIFICATIONS.groups.map((group) => (
+                  <div key={group.field} className={s.infoItem}>
+                    <p className={s.infoLabel}>{group.field}</p>
+                    <p className={s.infoValue}>{group.desc}</p>
                   </div>
                 ))}
               </div>

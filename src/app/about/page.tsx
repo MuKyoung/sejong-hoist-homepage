@@ -131,6 +131,16 @@ export default function AboutPage() {
                   <p className={s.infoValue}>{COMPANY.bizNo}</p>
                 </div>
               </div>
+
+              <div style={{ marginTop: 28 }}>
+                <a
+                  href="/downloads/sejong-company-profile.pdf"
+                  download
+                  className={s.ghostBtn}
+                >
+                  회사소개서 다운로드 (PDF)
+                </a>
+              </div>
             </div>
           </div>
         </div>
@@ -140,7 +150,7 @@ export default function AboutPage() {
         <div className="container">
           <div className={s.centerHeader}>
             <p className={s.eyebrow}>Core Values</p>
-            <h2 className={s.headline}>세종이 추구하는 가치</h2>
+            <h2 className={s.headline}>㈜세종호이스트크레인이 추구하는 가치</h2>
           </div>
           <div className={s.cardGrid}>
             {VALUES.map((v) => (

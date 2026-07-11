@@ -25,11 +25,11 @@ const COLUMNS = [
     title: "사업영역",
     titleEn: "Business",
     links: [
-      { label: "호이스트 크레인", labelEn: "Hoist Crane", href: "/business#hoist" },
-      { label: "그랩·갠트리 크레인", labelEn: "Grab & Gantry", href: "/business#gantry" },
-      { label: "유지보수·이전설치", labelEn: "Maintenance", href: "/business#maintenance" },
-      { label: "철구조물 제작", labelEn: "Steel Structure", href: "/business#steel" },
-      { label: "제품 라인업", labelEn: "Products", href: "/business" },
+      { label: "오버헤드 크레인", labelEn: "Overhead Crane", href: "/business#overhead" },
+      { label: "겐트리 크레인", labelEn: "Gantry Crane", href: "/business#gantry" },
+      { label: "모노레일", labelEn: "Monorail", href: "/business#monorail" },
+      { label: "서스펜션·지브·ETC", labelEn: "Suspension · Jib · ETC", href: "/business#suspension" },
+      { label: "제품 라인업", labelEn: "Products", href: "/business#products" },
     ],
   },
   {

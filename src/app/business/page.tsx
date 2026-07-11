@@ -62,6 +62,22 @@ export default function BusinessPage() {
                         </li>
                       ))}
                     </ul>
+
+                    {area.photos.length > 1 && (
+                      <div className={s.areaThumbs}>
+                        {area.photos.slice(1).map((photo, i) => (
+                          <div key={photo} className={s.areaThumb}>
+                            <Image
+                              src={photo}
+                              alt={`${area.title} 시공 사진 ${i + 2}`}
+                              fill
+                              className={s.image}
+                              sizes="140px"
+                            />
+                          </div>
+                        ))}
+                      </div>
+                    )}
                   </div>
                 </article>
               ))}
