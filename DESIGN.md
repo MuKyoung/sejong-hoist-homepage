@@ -143,13 +143,18 @@ not on /demo or /admin): `--primary` pill, 52px (48px mobile), chat icon + label
 ### Hero (compact split v2 — photos are NEVER a wide background)
 **Client directive (2026-07): photos must not spread as a background** — the
 source photos read as low-quality at large sizes. Max photo display width
-site-wide ≈ 640px. The hero is a COMPACT split layout on a `--surface` band
-(`margin-top: var(--header-h)`, hairline bottom, padding 40→64px, grid
-`1fr 0.95fr` gap 48):
-- Left: eyebrow (12px `--primary` caps, letter-spaced) + headline
-  700/clamp(26→38px) `--navy` (switches per slide) + sub `--body` + 46px pill
-  CTAs (primary navy fill / ghost 2px `--primary` outline).
-- Right: **4:3 image card** (~560px max, hairline border, sharp) with crossfade
+site-wide ≈ 640px. EXCEPTION (client request 26.07.10): the hero background is
+a full-bleed **video-like layer** — the active slide rendered with Ken Burns
+(per-slide zoom-in/out/pan, 8s) under a heavy navy scrim
+(`rgba(13,21,33,.82→.38)` left-to-right + bottom fade). It is atmospheric, not
+detail imagery, and will be swapped for real `<video>` footage when delivered.
+The hero is a COMPACT split layout over that layer (`margin-top:
+var(--header-h)`, min-height clamp(560px,68vh,740px), grid `1fr 0.95fr` gap 48):
+- Left (dark ground): eyebrow 12px white/72 caps + headline 700/clamp(26→38px)
+  WHITE with LS text-shadow (switches per slide, 0.55s text fade) + sub
+  white/88 + 46px pill CTAs (**white fill + `--navy` text** / white/60 outline).
+- Right: **4:3 crisp image card** (~560px max, white/28 border, white/10 offset
+  plate) showing the SAME active slide as the background — with crossfade
   slideshow over a `--brand-deep` offset plate (+14px right, plate stops above
   the control row). Below the card one row: per-slide project caption 13px
   `--muted` (ellipsis) + dots (`--tint-strong`, active 26px `--primary`, 24px

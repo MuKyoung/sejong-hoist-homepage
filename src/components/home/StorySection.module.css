@@ -1,14 +1,72 @@
-/* Hero — 컴팩트 스플릿 v2 (좌 텍스트 / 우 소형 4:3 이미지 카드 + 캡션 바).
-   사진은 배경으로 넓게 깔지 않는다 — 표시폭 최대 ~600px (저해상 원본 배려). */
+/* Hero — 스플릿 구성(좌 텍스트 / 우 4:3 이미지 카드)은 유지하고,
+   배경(기존 회색)에 영상형 레이어를 깔았다: 활성 슬라이드와 동기화된
+   켄번즈(줌/팬) + 네이비 스크림. 실제 시공 영상 수급 시 <video>로 교체. */
 .section {
+  position: relative;
   margin-top: var(--header-h);
-  padding: 40px 0 48px;
-  background: var(--surface);
-  border-bottom: 1px solid var(--hairline);
+  min-height: clamp(560px, 68vh, 740px);
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  background: var(--navy-deep);
+  padding: 56px 0 64px;
 }
-@media (min-width: 1024px) { .section { padding: 56px 0 64px; } }
 
+/* ── 배경 영상형 레이어 ── */
+.bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+
+.bgSlide {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity 1.4s var(--ease-std);
+}
+.bgSlideActive { opacity: 1; }
+
+.bgImage {
+  object-fit: cover;
+  transform: scale(1.06);
+}
+
+@keyframes kbZoomIn {
+  from { transform: scale(1.04); }
+  to { transform: scale(1.16); }
+}
+@keyframes kbZoomOut {
+  from { transform: scale(1.18); }
+  to { transform: scale(1.06); }
+}
+@keyframes kbPanRight {
+  from { transform: scale(1.14) translateX(-2.5%); }
+  to { transform: scale(1.14) translateX(2.5%); }
+}
+@keyframes kbPanLeft {
+  from { transform: scale(1.14) translateX(2.5%); }
+  to { transform: scale(1.14) translateX(-2.5%); }
+}
+
+.bgSlideActive .bgImage { animation: kbZoomIn 8s ease-out forwards; }
+.bgSlide:nth-child(2).bgSlideActive .bgImage { animation-name: kbZoomOut; }
+.bgSlide:nth-child(3).bgSlideActive .bgImage { animation-name: kbPanRight; }
+.bgSlide:nth-child(4).bgSlideActive .bgImage { animation-name: kbPanLeft; }
+
+/* 좌측 텍스트 가독용 네이비 스크림 */
+.bgScrim {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(90deg, rgba(13, 21, 33, 0.82) 0%, rgba(13, 21, 33, 0.6) 52%, rgba(13, 21, 33, 0.38) 100%),
+    linear-gradient(180deg, rgba(13, 21, 33, 0.1) 0%, rgba(13, 21, 33, 0) 40%, rgba(13, 21, 33, 0.4) 100%);
+}
+
+/* ── 콘텐츠 ── */
 .grid {
+  position: relative;
+  z-index: 1;
   display: grid;
   grid-template-columns: 1fr;
   gap: 32px;
@@ -18,7 +76,7 @@
   .grid { grid-template-columns: 1fr 0.95fr; gap: 48px; }
 }
 
-/* Copy */
+/* Copy — 다크 배경 위 화이트 타이포 */
 .copy { min-width: 0; }
 
 .eyebrow {
@@ -26,7 +84,7 @@
   font-weight: 700;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: var(--primary);
+  color: rgba(255, 255, 255, 0.72);
   margin-bottom: 12px;
 }
 
@@ -35,7 +93,8 @@
   font-weight: 700;
   line-height: 1.28;
   letter-spacing: -0.03em;
-  color: var(--navy);
+  color: #ffffff;
+  text-shadow: 0 0 20px rgba(0, 0, 0, 0.15), 1px 1px 0 rgba(0, 0, 0, 0.3);
   word-break: keep-all;
 }
 .headlineLine { display: block; }
@@ -45,7 +104,8 @@
   max-width: 460px;
   font-size: clamp(0.9375rem, 1.3vw, 1rem);
   line-height: 1.65;
-  color: var(--body);
+  color: rgba(255, 255, 255, 0.88);
+  text-shadow: 0 0 16px rgba(0, 0, 0, 0.25);
   word-break: keep-all;
 }
 
@@ -56,6 +116,7 @@
   margin-top: 24px;
 }
 
+/* 다크 배경용 버튼 — 화이트 필 + 화이트 아웃라인 */
 .primaryBtn {
   display: inline-flex;
   align-items: center;
@@ -64,13 +125,12 @@
   padding: 0 26px;
   font-size: 14px;
   font-weight: 700;
-  color: var(--on-primary);
-  background: var(--primary);
+  color: var(--navy);
+  background: #ffffff;
   border-radius: var(--r-full);
-  transition: background var(--motion-standard) var(--ease-std);
+  transition: background var(--motion-standard) var(--ease-std), color var(--motion-standard) var(--ease-std);
 }
-.primaryBtn:hover { background: var(--primary-deep); }
-.primaryBtn:active { background: var(--primary-press); }
+.primaryBtn:hover { background: var(--tint); color: var(--primary-deep); }
 
 .ghostBtn {
   display: inline-flex;
@@ -80,15 +140,15 @@
   padding: 0 26px;
   font-size: 14px;
   font-weight: 700;
-  color: var(--primary);
-  background: var(--canvas);
-  border: 2px solid var(--primary);
+  color: #ffffff;
+  background: transparent;
+  border: 2px solid rgba(255, 255, 255, 0.6);
   border-radius: var(--r-full);
-  transition: background var(--motion-standard) var(--ease-std);
+  transition: background var(--motion-fast), border-color var(--motion-fast);
 }
-.ghostBtn:hover { background: var(--tint); }
+.ghostBtn:hover { background: rgba(255, 255, 255, 0.12); border-color: #ffffff; }
 
-/* Visual — 4:3 카드 + 딥네이비 오프셋 플레이트 */
+/* Visual — 4:3 크리스프 카드 (배경 영상과 동일 슬라이드, 카드가 '스크린' 역할) */
 .visualWrap {
   position: relative;
   min-width: 0;
@@ -99,8 +159,8 @@
   top: 14px;
   left: 14px;
   right: -14px;
-  bottom: 42px; /* 컨트롤 행 위까지만 */
-  background: var(--brand-deep);
+  bottom: 42px;
+  background: rgba(255, 255, 255, 0.1);
 }
 @media (max-width: 639.98px) {
   .visualWrap::before { top: 10px; left: 10px; right: -10px; bottom: 40px; }
@@ -110,55 +170,27 @@
   position: relative;
   aspect-ratio: 4 / 3;
   overflow: hidden;
-  background: var(--surface-alt);
-  border: 1px solid var(--hairline);
+  background: var(--navy-deep);
+  border: 1px solid rgba(255, 255, 255, 0.28);
 }
 
 .slide {
   position: absolute;
   inset: 0;
   opacity: 0;
-  transition: opacity 1.2s var(--ease-std);
+  transition: opacity 1s var(--ease-std);
 }
 .slideActive { opacity: 1; }
+.image { object-fit: cover; }
 
-.image {
-  object-fit: cover;
-  transform: scale(1.04);
-}
-
-/* 영상형 켄번즈 — 실제 시공 영상 수급 전 예시 연출.
-   슬라이드마다 줌인/줌아웃/팬을 교차해 영상처럼 보이게 함 (소형 카드라 화질 안전) */
-@keyframes kbZoomIn {
-  from { transform: scale(1.02); }
-  to { transform: scale(1.14); }
-}
-@keyframes kbZoomOut {
-  from { transform: scale(1.16); }
-  to { transform: scale(1.04); }
-}
-@keyframes kbPanRight {
-  from { transform: scale(1.12) translateX(-2.5%); }
-  to { transform: scale(1.12) translateX(2.5%); }
-}
-@keyframes kbPanLeft {
-  from { transform: scale(1.12) translateX(2.5%); }
-  to { transform: scale(1.12) translateX(-2.5%); }
-}
-
-.slideActive .image { animation: kbZoomIn 7s ease-out forwards; }
-.slide:nth-child(2).slideActive .image { animation-name: kbZoomOut; }
-.slide:nth-child(3).slideActive .image { animation-name: kbPanRight; }
-.slide:nth-child(4).slideActive .image { animation-name: kbPanLeft; }
-
-/* 슬라이드 전환 시 텍스트도 부드럽게 교체 */
+/* 슬라이드 전환 시 텍스트 페이드 교체 */
 @keyframes textIn {
   from { opacity: 0; transform: translateY(10px); }
   to { opacity: 1; transform: none; }
 }
 .textSwap { animation: textIn 0.55s var(--ease-std); }
 
-/* 캡션 + 컨트롤 행 (카드 아래) */
+/* 캡션 + 컨트롤 행 (카드 아래, 다크 배경 위) */
 .controls {
   position: relative;
   z-index: 1;
@@ -173,7 +205,7 @@
   min-width: 0;
   font-size: 13px;
   font-weight: 500;
-  color: var(--muted);
+  color: rgba(255, 255, 255, 0.75);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -196,30 +228,31 @@
   padding: 8px;
   border: none;
   border-radius: var(--r-full);
-  background-color: var(--tint-strong);
+  background-color: rgba(255, 255, 255, 0.4);
   background-clip: content-box;
   transition: width var(--motion-standard) var(--ease-std),
     background-color var(--motion-standard) var(--ease-std);
 }
-.dot:hover { background-color: var(--faint); }
-.dotActive { width: 26px; background-color: var(--primary); }
-.dotActive:hover { background-color: var(--primary); }
+.dot:hover { background-color: rgba(255, 255, 255, 0.7); }
+.dotActive { width: 26px; background-color: #ffffff; }
+.dotActive:hover { background-color: #ffffff; }
 
 .counter {
   font-size: 13px;
   font-weight: 400;
-  color: var(--muted);
+  color: rgba(255, 255, 255, 0.6);
   font-variant-numeric: tabular-nums;
   letter-spacing: 0.04em;
 }
-.counterNow { color: var(--navy); font-weight: 700; }
+.counterNow { color: #fff; font-weight: 700; }
 .counterSep { opacity: 0.5; }
 
 @media (prefers-reduced-motion: reduce) {
   .slide,
+  .bgSlide,
   .dot { transition: none; }
-  .slideActive .image,
-  .slide .image {
+  .bgSlideActive .bgImage,
+  .bgSlide .bgImage {
     animation: none !important;
     transform: none;
   }
