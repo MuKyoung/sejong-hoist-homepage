@@ -144,7 +144,9 @@ not on /demo or /admin): `--primary` pill, 52px (48px mobile), chat icon + label
 **Client directive (2026-07): photos must not spread as a background** — the
 source photos read as low-quality at large sizes. Max photo display width
 site-wide ≈ 640px. EXCEPTION (client request 26.07.10): the hero background is
-a full-bleed **video-like layer** — the active slide rendered with Ken Burns
+a **video-like layer boxed inside the container frame** (`.frame`, min-height
+clamp(520px,62vh,680px), 20px gap under the header — never full-bleed
+left-right) — the active slide rendered with Ken Burns
 (per-slide zoom-in/out/pan, 8s) under a heavy navy scrim
 (`rgba(13,21,33,.82→.38)` left-to-right + bottom fade). It is atmospheric, not
 detail imagery, and will be swapped for real `<video>` footage when delivered.
