@@ -2,17 +2,23 @@
    배경(기존 회색)에 영상형 레이어를 깔았다: 활성 슬라이드와 동기화된
    켄번즈(줌/팬) + 네이비 스크림. 실제 시공 영상 수급 시 <video>로 교체. */
 .section {
-  position: relative;
   margin-top: var(--header-h);
-  min-height: clamp(560px, 68vh, 740px);
+  padding: 20px 0 0;
+  background: var(--canvas);
+}
+
+/* 컨테이너 폭 안의 박스형 프레임 — 배경이 양옆으로 확장되지 않음 */
+.frame {
+  position: relative;
+  min-height: clamp(520px, 62vh, 680px);
   display: flex;
   align-items: center;
   overflow: hidden;
   background: var(--navy-deep);
-  padding: 56px 0 64px;
+  padding: clamp(32px, 4vw, 56px) clamp(24px, 4.5vw, 56px);
 }
 
-/* ── 배경 영상형 레이어 ── */
+/* ── 배경 영상형 레이어 (프레임 내부) ── */
 .bg {
   position: absolute;
   inset: 0;
@@ -67,6 +73,7 @@
 .grid {
   position: relative;
   z-index: 1;
+  width: 100%;
   display: grid;
   grid-template-columns: 1fr;
   gap: 32px;

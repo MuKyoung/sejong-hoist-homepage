@@ -83,27 +83,28 @@ export default function StorySection({ locale = "ko" }: { locale?: Locale }) {
 
   return (
     <section className={s.section} aria-label={locale === "en" ? "Sejong Hoist Crane" : "세종호이스트크레인 소개"}>
-      <div className={s.bg} aria-hidden>
-        {slides.map((slide, i) => (
-          <div
-            key={slide.image}
-            className={`${s.bgSlide} ${i === idx ? s.bgSlideActive : ""}`}
-          >
-            <Image
-              src={slide.image}
-              alt=""
-              fill
-              className={s.bgImage}
-              sizes="100vw"
-              priority={i === 0}
-            />
-          </div>
-        ))}
-        <div className={s.bgScrim} />
-      </div>
-
       <div className="container">
-        <div className={s.grid}>
+        <div className={s.frame}>
+          <div className={s.bg} aria-hidden>
+            {slides.map((slide, i) => (
+              <div
+                key={slide.image}
+                className={`${s.bgSlide} ${i === idx ? s.bgSlideActive : ""}`}
+              >
+                <Image
+                  src={slide.image}
+                  alt=""
+                  fill
+                  className={s.bgImage}
+                  sizes="(min-width: 1280px) 1200px, 100vw"
+                  priority={i === 0}
+                />
+              </div>
+            ))}
+            <div className={s.bgScrim} />
+          </div>
+
+          <div className={s.grid}>
           <div className={s.copy}>
             <p className={s.eyebrow}>{ui.eyebrow}</p>
             <div key={idx} className={s.textSwap}>
@@ -167,6 +168,7 @@ export default function StorySection({ locale = "ko" }: { locale?: Locale }) {
                 </p>
               </div>
             </div>
+          </div>
           </div>
         </div>
       </div>
