@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import { NOTICES } from "@/data/site";
+import { getNotices } from "@/lib/cms";
 import s from "./OverviewMosaicSection.module.css";
 import Reveal from "./Reveal";
 
@@ -62,8 +62,9 @@ function ArrowGlyph() {
   );
 }
 
-export default function OverviewMosaicSection({ locale = "ko" }: { locale?: Locale }) {
+export default async function OverviewMosaicSection({ locale = "ko" }: { locale?: Locale }) {
   const t = T[locale];
+  const notices = await getNotices();
   return (
     <section className={s.section} aria-label={t.title}>
       <div className="container">
@@ -125,7 +126,7 @@ export default function OverviewMosaicSection({ locale = "ko" }: { locale?: Loca
             </Link>
           </div>
           <ul className={s.newsCols}>
-            {NOTICES.slice(0, 3).map((n) => (
+            {notices.slice(0, 3).map((n) => (
               <li key={n.id} className={s.newsCol}>
                 <Link href={`/support/notice/${n.id}`} className={s.newsItem}>
                   <span className={s.newsCat}>[{locale === "en" ? CATEGORY_EN[n.category] ?? n.category : n.category}]</span>

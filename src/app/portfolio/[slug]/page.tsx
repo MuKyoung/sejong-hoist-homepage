@@ -4,10 +4,13 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import PageHero from "@/components/subpage/PageHero";
 import ContactBand from "@/components/subpage/ContactBand";
-import { PORTFOLIO, getPortfolioBySlug } from "@/data/site";
+import { PORTFOLIO } from "@/data/site";
+import { getPortfolioItem } from "@/lib/cms";
 import s from "@/styles/subpage.module.css";
 
 type Props = { params: Promise<{ slug: string }> };
+
+export const revalidate = 300;
 
 export function generateStaticParams() {
   return PORTFOLIO.map((item) => ({ slug: item.slug }));
@@ -15,7 +18,7 @@ export function generateStaticParams() {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
-  const item = getPortfolioBySlug(slug);
+  const item = await getPortfolioItem(slug);
   if (!item) return { title: "시공사례" };
   return {
     title: `${item.title} | (주)세종호이스트크레인`,
@@ -25,7 +28,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function PortfolioDetailPage({ params }: Props) {
   const { slug } = await params;
-  const item = getPortfolioBySlug(slug);
+  const item = await getPortfolioItem(slug);
   if (!item) notFound();
 
   const info: { label: string; value: string }[] = [

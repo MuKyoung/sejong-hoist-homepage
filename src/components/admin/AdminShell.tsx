@@ -12,6 +12,7 @@ const NAV: NavItem[] = [
   { label: "대시보드", href: "/admin" },
   { label: "문의 관리", href: "/admin/inquiries" },
   { label: "게시물 관리", href: "/admin/posts" },
+  { label: "시공사례 관리", href: "/admin/portfolio" },
   { label: "회원 관리", href: "/admin/members", adminOnly: true },
 ];
 
@@ -19,6 +20,7 @@ const TITLES: Record<string, string> = {
   "/admin": "대시보드",
   "/admin/inquiries": "문의 관리",
   "/admin/posts": "게시물 관리",
+  "/admin/portfolio": "시공사례 관리",
   "/admin/members": "회원 관리",
 };
 

@@ -172,6 +172,29 @@ create policy inquiries_staff_delete on public.inquiries for delete
   using (public.is_staff());
 
 -- ============================================================
+-- Storage — 시공사례 이미지 버킷 (public read / staff write)
+-- ============================================================
+insert into storage.buckets (id, name, public)
+values ('portfolio-images', 'portfolio-images', true)
+on conflict (id) do nothing;
+
+drop policy if exists "portfolio_images_public_read" on storage.objects;
+create policy "portfolio_images_public_read" on storage.objects
+  for select using (bucket_id = 'portfolio-images');
+
+drop policy if exists "portfolio_images_staff_insert" on storage.objects;
+create policy "portfolio_images_staff_insert" on storage.objects
+  for insert with check (bucket_id = 'portfolio-images' and public.is_staff());
+
+drop policy if exists "portfolio_images_staff_update" on storage.objects;
+create policy "portfolio_images_staff_update" on storage.objects
+  for update using (bucket_id = 'portfolio-images' and public.is_staff());
+
+drop policy if exists "portfolio_images_staff_delete" on storage.objects;
+create policy "portfolio_images_staff_delete" on storage.objects
+  for delete using (bucket_id = 'portfolio-images' and public.is_staff());
+
+-- ============================================================
 -- FIRST ADMIN — after creating a user in Supabase (Auth → Users),
 -- promote them once:
 --   update public.profiles set role = 'admin' where email = 'you@example.com';

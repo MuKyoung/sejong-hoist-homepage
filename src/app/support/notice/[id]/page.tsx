@@ -5,6 +5,7 @@ import PageHero from "@/components/subpage/PageHero";
 import SubNav from "@/components/subpage/SubNav";
 import ContactBand from "@/components/subpage/ContactBand";
 import { NOTICES, NOTICE_CATEGORIES } from "@/data/site";
+import { getNoticeById } from "@/lib/cms";
 import s from "@/styles/subpage.module.css";
 
 type Props = { params: Promise<{ id: string }> };
@@ -30,13 +31,15 @@ const SUPPORT_NAV = [
   { label: "견적 문의", href: "/support/inquiry" },
 ];
 
+export const revalidate = 300;
+
 export function generateStaticParams() {
   return NOTICES.map((n) => ({ id: String(n.id) }));
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { id } = await params;
-  const notice = NOTICES.find((n) => n.id === Number(id));
+  const notice = await getNoticeById(Number(id));
   if (!notice) return { title: "공지사항" };
   return { title: `${notice.title} | 공지사항` };
 }
@@ -50,7 +53,7 @@ function badgeClass(category: string) {
 
 export default async function NoticeDetailPage({ params }: Props) {
   const { id } = await params;
-  const notice = NOTICES.find((n) => n.id === Number(id));
+  const notice = await getNoticeById(Number(id));
   if (!notice) notFound();
 
   const detail = DETAIL[notice.id];
@@ -79,7 +82,7 @@ export default async function NoticeDetailPage({ params }: Props) {
               <span className={s.noticeDate}>{notice.date}</span>
             </div>
 
-            <p className={s.body}>{detail?.desc ?? notice.title}</p>
+            <p className={s.body} style={{ whiteSpace: "pre-line" }}>{notice.body ?? detail?.desc ?? notice.title}</p>
 
             <div style={{ marginTop: 40 }}>
               <Link href="/support/notice" className={s.ghostBtn}>

@@ -1,10 +1,8 @@
 import Link from "next/link";
 import Image from "next/image";
-import { PORTFOLIO } from "@/data/site";
+import { getPortfolioList } from "@/lib/cms";
 import s from "./PortfolioPreviewSection.module.css";
 import Reveal from "./Reveal";
-
-const FEATURED = PORTFOLIO.slice(0, 4);
 
 type Locale = "ko" | "en";
 
@@ -26,8 +24,9 @@ const INDUSTRY_EN: Record<string, string> = {
   물류: "Logistics",
 };
 
-export default function PortfolioPreviewSection({ locale = "ko" }: { locale?: Locale }) {
+export default async function PortfolioPreviewSection({ locale = "ko" }: { locale?: Locale }) {
   const t = T[locale];
+  const featured = (await getPortfolioList()).slice(0, 4);
   return (
     <section className={s.section} aria-label={t.title}>
       <div className="container">
@@ -41,7 +40,7 @@ export default function PortfolioPreviewSection({ locale = "ko" }: { locale?: Lo
 
         <Reveal delay={100}>
         <div className={s.grid}>
-          {FEATURED.map((item) => (
+          {featured.map((item) => (
             <Link key={item.slug} href={`/portfolio/${item.slug}`} className={s.card}>
               <div className={s.thumb}>
                 <Image

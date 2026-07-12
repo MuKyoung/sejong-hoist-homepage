@@ -39,6 +39,12 @@ Trust this map. Do not scan the file tree to rediscover structure.
   Actions under the user session. Env-guarded: builds/works without Supabase env
   (`isSupabaseConfigured`), showing a "not configured" state.
 - Public inquiry form (`support/inquiry`) inserts into `inquiries` (anon INSERT-only).
+- Public content is hybrid: `src/lib/cms.ts` (`getNotices`/`getPortfolioList`/…)
+  reads published DB rows via a cookie-less anon client (`supabase/public.ts`),
+  falling back to `site.ts` statics when unconfigured/empty. Home, notice and
+  portfolio pages use it with `revalidate = 300`; admin actions revalidatePath
+  the public routes. Portfolio images upload to Storage bucket
+  `portfolio-images` (policies in schema.sql; next.config allows *.supabase.co).
 
 ### Domain data (single source: `src/data/site.ts`)
 

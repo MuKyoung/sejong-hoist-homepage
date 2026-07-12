@@ -12,6 +12,8 @@ export const metadata: Metadata = {
     "Korean crane manufacturer since 1999. Design, fabrication, installation and maintenance of hoists and cranes up to 350 tons. KCs safety-certified.",
 };
 
+export const revalidate = 300;
+
 export default function EnHomePage() {
   return (
     <>

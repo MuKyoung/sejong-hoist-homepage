@@ -3,7 +3,8 @@ import Link from "next/link";
 import PageHero from "@/components/subpage/PageHero";
 import SubNav from "@/components/subpage/SubNav";
 import ContactBand from "@/components/subpage/ContactBand";
-import { NOTICES, NOTICE_CATEGORIES } from "@/data/site";
+import { NOTICE_CATEGORIES } from "@/data/site";
+import { getNotices } from "@/lib/cms";
 import s from "@/styles/subpage.module.css";
 
 export const metadata: Metadata = {
@@ -24,7 +25,10 @@ function badgeClass(category: string) {
   return s.badgeMuted;
 }
 
-export default function NoticePage() {
+export const revalidate = 300;
+
+export default async function NoticePage() {
+  const notices = await getNotices();
   return (
     <>
       <PageHero
@@ -44,7 +48,7 @@ export default function NoticePage() {
               <span>날짜</span>
             </div>
 
-            {NOTICES.map((notice) => (
+            {notices.map((notice) => (
               <Link
                 key={notice.id}
                 href={`/support/notice/${notice.id}`}
