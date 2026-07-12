@@ -25,6 +25,15 @@
 }
 .fab:active { background: var(--primary-press); transform: none; }
 
+/* 커서 추적 모드 (데스크톱 전용) — JS가 transform: translateY로 세로 위치 구동.
+   transform 트랜지션은 rAF 러프와 충돌하므로 배경 전환만 남긴다. */
+.follow {
+  top: 0;
+  bottom: auto;
+  transition: background var(--motion-standard) var(--ease-std);
+  will-change: transform;
+}
+
 @media (max-width: 639.98px) {
   .fab {
     height: 48px;
