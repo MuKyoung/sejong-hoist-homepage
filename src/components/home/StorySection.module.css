@@ -10,12 +10,12 @@
 /* 컨테이너 폭 안의 박스형 프레임 — 배경이 양옆으로 확장되지 않음 */
 .frame {
   position: relative;
-  min-height: clamp(420px, 50vh, 540px);
+  min-height: clamp(380px, 44vh, 470px);
   display: flex;
   align-items: center;
   overflow: hidden;
   background: var(--navy-deep);
-  padding: clamp(24px, 2.8vw, 36px) clamp(24px, 4.5vw, 56px);
+  padding: clamp(20px, 2.4vw, 28px) clamp(24px, 4.5vw, 56px);
 }
 
 /* ── 배경 영상형 레이어 (프레임 내부) ── */
@@ -80,7 +80,7 @@
   align-items: center;
 }
 @media (min-width: 1024px) {
-  .grid { grid-template-columns: 1fr 0.88fr; gap: 48px; }
+  .grid { grid-template-columns: 1fr 0.82fr; gap: 48px; }
 }
 
 /* Copy — 다크 배경 위 화이트 타이포 */
