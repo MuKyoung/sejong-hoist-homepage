@@ -82,7 +82,7 @@ export default function StorySection({ locale = "ko" }: { locale?: Locale }) {
   const active = slides[idx];
 
   return (
-    <section className={s.section} aria-label={locale === "en" ? "Sejong Hoist Crane" : "세종호이스트크레인 소개"}>
+    <section className={`${s.section} scroll-fx`} aria-label={locale === "en" ? "Sejong Hoist Crane" : "세종호이스트크레인 소개"}>
       <div className="container">
         <div className={s.frame}>
           <div className={s.bg} aria-hidden>

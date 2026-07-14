@@ -105,7 +105,11 @@ body {
   line-height: 1.5;
   color: var(--body);
   background: var(--canvas);
+  /* clip: hidden과 달리 body를 스크롤 컨테이너로 만들지 않음 —
+     스크롤 연동 애니메이션(view() 타임라인)이 루트 스크롤러를 참조하기 위한 조건.
+     clip 미지원 구형 브라우저는 hidden으로 폴백. */
   overflow-x: hidden;
+  overflow-x: clip;
   -webkit-font-smoothing: antialiased;
   word-break: keep-all;
 }
@@ -116,6 +120,28 @@ button { cursor: pointer; font-family: inherit; }
 
 /* 고정 헤더 아래로 앵커가 가려지지 않도록 (#hoist, #certs 등) */
 [id] { scroll-margin-top: calc(var(--header-h) + 16px); }
+
+/* ── 스크롤 연동 섹션 등장/퇴장 (홈 섹션에 .scroll-fx 부여) ──
+   스크롤 정도에 따라 진입 시 아래에서 떠오르고, 뷰포트를 벗어날 때
+   위로 빠져나가며 사라진다(양방향 스크럽). 지원 브라우저(Chromium 등)에서만
+   동작하고, 그 외에는 기존 IntersectionObserver 리빌이 그대로 적용된다. */
+@keyframes scrollFxIn {
+  from { opacity: 0; transform: translateY(36px); }
+  to { opacity: 1; transform: none; }
+}
+@keyframes scrollFxOut {
+  from { opacity: 1; transform: none; }
+  to { opacity: 0; transform: translateY(-28px); }
+}
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .scroll-fx {
+      animation: scrollFxIn linear both, scrollFxOut linear both;
+      animation-timeline: view(), view();
+      animation-range: entry 0% entry 75%, exit 25% exit 100%;
+    }
+  }
+}
 
 .container {
   max-width: 1280px;

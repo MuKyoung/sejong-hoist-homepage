@@ -115,7 +115,7 @@ export default function BusinessCirclesSection({ locale = "ko" }: { locale?: Loc
   const t = T[locale];
 
   return (
-    <section className={s.section} aria-label={t.title}>
+    <section className={`${s.section} scroll-fx`} aria-label={t.title}>
       <div className="container">
         <Reveal>
         <div className={s.header}>

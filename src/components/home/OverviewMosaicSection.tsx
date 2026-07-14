@@ -90,7 +90,7 @@ export default async function OverviewMosaicSection({ locale = "ko" }: { locale?
   const [notices, portfolio] = await Promise.all([getNotices(), getPortfolioList()]);
   const projects = portfolio.slice(0, 4);
   return (
-    <section className={s.section} aria-label={t.title}>
+    <section className={`${s.section} scroll-fx`} aria-label={t.title}>
       <div className="container">
         <Reveal>
         <div className={s.header}>

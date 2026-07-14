@@ -247,6 +247,12 @@ Entrance: home sections reveal once on scroll via the shared `Reveal` wrapper
 Hover micro-interactions: photo thumbs zoom 1.05 (0.6s), arrow glyphs slide
 +5px, circle icons lift 3px, strip cells grow a 2px `--primary` top rule
 (scaleX left→right). Numbers count up once on first view (stats band).
+Scroll-linked (scrub): home sections carry the global `scroll-fx` class —
+CSS scroll-driven animation (`animation-timeline: view()`) fades/slides each
+section in during viewport entry and out during exit, reversible with scroll
+direction. Chromium-only for now; other browsers keep the one-shot Reveal
+fallback. Requires `body{overflow-x:clip}` (NOT `hidden` — that would make
+body the scroll container and break view() timelines).
 No parallax. Everything respects `prefers-reduced-motion`.
 
 ## 8. Do / Don't

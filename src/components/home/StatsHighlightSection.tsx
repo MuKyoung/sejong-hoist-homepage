@@ -60,7 +60,7 @@ export default function StatsHighlightSection({ locale = "ko" }: { locale?: Loca
 
   return (
     <section
-      className={`${s.section} ${visible ? s.on : ""}`}
+      className={`${s.section} scroll-fx ${visible ? s.on : ""}`}
       aria-label={locale === "en" ? "Key figures" : "주요 실적"}
       ref={ref}
     >

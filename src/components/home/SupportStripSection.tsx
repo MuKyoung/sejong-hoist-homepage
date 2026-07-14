@@ -25,7 +25,7 @@ const HALVES: Record<Locale, [string, string]> = {
 export default function SupportStripSection({ locale = "ko" }: { locale?: Locale }) {
   const halves = HALVES[locale];
   return (
-    <section className={s.section} aria-label={locale === "en" ? "Quick links" : "고객지원 바로가기"}>
+    <section className={`${s.section} scroll-fx`} aria-label={locale === "en" ? "Quick links" : "고객지원 바로가기"}>
       <div className="container">
         <Reveal bare>
         <div className={s.strip}>

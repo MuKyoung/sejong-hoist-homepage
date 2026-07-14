@@ -28,7 +28,7 @@ export default async function PortfolioPreviewSection({ locale = "ko" }: { local
   const t = T[locale];
   const featured = (await getPortfolioList()).slice(0, 4);
   return (
-    <section className={s.section} aria-label={t.title}>
+    <section className={`${s.section} scroll-fx`} aria-label={t.title}>
       <div className="container">
         <Reveal>
         <div className={s.header}>
