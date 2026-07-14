@@ -191,6 +191,10 @@
 }
 @media (hover: hover) and (pointer: fine) {
   .pfList li:hover .pfStrip { display: flex; }
+  /* 진입 애니메이션 fill이 행/패널을 각각 스태킹 컨텍스트로 만들므로,
+     호버 중에는 행과 패널을 최상위로 올려 스트립이 텍스트·라인 위에 보이게 */
+  .pfList li:hover { z-index: 30; }
+  .pfPanel:hover { z-index: 30; }
 }
 
 .pfShot {
