@@ -80,6 +80,11 @@ function ArrowGlyph() {
   );
 }
 
+/** 호버 프리뷰용 사진 목록 — 대표 이미지 + 갤러리에서 최대 4장 (중복 제거) */
+function previewShots(item: { src: string; gallery: string[] }) {
+  return [...new Set([item.src, ...item.gallery])].slice(0, 4);
+}
+
 export default async function OverviewMosaicSection({ locale = "ko" }: { locale?: Locale }) {
   const t = T[locale];
   const [notices, portfolio] = await Promise.all([getNotices(), getPortfolioList()]);
@@ -135,6 +140,24 @@ export default async function OverviewMosaicSection({ locale = "ko" }: { locale?
                     </span>
                     <span className={s.pfArrow} aria-hidden>
                       <ArrowGlyph />
+                    </span>
+                    {/* 호버 시 행 아래로 펼쳐지는 사진 프리뷰 (데스크톱 전용, 클릭 = 상세 이동) */}
+                    <span className={s.pfStrip} aria-hidden>
+                      {previewShots(item).map((shot, j) => (
+                        <span
+                          key={shot}
+                          className={s.pfShot}
+                          style={{ "--j": j } as React.CSSProperties}
+                        >
+                          <Image
+                            src={shot}
+                            alt=""
+                            fill
+                            className={s.pfShotImg}
+                            sizes="160px"
+                          />
+                        </span>
+                      ))}
                     </span>
                   </Link>
                 </li>
