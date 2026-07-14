@@ -95,7 +95,7 @@ export default async function OverviewMosaicSection({ locale = "ko" }: { locale?
         </div>
         </Reveal>
 
-        <Reveal delay={100}>
+        <Reveal bare>
         <div className={s.grid}>
           <Link href="/about" className={s.photoCard}>
             <Image
@@ -121,8 +121,8 @@ export default async function OverviewMosaicSection({ locale = "ko" }: { locale?
               </Link>
             </div>
             <ul className={s.pfList}>
-              {projects.map((item) => (
-                <li key={item.slug}>
+              {projects.map((item, i) => (
+                <li key={item.slug} style={{ "--i": i } as React.CSSProperties}>
                   <Link href={`/portfolio/${item.slug}`} className={s.pfRow}>
                     <span className={s.pfIndustry}>
                       {locale === "en" ? INDUSTRY_EN[item.industry] ?? item.industry : item.industry}
@@ -159,7 +159,7 @@ export default async function OverviewMosaicSection({ locale = "ko" }: { locale?
         </div>
         </Reveal>
 
-        <Reveal delay={200}>
+        <Reveal bare>
         <div className={s.newsBand}>
           <div className={s.newsHead}>
             <h3 className={s.newsTitle}>{t.newsTitle}</h3>

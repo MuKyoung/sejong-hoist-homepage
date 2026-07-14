@@ -59,11 +59,19 @@ export default function StatsHighlightSection({ locale = "ko" }: { locale?: Loca
   }, []);
 
   return (
-    <section className={s.section} aria-label={locale === "en" ? "Key figures" : "주요 실적"} ref={ref}>
+    <section
+      className={`${s.section} ${visible ? s.on : ""}`}
+      aria-label={locale === "en" ? "Key figures" : "주요 실적"}
+      ref={ref}
+    >
       <div className="container">
         <div className={s.grid}>
-          {STATS[locale].map((st) => (
-            <div key={st.label} className={s.cell}>
+          {STATS[locale].map((st, i) => (
+            <div
+              key={st.label}
+              className={s.cell}
+              style={{ "--i": i } as React.CSSProperties}
+            >
               <p className={s.label}>{st.label}</p>
               <p className={s.number}>
                 <CountUp target={st.value} run={visible} />

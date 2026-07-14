@@ -13,6 +13,23 @@
   gap: 16px;
 }
 
+/* 스크롤 진입 시 셀 순차 등장 */
+:global([data-reveal="off"]) .cell { opacity: 0; }
+:global([data-reveal="on"]) .cell {
+  animation: cellIn 0.55s var(--ease-std) both;
+  animation-delay: calc(90ms * var(--i, 0));
+}
+@keyframes cellIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  :global([data-reveal]) .cell {
+    opacity: 1;
+    animation: none !important;
+  }
+}
+
 .cell {
   position: relative;
   height: 240px;

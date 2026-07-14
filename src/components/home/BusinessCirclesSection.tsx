@@ -125,13 +125,14 @@ export default function BusinessCirclesSection({ locale = "ko" }: { locale?: Loc
         </div>
         </Reveal>
 
-        <Reveal delay={100}>
+        <Reveal bare>
         <div className={s.circles}>
           {BUSINESS_AREAS.map((area, i) => (
             <Link
               key={area.title}
               href={area.href}
               className={`${s.circle} ${fills[i % fills.length]}`}
+              style={{ "--i": i } as React.CSSProperties}
             >
               <span className={s.circleIcon}>
                 <AreaIcon name={area.icon} />

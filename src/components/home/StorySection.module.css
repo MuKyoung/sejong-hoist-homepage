@@ -83,6 +83,21 @@
   .grid { grid-template-columns: 1fr 0.82fr; gap: 48px; }
 }
 
+/* ── 최초 로드 진입 연출 (슬라이드 전환용 textSwap과 별개 요소만) ── */
+@keyframes heroRise {
+  from { opacity: 0; transform: translateY(18px); }
+  to { opacity: 1; transform: none; }
+}
+@keyframes heroCard {
+  from { opacity: 0; transform: translateY(26px) scale(0.985); }
+  to { opacity: 1; transform: none; }
+}
+
+.eyebrow { animation: heroRise 0.6s var(--ease-std) 0.05s both; }
+.ctas { animation: heroRise 0.6s var(--ease-std) 0.4s both; }
+.visualWrap { animation: heroCard 0.75s var(--ease-std) 0.25s both; }
+.controls { animation: heroRise 0.6s var(--ease-std) 0.55s both; }
+
 /* Copy — 다크 배경 위 화이트 타이포 */
 .copy { min-width: 0; }
 
@@ -264,4 +279,8 @@
     transform: none;
   }
   .textSwap { animation: none; }
+  .eyebrow,
+  .ctas,
+  .visualWrap,
+  .controls { animation: none; }
 }

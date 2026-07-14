@@ -38,10 +38,15 @@ export default async function PortfolioPreviewSection({ locale = "ko" }: { local
         </div>
         </Reveal>
 
-        <Reveal delay={100}>
+        <Reveal bare>
         <div className={s.grid}>
-          {featured.map((item) => (
-            <Link key={item.slug} href={`/portfolio/${item.slug}`} className={s.card}>
+          {featured.map((item, i) => (
+            <Link
+              key={item.slug}
+              href={`/portfolio/${item.slug}`}
+              className={s.card}
+              style={{ "--i": i } as React.CSSProperties}
+            >
               <div className={s.thumb}>
                 <Image
                   src={item.src}

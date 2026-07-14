@@ -27,9 +27,9 @@ export default function SupportStripSection({ locale = "ko" }: { locale?: Locale
   return (
     <section className={s.section} aria-label={locale === "en" ? "Quick links" : "고객지원 바로가기"}>
       <div className="container">
-        <Reveal>
+        <Reveal bare>
         <div className={s.strip}>
-          <div className={`${s.cell} ${s.splitCell}`}>
+          <div className={`${s.cell} ${s.splitCell}`} style={{ "--i": 0 } as React.CSSProperties}>
             <Link href="/business" className={s.half}>
               <span className={s.halfTitle}>{halves[0]}</span>
             </Link>
@@ -38,8 +38,13 @@ export default function SupportStripSection({ locale = "ko" }: { locale?: Locale
             </Link>
           </div>
 
-          {CELLS[locale].map((cell) => (
-            <Link key={cell.href} href={cell.href} className={s.cell}>
+          {CELLS[locale].map((cell, i) => (
+            <Link
+              key={cell.href}
+              href={cell.href}
+              className={s.cell}
+              style={{ "--i": i + 1 } as React.CSSProperties}
+            >
               <span className={s.cellTitle}>{cell.title}</span>
               <span className={s.cellDesc}>{cell.desc}</span>
             </Link>
