@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import { getNotices } from "@/lib/cms";
+import { getNotices, getPortfolioList } from "@/lib/cms";
 import s from "./OverviewMosaicSection.module.css";
 import Reveal from "./Reveal";
 
@@ -8,14 +8,17 @@ type Locale = "ko" | "en";
 
 const T: Record<Locale, {
   eyebrow: string; title: string; subtitle: string; photoLabel: string;
-  blocks: [string, string, string, string]; newsTitle: string; more: string;
+  portfolioTitle: string; portfolioMore: string;
+  blocks: [string, string, string]; newsTitle: string; more: string;
 }> = {
   ko: {
     eyebrow: "About Us",
     title: "회사소개",
     subtitle: "운반하역 현장의 안전과 품질을 책임지는 세종호이스트크레인입니다.",
     photoLabel: "세종호이스트크레인 소개",
-    blocks: ["시공사례", "기술·인증", "CONTACT US", "견적 문의"],
+    portfolioTitle: "시공사례",
+    portfolioMore: "전체 보기 +",
+    blocks: ["기술·인증", "CONTACT US", "견적 문의"],
     newsTitle: "뉴스 및 공지",
     more: "더보기 +",
   },
@@ -24,7 +27,9 @@ const T: Record<Locale, {
     title: "Who We Are",
     subtitle: "Sejong Hoist Crane builds safety and quality into every heavy-lifting site.",
     photoLabel: "About Sejong Hoist Crane",
-    blocks: ["Projects", "Technology", "CONTACT US", "Request a Quote"],
+    portfolioTitle: "Projects",
+    portfolioMore: "View all +",
+    blocks: ["Technology", "CONTACT US", "Request a Quote"],
     newsTitle: "News & Notice",
     more: "More +",
   },
@@ -43,6 +48,19 @@ const CATEGORY_EN: Record<string, string> = {
   제품: "Product",
   채용: "Careers",
   기술: "Tech",
+};
+
+const TITLE_EN: Record<string, string> = {
+  "gantry-350": "Gantry Crane 350TON",
+  "grab-350-50": "Grab Crane 350/50TON",
+  "grab-250-50": "Grab Crane 250/50TON",
+  "ceiling-30": "Overhead Crane 30TON",
+};
+
+const INDUSTRY_EN: Record<string, string> = {
+  "전기·전자": "Electric & Electronics",
+  자동차: "Automotive",
+  물류: "Logistics",
 };
 
 function ArrowGlyph() {
@@ -64,7 +82,8 @@ function ArrowGlyph() {
 
 export default async function OverviewMosaicSection({ locale = "ko" }: { locale?: Locale }) {
   const t = T[locale];
-  const notices = await getNotices();
+  const [notices, portfolio] = await Promise.all([getNotices(), getPortfolioList()]);
+  const projects = portfolio.slice(0, 4);
   return (
     <section className={s.section} aria-label={t.title}>
       <div className="container">
@@ -84,7 +103,7 @@ export default async function OverviewMosaicSection({ locale = "ko" }: { locale?
               alt=""
               fill
               className={s.photoImg}
-              sizes="(min-width: 1024px) 40vw, 100vw"
+              sizes="(min-width: 1024px) 28vw, 100vw"
             />
             <span className={s.photoOverlay} aria-hidden />
             <span className={s.photoLabel}>
@@ -93,24 +112,47 @@ export default async function OverviewMosaicSection({ locale = "ko" }: { locale?
             </span>
           </Link>
 
-          <div className={s.blockCol}>
-            <Link href="/portfolio" className={`${s.block} ${s.blockBrand}`}>
-              <span className={s.blockLabel}>{t.blocks[0]}</span>
-              <ArrowGlyph />
-            </Link>
-            <Link href="/technology" className={`${s.block} ${s.blockWhite}`}>
-              <span className={s.blockLabel}>{t.blocks[1]}</span>
-              <ArrowGlyph />
-            </Link>
+          {/* 시공사례 리스트 — 클릭 시 해당 상세로 (2026-07-13 클라이언트 요청) */}
+          <div className={s.pfPanel}>
+            <div className={s.pfHead}>
+              <h3 className={s.pfTitle}>{t.portfolioTitle}</h3>
+              <Link href="/portfolio" className={s.pfMore}>
+                {t.portfolioMore}
+              </Link>
+            </div>
+            <ul className={s.pfList}>
+              {projects.map((item) => (
+                <li key={item.slug}>
+                  <Link href={`/portfolio/${item.slug}`} className={s.pfRow}>
+                    <span className={s.pfIndustry}>
+                      {locale === "en" ? INDUSTRY_EN[item.industry] ?? item.industry : item.industry}
+                    </span>
+                    <span className={s.pfName}>
+                      {locale === "en" ? TITLE_EN[item.slug] ?? item.title : item.title}
+                    </span>
+                    <span className={s.pfMeta}>
+                      {item.capacity} · {item.year}
+                    </span>
+                    <span className={s.pfArrow} aria-hidden>
+                      <ArrowGlyph />
+                    </span>
+                  </Link>
+                </li>
+              ))}
+            </ul>
           </div>
 
           <div className={s.blockCol}>
+            <Link href="/technology" className={`${s.block} ${s.blockWhite}`}>
+              <span className={s.blockLabel}>{t.blocks[0]}</span>
+              <ArrowGlyph />
+            </Link>
             <Link href="/support" className={`${s.block} ${s.blockSurface}`}>
-              <span className={s.blockLabel}>{t.blocks[2]}</span>
+              <span className={s.blockLabel}>{t.blocks[1]}</span>
               <ArrowGlyph />
             </Link>
             <Link href="/support/inquiry" className={`${s.block} ${s.blockDeep}`}>
-              <span className={s.blockLabel}>{t.blocks[3]}</span>
+              <span className={s.blockLabel}>{t.blocks[2]}</span>
               <ArrowGlyph />
             </Link>
           </div>

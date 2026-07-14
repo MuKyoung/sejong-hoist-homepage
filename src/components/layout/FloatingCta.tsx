@@ -31,13 +31,15 @@ export default function FloatingCta({ locale = "ko" }: { locale?: "ko" | "en" })
       raf = requestAnimationFrame(tick);
     };
 
-    const onMove = (e: MouseEvent) => {
+    let lastY = -1;
+
+    const follow = (clientY: number, overButton: boolean) => {
       // 버튼 위에 커서가 있는 동안은 제자리에 멈춰서 클릭이 쉽도록
-      if (active && el.contains(e.target as Node)) {
+      if (active && overButton) {
         target = current;
         return;
       }
-      target = clampY(e.clientY - el.offsetHeight / 2);
+      target = clampY(clientY - el.offsetHeight / 2);
       if (!active) {
         active = true;
         current = el.getBoundingClientRect().top;
@@ -46,14 +48,29 @@ export default function FloatingCta({ locale = "ko" }: { locale?: "ko" | "en" })
       }
     };
 
+    // 마우스 이동 + 휠 스크롤 모두에서 커서 위치를 추적
+    const onMove = (e: MouseEvent) => {
+      lastY = e.clientY;
+      follow(e.clientY, el.contains(e.target as Node));
+    };
+
+    // 스크롤바 드래그 등 wheel 없는 스크롤도 마지막 커서 위치로 따라오도록
+    const onScroll = () => {
+      if (lastY >= 0) follow(lastY, false);
+    };
+
     const onResize = () => {
       if (active) target = clampY(target);
     };
 
     window.addEventListener("mousemove", onMove, { passive: true });
+    window.addEventListener("wheel", onMove, { passive: true });
+    window.addEventListener("scroll", onScroll, { passive: true });
     window.addEventListener("resize", onResize);
     return () => {
       window.removeEventListener("mousemove", onMove);
+      window.removeEventListener("wheel", onMove);
+      window.removeEventListener("scroll", onScroll);
       window.removeEventListener("resize", onResize);
       cancelAnimationFrame(raf);
       el.classList.remove(s.follow);
@@ -63,19 +80,7 @@ export default function FloatingCta({ locale = "ko" }: { locale?: "ko" | "en" })
 
   return (
     <Link ref={ref} href="/support/inquiry" className={s.fab}>
-      <svg
-        width="18"
-        height="18"
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="1.8"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        aria-hidden
-      >
-        <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
-      </svg>
+      <span className={s.mark} aria-hidden />
       {locale === "en" ? "Get a Quote" : "견적 문의"}
     </Link>
   );

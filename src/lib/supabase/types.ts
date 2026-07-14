@@ -23,6 +23,8 @@ export type Inquiry = {
   handled_by: string | null;
   handled_at: string | null;
   created_at: string;
+  /** storage 'inquiry-files' 버킷의 object path 목록 (스키마 갱신 전 행은 null 가능) */
+  attachments: string[] | null;
 };
 
 export type Notice = {

@@ -95,6 +95,7 @@ html {
 
 body {
   font-family:
+    "Pretendard Variable", Pretendard,
     var(--font-noto-sans-kr), "Noto Sans KR",
     -apple-system, BlinkMacSystemFont,
     "Apple SD Gothic Neo", "Malgun Gothic",

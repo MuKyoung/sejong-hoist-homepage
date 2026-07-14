@@ -110,6 +110,10 @@ create table if not exists public.inquiries (
   created_at       timestamptz not null default now()
 );
 
+-- 문의 첨부파일 경로 목록 (2026-07-13 — storage 'inquiry-files' 버킷의 object path)
+alter table public.inquiries
+  add column if not exists attachments text[] not null default '{}';
+
 -- updated_at auto-touch
 create or replace function public.touch_updated_at()
 returns trigger language plpgsql as $$
@@ -193,6 +197,38 @@ create policy "portfolio_images_staff_update" on storage.objects
 drop policy if exists "portfolio_images_staff_delete" on storage.objects;
 create policy "portfolio_images_staff_delete" on storage.objects
   for delete using (bucket_id = 'portfolio-images' and public.is_staff());
+
+-- ============================================================
+-- Storage — 문의 첨부파일 버킷 (비공개: 업로드는 누구나, 열람은 staff만)
+-- 10MB 제한 + 문서/이미지 위주 MIME 허용 (hwp/dwg 등은 octet-stream으로 옴)
+-- ============================================================
+insert into storage.buckets (id, name, public, file_size_limit, allowed_mime_types)
+values (
+  'inquiry-files', 'inquiry-files', false, 10485760,
+  array[
+    'image/jpeg','image/png','image/gif','image/webp','image/bmp',
+    'application/pdf','application/zip','application/x-zip-compressed',
+    'application/msword',
+    'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+    'application/vnd.ms-excel',
+    'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+    'application/x-hwp','application/haansofthwp','application/vnd.hancom.hwp',
+    'application/octet-stream'
+  ]
+)
+on conflict (id) do nothing;
+
+drop policy if exists "inquiry_files_public_insert" on storage.objects;
+create policy "inquiry_files_public_insert" on storage.objects
+  for insert with check (bucket_id = 'inquiry-files');
+
+drop policy if exists "inquiry_files_staff_read" on storage.objects;
+create policy "inquiry_files_staff_read" on storage.objects
+  for select using (bucket_id = 'inquiry-files' and public.is_staff());
+
+drop policy if exists "inquiry_files_staff_delete" on storage.objects;
+create policy "inquiry_files_staff_delete" on storage.objects
+  for delete using (bucket_id = 'inquiry-files' and public.is_staff());
 
 -- ============================================================
 -- FIRST ADMIN — after creating a user in Supabase (Auth → Users),

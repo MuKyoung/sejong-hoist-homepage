@@ -1,6 +1,6 @@
 export const COMPANY = {
   name: "(주)세종호이스트크레인",
-  ceo: "김승용",
+  ceo: "김승용 · 김하민", // 공동대표 (2026-07-13 클라이언트 확정)
   bizNo: "142-88-01261",
   address: "세종특별자치시 부강면 시목부강로 314",
   tel: "044-865-0801",
@@ -202,6 +202,8 @@ export type CertDoc = {
   title: string;
   desc: string;
   pageCount: number;
+  /** 카드에 크게 부각할 대표 톤수 (2026-07-13 큰 톤수 부각 요청) */
+  capacity?: string;
 };
 
 export const CERT_DOCS: CertDoc[] = [
@@ -210,12 +212,14 @@ export const CERT_DOCS: CertDoc[] = [
     title: "갠트리 350TON·그라브 350/50T·250/50T 안전인증",
     desc: "한국승강기안전공단 · KCs 개별 제품심사 적합",
     pageCount: 9,
+    capacity: "350TON",
   },
   {
     slug: "cert-2",
     title: "콘덴스룸 크레인 3TON 안전인증",
     desc: "한국승강기안전공단 · KCs 개별 제품심사 적합",
     pageCount: 4,
+    capacity: "3TON",
   },
   {
     slug: "cert-3",
@@ -243,27 +247,60 @@ export const certPage = (doc: CertDoc, n: number) =>
 export const getCertDocBySlug = (slug: string) =>
   CERT_DOCS.find((d) => d.slug === slug);
 
-/* 기술·인증 — 서면심사도서 11권 (표지만 게시; 본문은 수백 페이지 기술도서) */
+/* 기술·인증 — 서면심사도서 11권 (표지만 게시; 본문은 수백 페이지 기술도서)
+   2026-07-13 클라이언트 요청: 큰 톤수 부각 — 톤수 내림차순 정렬 */
 export const REVIEW_DOCS: { title: string; pages: number; image: string }[] = [
-  { title: "총조립 30TON (SJ-30-26400)", pages: 88, image: "/images/certs/docs/doc-01.jpg" },
   { title: "총조립 350/50TON (SJ-350-50-28300)", pages: 327, image: "/images/certs/docs/doc-02.jpg" },
-  { title: "본체조립 30TON (SJ-30-26400)", pages: 89, image: "/images/certs/docs/doc-03.jpg" },
-  { title: "본체조립 250/50TON (SJ-250-50-28300)", pages: 322, image: "/images/certs/docs/doc-04.jpg" },
-  { title: "자재창고 5TON (SJ-5-15800)", pages: 88, image: "/images/certs/docs/doc-05.jpg" },
-  { title: "옥내창고 30TON (SJ-30-24100)", pages: 88, image: "/images/certs/docs/doc-06.jpg" },
-  { title: "시험실 5TON (SJ-5-26800)", pages: 88, image: "/images/certs/docs/doc-07.jpg" },
-  { title: "시험실 20TON (SJ-20-26800)", pages: 88, image: "/images/certs/docs/doc-08.jpg" },
-  { title: "포장장 5TON (SJ-5-14900)", pages: 88, image: "/images/certs/docs/doc-09.jpg" },
   { title: "옥외동 350TON (SJ-350-21000)", pages: 303, image: "/images/certs/docs/doc-10.jpg" },
+  { title: "본체조립 250/50TON (SJ-250-50-28300)", pages: 322, image: "/images/certs/docs/doc-04.jpg" },
+  { title: "총조립 30TON (SJ-30-26400)", pages: 88, image: "/images/certs/docs/doc-01.jpg" },
+  { title: "본체조립 30TON (SJ-30-26400)", pages: 89, image: "/images/certs/docs/doc-03.jpg" },
+  { title: "옥내창고 30TON (SJ-30-24100)", pages: 88, image: "/images/certs/docs/doc-06.jpg" },
+  { title: "시험실 20TON (SJ-20-26800)", pages: 88, image: "/images/certs/docs/doc-08.jpg" },
+  { title: "자재창고 5TON (SJ-5-15800)", pages: 88, image: "/images/certs/docs/doc-05.jpg" },
+  { title: "시험실 5TON (SJ-5-26800)", pages: 88, image: "/images/certs/docs/doc-07.jpg" },
+  { title: "포장장 5TON (SJ-5-14900)", pages: 88, image: "/images/certs/docs/doc-09.jpg" },
   { title: "콘덴서룸 3TON (SJ-3-17900)", pages: 88, image: "/images/certs/docs/doc-11.jpg" },
 ];
 
-/* 기술·인증 — ISO 인증 3건 (2026-07-10 클라이언트 요청. 정확한 표준명·번호 확인 중) */
-export const ISO_CERTS: { title: string; desc: string }[] = [
-  { title: "ISO 9001", desc: "품질경영시스템" },
-  { title: "ISO 14001", desc: "환경경영시스템" },
-  { title: "ISO 45001", desc: "안전보건경영시스템" },
+/* 기술·인증 — ISO 인증 3건 (2026-07-13 실물 인증서 수령: 에뿔인증원 발급,
+   유효기간 2026.04.23 ~ 2027.04.22, 갱신 만기 2029.04.22) */
+export const ISO_CERTS: {
+  title: string;
+  standard: string;
+  desc: string;
+  certNo: string;
+  image: string;
+}[] = [
+  {
+    title: "ISO 9001",
+    standard: "ISO 9001 : 2015",
+    desc: "품질경영시스템",
+    certNo: "Ac_Q26-066",
+    image: "/images/certs/iso/iso-9001.jpg",
+  },
+  {
+    title: "ISO 14001",
+    standard: "ISO 14001 : 2015",
+    desc: "환경경영시스템",
+    certNo: "Ac_E26-066",
+    image: "/images/certs/iso/iso-14001.jpg",
+  },
+  {
+    title: "ISO 45001",
+    standard: "ISO 45001 : 2018",
+    desc: "안전보건경영시스템",
+    certNo: "Ac_S26-066",
+    image: "/images/certs/iso/iso-45001.jpg",
+  },
 ];
+
+export const ISO_META = {
+  issuer: "에뿔인증원 (A+ Certification)",
+  period: "2026.04.23 ~ 2027.04.22",
+  scope:
+    "물품 취급장비(크레인 구조물, 호이스트 및 관련 부품)의 설계, 제조, 설치 및 서비스, 전기자재 및 방화자재의 공급 및 관련 제품의 도매·유통",
+};
 
 /* 기술·인증 — 보유 자격 인력 (기계·전기·산업안전 국가기술자격 다수 보유) */
 export const QUALIFICATIONS = {

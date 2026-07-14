@@ -112,9 +112,16 @@ export default function Footer({ locale = "ko" }: { locale?: Locale }) {
             <p>
               314 Simokbugang-ro, Bugang-myeon, Sejong-si, Korea
               <br />
-              CEO Kim Seung-yong | Business Reg. No. {COMPANY.bizNo}
+              CEO Kim Seung-yong, Kim Ha-min | Business Reg. No. {COMPANY.bizNo}
               <br />
-              TEL {COMPANY.tel} | FAX {COMPANY.fax} | E-mail {COMPANY.email}
+              TEL{" "}
+              <a href={`tel:${COMPANY.tel.replace(/-/g, "")}`} className={s.metaLink}>
+                {COMPANY.tel}
+              </a>{" "}
+              | FAX {COMPANY.fax} | E-mail{" "}
+              <a href={`mailto:${COMPANY.email}`} className={s.metaLink}>
+                {COMPANY.email}
+              </a>
             </p>
           ) : (
             <p>
@@ -122,7 +129,14 @@ export default function Footer({ locale = "ko" }: { locale?: Locale }) {
               <br />
               대표이사 {COMPANY.ceo} | 사업자등록번호 {COMPANY.bizNo}
               <br />
-              TEL {COMPANY.tel} | FAX {COMPANY.fax} | E-mail {COMPANY.email}
+              TEL{" "}
+              <a href={`tel:${COMPANY.tel.replace(/-/g, "")}`} className={s.metaLink}>
+                {COMPANY.tel}
+              </a>{" "}
+              | FAX {COMPANY.fax} | E-mail{" "}
+              <a href={`mailto:${COMPANY.email}`} className={s.metaLink}>
+                {COMPANY.email}
+              </a>
             </p>
           )}
         </div>

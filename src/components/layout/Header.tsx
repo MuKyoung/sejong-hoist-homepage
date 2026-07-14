@@ -119,7 +119,14 @@ export default function Header() {
               <Link href="/en" className={s.dropLink}>English</Link>
             </div>
           </div>
-          <a href="tel:0448650801" className={s.phone}>044-865-0801</a>
+          <div className={s.phones}>
+            <a href="tel:0448650801" className={s.phone}>
+              <span className={s.phoneLabel}>{isEn ? "Tel" : "대표"}</span>044-865-0801
+            </a>
+            <a href="tel:01076051510" className={s.phone}>
+              <span className={s.phoneLabel}>{isEn ? "Mobile" : "모바일"}</span>010-7605-1510
+            </a>
+          </div>
           <button
             type="button"
             className={s.menuBtn}
@@ -161,6 +168,14 @@ export default function Header() {
                 <Link href="/en" className={s.mobileLangLink} onClick={() => setOpen(false)}>
                   English
                 </Link>
+              </div>
+              <div className={s.mobileLang}>
+                <a href="tel:0448650801" className={s.mobileLangLink}>
+                  {isEn ? "Tel" : "대표"} 044-865-0801
+                </a>
+                <a href="tel:01076051510" className={s.mobileLangLink}>
+                  {isEn ? "Mobile" : "모바일"} 010-7605-1510
+                </a>
               </div>
               <Link
                 href="/support/inquiry"

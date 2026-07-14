@@ -571,6 +571,18 @@
   position: relative;
   aspect-ratio: 4 / 3;
   background: var(--surface-alt);
+  overflow: hidden;
+}
+/* 호버 시 살짝 줌인 (2026-07-13 클라이언트 요청) */
+.portfolioThumb :global(img) {
+  transition: transform 0.6s var(--ease-std);
+}
+.portfolioCard:hover .portfolioThumb :global(img) {
+  transform: scale(1.05);
+}
+@media (prefers-reduced-motion: reduce) {
+  .portfolioThumb :global(img) { transition: none; }
+  .portfolioCard:hover .portfolioThumb :global(img) { transform: none; }
 }
 
 .capacityBadge {
@@ -603,7 +615,9 @@
   font-weight: 700;
   color: var(--navy);
   margin-bottom: 6px;
+  transition: color var(--motion-fast) var(--ease-std);
 }
+.portfolioCard:hover .portfolioTitle { color: var(--primary); }
 
 .portfolioClient {
   font-size: 14px;
@@ -697,6 +711,19 @@
   .contactGrid { grid-template-columns: repeat(3, 1fr); gap: 32px; }
 }
 
+/* 연락 수단 아이콘 (2026-07-13 클라이언트 요청) */
+.contactIcon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 52px;
+  height: 52px;
+  margin-bottom: 14px;
+  border-radius: var(--r-full);
+  background: var(--tint);
+  color: var(--primary);
+}
+
 .contactItemLabel {
   font-size: 12px;
   font-weight: 600;
@@ -708,8 +735,16 @@
   font-size: 1.25rem;
   font-weight: 700;
   color: var(--navy);
+  text-decoration: underline;
+  text-decoration-color: transparent;
+  text-underline-offset: 4px;
+  transition: color var(--motion-fast) var(--ease-std),
+    text-decoration-color var(--motion-fast) var(--ease-std);
 }
-.contactItemValue:hover { color: var(--primary); }
+.contactItemValue:hover {
+  color: var(--primary);
+  text-decoration-color: currentColor;
+}
 
 /* Notice table */
 .noticeWrap {
@@ -877,6 +912,75 @@
   box-shadow: 0 0 0 3px rgba(44, 74, 110, 0.15);
 }
 .fieldTextarea { resize: vertical; min-height: 180px; }
+
+/* 문의 첨부파일 (2026-07-13) */
+.fieldLabelHint {
+  font-weight: 400;
+  font-size: 12.5px;
+  color: var(--muted);
+}
+
+.fileBtn {
+  display: inline-flex;
+  align-items: center;
+  padding: 10px 18px;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--primary);
+  background: var(--canvas);
+  border: 1px solid var(--tint-strong);
+  border-radius: var(--r-sm);
+  transition: background var(--motion-fast) var(--ease-std),
+    border-color var(--motion-fast) var(--ease-std);
+}
+.fileBtn:hover { background: var(--tint); border-color: var(--primary); }
+.fileBtn:disabled { opacity: 0.45; cursor: not-allowed; }
+
+.fileList {
+  list-style: none;
+  margin-top: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.fileItem {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 12px;
+  font-size: 13.5px;
+  background: var(--surface);
+  border: 1px solid var(--hairline);
+  border-radius: var(--r-sm);
+}
+
+.fileName {
+  flex: 1;
+  min-width: 0;
+  color: var(--body);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.fileSize {
+  flex-shrink: 0;
+  font-size: 12px;
+  color: var(--faint);
+  font-variant-numeric: tabular-nums;
+}
+
+.fileRemove {
+  flex-shrink: 0;
+  padding: 2px 6px;
+  font-size: 12px;
+  color: var(--muted);
+  background: none;
+  border: none;
+  transition: color var(--motion-fast) var(--ease-std);
+}
+.fileRemove:hover { color: #b0102f; }
 
 .agreeBox {
   padding: 16px;
@@ -1095,6 +1199,17 @@
 
 .certBody { padding: 18px 20px 20px; }
 
+/* 대표 톤수 부각 (2026-07-13 클라이언트 요청) */
+.certCapacity {
+  font-size: 1.625rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  line-height: 1.1;
+  color: var(--brand);
+  font-variant-numeric: tabular-nums;
+  margin-bottom: 6px;
+}
+
 .certTitle {
   font-size: 15px;
   font-weight: 700;
@@ -1301,7 +1416,23 @@
   color: var(--on-primary);
 }
 .orgTopTitle { font-size: 1.0625rem; font-weight: 700; }
-.orgTopSub { margin-top: 4px; font-size: 12px; color: rgba(255, 255, 255, 0.65); }
+.orgTopSub { margin-top: 4px; font-size: 13px; color: rgba(255, 255, 255, 0.72); }
+
+/* 총괄이사·전무 나란히 (2026-07-13 클라이언트 요청) */
+.orgLv2Row {
+  display: flex;
+  justify-content: center;
+  align-items: stretch;
+  gap: 16px;
+}
+.orgLv2Row .orgLv2,
+.orgLv2Row .orgLv3 {
+  width: 180px;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 
 .orgStem {
   width: 1px;

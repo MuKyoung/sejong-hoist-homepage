@@ -59,6 +59,9 @@ RLS 보안 정책이 생성됩니다.
 - 시공사례 이미지는 관리자 화면에서 업로드 → Supabase Storage
   `portfolio-images` 버킷(공개 읽기, staff 쓰기 — schema.sql에 정책 포함)에
   저장됩니다. 첫 등록 전까지는 기존 8건(정적)이 그대로 노출됩니다.
+- 견적 문의 첨부파일: 고객이 최대 3개(개당 10MB)까지 도면·사진 등을 첨부할 수
+  있습니다. **비공개** `inquiry-files` 버킷에 저장되며(schema.sql 재실행으로
+  생성) 관리자 문의 화면에서만 서명 URL(1시간)로 다운로드됩니다.
 
 ## 다음 단계 (예정)
 - 문의 접수 시 이메일 알림: Supabase Dashboard → Database Webhooks에서

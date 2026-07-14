@@ -18,7 +18,15 @@ const STATUS_CLASS: Record<InquiryStatus, string> = {
 
 const STATUSES: InquiryStatus[] = ["new", "in_progress", "done", "archived"];
 
-export default function InquiryRow({ inquiry }: { inquiry: Inquiry }) {
+export type AttachmentLink = { name: string; url: string | null };
+
+export default function InquiryRow({
+  inquiry,
+  attachments = [],
+}: {
+  inquiry: Inquiry;
+  attachments?: AttachmentLink[];
+}) {
   const [open, setOpen] = useState(false);
   const [status, setStatus] = useState<InquiryStatus>(inquiry.status);
   const [note, setNote] = useState(inquiry.admin_note ?? "");
@@ -71,6 +79,33 @@ export default function InquiryRow({ inquiry }: { inquiry: Inquiry }) {
               </div>
               {inquiry.email && (
                 <p className={s.cellMuted}>이메일: {inquiry.email}</p>
+              )}
+
+              {attachments.length > 0 && (
+                <div>
+                  <p className={s.statLabel} style={{ marginBottom: 4 }}>
+                    첨부파일 ({attachments.length})
+                  </p>
+                  <div style={{ display: "flex", flexWrap: "wrap", gap: 8 }}>
+                    {attachments.map((a) =>
+                      a.url ? (
+                        <a
+                          key={a.name}
+                          href={a.url}
+                          target="_blank"
+                          rel="noreferrer"
+                          className={`${s.btn} ${s.btnSm}`}
+                        >
+                          ⬇ {a.name}
+                        </a>
+                      ) : (
+                        <span key={a.name} className={s.cellMuted}>
+                          {a.name} (링크 만료 — 새로고침)
+                        </span>
+                      ),
+                    )}
+                  </div>
+                </div>
               )}
 
               <div style={{ display: "flex", flexWrap: "wrap", gap: 12, alignItems: "center" }}>

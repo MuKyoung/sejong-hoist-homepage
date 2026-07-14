@@ -25,6 +25,29 @@
 }
 .fab:active { background: var(--primary-press); transform: none; }
 
+/* 세종 로고 마크 음각(deboss) — 마스크 2겹: 눌린 어두운 본체 + 아래 1.5px 밝은 모서리 */
+.mark {
+  position: relative;
+  width: 15px;
+  height: 22px;
+  flex-shrink: 0;
+}
+.mark::before,
+.mark::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  -webkit-mask: url("/images/sejong-mark.png") center / contain no-repeat;
+  mask: url("/images/sejong-mark.png") center / contain no-repeat;
+}
+.mark::before {
+  background: rgba(255, 255, 255, 0.4);
+  transform: translateY(1.5px);
+}
+.mark::after {
+  background: rgba(10, 18, 29, 0.62);
+}
+
 /* 커서 추적 모드 (데스크톱 전용) — JS가 transform: translateY로 세로 위치 구동.
    transform 트랜지션은 rAF 러프와 충돌하므로 배경 전환만 남긴다. */
 .follow {

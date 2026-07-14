@@ -33,11 +33,11 @@
   color: var(--body);
 }
 
-/* Mosaic grid — photo + quick blocks (news moved to its own band below) */
+/* Mosaic grid — 작은 사진 · 시공사례 리스트 · 퀵 블록 (2026-07-13 재구성) */
 .grid {
   display: grid;
-  grid-template-columns: 1.4fr 1fr 1fr;
-  height: 280px;
+  grid-template-columns: 0.95fr 1.55fr 0.9fr;
+  min-height: 320px;
   gap: 16px;
 }
 
@@ -84,7 +84,95 @@
   word-break: keep-all;
 }
 
-/* ②③ Stacked color blocks */
+/* ② 시공사례 리스트 패널 — 행 클릭 시 해당 상세 페이지로 */
+.pfPanel {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  background: var(--canvas);
+  border: 1px solid var(--hairline);
+  border-radius: var(--r-xl);
+}
+
+.pfHead {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 16px 22px;
+  border-bottom: 1px solid var(--navy);
+}
+
+.pfTitle {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--ink);
+}
+
+.pfMore {
+  flex-shrink: 0;
+  font-size: 13px;
+  color: var(--muted);
+  transition: color var(--motion-fast) var(--ease-std);
+}
+.pfMore:hover { color: var(--primary); }
+
+.pfList {
+  list-style: none;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+.pfList li { flex: 1; display: flex; min-width: 0; }
+.pfList li + li { border-top: 1px solid var(--hairline); }
+
+.pfRow {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+  padding: 10px 22px;
+}
+
+.pfIndustry {
+  flex-shrink: 0;
+  min-width: 66px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--primary);
+}
+
+.pfName {
+  flex: 1;
+  min-width: 0;
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--body);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  transition: color var(--motion-fast) var(--ease-std);
+}
+.pfRow:hover .pfName { color: var(--primary); font-weight: 700; }
+
+.pfMeta {
+  flex-shrink: 0;
+  font-size: 12.5px;
+  color: var(--faint);
+  font-variant-numeric: tabular-nums;
+}
+
+.pfArrow {
+  flex-shrink: 0;
+  display: inline-flex;
+  color: var(--muted);
+  transition: transform var(--motion-standard) var(--ease-std),
+    color var(--motion-fast) var(--ease-std);
+}
+.pfRow:hover .pfArrow { transform: translateX(4px); color: var(--primary); }
+
+/* ③ Stacked color blocks */
 .blockCol {
   display: flex;
   flex-direction: column;
@@ -93,7 +181,7 @@
 
 .block {
   flex: 1;
-  min-height: 132px;
+  min-height: 88px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -198,17 +286,25 @@
 @media (max-width: 1023.98px) {
   .grid {
     grid-template-columns: 1fr 1fr;
-    height: auto;
+    min-height: 0;
   }
   .photoCard {
     grid-column: span 2;
-    height: 280px;
+    height: 220px;
   }
+  .pfPanel { grid-column: span 2; }
+  .pfRow { padding: 12px 20px; }
+  .blockCol { grid-column: span 2; flex-direction: row; }
+  .block { min-height: 96px; }
 }
 
 @media (max-width: 639.98px) {
   .grid { grid-template-columns: 1fr; }
-  .photoCard { grid-column: auto; height: 240px; }
+  .photoCard { grid-column: auto; height: 200px; }
+  .pfPanel { grid-column: auto; }
+  .pfIndustry { display: none; }
+  .blockCol { grid-column: auto; flex-direction: column; }
+  .block { min-height: 84px; }
   .newsCols { grid-template-columns: 1fr; }
   .newsCol + .newsCol {
     border-left: none;

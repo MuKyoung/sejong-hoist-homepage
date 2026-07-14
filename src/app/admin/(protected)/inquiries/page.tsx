@@ -1,9 +1,12 @@
 import { createClient } from "@/lib/supabase/server";
 import type { Inquiry } from "@/lib/supabase/types";
-import InquiryRow from "./InquiryRow";
+import InquiryRow, { type AttachmentLink } from "./InquiryRow";
 import s from "@/components/admin/admin.module.css";
 
 export const dynamic = "force-dynamic";
+
+/** "{ts}-{rand}/원본파일명.ext" → 표시용 파일명 */
+const fileLabel = (path: string) => path.split("/").pop() ?? path;
 
 export default async function InquiriesPage() {
   const supabase = await createClient();
@@ -13,6 +16,24 @@ export default async function InquiriesPage() {
     .order("created_at", { ascending: false });
 
   const rows = (data as Inquiry[] | null) ?? [];
+
+  // 비공개 버킷 첨부파일 → 1시간짜리 서명 URL (staff 세션만 발급 가능)
+  const allPaths = rows.flatMap((r) => r.attachments ?? []);
+  const signed: Record<string, string> = {};
+  if (allPaths.length > 0) {
+    const { data: urls } = await supabase.storage
+      .from("inquiry-files")
+      .createSignedUrls(allPaths, 3600);
+    for (const u of urls ?? []) {
+      if (u.path && u.signedUrl) signed[u.path] = u.signedUrl;
+    }
+  }
+
+  const linksFor = (row: Inquiry): AttachmentLink[] =>
+    (row.attachments ?? []).map((p) => ({
+      name: fileLabel(p),
+      url: signed[p] ?? null,
+    }));
 
   return (
     <>
@@ -37,7 +58,7 @@ export default async function InquiriesPage() {
               </thead>
               <tbody>
                 {rows.map((row) => (
-                  <InquiryRow key={row.id} inquiry={row} />
+                  <InquiryRow key={row.id} inquiry={row} attachments={linksFor(row)} />
                 ))}
               </tbody>
             </table>

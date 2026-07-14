@@ -53,3 +53,5 @@ next-env.d.ts
 /홈페이지용 사진/
 /*.pptx
 /*.xlsx
+/*.pdf
+/*.mp4

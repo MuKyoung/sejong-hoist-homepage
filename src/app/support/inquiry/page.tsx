@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useRef, useState } from "react";
 import PageHero from "@/components/subpage/PageHero";
 import SubNav from "@/components/subpage/SubNav";
 import { COMPANY } from "@/data/site";
@@ -13,6 +13,20 @@ const SUPPORT_NAV = [
   { label: "공지사항", href: "/support/notice" },
   { label: "견적 문의", href: "/support/inquiry" },
 ];
+
+const MAX_FILES = 3;
+const MAX_FILE_MB = 10;
+
+/** storage object key로 안전한 파일명 (확장자 유지, 나머지는 ASCII로) */
+function safeFileName(name: string) {
+  const dot = name.lastIndexOf(".");
+  const ext = dot >= 0 ? name.slice(dot + 1).replace(/[^a-zA-Z0-9]/g, "").toLowerCase() : "";
+  const base = (dot >= 0 ? name.slice(0, dot) : name)
+    .replace(/[^a-zA-Z0-9._-]/g, "_")
+    .replace(/_{2,}/g, "_")
+    .slice(0, 60) || "file";
+  return ext ? `${base}.${ext}` : base;
+}
 
 export default function InquiryPage() {
   const [form, setForm] = useState({
@@ -29,6 +43,27 @@ export default function InquiryPage() {
   const [submitted, setSubmitted] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [files, setFiles] = useState<File[]>([]);
+  const fileInputRef = useRef<HTMLInputElement>(null);
+
+  const addFiles = (list: FileList | null) => {
+    if (!list) return;
+    setError(null);
+    const next = [...files];
+    for (const f of Array.from(list)) {
+      if (next.length >= MAX_FILES) {
+        setError(`첨부파일은 최대 ${MAX_FILES}개까지 등록할 수 있습니다.`);
+        break;
+      }
+      if (f.size > MAX_FILE_MB * 1024 * 1024) {
+        setError(`"${f.name}" 파일이 ${MAX_FILE_MB}MB를 초과합니다.`);
+        continue;
+      }
+      if (!next.some((x) => x.name === f.name && x.size === f.size)) next.push(f);
+    }
+    setFiles(next);
+    if (fileInputRef.current) fileInputRef.current.value = "";
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -43,6 +78,21 @@ export default function InquiryPage() {
     setSubmitting(true);
     try {
       const supabase = createClient();
+
+      // 첨부파일 업로드 (비공개 버킷 — 관리자만 열람)
+      const attachments: string[] = [];
+      for (const f of files) {
+        const path = `${Date.now()}-${Math.random().toString(36).slice(2, 8)}/${safeFileName(f.name)}`;
+        const { error: uploadError } = await supabase.storage
+          .from("inquiry-files")
+          .upload(path, f);
+        if (uploadError) {
+          setError("첨부파일 업로드에 실패했습니다. 파일 용량(10MB 이하)을 확인하거나 첨부 없이 다시 시도해 주세요.");
+          return;
+        }
+        attachments.push(path);
+      }
+
       const { error: insertError } = await supabase.from("inquiries").insert({
         name: form.name,
         company: form.company || null,
@@ -50,11 +100,13 @@ export default function InquiryPage() {
         email: form.email || null,
         product_category: form.productCat || null,
         message: `[${form.category}] ${form.title}\n\n${form.content}`,
+        attachments,
       });
       if (insertError) {
         setError("접수 중 오류가 발생했습니다. 잠시 후 다시 시도하거나 전화로 문의해 주세요.");
         return;
       }
+      setFiles([]);
       setSubmitted(true);
     } catch {
       setError("접수 중 오류가 발생했습니다. 잠시 후 다시 시도해 주세요.");
@@ -193,6 +245,51 @@ export default function InquiryPage() {
                   />
                 </div>
 
+                {isSupabaseConfigured && (
+                  <div className={s.field}>
+                    <label className={s.fieldLabel} htmlFor="attachments">
+                      첨부파일 <span className={s.fieldLabelHint}>(선택 · 최대 {MAX_FILES}개, 개당 {MAX_FILE_MB}MB — 도면·현장사진 등)</span>
+                    </label>
+                    <input
+                      ref={fileInputRef}
+                      id="attachments"
+                      type="file"
+                      multiple
+                      accept="image/*,.pdf,.zip,.hwp,.dwg,.doc,.docx,.xls,.xlsx"
+                      style={{ display: "none" }}
+                      onChange={(e) => addFiles(e.target.files)}
+                    />
+                    <button
+                      type="button"
+                      className={s.fileBtn}
+                      onClick={() => fileInputRef.current?.click()}
+                      disabled={files.length >= MAX_FILES}
+                    >
+                      + 파일 선택
+                    </button>
+                    {files.length > 0 && (
+                      <ul className={s.fileList}>
+                        {files.map((f) => (
+                          <li key={`${f.name}-${f.size}`} className={s.fileItem}>
+                            <span className={s.fileName}>{f.name}</span>
+                            <span className={s.fileSize}>{(f.size / 1024 / 1024).toFixed(1)}MB</span>
+                            <button
+                              type="button"
+                              className={s.fileRemove}
+                              aria-label={`${f.name} 첨부 제거`}
+                              onClick={() =>
+                                setFiles(files.filter((x) => !(x.name === f.name && x.size === f.size)))
+                              }
+                            >
+                              ✕
+                            </button>
+                          </li>
+                        ))}
+                      </ul>
+                    )}
+                  </div>
+                )}
+
                 <div className={s.agreeBox}>
                   <label className={s.agreeLabel}>
                     <input
@@ -232,18 +329,35 @@ export default function InquiryPage() {
           </div>
           <div className={s.contactGrid}>
             <div>
+              <span className={s.contactIcon} aria-hidden>
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z" />
+                </svg>
+              </span>
               <p className={s.contactItemLabel}>대표전화</p>
               <a href={`tel:${COMPANY.tel.replace(/-/g, "")}`} className={s.contactItemValue}>
                 {COMPANY.tel}
               </a>
             </div>
             <div>
+              <span className={s.contactIcon} aria-hidden>
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
+                  <rect x="5" y="2" width="14" height="20" rx="2" ry="2" />
+                  <line x1="12" y1="18" x2="12.01" y2="18" />
+                </svg>
+              </span>
               <p className={s.contactItemLabel}>휴대전화</p>
               <a href={`tel:${COMPANY.mobile.replace(/-/g, "")}`} className={s.contactItemValue}>
                 {COMPANY.mobile}
               </a>
             </div>
             <div>
+              <span className={s.contactIcon} aria-hidden>
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
+                  <polyline points="22,6 12,13 2,6" />
+                </svg>
+              </span>
               <p className={s.contactItemLabel}>이메일</p>
               <a href={`mailto:${COMPANY.email}`} className={s.contactItemValue}>
                 {COMPANY.email}

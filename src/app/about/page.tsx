@@ -6,6 +6,7 @@ import Link from "next/link";
 import PageHero from "@/components/subpage/PageHero";
 import SubNav from "@/components/subpage/SubNav";
 import ContactBand from "@/components/subpage/ContactBand";
+import Reveal from "@/components/home/Reveal";
 import { COMPANY, GREETING } from "@/data/site";
 import s from "@/styles/subpage.module.css";
 
@@ -55,38 +56,44 @@ export default function AboutPage() {
       <section className={`${s.section} ${s.sectionWhite}`}>
         <div className="container">
           <div className={s.greetWrap}>
-            <p className={s.eyebrow}>CEO Greeting</p>
-            <h2 className={s.greetHeadline}>
-              {GREETING.headline[0]}
-              <br />
-              {GREETING.headline[1]}
-            </h2>
-            <p className={s.greetQuoteC}>“{GREETING.quote}”</p>
+            <Reveal>
+              <p className={s.eyebrow}>CEO Greeting</p>
+              <h2 className={s.greetHeadline}>
+                {GREETING.headline[0]}
+                <br />
+                {GREETING.headline[1]}
+              </h2>
+              <p className={s.greetQuoteC}>“{GREETING.quote}”</p>
+            </Reveal>
 
-            <div className={s.greetBody}>
-              <p className={s.greetLead}>{GREETING.paragraphs[0]}</p>
-              <p className={s.body} style={{ marginTop: 20 }}>
-                {GREETING.paragraphs[1]}
-              </p>
-              <p className={s.body}>{GREETING.paragraphs[2]}</p>
-              <p className={s.body}>{GREETING.paragraphs[3]}</p>
-            </div>
-
-            <div className={s.greetSignBlock}>
-              <p className={s.greetRole}>(주)세종호이스트크레인 대표이사</p>
-              <div className={s.greetNameRow}>
-                <p className={s.greetName}>김 승 용</p>
-                {hasSign && (
-                  <Image
-                    src="/images/ceo-sign.png"
-                    alt="대표이사 김승용 서명"
-                    width={140}
-                    height={56}
-                    style={{ height: 46, width: "auto" }}
-                  />
-                )}
+            <Reveal delay={120}>
+              <div className={s.greetBody}>
+                <p className={s.greetLead}>{GREETING.paragraphs[0]}</p>
+                <p className={s.body} style={{ marginTop: 20 }}>
+                  {GREETING.paragraphs[1]}
+                </p>
+                <p className={s.body}>{GREETING.paragraphs[2]}</p>
+                <p className={s.body}>{GREETING.paragraphs[3]}</p>
               </div>
-            </div>
+            </Reveal>
+
+            <Reveal delay={220}>
+              <div className={s.greetSignBlock}>
+                <p className={s.greetRole}>(주)세종호이스트크레인 대표이사</p>
+                <div className={s.greetNameRow}>
+                  <p className={s.greetName}>김 승 용</p>
+                  {hasSign && (
+                    <Image
+                      src="/images/ceo-sign.png"
+                      alt="대표이사 김승용 서명"
+                      width={140}
+                      height={56}
+                      style={{ height: 46, width: "auto" }}
+                    />
+                  )}
+                </div>
+              </div>
+            </Reveal>
           </div>
         </div>
       </section>
@@ -94,7 +101,7 @@ export default function AboutPage() {
       <section className={`${s.section} ${s.sectionAlt}`}>
         <div className="container">
           <div className={s.twoCol}>
-            <div>
+            <Reveal>
               <div className={s.visual}>
                 <Image
                   src="/images/about-01.jpg"
@@ -105,8 +112,8 @@ export default function AboutPage() {
                 />
               </div>
               <p className={s.visualCaption}>세종호이스트크레인 사옥 전경</p>
-            </div>
-            <div>
+            </Reveal>
+            <Reveal delay={120}>
               <p className={s.eyebrow}>Company</p>
               <h2 className={`${s.headline} ${s.headlineNavy}`}>기업개요</h2>
               <p className={s.body}>
@@ -141,26 +148,30 @@ export default function AboutPage() {
                   회사소개서 다운로드 (PDF)
                 </a>
               </div>
-            </div>
+            </Reveal>
           </div>
         </div>
       </section>
 
       <section className={`${s.section} ${s.sectionWhite}`}>
         <div className="container">
-          <div className={s.centerHeader}>
-            <p className={s.eyebrow}>Core Values</p>
-            <h2 className={s.headline}>㈜세종호이스트크레인이 추구하는 가치</h2>
-          </div>
-          <div className={s.cardGrid}>
-            {VALUES.map((v) => (
-              <article key={v.num} className={s.valueCard}>
-                <p className={s.valueNum}>{v.num}</p>
-                <h3 className={s.valueTitle}>{v.title}</h3>
-                <p className={s.valueDesc}>{v.desc}</p>
-              </article>
-            ))}
-          </div>
+          <Reveal>
+            <div className={s.centerHeader}>
+              <p className={s.eyebrow}>Core Values</p>
+              <h2 className={s.headline}>㈜세종호이스트크레인이 추구하는 가치</h2>
+            </div>
+          </Reveal>
+          <Reveal delay={120}>
+            <div className={s.cardGrid}>
+              {VALUES.map((v) => (
+                <article key={v.num} className={s.valueCard}>
+                  <p className={s.valueNum}>{v.num}</p>
+                  <h3 className={s.valueTitle}>{v.title}</h3>
+                  <p className={s.valueDesc}>{v.desc}</p>
+                </article>
+              ))}
+            </div>
+          </Reveal>
         </div>
       </section>
 

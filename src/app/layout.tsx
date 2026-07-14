@@ -31,6 +31,12 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="ko" className={notoSansKr.variable}>
       <head>
         <link rel="icon" href="/images/sejong-logo.png" type="image/png" />
+        {/* Pretendard 동적 서브셋 — 필요한 글리프 조각만 로드 (한글 전체 셀프호스팅 대비 수십 KB 수준) */}
+        <link rel="preconnect" href="https://cdn.jsdelivr.net" crossOrigin="anonymous" />
+        <link
+          rel="stylesheet"
+          href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css"
+        />
       </head>
       <body>
         <ConditionalLayout>{children}</ConditionalLayout>

@@ -77,8 +77,12 @@ Circle fills at 95% opacity (navy ramp): `rgba(62,92,128,.95)`,
 
 ## 3. Typography
 
-Korean: **Noto Sans KR** via `next/font/google` in `app/layout.tsx`. (The Figma
-import shows Inter — a Latin placeholder; LS ships Noto Sans KR for Korean.)
+Korean: **Pretendard Variable** (jsdelivr dynamic-subset CSS in `app/layout.tsx`
+head — loads only needed glyph slices), falling back to **Noto Sans KR** via
+`next/font/google`. Client request 26.07.13: "폰트를 고급스럽게" — Pretendard is
+the premium Korean corporate standard. If the CDN is unreachable the site
+renders in Noto with identical metrics-ish fallback; do not remove the fallback
+chain.
 
 | Style | Spec | Use |
 |---|---|---|
@@ -253,7 +257,7 @@ No parallax. Everything respects `prefers-reduced-motion`.
 - Use solid navy blocks (`--brand`, `--brand-deep`) as color anchors with white text.
 - Reserve `--primary` (navy #2C4A6E) for interactive elements.
 - Separate flat cells with 1px hairlines + 16px gaps; sharp corners on structural cards.
-- Use Noto Sans KR everywhere; 700 headings/nav, 400 body.
+- Use Pretendard (Noto Sans KR fallback) everywhere; 700 headings/nav, 400 body.
 
 **Don't**
 - **Never use LS ELECTRIC images, logos, icons, copy, or product names.**

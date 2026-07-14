@@ -3,7 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import PageHero from "@/components/subpage/PageHero";
 import ContactBand from "@/components/subpage/ContactBand";
-import { CERT_DOCS, certCover, REVIEW_DOCS, ISO_CERTS, QUALIFICATIONS, SAFETY_STEPS } from "@/data/site";
+import { CERT_DOCS, certCover, REVIEW_DOCS, ISO_CERTS, ISO_META, QUALIFICATIONS, SAFETY_STEPS } from "@/data/site";
 import s from "@/styles/subpage.module.css";
 
 export const metadata: Metadata = {
@@ -44,6 +44,9 @@ export default function TechnologyPage() {
                   />
                 </div>
                 <div className={s.certBody}>
+                  {doc.capacity && (
+                    <p className={s.certCapacity}>{doc.capacity}</p>
+                  )}
                   <h3 className={s.certTitle}>{doc.title}</h3>
                   <p className={s.certIssuer}>{doc.desc}</p>
                   <span className={s.certZoom}>전체 {doc.pageCount}페이지 보기 →</span>
@@ -54,16 +57,36 @@ export default function TechnologyPage() {
 
           <div className={s.docHead}>
             <h3 className={s.docHeadTitle}>ISO 인증</h3>
-            <p className={s.body}>품질·환경·안전보건 경영시스템 인증을 보유하고 있습니다.</p>
+            <p className={s.body}>
+              품질·환경·안전보건 경영시스템 인증을 보유하고 있습니다.
+              {" "}{ISO_META.issuer} 발급, 유효기간 {ISO_META.period}.
+            </p>
           </div>
 
-          <div className={s.cardGrid}>
+          <div className={s.certGrid}>
             {ISO_CERTS.map((iso) => (
-              <article key={iso.title} className={s.valueCard}>
-                <p className={s.valueNum}>{iso.title}</p>
-                <h3 className={s.valueTitle}>{iso.desc}</h3>
-                <p className={s.valueDesc}>인증 보유</p>
-              </article>
+              <a
+                key={iso.title}
+                href={iso.image}
+                target="_blank"
+                rel="noreferrer"
+                className={s.certCard}
+              >
+                <div className={s.certThumb}>
+                  <Image
+                    src={iso.image}
+                    alt={`${iso.standard} ${iso.desc} 인증서`}
+                    fill
+                    className={s.certImg}
+                    sizes="(max-width: 639px) 100vw, (max-width: 1023px) 50vw, 380px"
+                  />
+                </div>
+                <div className={s.certBody}>
+                  <h3 className={s.certTitle}>{iso.standard}</h3>
+                  <p className={s.certIssuer}>{iso.desc} · 인증번호 {iso.certNo}</p>
+                  <span className={s.certZoom}>인증서 원본 보기 →</span>
+                </div>
+              </a>
             ))}
           </div>
 
