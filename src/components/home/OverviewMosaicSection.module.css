@@ -43,11 +43,11 @@
 
 /* ── 스크롤 진입 스태거 (Reveal bare + data-reveal) ── */
 @keyframes mosaicIn {
-  from { opacity: 0; transform: translateY(20px); }
+  from { opacity: 0; transform: translateY(38px); }
   to { opacity: 1; transform: none; }
 }
 @keyframes rowIn {
-  from { opacity: 0; transform: translateX(-14px); }
+  from { opacity: 0; transform: translateX(-32px); }
   to { opacity: 1; transform: none; }
 }
 
@@ -57,20 +57,20 @@
 :global([data-reveal="off"]) .pfList li,
 :global([data-reveal="off"]) .newsCol { opacity: 0; }
 
-:global([data-reveal="on"]) .photoCard { animation: mosaicIn 0.6s var(--ease-std) both; }
-:global([data-reveal="on"]) .pfPanel { animation: mosaicIn 0.6s var(--ease-std) 0.12s both; }
-:global([data-reveal="on"]) .block { animation: mosaicIn 0.6s var(--ease-std) both; }
+:global([data-reveal="on"]) .photoCard { animation: mosaicIn 0.8s var(--ease-out-expo) both; }
+:global([data-reveal="on"]) .pfPanel { animation: mosaicIn 0.8s var(--ease-out-expo) 0.12s both; }
+:global([data-reveal="on"]) .block { animation: mosaicIn 0.8s var(--ease-out-expo) both; }
 :global([data-reveal="on"]) .block:nth-child(1) { animation-delay: 0.24s; }
 :global([data-reveal="on"]) .block:nth-child(2) { animation-delay: 0.32s; }
 :global([data-reveal="on"]) .block:nth-child(3) { animation-delay: 0.4s; }
 
 /* 시공사례 행 — 패널 등장 후 좌측에서 순차 진입 */
 :global([data-reveal="on"]) .pfList li {
-  animation: rowIn 0.5s var(--ease-std) both;
-  animation-delay: calc(0.3s + 80ms * var(--i, 0));
+  animation: rowIn 0.65s var(--ease-out-expo) both;
+  animation-delay: calc(0.3s + 90ms * var(--i, 0));
 }
 
-:global([data-reveal="on"]) .newsCol { animation: mosaicIn 0.55s var(--ease-std) both; }
+:global([data-reveal="on"]) .newsCol { animation: mosaicIn 0.7s var(--ease-out-expo) both; }
 :global([data-reveal="on"]) .newsCol:nth-child(2) { animation-delay: 0.1s; }
 :global([data-reveal="on"]) .newsCol:nth-child(3) { animation-delay: 0.2s; }
 
@@ -175,20 +175,27 @@
 }
 .pfList li + li { border-top: 1px solid var(--hairline); }
 
-/* 행 호버 시 아래로 펼쳐지는 사진 카드 스트립 (데스크톱 전용) */
+/* 행 호버 시 아래로 펼쳐지는 사진 드로어 (데스크톱 전용) —
+   호버된 행이 네이비로 반전되고, 같은 네이비 드로어가 행 폭 그대로
+   아래로 열리며 사진이 바텀업 와이프 + 줌 세틀로 샤라락 등장 */
 .pfStrip {
   display: none;
   position: absolute;
-  top: calc(100% + 1px);
-  left: 12px;
-  right: 12px;
+  top: 100%;
+  left: 0;
+  right: 0;
   z-index: 6;
-  gap: 10px;
-  padding: 12px;
-  background: var(--canvas);
-  border: 1px solid var(--hairline);
-  box-shadow: var(--shadow-md);
+  gap: 8px;
+  padding: 14px;
+  background: var(--navy);
+  box-shadow: 0 28px 56px -18px rgba(13, 21, 33, 0.55);
+  animation: stripDrop 0.5s var(--ease-out-expo) both;
 }
+@keyframes stripDrop {
+  from { opacity: 0; transform: translateY(-12px); }
+  to { opacity: 1; transform: none; }
+}
+
 @media (hover: hover) and (pointer: fine) {
   .pfList li:hover .pfStrip { display: flex; }
   /* 진입 애니메이션 fill이 행/패널을 각각 스태킹 컨텍스트로 만들므로,
@@ -199,25 +206,35 @@
 
 .pfShot {
   position: relative;
-  width: calc((100% - 30px) / 4);
+  width: calc((100% - 24px) / 4);
   flex: 0 0 auto;
   aspect-ratio: 4 / 3;
   overflow: hidden;
-  background: var(--surface);
-  border: 1px solid var(--hairline);
-  /* display none → flex 전환 시마다 재생되는 샤라락 등장 */
-  animation: shotIn 0.4s var(--ease-std) both;
-  animation-delay: calc(60ms * var(--j, 0));
+  background: var(--brand-deep);
+  /* display none → flex 전환 시마다 재생 — 바텀업 와이프 */
+  animation: shotWipe 0.65s var(--ease-out-expo) both;
+  animation-delay: calc(85ms * var(--j, 0));
 }
-.pfShotImg { object-fit: cover; }
+.pfShotImg {
+  object-fit: cover;
+  /* 와이프와 동시에 줌이 풀리며 내려앉는 세틀 */
+  animation: shotZoom 1s var(--ease-out-expo) both;
+  animation-delay: calc(85ms * var(--j, 0));
+}
 
-@keyframes shotIn {
-  from { opacity: 0; transform: translateY(14px); }
-  to { opacity: 1; transform: none; }
+@keyframes shotWipe {
+  from { clip-path: inset(100% 0 0 0); opacity: 0.4; }
+  to { clip-path: inset(0 0 0 0); opacity: 1; }
+}
+@keyframes shotZoom {
+  from { transform: scale(1.22); }
+  to { transform: scale(1); }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .pfShot { animation: none; }
+  .pfStrip,
+  .pfShot,
+  .pfShotImg { animation: none; }
 }
 
 .pfRow {
@@ -265,6 +282,18 @@
     color var(--motion-fast) var(--ease-std);
 }
 .pfRow:hover .pfArrow { transform: translateX(4px); color: var(--primary); }
+
+/* 데스크톱: 호버된 행이 네이비로 반전 — 아래 드로어와 하나의 블록으로 이어짐 */
+@media (hover: hover) and (pointer: fine) {
+  .pfList li {
+    transition: background var(--motion-standard) var(--ease-std);
+  }
+  .pfList li:hover { background: var(--navy); }
+  .pfList li:hover .pfIndustry { color: rgba(255, 255, 255, 0.78); }
+  .pfList li:hover .pfName { color: #fff; font-weight: 700; }
+  .pfList li:hover .pfMeta { color: rgba(255, 255, 255, 0.6); }
+  .pfList li:hover .pfArrow { color: #fff; transform: translateX(6px); }
+}
 
 /* ③ Stacked color blocks */
 .blockCol {

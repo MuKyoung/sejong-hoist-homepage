@@ -85,18 +85,18 @@
 
 /* ── 최초 로드 진입 연출 (슬라이드 전환용 textSwap과 별개 요소만) ── */
 @keyframes heroRise {
-  from { opacity: 0; transform: translateY(18px); }
+  from { opacity: 0; transform: translateY(30px); }
   to { opacity: 1; transform: none; }
 }
 @keyframes heroCard {
-  from { opacity: 0; transform: translateY(26px) scale(0.985); }
+  from { opacity: 0; transform: translateY(48px) scale(0.955); }
   to { opacity: 1; transform: none; }
 }
 
-.eyebrow { animation: heroRise 0.6s var(--ease-std) 0.05s both; }
-.ctas { animation: heroRise 0.6s var(--ease-std) 0.4s both; }
-.visualWrap { animation: heroCard 0.75s var(--ease-std) 0.25s both; }
-.controls { animation: heroRise 0.6s var(--ease-std) 0.55s both; }
+.eyebrow { animation: heroRise 0.8s var(--ease-out-expo) 0.05s both; }
+.ctas { animation: heroRise 0.8s var(--ease-out-expo) 0.4s both; }
+.visualWrap { animation: heroCard 1s var(--ease-out-expo) 0.25s both; }
+.controls { animation: heroRise 0.8s var(--ease-out-expo) 0.6s both; }
 
 /* Copy — 다크 배경 위 화이트 타이포 */
 .copy { min-width: 0; }
@@ -207,10 +207,10 @@
 
 /* 슬라이드 전환 시 텍스트 페이드 교체 */
 @keyframes textIn {
-  from { opacity: 0; transform: translateY(10px); }
+  from { opacity: 0; transform: translateY(24px); }
   to { opacity: 1; transform: none; }
 }
-.textSwap { animation: textIn 0.55s var(--ease-std); }
+.textSwap { animation: textIn 0.7s var(--ease-out-expo); }
 
 /* 캡션 + 컨트롤 행 (카드 아래, 다크 배경 위) */
 .controls {

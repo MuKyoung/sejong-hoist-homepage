@@ -243,7 +243,11 @@ hairline, sharp corners, no resting shadow. Forms: inputs `--r-sm/md`, focus
 Hover/focus transitions 120–200ms ease. Slideshow crossfade ~1s; the hero's
 active slide slow-zooms 1→1.06 over 7s (Ken Burns — fine at card size).
 Entrance: home sections reveal once on scroll via the shared `Reveal` wrapper
-(fade + translateY 20px, 0.7s, header → content staggered 100–200ms).
+(fade + translateY 34px, 0.85s `--ease-out-expo`, header → content staggered
+100–200ms; child grids stagger 85–140ms per item with the same expo ease —
+circles overshoot-pop, cards rise 36–44px). Home portfolio rows invert to
+navy on hover and open a navy photo drawer below the row (bottom-up
+`clip-path` wipe + zoom-settle per shot, 85ms stagger).
 Hover micro-interactions: photo thumbs zoom 1.05 (0.6s), arrow glyphs slide
 +5px, circle icons lift 3px, strip cells grow a 2px `--primary` top rule
 (scaleX left→right). Numbers count up once on first view (stats band).

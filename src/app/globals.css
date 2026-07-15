@@ -83,6 +83,8 @@
   --ease-enter:  cubic-bezier(0.2, 0.6, 0.25, 1);
   --ease-exit:   cubic-bezier(0.4, 0.0, 1, 1);
   --ease-std:    cubic-bezier(0.25, 0.1, 0.25, 1);
+  /* 등장 연출용 — 초반에 빠르게 치고 나가 부드럽게 감속 (감각적인 엔트런스) */
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -126,12 +128,12 @@ button { cursor: pointer; font-family: inherit; }
    위로 빠져나가며 사라진다(양방향 스크럽). 지원 브라우저(Chromium 등)에서만
    동작하고, 그 외에는 기존 IntersectionObserver 리빌이 그대로 적용된다. */
 @keyframes scrollFxIn {
-  from { opacity: 0; transform: translateY(36px); }
+  from { opacity: 0; transform: translateY(72px) scale(0.985); }
   to { opacity: 1; transform: none; }
 }
 @keyframes scrollFxOut {
   from { opacity: 1; transform: none; }
-  to { opacity: 0; transform: translateY(-28px); }
+  to { opacity: 0; transform: translateY(-52px) scale(0.99); }
 }
 @supports (animation-timeline: view()) {
   @media (prefers-reduced-motion: no-preference) {
