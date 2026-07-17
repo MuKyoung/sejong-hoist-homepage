@@ -205,12 +205,19 @@
 .slideActive { opacity: 1; }
 .image { object-fit: cover; }
 
-/* 슬라이드 전환 시 텍스트 페이드 교체 */
+/* 슬라이드 전환 시 텍스트 페이드 교체 — 헤드라인 줄과 서브가 순차 상승 */
 @keyframes textIn {
   from { opacity: 0; transform: translateY(24px); }
   to { opacity: 1; transform: none; }
 }
+@keyframes lineRise {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: none; }
+}
 .textSwap { animation: textIn 0.7s var(--ease-out-expo); }
+.textSwap .headlineLine { animation: lineRise 0.8s var(--ease-out-expo) both; }
+.textSwap .headlineLine:nth-child(2) { animation-delay: 0.1s; }
+.textSwap .sub { animation: lineRise 0.8s var(--ease-out-expo) 0.2s both; }
 
 /* 캡션 + 컨트롤 행 (카드 아래, 다크 배경 위) */
 .controls {
@@ -256,8 +263,20 @@
     background-color var(--motion-standard) var(--ease-std);
 }
 .dot:hover { background-color: rgba(255, 255, 255, 0.7); }
-.dotActive { width: 26px; background-color: #ffffff; }
-.dotActive:hover { background-color: #ffffff; }
+/* 활성 닷 = 오토플레이 진행바 (6s 슬라이드 주기와 동기) */
+.dotActive {
+  width: 26px;
+  background-color: rgba(255, 255, 255, 0.35);
+  background-image: linear-gradient(#fff, #fff);
+  background-repeat: no-repeat;
+  background-origin: content-box;
+  background-size: 0% 100%;
+  animation: dotProgress 6s linear forwards;
+}
+.dotActive:hover { background-color: rgba(255, 255, 255, 0.35); }
+@keyframes dotProgress {
+  to { background-size: 100% 100%; }
+}
 
 .counter {
   font-size: 13px;
@@ -269,6 +288,23 @@
 .counterNow { color: #fff; font-weight: 700; }
 .counterSep { opacity: 0.5; }
 
+/* 슬라이드 번호 교체 시 아래에서 굴러 올라오는 스와프 */
+.counterSwap {
+  display: inline-block;
+  animation: counterRoll 0.5s var(--ease-out-expo);
+}
+@keyframes counterRoll {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: none; }
+}
+
+/* 사진 카드 아이들 플로팅 — 진입 연출이 끝난 뒤 은은하게 부유 */
+.visual { animation: visualFloat 7s ease-in-out 2s infinite; }
+@keyframes visualFloat {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-7px); }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .slide,
   .bgSlide,
@@ -278,7 +314,13 @@
     animation: none !important;
     transform: none;
   }
-  .textSwap { animation: none; }
+  .textSwap,
+  .textSwap .headlineLine,
+  .textSwap .sub,
+  .dotActive,
+  .counterSwap,
+  .visual { animation: none; }
+  .dotActive { background-color: #ffffff; }
   .eyebrow,
   .ctas,
   .visualWrap,

@@ -74,10 +74,12 @@ export default function StorySection({ locale = "ko" }: { locale?: Locale }) {
   const slides = SLIDES[locale];
   const ui = UI[locale];
 
+  // idx 의존성 포함: 수동 이동 시에도 매 슬라이드가 온전한 6초를 갖고,
+  // 활성 닷의 진행바(dotProgress 6s)와 주기가 정확히 동기화된다.
   useEffect(() => {
     const t = setInterval(() => setIdx((i) => (i + 1) % slides.length), 6000);
     return () => clearInterval(t);
-  }, [slides.length]);
+  }, [slides.length, idx]);
 
   const active = slides[idx];
 
@@ -162,7 +164,7 @@ export default function StorySection({ locale = "ko" }: { locale?: Locale }) {
                   ))}
                 </div>
                 <p className={s.counter}>
-                  <span className={s.counterNow}>{pad(idx + 1)}</span>
+                  <span key={idx} className={`${s.counterNow} ${s.counterSwap}`}>{pad(idx + 1)}</span>
                   <span className={s.counterSep}> / </span>
                   {pad(slides.length)}
                 </p>

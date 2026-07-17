@@ -1553,3 +1553,52 @@
   .orgCol::before { display: none; }
   .orgCol { padding-top: 0; }
 }
+
+/* ============================================================
+   서브페이지 공통 모션 (2026-07 애니메이션 고도화)
+   ============================================================ */
+
+/* 센터 섹션 헤더 타이틀 아래 네이비 액센트 룰 (홈과 통일) */
+.centerHeader .headline::after {
+  content: "";
+  display: block;
+  width: 36px;
+  height: 3px;
+  margin: 14px auto 0;
+  background: var(--brand);
+}
+
+/* 스크롤 연동 진입 — 카드·그리드류가 뷰포트 진입에 비례해 떠오름.
+   지원 브라우저(Chromium) 한정, 그 외에는 정적 표시로 자연 폴백 */
+@keyframes subRise {
+  from { opacity: 0; transform: translateY(34px); }
+  to { opacity: 1; transform: none; }
+}
+@keyframes subRule {
+  from { transform: scaleX(0); }
+  to { transform: scaleX(1); }
+}
+
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .certCard,
+    .valueCard,
+    .portfolioCard,
+    .infoItem,
+    .contactGrid > div,
+    .orgTop,
+    .orgLv2Row,
+    .orgCol,
+    .histGroup,
+    .visual {
+      animation: subRise linear both;
+      animation-timeline: view();
+      animation-range: entry 0% entry 50%;
+    }
+    .centerHeader .headline::after {
+      animation: subRule linear both;
+      animation-timeline: view();
+      animation-range: entry 20% entry 70%;
+    }
+  }
+}

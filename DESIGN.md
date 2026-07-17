@@ -257,6 +257,16 @@ section in during viewport entry and out during exit, reversible with scroll
 direction. Chromium-only for now; other browsers keep the one-shot Reveal
 fallback. Requires `body{overflow-x:clip}` (NOT `hidden` — that would make
 body the scroll container and break view() timelines).
+2026-07 "more animation" pass (client request): hero headline rises line by
+line per slide, active dot doubles as a 6s autoplay progress bar (interval
+resets on idx so they stay in sync), slide counter rolls, hero photo card
+and circle contents idle-float (inner wrappers, so entrance/hover transforms
+don't conflict); section titles grow a 36px navy rule; stats dividers grow
+top-down; news items get a hover accent bar; GNB dropdown links cascade
+(35ms steps, opacity/transform only — color stays instant); FAB emits a
+periodic pulse ring. Subpages: PageHero staggers on load, centered headlines
+carry the navy rule, and cards/grids/org/history/footer columns rise via
+scroll-driven `view()` timelines (Chromium; static elsewhere).
 No parallax. Everything respects `prefers-reduced-motion`.
 
 ## 8. Do / Don't

@@ -25,6 +25,21 @@
 }
 .fab:active { background: var(--primary-press); transform: none; }
 
+/* 주기적 펄스 링 — 버튼 뒤로 퍼지는 은은한 잔물결 (시선 유도) */
+.fab::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: var(--r-full);
+  animation: fabPulse 3.2s var(--ease-std) 1.5s infinite;
+}
+@keyframes fabPulse {
+  0% { box-shadow: 0 0 0 0 rgba(44, 74, 110, 0.4); }
+  60% { box-shadow: 0 0 0 16px rgba(44, 74, 110, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(44, 74, 110, 0); }
+}
+
 /* 세종 로고 마크 음각(deboss) — 마스크 2겹: 눌린 어두운 본체 + 아래 1.5px 밝은 모서리 */
 .mark {
   position: relative;
@@ -70,4 +85,5 @@
 @media (prefers-reduced-motion: reduce) {
   .fab { transition: none; }
   .fab:hover { transform: none; }
+  .fab::before { animation: none; }
 }

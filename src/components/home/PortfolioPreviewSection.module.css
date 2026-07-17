@@ -25,6 +25,20 @@
   letter-spacing: -0.02em;
   color: var(--navy);
 }
+.headline::after {
+  content: "";
+  display: block;
+  width: 36px;
+  height: 3px;
+  margin: 14px auto 0;
+  background: var(--brand);
+  transform: scaleX(0);
+  transition: transform 0.7s var(--ease-out-expo) 0.35s;
+}
+:global([data-reveal="on"]) .headline::after { transform: scaleX(1); }
+@media (prefers-reduced-motion: reduce) {
+  .headline::after { transform: scaleX(1); transition: none; }
+}
 
 .subtitle {
   margin-top: 10px;

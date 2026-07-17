@@ -11,24 +11,41 @@
 }
 
 .cell {
+  position: relative;
   text-align: center;
   padding: 8px 16px;
-  border-left: 1px solid rgba(255, 255, 255, 0.16);
   /* 진입 전 숨김 → .on 에서 순차 등장 (숫자 카운트업과 동기) */
   opacity: 0;
   transform: translateY(32px);
   transition: opacity 0.8s var(--ease-out-expo), transform 0.8s var(--ease-out-expo);
   transition-delay: calc(140ms * var(--i, 0));
 }
-.cell:first-child { border-left: none; }
+
+/* 셀 사이 디바이더 — 등장 후 위→아래로 자라남 */
+.cell::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 8%;
+  bottom: 8%;
+  width: 1px;
+  background: rgba(255, 255, 255, 0.16);
+  transform: scaleY(0);
+  transform-origin: top;
+  transition: transform 0.9s var(--ease-out-expo);
+  transition-delay: calc(140ms * var(--i, 0) + 0.5s);
+}
+.cell:first-child::before { display: none; }
 
 .on .cell {
   opacity: 1;
   transform: none;
 }
+.on .cell::before { transform: scaleY(1); }
 
 @media (prefers-reduced-motion: reduce) {
-  .cell {
+  .cell,
+  .cell::before {
     opacity: 1;
     transform: none;
     transition: none;
@@ -70,5 +87,5 @@
     grid-template-columns: 1fr;
     gap: 32px;
   }
-  .cell { border-left: none; }
+  .cell::before { display: none; }
 }

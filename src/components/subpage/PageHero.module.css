@@ -9,6 +9,12 @@
   .pageHero { padding-top: calc(var(--header-h) + 64px); padding-bottom: 48px; }
 }
 
+/* 페이지 진입 시 아이브로우 → 타이틀 → 설명 순차 상승 */
+@keyframes phRise {
+  from { opacity: 0; transform: translateY(22px); }
+  to { opacity: 1; transform: none; }
+}
+
 .eyebrow {
   font-size: 13px;
   font-weight: 700;
@@ -16,6 +22,7 @@
   text-transform: uppercase;
   color: var(--primary);
   margin-bottom: 12px;
+  animation: phRise 0.7s var(--ease-out-expo) 0.05s both;
 }
 
 .title {
@@ -25,6 +32,7 @@
   letter-spacing: -0.02em;
   color: var(--navy);
   margin-bottom: 12px;
+  animation: phRise 0.8s var(--ease-out-expo) 0.16s both;
 }
 
 .desc {
@@ -34,4 +42,11 @@
   max-width: 560px;
   margin-left: auto;
   margin-right: auto;
+  animation: phRise 0.8s var(--ease-out-expo) 0.3s both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .eyebrow,
+  .title,
+  .desc { animation: none; }
 }

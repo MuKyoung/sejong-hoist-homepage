@@ -25,6 +25,18 @@
   letter-spacing: -0.02em;
   color: var(--navy);
 }
+/* 타이틀 아래 네이비 액센트 룰 — 리빌 후 좌우로 자라남 */
+.title::after {
+  content: "";
+  display: block;
+  width: 36px;
+  height: 3px;
+  margin: 14px auto 0;
+  background: var(--brand);
+  transform: scaleX(0);
+  transition: transform 0.7s var(--ease-out-expo) 0.35s;
+}
+:global([data-reveal="on"]) .title::after { transform: scaleX(1); }
 
 .subtitle {
   margin-top: 10px;
@@ -93,6 +105,8 @@
     opacity: 1;
     animation: none !important;
   }
+  .circleInner { animation: none; }
+  .title::after { transform: scaleX(1); transition: none; }
 }
 
 /* Offset outer ring */
@@ -115,6 +129,20 @@
 .c2 { background-color: rgba(44, 74, 110, 0.95); }
 .c3 { background-color: rgba(33, 57, 86, 0.95); }
 .c4 { background-color: rgba(22, 39, 60, 0.95); }
+
+/* 내부 래퍼 — 진입/호버(외곽)와 분리된 아이들 플로팅 담당 */
+.circleInner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  animation: circleFloat 5.5s ease-in-out infinite;
+  animation-delay: calc(1.6s + 0.45s * var(--i, 0));
+}
+@keyframes circleFloat {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-5px); }
+}
 
 .circleIcon {
   display: inline-flex;

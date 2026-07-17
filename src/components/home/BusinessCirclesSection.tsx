@@ -134,13 +134,15 @@ export default function BusinessCirclesSection({ locale = "ko" }: { locale?: Loc
               className={`${s.circle} ${fills[i % fills.length]}`}
               style={{ "--i": i } as React.CSSProperties}
             >
-              <span className={s.circleIcon}>
-                <AreaIcon name={area.icon} />
+              <span className={s.circleInner}>
+                <span className={s.circleIcon}>
+                  <AreaIcon name={area.icon} />
+                </span>
+                <span className={s.circleTitle}>
+                  {locale === "en" ? area.en : area.title}
+                </span>
+                {locale === "ko" && <span className={s.circleEn}>{area.en}</span>}
               </span>
-              <span className={s.circleTitle}>
-                {locale === "en" ? area.en : area.title}
-              </span>
-              {locale === "ko" && <span className={s.circleEn}>{area.en}</span>}
             </Link>
           ))}
         </div>

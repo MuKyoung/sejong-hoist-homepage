@@ -25,6 +25,20 @@
   letter-spacing: -0.02em;
   color: var(--navy);
 }
+.title::after {
+  content: "";
+  display: block;
+  width: 36px;
+  height: 3px;
+  margin: 14px auto 0;
+  background: var(--brand);
+  transform: scaleX(0);
+  transition: transform 0.7s var(--ease-out-expo) 0.35s;
+}
+:global([data-reveal="on"]) .title::after { transform: scaleX(1); }
+@media (prefers-reduced-motion: reduce) {
+  .title::after { transform: scaleX(1); transition: none; }
+}
 
 .subtitle {
   margin-top: 10px;
@@ -383,11 +397,32 @@
 .newsCol + .newsCol { border-left: 1px solid var(--hairline); }
 
 .newsItem {
+  position: relative;
   display: flex;
   flex-direction: column;
   gap: 8px;
   padding: 22px 28px 24px;
   min-width: 0;
+  transition: background var(--motion-standard) var(--ease-std);
+}
+/* 호버 시 좌측 네이비 액센트바가 자라나며 배경이 살짝 밝아짐 */
+.newsItem::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 18%;
+  bottom: 18%;
+  width: 3px;
+  background: var(--brand);
+  transform: scaleY(0);
+  transform-origin: top;
+  transition: transform 0.3s var(--ease-out-expo);
+}
+.newsItem:hover { background: var(--surface); }
+.newsItem:hover::before { transform: scaleY(1); }
+@media (prefers-reduced-motion: reduce) {
+  .newsItem,
+  .newsItem::before { transition: none; }
 }
 
 .newsCat {

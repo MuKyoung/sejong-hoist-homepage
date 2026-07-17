@@ -101,13 +101,30 @@
 }
 
 .dropLink {
+  --d: 0ms;
   display: block;
   padding: 9px 18px;
   font-size: 14px;
   font-weight: 500;
   color: var(--body);
   white-space: nowrap;
-  transition: color var(--motion-fast), background var(--motion-fast);
+  opacity: 0;
+  transform: translateY(7px);
+  /* 등장(opacity/transform)만 계단식 지연 — 색상 호버 반응은 즉시 */
+  transition: opacity 0.3s var(--ease-out-expo) var(--d),
+    transform 0.3s var(--ease-out-expo) var(--d),
+    color var(--motion-fast), background var(--motion-fast);
+}
+.dropLink:nth-child(2) { --d: 35ms; }
+.dropLink:nth-child(3) { --d: 70ms; }
+.dropLink:nth-child(4) { --d: 105ms; }
+.dropLink:nth-child(5) { --d: 140ms; }
+.dropLink:nth-child(6) { --d: 175ms; }
+.dropLink:nth-child(7) { --d: 210ms; }
+.navItem:hover .dropdown .dropLink,
+.navItem:focus-within .dropdown .dropLink {
+  opacity: 1;
+  transform: none;
 }
 .dropLink:hover {
   color: var(--primary);
@@ -117,6 +134,11 @@
 @media (prefers-reduced-motion: reduce) {
   .navItem::after,
   .dropdown { transition: none; }
+  .dropLink {
+    opacity: 1;
+    transform: none;
+    transition: color var(--motion-fast), background var(--motion-fast);
+  }
 }
 
 .right { display: flex; align-items: center; align-self: stretch; gap: 16px; flex-shrink: 0; }
