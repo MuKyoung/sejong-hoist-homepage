@@ -364,7 +364,7 @@ export default function EditorialConcept() {
             {/* 좌: 딥 네이비 컬러 카드 — 연세대 Research 카드 */}
             <Rise className="h-full">
               <Link href="/business" className="group relative flex flex-col justify-between overflow-hidden h-full min-h-[420px] lg:min-h-[540px] p-9 lg:p-12"
-                style={{ background: NAVY, color: "#fff", borderRadius: "0 clamp(64px, 8vw, 128px) 0 0" }}>
+                style={{ background: NAVY, color: "#fff" }}>
                 <div className="absolute -right-24 -bottom-24 w-[340px] h-[340px] rounded-full opacity-60 transition-transform duration-[1400ms] group-hover:scale-125"
                   style={{ background: "radial-gradient(circle, rgba(46,90,167,0.55), transparent 68%)", transitionTimingFunction: "cubic-bezier(0.16,1,0.3,1)" }} aria-hidden />
                 <div>
@@ -403,7 +403,7 @@ export default function EditorialConcept() {
 
               <Rise delay={0.22}>
                 <Link href="/technology" className="group flex items-center justify-between gap-6 p-8 lg:p-10 min-h-[150px]"
-                  style={{ background: PALE, borderRadius: "0 0 0 clamp(40px, 5vw, 80px)" }}>
+                  style={{ background: PALE }}>
                   <div>
                     <p className="font-extrabold" style={{ fontSize: "clamp(28px, 3vw, 42px)", letterSpacing: "-0.03em", color: ROYAL }}>
                       Technology

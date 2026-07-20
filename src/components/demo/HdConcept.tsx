@@ -191,7 +191,7 @@ export default function HdConcept() {
                   initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.12, duration: 0.4, ease: E }}
                 >
-                  <Link href="/portfolio" className="group block relative overflow-hidden rounded-xl h-full min-h-[190px]">
+                  <Link href="/portfolio" className="group block relative overflow-hidden rounded-[10px] h-full min-h-[190px]">
                     <Image
                       src="/images/pf-gantry350.jpg" alt="350TON 겐트리 크레인 시공"
                       fill sizes="240px"
