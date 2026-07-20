@@ -74,16 +74,18 @@ const PROCESS = [
   { step: "04", title: "인증 · 유지보수", desc: "안전인증 취득을 지원하고 정기 점검과 보수로 설비 수명을 관리합니다." },
 ];
 
-/* ── 느린 등장 래퍼 ── */
+/* ── 느린 등장 래퍼 — x 지정 시 좌/우에서 슬라이드 인 ── */
 function Rise({
   children,
   delay = 0,
   y = 40,
+  x = 0,
   className = "",
 }: {
   children: React.ReactNode;
   delay?: number;
   y?: number;
+  x?: number;
   className?: string;
 }) {
   const reduced = useReducedMotion();
@@ -91,8 +93,8 @@ function Rise({
   return (
     <motion.div
       className={className}
-      initial={{ opacity: 0, y }}
-      whileInView={{ opacity: 1, y: 0 }}
+      initial={{ opacity: 0, x, y: x ? 0 : y }}
+      whileInView={{ opacity: 1, x: 0, y: 0 }}
       viewport={{ once: true, margin: "-10%" }}
       transition={{ duration: 1.3, delay, ease: E }}
     >
@@ -163,7 +165,7 @@ export default function MonumentConcept() {
   const rest = PORTFOLIO.slice(1, 4);
 
   return (
-    <div style={{ background: INK, color: TEXT }}>
+    <div className="overflow-x-clip" style={{ background: INK, color: TEXT }}>
       {/* ══════════ 헤더 ══════════ */}
       <header
         className="fixed top-0 inset-x-0 z-50"
@@ -436,7 +438,7 @@ export default function MonumentConcept() {
       <section style={{ background: PANEL, paddingBlock: "clamp(76px, 8.5vw, 124px)" }}>
         <div className="mx-auto" style={{ maxWidth: 1440, paddingInline: "clamp(20px, 4vw, 56px)" }}>
           <div className="grid lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.6fr)] gap-x-16 gap-y-14 items-start">
-            <Rise>
+            <Rise x={-90}>
               <p className="text-[13px] font-semibold tracking-[0.18em] mb-6" style={{ color: BRASS }}>규모</p>
               <h2 className="font-extrabold" style={{ fontSize: "clamp(32px, 4.4vw, 60px)", lineHeight: 1.16, letterSpacing: "-0.04em", color: TEXT }}>
                 숫자로 남은
@@ -455,7 +457,7 @@ export default function MonumentConcept() {
 
             <div className="grid sm:grid-cols-3" style={{ borderTop: `1px solid ${LINE}` }}>
               {STATS.map((st, i) => (
-                <Rise key={st.label} delay={0.15 + i * 0.18} className="h-full">
+                <Rise key={st.label} delay={0.15 + i * 0.18} x={90} className="h-full">
                   <div
                     className={[
                       "py-10 sm:py-12 h-full border-white/10",
@@ -473,7 +475,7 @@ export default function MonumentConcept() {
           </div>
 
           {/* 와이드 이미지 밴드 — 수치 아래 빈 구간을 스케일 컷으로 마감 */}
-          <Rise delay={0.1}>
+          <Rise delay={0.1} x={-110}>
             <div className="relative overflow-hidden mt-16 lg:mt-24" style={{ aspectRatio: "21 / 8", background: INK }}>
               <Image src="/images/hero-04.jpg" alt="세종호이스트크레인 시공 현장" fill sizes="100vw" className="object-cover" />
               <span className="absolute inset-0" style={{ background: "linear-gradient(0deg, rgba(8,11,15,0.85) 4%, rgba(8,11,15,0.12) 60%, transparent)" }} />
@@ -510,7 +512,7 @@ export default function MonumentConcept() {
 
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-14">
             {BUSINESS_AREAS.map((area, i) => (
-              <Rise key={area.slug} delay={(i % 3) * 0.14}>
+              <Rise key={area.slug} delay={(i % 3) * 0.14} x={i % 3 === 0 ? -80 : i % 3 === 2 ? 80 : 0}>
                 <Link href={area.href} className="group block">
                   <div className="relative overflow-hidden" style={{ aspectRatio: "4 / 3", background: "#DED9D0" }}>
                     <Image
@@ -572,7 +574,7 @@ export default function MonumentConcept() {
           </Rise>
 
           {/* 대표 사례 — 가로 전체를 쓰는 시네마틱 프레임 */}
-          <Rise>
+          <Rise x={110}>
             <Link href={`/portfolio/${featured.slug}`} className="group block">
               <div className="relative overflow-hidden" style={{ aspectRatio: "21 / 9", background: PANEL }}>
                 <Image
@@ -604,7 +606,7 @@ export default function MonumentConcept() {
           {/* 보조 사례 3건 — 정수 그리드로 빈칸 없이 마감 */}
           <div className="grid sm:grid-cols-3 gap-x-8 gap-y-12 mt-8 lg:mt-10">
             {rest.map((item, i) => (
-              <Rise key={item.slug} delay={i * 0.14}>
+              <Rise key={item.slug} delay={i * 0.14} x={i === 0 ? -80 : i === 2 ? 80 : 0}>
                 <Link href={`/portfolio/${item.slug}`} className="group block">
                   <div className="relative overflow-hidden" style={{ aspectRatio: "3 / 2", background: PANEL }}>
                     <Image
@@ -644,7 +646,7 @@ export default function MonumentConcept() {
 
           <div className="grid sm:grid-cols-2 lg:grid-cols-4" style={{ borderTop: `1px solid ${LINE}` }}>
             {PROCESS.map((p, i) => (
-              <Rise key={p.step} delay={i * 0.16}>
+              <Rise key={p.step} delay={i * 0.16} x={i < 2 ? -70 : 70}>
                 <div
                   className={[
                     "py-10 lg:py-12 h-full border-white/10",
@@ -676,7 +678,7 @@ export default function MonumentConcept() {
 
         <div className="relative mx-auto" style={{ maxWidth: 1440, paddingInline: "clamp(20px, 4vw, 56px)" }}>
           <div className="grid lg:grid-cols-[minmax(0,0.85fr)_minmax(0,1.35fr)] gap-x-16 gap-y-14 items-center">
-            <Rise>
+            <Rise x={-90}>
               <p className="text-[13px] font-semibold tracking-[0.18em] mb-6" style={{ color: BRASS }}>기술 · 인증</p>
               <h2 className="font-extrabold" style={{ fontSize: "clamp(32px, 4.4vw, 56px)", lineHeight: 1.18, letterSpacing: "-0.04em", color: TEXT }}>
                 안전은 약속이 아니라
@@ -694,7 +696,7 @@ export default function MonumentConcept() {
 
             <div className="grid sm:grid-cols-2 gap-px" style={{ background: LINE }}>
               {PROOFS.map((p, i) => (
-                <Rise key={p.k} delay={0.1 + i * 0.14}>
+                <Rise key={p.k} delay={0.1 + i * 0.14} x={90}>
                   <div className="h-full p-8 lg:p-10" style={{ background: INK }}>
                     <p className="text-[13px]" style={{ color: MUTED }}>{p.k}</p>
                     <p className="mt-3 font-extrabold leading-none" style={{ fontSize: "clamp(30px, 3.4vw, 44px)", letterSpacing: "-0.04em", color: TEXT }}>
@@ -713,14 +715,14 @@ export default function MonumentConcept() {
       <section style={{ background: BRASS, color: INK, paddingBlock: "clamp(76px, 8.5vw, 124px)" }}>
         <div className="mx-auto" style={{ maxWidth: 1440, paddingInline: "clamp(20px, 4vw, 56px)" }}>
           <div className="grid lg:grid-cols-[minmax(0,1.3fr)_minmax(0,1fr)] gap-x-16 gap-y-12 items-center">
-            <Rise>
+            <Rise x={-90}>
               <h2 className="font-extrabold" style={{ fontSize: "clamp(32px, 5vw, 68px)", lineHeight: 1.12, letterSpacing: "-0.045em" }}>
                 현장 조건만 알려주시면
                 <br />
                 사양과 견적을 제안합니다
               </h2>
             </Rise>
-            <Rise delay={0.18}>
+            <Rise delay={0.18} x={90}>
               <div style={{ borderTop: "1px solid rgba(12,15,19,0.22)" }}>
                 <a href={`tel:${COMPANY.tel.replace(/-/g, "")}`} className="flex items-baseline justify-between gap-6 py-6" style={{ borderBottom: "1px solid rgba(12,15,19,0.22)" }}>
                   <span className="text-[13px] font-semibold" style={{ color: "rgba(12,15,19,0.6)" }}>대표전화</span>

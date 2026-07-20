@@ -82,17 +82,17 @@ function NE() {
   );
 }
 
-/* 느린 등장 래퍼 */
+/* 느린 등장 래퍼 — x 지정 시 좌/우에서 슬라이드 인 */
 function Rise({
-  children, delay = 0, y = 36, className = "",
-}: { children: React.ReactNode; delay?: number; y?: number; className?: string }) {
+  children, delay = 0, y = 36, x = 0, className = "",
+}: { children: React.ReactNode; delay?: number; y?: number; x?: number; className?: string }) {
   const reduced = useReducedMotion();
   if (reduced) return <div className={className}>{children}</div>;
   return (
     <motion.div
       className={className}
-      initial={{ opacity: 0, y }}
-      whileInView={{ opacity: 1, y: 0 }}
+      initial={{ opacity: 0, x, y: x ? 0 : y }}
+      whileInView={{ opacity: 1, x: 0, y: 0 }}
       viewport={{ once: true, margin: "-8%" }}
       transition={{ duration: 1.2, delay, ease: E }}
     >
@@ -129,7 +129,7 @@ export default function EditorialConcept() {
   const cards = PORTFOLIO.slice(0, 3);
 
   return (
-    <div style={{ background: "#fff", color: INK }}>
+    <div className="overflow-x-clip" style={{ background: "#fff", color: INK }}>
       {/* ══════════ 헤더 : 명지대式 2단 (다크 유틸 + 라이트 메인) ══════════ */}
       <div style={{ background: "#0E1420" }}>
         <div className="mx-auto hidden md:flex items-center justify-between h-9 text-[12.5px]"
@@ -344,7 +344,7 @@ export default function EditorialConcept() {
       {/* ══════════ 에디토리얼 인트로 + 비대칭 매거진 그리드 (연세대) ══════════ */}
       <section style={{ paddingBlock: "clamp(80px, 9vw, 136px)" }}>
         <div className="mx-auto" style={{ maxWidth: 1400, paddingInline: "clamp(20px, 3.5vw, 48px)" }}>
-          <Rise>
+          <Rise x={-100}>
             <div className="flex flex-wrap items-end gap-x-8 gap-y-4 mb-6">
               <h2 className="font-extrabold" style={{ fontSize: "clamp(34px, 4.8vw, 64px)", lineHeight: 1.14, letterSpacing: "-0.045em" }}>
                 무게를 아는 회사,
@@ -362,7 +362,7 @@ export default function EditorialConcept() {
           {/* 비대칭 그리드: 컬러 카드 / 포토 카드 / 디스플레이 워드 */}
           <div className="grid lg:grid-cols-[1fr_1.1fr] gap-6 lg:gap-8 mt-14 lg:mt-20">
             {/* 좌: 딥 네이비 컬러 카드 — 연세대 Research 카드 */}
-            <Rise className="h-full">
+            <Rise x={-90} className="h-full">
               <Link href="/business" className="group relative flex flex-col justify-between overflow-hidden h-full min-h-[420px] lg:min-h-[540px] p-9 lg:p-12"
                 style={{ background: NAVY, color: "#fff" }}>
                 <div className="absolute -right-24 -bottom-24 w-[340px] h-[340px] rounded-full opacity-60 transition-transform duration-[1400ms] group-hover:scale-125"
@@ -383,7 +383,7 @@ export default function EditorialConcept() {
 
             {/* 우: 포토 카드 (History) + 디스플레이 워드 (Giving to) */}
             <div className="flex flex-col gap-6 lg:gap-8">
-              <Rise delay={0.12}>
+              <Rise delay={0.12} x={90}>
                 <Link href="/portfolio" className="group relative block overflow-hidden min-h-[300px] lg:min-h-[340px]">
                   <Image src="/images/pf-gantry350.jpg" alt="350TON 겐트리 크레인" fill sizes="(max-width: 1024px) 100vw, 640px"
                     className="object-cover group-hover:scale-[1.07]" style={{ transition: "transform 1.3s cubic-bezier(0.16,1,0.3,1)" }} />
@@ -401,7 +401,7 @@ export default function EditorialConcept() {
                 </Link>
               </Rise>
 
-              <Rise delay={0.22}>
+              <Rise delay={0.22} x={90}>
                 <Link href="/technology" className="group flex items-center justify-between gap-6 p-8 lg:p-10 min-h-[150px]"
                   style={{ background: PALE }}>
                   <div>
@@ -425,8 +425,8 @@ export default function EditorialConcept() {
 
       {/* ══════════ 게시판 패널 (명지대) : 탭 리스트 + 우측 룰 블록 ══════════ */}
       <section className="relative" style={{ background: PALE, paddingBlock: "clamp(80px, 9vw, 136px)", overflow: "hidden" }}>
-        {/* 대형 페이드 워드마크 */}
-        <Rise y={24} className="pointer-events-none select-none absolute -top-4 left-0" >
+        {/* 대형 페이드 워드마크 — 좌측에서 크게 슬라이드 인 */}
+        <Rise x={-160} className="pointer-events-none select-none absolute -top-4 left-0" >
           <p className="font-extrabold leading-none" aria-hidden
             style={{ fontSize: "clamp(90px, 13vw, 200px)", letterSpacing: "-0.04em", color: "rgba(16,24,40,0.045)", whiteSpace: "nowrap" }}>
             Sejong Hoist
@@ -436,19 +436,19 @@ export default function EditorialConcept() {
         <div className="relative mx-auto" style={{ maxWidth: 1400, paddingInline: "clamp(20px, 3.5vw, 48px)" }}>
           <div className="grid lg:grid-cols-[1.5fr_1fr] gap-x-16 gap-y-16">
             {/* 좌: 탭 게시판 */}
-            <Rise>
+            <Rise x={-90}>
               <div className="flex items-baseline justify-between gap-6 pb-5" style={{ borderBottom: `2px solid ${INK}` }}>
                 <div className="flex items-baseline gap-6">
                   <span className="w-2 h-2 rounded-full self-center hidden sm:block" style={{ background: ROYAL }} aria-hidden />
                   <button type="button" onClick={() => setTab("notice")}
-                    className="text-[clamp(22px,2.4vw,30px)] font-extrabold tracking-tight transition-colors duration-400"
+                    className="text-[clamp(22px,2.4vw,30px)] font-extrabold tracking-tight transition-colors duration-600"
                     style={{ color: tab === "notice" ? INK : "rgba(16,24,40,0.3)" }}
                     aria-pressed={tab === "notice"}>
                     공지사항
                   </button>
                   <span style={{ width: 1, height: 20, background: HAIR, alignSelf: "center" }} aria-hidden />
                   <button type="button" onClick={() => setTab("news")}
-                    className="text-[clamp(22px,2.4vw,30px)] font-extrabold tracking-tight transition-colors duration-400"
+                    className="text-[clamp(22px,2.4vw,30px)] font-extrabold tracking-tight transition-colors duration-600"
                     style={{ color: tab === "news" ? INK : "rgba(16,24,40,0.3)" }}
                     aria-pressed={tab === "news"}>
                     시공 소식
@@ -464,7 +464,7 @@ export default function EditorialConcept() {
                 <motion.ul
                   key={tab}
                   initial={{ opacity: 0, y: 14 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -8 }}
-                  transition={{ duration: 0.55, ease: E }}
+                  transition={{ duration: 0.85, ease: E }}
                   className="list-none"
                 >
                   {(tab === "notice"
@@ -478,7 +478,7 @@ export default function EditorialConcept() {
                       }))
                   ).map((row, i) => (
                     <li key={row.key} style={{ borderBottom: `1px solid ${HAIR}` }}>
-                      <Link href={row.href} className="group flex items-center gap-5 py-[18px] transition-colors duration-400 hover:bg-white"
+                      <Link href={row.href} className="group flex items-center gap-5 py-[18px] transition-colors duration-600 hover:bg-white"
                         style={{ paddingInline: 6 }}>
                         <span className="shrink-0 min-w-[64px] text-center text-[11.5px] font-bold px-2.5 py-1.5"
                           style={{
@@ -509,7 +509,7 @@ export default function EditorialConcept() {
             </Rise>
 
             {/* 우: 룰 블록 (명지대 연구윤리 칼럼) */}
-            <Rise delay={0.15}>
+            <Rise delay={0.15} x={90}>
               <div style={{ borderTop: `2px solid ${INK}` }}>
                 <div className="py-7" style={{ borderBottom: `1px solid ${HAIR}` }}>
                   <h3 className="text-[19px] font-extrabold tracking-tight">안전관리 체계</h3>
@@ -551,7 +551,7 @@ export default function EditorialConcept() {
         </div>
 
         <div className="relative mx-auto" style={{ maxWidth: 1400, paddingInline: "clamp(20px, 3.5vw, 48px)" }}>
-          <Rise y={24}>
+          <Rise x={160}>
             <p className="font-extrabold leading-none select-none" aria-hidden
               style={{ fontSize: "clamp(64px, 9vw, 150px)", letterSpacing: "-0.04em", color: "rgba(255,255,255,0.08)" }}>
               Field Proven
@@ -560,7 +560,7 @@ export default function EditorialConcept() {
 
           <div className="grid lg:grid-cols-[0.85fr_2fr] gap-x-14 gap-y-14 mt-6">
             {/* 좌 레일 */}
-            <Rise>
+            <Rise x={-90}>
               <h2 className="text-[clamp(24px,2.6vw,34px)] font-extrabold text-white tracking-tight leading-[1.3]">
                 현장이 증명한
                 <br />
@@ -585,7 +585,7 @@ export default function EditorialConcept() {
             {/* 우: 시공 카드 3장 */}
             <div className="grid sm:grid-cols-3 gap-5">
               {cards.map((item, i) => (
-                <Rise key={item.slug} delay={0.12 + i * 0.14} className="h-full">
+                <Rise key={item.slug} delay={0.12 + i * 0.14} x={80} className="h-full">
                   <Link href={`/portfolio/${item.slug}`} className="group flex flex-col h-full backdrop-blur-[3px] transition-colors duration-500 hover:bg-white"
                     style={{ background: "rgba(255,255,255,0.92)" }}>
                     <div className="relative overflow-hidden" style={{ aspectRatio: "4 / 3" }}>
@@ -619,7 +619,7 @@ export default function EditorialConcept() {
         </div>
         <div className="mx-auto" style={{ maxWidth: 1400, paddingInline: "clamp(20px, 3.5vw, 48px)", paddingBlock: "clamp(72px, 8vw, 116px)" }}>
           <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-10">
-            <Rise>
+            <Rise x={-90}>
               <h2 className="font-extrabold text-white" style={{ fontSize: "clamp(28px, 3.8vw, 52px)", letterSpacing: "-0.04em", lineHeight: 1.2 }}>
                 Today is Safer than Yesterday
               </h2>
@@ -628,7 +628,7 @@ export default function EditorialConcept() {
                 유지보수까지 함께합니다. 현장 조건만 알려주시면 최적 사양과 견적을 제안해 드립니다.
               </p>
             </Rise>
-            <Rise delay={0.15}>
+            <Rise delay={0.15} x={90}>
               <div className="flex flex-col sm:flex-row gap-4">
                 <Link href="/support/inquiry"
                   className="flex items-center justify-center gap-2.5 h-[60px] px-10 rounded-full text-[15px] font-bold transition-colors duration-500 hover:bg-[#dfe9f8]"

@@ -118,7 +118,7 @@ const QUICK = [
   },
 ];
 
-const DUR = 5500;
+const DUR = 7000;
 
 export default function YsConcept() {
   const reduced = useReducedMotion();
@@ -209,7 +209,7 @@ export default function YsConcept() {
                         layoutId="ysUnderline"
                         className="absolute left-4 right-4 bottom-0 h-[3px] rounded-full"
                         style={{ background: NAVY }}
-                        transition={{ duration: 0.3, ease: E }}
+                        transition={{ duration: 0.6, ease: E }}
                       />
                     )}
                   </Link>
@@ -251,7 +251,7 @@ export default function YsConcept() {
               initial={{ height: 0, opacity: 0 }}
               animate={{ height: "auto", opacity: 1 }}
               exit={{ height: 0, opacity: 0 }}
-              transition={{ duration: 0.35, ease: E }}
+              transition={{ duration: 0.65, ease: E }}
               className="hidden lg:block absolute left-0 right-0 top-full overflow-hidden bg-white rounded-b-[10px]"
               style={{ boxShadow: "0 32px 56px rgba(23,42,69,0.14)" }}
             >
@@ -292,7 +292,7 @@ export default function YsConcept() {
         {mobileOpen && (
           <motion.div
             initial={{ opacity: 0, x: 44 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: 44 }}
-            transition={{ duration: 0.3, ease: E }}
+            transition={{ duration: 0.6, ease: E }}
             className="fixed inset-0 z-40 lg:hidden overflow-y-auto bg-white"
             style={{ paddingTop: "64px" }}
           >
@@ -356,7 +356,7 @@ export default function YsConcept() {
                   exit: (d: number) => ({ x: d * -36, opacity: 0 }),
                 }}
                 initial="enter" animate="center" exit="exit"
-                transition={{ duration: 0.65, ease: E }}
+                transition={{ duration: 1.0, ease: E }}
                 className="absolute inset-0"
               >
                 <motion.div
@@ -451,12 +451,12 @@ export default function YsConcept() {
           <div className="grid grid-cols-3 lg:grid-cols-6 gap-3 sm:gap-4 mt-5 sm:mt-6">
             {QUICK.map((q, i) => (
               <motion.div key={q.href}
-                initial={{ opacity: 0, y: 18 }} animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.25 + i * 0.06, duration: 0.6, ease: E }}
+                initial={{ opacity: 0, x: i < 3 ? -70 : 70 }} animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: 0.25 + i * 0.08, duration: 0.85, ease: E }}
               >
                 <Link
                   href={q.href}
-                  className="group flex flex-col items-center justify-center gap-2.5 rounded-[10px] bg-white py-5 sm:py-6 border border-[#E7ECF2] hover:border-[#B9C7D8] shadow-[0_8px_24px_rgba(23,42,69,0.06)] hover:shadow-[0_16px_36px_rgba(23,42,69,0.12)] transition-all duration-300 hover:-translate-y-1"
+                  className="group flex flex-col items-center justify-center gap-2.5 rounded-[10px] bg-white py-5 sm:py-6 border border-[#E7ECF2] hover:border-[#B9C7D8] shadow-[0_8px_24px_rgba(23,42,69,0.06)] hover:shadow-[0_16px_36px_rgba(23,42,69,0.12)] transition-all duration-700 hover:-translate-y-1"
                 >
                   <span
                     className="w-11 h-11 rounded-full flex items-center justify-center bg-[#EEF3F9] group-hover:bg-[#2C4A6E] group-hover:text-white transition-colors duration-300"

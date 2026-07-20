@@ -35,7 +35,7 @@ const SLIDES = [
   },
 ];
 
-const DUR = 6500;
+const DUR = 7500;
 
 export default function HdConcept() {
   const reduced = useReducedMotion();
@@ -75,7 +75,7 @@ export default function HdConcept() {
           background: solid ? "rgba(255,255,255,0.98)" : "transparent",
           borderBottom: solid ? "1px solid #EEF1F5" : "1px solid rgba(255,255,255,0.16)",
           boxShadow: scrolled && !mega ? "0 6px 24px rgba(10,20,35,0.07)" : "none",
-          transition: "background .3s ease, border-color .3s ease, box-shadow .3s ease",
+          transition: "background .55s ease, border-color .55s ease, box-shadow .55s ease",
         }}
       >
         <div className="max-w-[1440px] mx-auto px-5 sm:px-8 xl:px-10 h-[60px] lg:h-[68px] flex items-stretch justify-between gap-4">
@@ -95,12 +95,12 @@ export default function HdConcept() {
               <div key={item.href} className="relative flex" onMouseEnter={() => setMega(true)}>
                 <Link
                   href={item.href}
-                  className="group relative flex items-center px-4 xl:px-6 text-[16px] font-bold tracking-[-0.01em] whitespace-nowrap transition-colors duration-200"
+                  className="group relative flex items-center px-4 xl:px-6 text-[16px] font-bold tracking-[-0.01em] whitespace-nowrap transition-colors duration-500"
                   style={{ color: fg, textShadow: solid ? "none" : "0 1px 14px rgba(0,0,0,0.5)" }}
                 >
                   {item.label}
                   <span
-                    className="absolute left-3 right-3 xl:left-4 xl:right-4 bottom-0 h-[2px] origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-300"
+                    className="absolute left-3 right-3 xl:left-4 xl:right-4 bottom-0 h-[2px] origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-700"
                     style={{ background: solid ? "#2C4A6E" : "#FFFFFF" }}
                   />
                 </Link>
@@ -124,7 +124,7 @@ export default function HdConcept() {
             </a>
             <Link
               href="/support/inquiry"
-              className="hidden sm:flex items-center h-10 px-5 rounded-full text-[13px] font-bold whitespace-nowrap transition-all duration-200"
+              className="hidden sm:flex items-center h-10 px-5 rounded-full text-[13px] font-bold whitespace-nowrap transition-all duration-500"
               style={{
                 border: `1.5px solid ${solid ? "#2C4A6E" : "rgba(255,255,255,0.55)"}`,
                 color: solid ? "#2C4A6E" : "#fff",
@@ -158,7 +158,7 @@ export default function HdConcept() {
               initial={{ height: 0, opacity: 0 }}
               animate={{ height: "auto", opacity: 1 }}
               exit={{ height: 0, opacity: 0 }}
-              transition={{ duration: 0.38, ease: E }}
+              transition={{ duration: 0.7, ease: E }}
               className="hidden lg:block absolute left-0 right-0 top-full overflow-hidden bg-white"
               style={{ borderTop: "1px solid #EEF1F5", boxShadow: "0 28px 48px rgba(10,20,35,0.12)" }}
             >
@@ -177,7 +177,7 @@ export default function HdConcept() {
                           transition={{ delay: 0.08 + ci * 0.02 + i * 0.03, duration: 0.35, ease: E }}
                         >
                           <Link href={c.href}
-                            className="block text-[13.5px] py-0.5 text-[#5E6E80] hover:text-[#16273C] hover:translate-x-1 transition-all duration-200">
+                            className="block text-[13.5px] py-0.5 text-[#5E6E80] hover:text-[#16273C] hover:translate-x-1 transition-all duration-500">
                             {c.label}
                           </Link>
                         </motion.div>
@@ -272,8 +272,8 @@ export default function HdConcept() {
               scale: reduced ? 1 : idx === i ? 1.07 : 1,
             }}
             transition={{
-              opacity: { duration: 1.1, ease: "easeInOut" },
-              scale: { duration: DUR / 1000 + 1.5, ease: "linear" },
+              opacity: { duration: 1.7, ease: "easeInOut" },
+              scale: { duration: DUR / 1000 + 2, ease: "linear" },
             }}
           >
             <Image
@@ -295,23 +295,24 @@ export default function HdConcept() {
           <div className="w-full max-w-[1440px] mx-auto px-5 sm:px-8 xl:px-10">
             <div className="max-w-[820px] pt-8 pb-24 sm:pb-16">
               <AnimatePresence mode="wait">
-                <motion.div key={idx} exit={{ opacity: 0, y: -14, transition: { duration: 0.22 } }}>
+                <motion.div key={idx} exit={{ opacity: 0, y: -14, transition: { duration: 0.5, ease: E } }}>
+                  {/* 헤드라인 — 홀수 줄은 좌, 짝수 줄은 우에서 슬라이드 인 (이목 집중) */}
                   {SLIDES[idx].lines.map((line, li) => (
-                    <div key={li} className="overflow-hidden">
-                      <motion.h2
-                        initial={{ y: "112%" }} animate={{ y: 0 }}
-                        transition={{ delay: 0.12 + li * 0.09, duration: 0.85, ease: E }}
-                        className="text-white font-extrabold leading-[1.08]"
-                        style={{ fontSize: "clamp(32px, 5.4vw, 64px)", letterSpacing: "-0.04em", textShadow: "0 2px 28px rgba(0,0,0,0.35)" }}
-                      >
-                        {line}
-                      </motion.h2>
-                    </div>
+                    <motion.h2
+                      key={li}
+                      initial={{ opacity: 0, x: li % 2 === 0 ? -120 : 120 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ delay: 0.1 + li * 0.12, duration: 1.05, ease: E }}
+                      className="text-white font-extrabold leading-[1.08]"
+                      style={{ fontSize: "clamp(32px, 5.4vw, 64px)", letterSpacing: "-0.04em", textShadow: "0 2px 28px rgba(0,0,0,0.35)" }}
+                    >
+                      {line}
+                    </motion.h2>
                   ))}
 
                   <motion.p
-                    initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.44, duration: 0.65, ease: E }}
+                    initial={{ opacity: 0, x: -70 }} animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: 0.5, duration: 0.9, ease: E }}
                     className="mt-5 sm:mt-6 text-[14px] sm:text-[16px] leading-[1.8] text-white/75 max-w-[560px]"
                   >
                     {SLIDES[idx].sub}
@@ -326,14 +327,17 @@ export default function HdConcept() {
         {/* 슬라이드 컨트롤 : 플로팅 요소(FAB · 시안 스위처)와 겹치지 않게 위로 띄움 */}
         <div className="absolute inset-x-0 bottom-24 lg:bottom-20">
           <div className="max-w-[1440px] mx-auto px-5 sm:px-8 xl:px-10 flex items-end justify-between gap-5">
-            <div className="flex items-center gap-4 sm:gap-5 flex-1 max-w-[420px]">
+            <motion.div
+              initial={{ opacity: 0, x: -80 }} animate={{ opacity: 1, x: 0 }}
+              transition={{ delay: 0.85, duration: 1, ease: E }}
+              className="flex items-center gap-4 sm:gap-5 flex-1 max-w-[420px]">
               {/* 카운터 롤 */}
               <div className="relative h-8 sm:h-9 overflow-hidden" aria-hidden>
                 <AnimatePresence mode="popLayout">
                   <motion.span
                     key={idx}
                     initial={{ y: 18, opacity: 0 }} animate={{ y: 0, opacity: 1 }} exit={{ y: -18, opacity: 0 }}
-                    transition={{ duration: 0.45, ease: E }}
+                    transition={{ duration: 0.75, ease: E }}
                     className="block text-[24px] sm:text-[28px] font-extrabold text-white leading-8 sm:leading-9 tabular-nums"
                   >
                     {String(idx + 1).padStart(2, "0")}
@@ -352,12 +356,15 @@ export default function HdConcept() {
                 />
               </div>
               <span className="text-[13px] text-white/50 tabular-nums" aria-hidden>/ {String(SLIDES.length).padStart(2, "0")}</span>
-            </div>
+            </motion.div>
 
-            <div className="flex items-center gap-2 sm:gap-2.5">
+            <motion.div
+              initial={{ opacity: 0, x: 80 }} animate={{ opacity: 1, x: 0 }}
+              transition={{ delay: 0.85, duration: 1, ease: E }}
+              className="flex items-center gap-2 sm:gap-2.5">
               <button type="button" onClick={() => setPlaying((v) => !v)}
                 aria-label={playing ? "슬라이드 일시정지" : "슬라이드 재생"}
-                className="w-10 h-10 sm:w-11 sm:h-11 rounded-full border border-white/30 text-white flex items-center justify-center hover:bg-white/10 hover:border-white/60 transition-all">
+                className="w-10 h-10 sm:w-11 sm:h-11 rounded-full border border-white/30 text-white flex items-center justify-center hover:bg-white/10 hover:border-white/60 transition-all duration-500">
                 {playing ? (
                   <svg width="11" height="12" viewBox="0 0 11 12" fill="currentColor" aria-hidden><rect x="1" width="3" height="12" rx="1" /><rect x="7" width="3" height="12" rx="1" /></svg>
                 ) : (
@@ -365,14 +372,14 @@ export default function HdConcept() {
                 )}
               </button>
               <button type="button" onClick={() => go(-1)} aria-label="이전 슬라이드"
-                className="w-10 h-10 sm:w-11 sm:h-11 rounded-full border border-white/30 text-white flex items-center justify-center hover:bg-white/10 hover:border-white/60 transition-all">
+                className="w-10 h-10 sm:w-11 sm:h-11 rounded-full border border-white/30 text-white flex items-center justify-center hover:bg-white/10 hover:border-white/60 transition-all duration-500">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden><polyline points="15 18 9 12 15 6" /></svg>
               </button>
               <button type="button" onClick={() => go(1)} aria-label="다음 슬라이드"
-                className="w-10 h-10 sm:w-11 sm:h-11 rounded-full border border-white/30 text-white flex items-center justify-center hover:bg-white/10 hover:border-white/60 transition-all">
+                className="w-10 h-10 sm:w-11 sm:h-11 rounded-full border border-white/30 text-white flex items-center justify-center hover:bg-white/10 hover:border-white/60 transition-all duration-500">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden><polyline points="9 18 15 12 9 6" /></svg>
               </button>
-            </div>
+            </motion.div>
           </div>
         </div>
 
