@@ -101,6 +101,18 @@ const HERO_DEMOS: readonly DemoEntry[] = [
     href: "/demo/7",
     dark: true,
   },
+  {
+    num: "08",
+    name: "EDITORIAL",
+    subtitle: "시안 D · 에디토리얼 포털",
+    ref: "연세대학교 메인 × 명지대 산학협력단 믹스",
+    palette: ["#FFFFFF", "#2E5AA7", "#0E1420"],
+    desc: "풀블리드 대형 타이포 히어로에 비대칭 매거진 그리드, 탭 게시판과 대형 페이드 워드마크까지. 두 대학 사이트의 연출을 하나로 섞은 전체 리뉴얼안입니다.",
+    keys: ["비대칭 매거진 그리드", "탭 게시판 + 룰 블록", "페이드 영문 워드마크", "원형 퀵 플로팅"],
+    img: "/images/hero-04.jpg",
+    href: "/demo/8",
+    dark: false,
+  },
 ];
 
 function DemoCard({ d, i }: { d: DemoEntry; i: number }) {

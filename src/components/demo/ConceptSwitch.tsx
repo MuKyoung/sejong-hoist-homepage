@@ -8,9 +8,10 @@ const CONCEPTS = [
   { id: "5", label: "시안 A" },
   { id: "6", label: "시안 B" },
   { id: "7", label: "시안 C" },
+  { id: "8", label: "시안 D" },
 ] as const;
 
-export default function ConceptSwitch({ current }: { current: "5" | "6" | "7" }) {
+export default function ConceptSwitch({ current }: { current: "5" | "6" | "7" | "8" }) {
   return (
     <div
       className="fixed left-3 sm:left-4 bottom-3 sm:bottom-4 z-[70] flex items-center gap-0.5 h-11 px-1.5 rounded-full backdrop-blur"
