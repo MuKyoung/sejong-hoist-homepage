@@ -102,22 +102,7 @@ export default async function OverviewMosaicSection({ locale = "ko" }: { locale?
 
         <Reveal bare>
         <div className={s.grid}>
-          <Link href="/about" className={s.photoCard}>
-            <Image
-              src="/images/about-02.jpg"
-              alt=""
-              fill
-              className={s.photoImg}
-              sizes="(min-width: 1024px) 28vw, 100vw"
-            />
-            <span className={s.photoOverlay} aria-hidden />
-            <span className={s.photoLabel}>
-              {t.photoLabel}
-              <ArrowGlyph />
-            </span>
-          </Link>
-
-          {/* 시공사례 리스트 — 클릭 시 해당 상세로 (2026-07-13 클라이언트 요청) */}
+          {/* 시공사례 리스트 좌측 정렬 — 클릭 시 해당 상세로 (26.07.16 클라이언트 요청) */}
           <div className={s.pfPanel}>
             <div className={s.pfHead}>
               <h3 className={s.pfTitle}>{t.portfolioTitle}</h3>
@@ -165,13 +150,28 @@ export default async function OverviewMosaicSection({ locale = "ko" }: { locale?
             </ul>
           </div>
 
-          <div className={s.blockCol}>
-            <Link href="/technology" className={`${s.block} ${s.blockWhite}`}>
-              <span className={s.blockLabel}>{t.blocks[0]}</span>
-              <ArrowGlyph />
+          {/* 우측 4칸 — 사진 · CONTACT US · 기술·인증 · 견적 문의 (26.07.16 클라이언트 요청) */}
+          <div className={s.quad}>
+            <Link href="/about" className={s.photoCard}>
+              <Image
+                src="/images/about-02.jpg"
+                alt=""
+                fill
+                className={s.photoImg}
+                sizes="(min-width: 1024px) 20vw, 50vw"
+              />
+              <span className={s.photoOverlay} aria-hidden />
+              <span className={s.photoLabel}>
+                {t.photoLabel}
+                <ArrowGlyph />
+              </span>
             </Link>
             <Link href="/support" className={`${s.block} ${s.blockSurface}`}>
               <span className={s.blockLabel}>{t.blocks[1]}</span>
+              <ArrowGlyph />
+            </Link>
+            <Link href="/technology" className={`${s.block} ${s.blockWhite}`}>
+              <span className={s.blockLabel}>{t.blocks[0]}</span>
               <ArrowGlyph />
             </Link>
             <Link href="/support/inquiry" className={`${s.block} ${s.blockDeep}`}>

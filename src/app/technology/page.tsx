@@ -1,10 +1,22 @@
 import type { Metadata } from "next";
 import Image from "next/image";
-import Link from "next/link";
 import PageHero from "@/components/subpage/PageHero";
 import ContactBand from "@/components/subpage/ContactBand";
+import CertShowcase from "@/components/subpage/CertShowcase";
 import { CERT_DOCS, certCover, REVIEW_DOCS, ISO_CERTS, ISO_META, QUALIFICATIONS, SAFETY_STEPS } from "@/data/site";
 import s from "@/styles/subpage.module.css";
+
+/* 톤수 박스 그리드용 데이터 (26.07.16 클라이언트 요청) —
+   용량이 없는 일괄 인증은 제목의 대수로 라벨 대체 */
+const SHOWCASE_DOCS = CERT_DOCS.map((doc) => ({
+  slug: doc.slug,
+  title: doc.title,
+  desc: doc.desc,
+  pageCount: doc.pageCount,
+  label: doc.capacity ?? `${doc.title.match(/(\d+)대/)?.[1] ?? doc.pageCount}대`,
+  sub: doc.capacity ? "KCs 안전인증" : "일괄 안전인증",
+  cover: certCover(doc),
+}));
 
 export const metadata: Metadata = {
   title: "기술·인증 | (주)세종호이스트크레인",
@@ -27,33 +39,12 @@ export default function TechnologyPage() {
             <h2 className={s.headline}>보유 인증</h2>
             <p className={s.body}>
               LS ELECTRIC 부산공장 크레인 13대 전수 안전인증 합격
-              (적합률 100%, 부적합 0건). 카드를 클릭하면 인증서 원본을 확인할 수 있습니다.
+              (적합률 100%, 부적합 0건). 박스를 선택하면 해당 인증서가 크게 표시됩니다.
             </p>
           </div>
 
-          <div className={s.certGrid}>
-            {CERT_DOCS.map((doc) => (
-              <Link key={doc.slug} href={`/technology/certs/${doc.slug}`} className={s.certCard}>
-                <div className={s.certThumb}>
-                  <Image
-                    src={certCover(doc)}
-                    alt={doc.title}
-                    fill
-                    className={s.certImg}
-                    sizes="(max-width: 639px) 100vw, (max-width: 1023px) 50vw, 380px"
-                  />
-                </div>
-                <div className={s.certBody}>
-                  {doc.capacity && (
-                    <p className={s.certCapacity}>{doc.capacity}</p>
-                  )}
-                  <h3 className={s.certTitle}>{doc.title}</h3>
-                  <p className={s.certIssuer}>{doc.desc}</p>
-                  <span className={s.certZoom}>전체 {doc.pageCount}페이지 보기 →</span>
-                </div>
-              </Link>
-            ))}
-          </div>
+          {/* 톤수 박스 → 클릭 시 인증서 확대 (26.07.16 클라이언트 요청) */}
+          <CertShowcase docs={SHOWCASE_DOCS} />
 
           <div className={s.docHead}>
             <h3 className={s.docHeadTitle}>ISO 인증</h3>

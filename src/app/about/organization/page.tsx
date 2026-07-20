@@ -31,7 +31,7 @@ export default function OrganizationPage() {
         <div className="container">
           <div className={s.orgTop}>
             <p className={s.orgTopTitle}>대표이사</p>
-            <p className={s.orgTopSub}>공동대표 {COMPANY.ceo}</p>
+            <p className={s.orgTopSub}>각자대표 {COMPANY.ceo}</p>
           </div>
           <div className={s.orgStem} aria-hidden />
           <div className={s.orgLv2Row}>

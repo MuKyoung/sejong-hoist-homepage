@@ -93,9 +93,32 @@
 
 .image {
   object-fit: cover;
-  transition: transform 0.6s var(--ease-std);
+  /* 26.07.16: 무겁고 길게 (기존 대비 2배) */
+  transition: transform 1.2s var(--ease-out-expo), filter 1.2s var(--ease-out-expo);
 }
-.card:hover .image { transform: scale(1.05); }
+
+/* 26.07.16: 카드별 서로 다른 호버 연출 후보 (클라이언트 선택용)
+   1안 좌상단 고정 대확대 · 2안 중앙 딥 줌 · 3안 줌+팬 · 4안 컬러 부스트 줌 */
+.card:nth-child(1) .image { transform-origin: top left; }
+.card:nth-child(1):hover .image { transform: scale(2.2); }
+.card:nth-child(2):hover .image { transform: scale(1.35); }
+.card:nth-child(3) .image { transform-origin: center right; }
+.card:nth-child(3):hover .image { transform: scale(1.28) translateX(-4%); }
+.card:nth-child(4):hover .image { transform: scale(1.18); filter: saturate(1.35) brightness(1.05); }
+
+.fxTag {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  z-index: 2;
+  padding: 4px 10px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: #fff;
+  background: rgba(22, 39, 60, 0.82);
+  border-radius: var(--r-full);
+}
 
 .badge {
   position: absolute;

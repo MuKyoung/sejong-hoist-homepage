@@ -193,7 +193,7 @@
 
 .phone {
   display: flex;
-  align-items: baseline;
+  align-items: center;
   gap: 6px;
   font-size: 12.5px;
   font-weight: 500;
@@ -204,12 +204,11 @@
 }
 .phone:hover { color: var(--primary); }
 
-.phoneLabel {
-  font-size: 10.5px;
-  font-weight: 700;
-  letter-spacing: 0.02em;
-  color: var(--faint);
-  min-width: 34px;
+/* 전화기·휴대폰 아이콘 (26.07.16) — 번호와 함께 클릭 영역임을 표시 */
+.phoneIcon {
+  flex-shrink: 0;
+  color: var(--primary);
+  vertical-align: -1px;
 }
 
 .menuBtn {

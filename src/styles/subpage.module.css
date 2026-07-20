@@ -271,7 +271,8 @@
   border: 1px solid var(--hairline);
   background: var(--canvas);
 }
-.areaCard + .areaCard { margin-top: 16px; }
+/* 26.07.16: 카드 사이 간격을 띄우고 사진을 프레임 안쪽으로 (구성 변화) */
+.areaCard + .areaCard { margin-top: 28px; }
 @media (min-width: 768px) {
   .areaCard { grid-template-columns: 320px 1fr; }
 }
@@ -280,9 +281,13 @@
   position: relative;
   min-height: 220px;
   background: var(--surface-alt);
+  border: 1px solid var(--hairline);
+}
+@media (min-width: 768px) {
+  .areaPhoto { margin: 16px 0 16px 16px; }
 }
 @media (max-width: 767.98px) {
-  .areaPhoto { aspect-ratio: 4 / 3; min-height: 0; }
+  .areaPhoto { aspect-ratio: 4 / 3; min-height: 0; margin: 12px 12px 0; }
 }
 
 .areaBody { padding: 26px 30px 28px; }
@@ -537,13 +542,23 @@
   background: var(--surface);
   border: 1px solid transparent;
   border-radius: var(--r-full);
-  transition: background var(--motion-fast), color var(--motion-fast), border-color var(--motion-fast);
+  transition: background var(--motion-fast), color var(--motion-fast),
+    border-color var(--motion-fast), transform 0.4s var(--ease-out-expo),
+    box-shadow 0.4s var(--ease-out-expo);
 }
-.filterBtn:hover { color: var(--ink); }
+/* 26.07.16: 필터 박스 호버 시 훅 커지는 효과 */
+.filterBtn:hover {
+  color: var(--ink);
+  transform: scale(1.12);
+  box-shadow: var(--shadow-md);
+}
 .filterBtnActive {
   color: var(--primary);
   background: var(--tint);
   border-color: var(--tint-strong);
+}
+@media (prefers-reduced-motion: reduce) {
+  .filterBtn:hover { transform: none; }
 }
 
 .portfolioGrid {
@@ -553,6 +568,19 @@
 }
 @media (min-width: 768px) { .portfolioGrid { grid-template-columns: repeat(2, 1fr); } }
 @media (min-width: 1024px) { .portfolioGrid { grid-template-columns: repeat(3, 1fr); } }
+
+/* 26.07.16: 필터 변경 시 카드가 페이드인하며 순차 재등장 (그리드 key 재마운트로 재생) */
+@keyframes pfCardIn {
+  from { opacity: 0; transform: translateY(26px) scale(0.985); }
+  to { opacity: 1; transform: none; }
+}
+.portfolioGrid .portfolioCard {
+  animation: pfCardIn 0.7s var(--ease-out-expo) both;
+  animation-delay: calc(70ms * var(--i, 0));
+}
+@media (prefers-reduced-motion: reduce) {
+  .portfolioGrid .portfolioCard { animation: none; }
+}
 
 .portfolioCard {
   display: block;
@@ -573,12 +601,12 @@
   background: var(--surface-alt);
   overflow: hidden;
 }
-/* 호버 시 살짝 줌인 (2026-07-13 클라이언트 요청) */
+/* 호버 줌인 — 26.07.16 요청: 두 배 느리게(무겁게) + 확대폭 증가 */
 .portfolioThumb :global(img) {
-  transition: transform 0.6s var(--ease-std);
+  transition: transform 1.2s var(--ease-out-expo);
 }
 .portfolioCard:hover .portfolioThumb :global(img) {
-  transform: scale(1.05);
+  transform: scale(1.1);
 }
 @media (prefers-reduced-motion: reduce) {
   .portfolioThumb :global(img) { transition: none; }
@@ -1418,11 +1446,11 @@
 .orgTopTitle { font-size: 1.0625rem; font-weight: 700; }
 .orgTopSub { margin-top: 4px; font-size: 13px; color: rgba(255, 255, 255, 0.72); }
 
-/* 총괄이사·전무 나란히 (2026-07-13 클라이언트 요청) */
+/* 좌측 총괄이사, 그 옆 한 단 아래 전무 (26.07.16 클라이언트 요청) */
 .orgLv2Row {
   display: flex;
   justify-content: center;
-  align-items: stretch;
+  align-items: flex-start;
   gap: 16px;
 }
 .orgLv2Row .orgLv2,
@@ -1433,6 +1461,7 @@
   align-items: center;
   justify-content: center;
 }
+.orgLv2Row .orgLv3 { margin-top: 22px; }
 
 .orgStem {
   width: 1px;
@@ -1601,4 +1630,22 @@
       animation-range: entry 20% entry 70%;
     }
   }
+}
+
+/* ── 인사말 등장 연출 (26.07.16): 아래에서 위로 천천히 + 350톤 무게감 강조 ── */
+.slowReveal { transition-duration: 1.5s !important; }
+
+.greetTon { display: inline-block; }
+:global([data-reveal="off"]) .greetTon { opacity: 0; }
+:global([data-reveal="on"]) .greetTon {
+  animation: tonRise 1.6s var(--ease-out-expo) 0.2s both;
+}
+@keyframes tonRise {
+  0% { opacity: 0; transform: translateY(64px) scale(1.14); }
+  72% { opacity: 1; transform: translateY(-4px) scale(1.02); }
+  100% { opacity: 1; transform: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .slowReveal { transition-duration: 0.01s !important; }
+  :global([data-reveal]) .greetTon { animation: none; opacity: 1; }
 }

@@ -56,17 +56,19 @@ export default function AboutPage() {
       <section className={`${s.section} ${s.sectionWhite}`}>
         <div className="container">
           <div className={s.greetWrap}>
-            <Reveal>
+            {/* 26.07.16: 아래에서 위로 천천히 등장 + 350톤 무게감 강조 연출 */}
+            <Reveal className={s.slowReveal}>
               <p className={s.eyebrow}>CEO Greeting</p>
               <h2 className={s.greetHeadline}>
-                {GREETING.headline[0]}
+                <span className={s.greetTon}>350톤</span>
+                {GREETING.headline[0].replace(/^350톤/, "")}
                 <br />
                 {GREETING.headline[1]}
               </h2>
               <p className={s.greetQuoteC}>“{GREETING.quote}”</p>
             </Reveal>
 
-            <Reveal delay={120}>
+            <Reveal delay={280} className={s.slowReveal}>
               <div className={s.greetBody}>
                 <p className={s.greetLead}>{GREETING.paragraphs[0]}</p>
                 <p className={s.body} style={{ marginTop: 20 }}>
@@ -77,7 +79,7 @@ export default function AboutPage() {
               </div>
             </Reveal>
 
-            <Reveal delay={220}>
+            <Reveal delay={520} className={s.slowReveal}>
               <div className={s.greetSignBlock}>
                 <p className={s.greetRole}>(주)세종호이스트크레인 대표이사</p>
                 <div className={s.greetNameRow}>

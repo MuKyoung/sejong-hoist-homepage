@@ -1,0 +1,92 @@
+/* 사진 클릭 확대 라이트박스 (26.07.16) */
+
+.trigger {
+  position: absolute;
+  inset: 0;
+  display: block;
+  padding: 0;
+  border: none;
+  background: none;
+  cursor: zoom-in;
+  overflow: hidden;
+}
+
+.img {
+  object-fit: cover;
+  transition: transform 1.2s var(--ease-out-expo);
+}
+.trigger:hover .img { transform: scale(1.07); }
+
+/* 우하단 돋보기 힌트 — 호버 시 표시 */
+.hint {
+  position: absolute;
+  right: 10px;
+  bottom: 10px;
+  z-index: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  border-radius: var(--r-full);
+  background: rgba(22, 39, 60, 0.72);
+  color: #fff;
+  opacity: 0;
+  transition: opacity 0.3s var(--ease-std);
+}
+.trigger:hover .hint { opacity: 1; }
+@media (hover: none) { .hint { opacity: 0.85; } }
+
+.overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 90;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: clamp(16px, 4vw, 48px);
+  background: rgba(10, 16, 26, 0.88);
+  cursor: zoom-out;
+  animation: overlayIn 0.3s ease both;
+}
+@keyframes overlayIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.frame {
+  position: relative;
+  width: min(92vw, 1100px);
+  height: min(84vh, 820px);
+  animation: frameIn 0.55s var(--ease-out-expo) both;
+}
+@keyframes frameIn {
+  from { opacity: 0; transform: scale(0.92) translateY(14px); }
+  to { opacity: 1; transform: none; }
+}
+
+.full { object-fit: contain; }
+
+.close {
+  position: absolute;
+  top: 18px;
+  right: 18px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  border-radius: var(--r-full);
+  background: rgba(255, 255, 255, 0.08);
+  color: #fff;
+  cursor: pointer;
+  transition: background 0.2s var(--ease-std), border-color 0.2s var(--ease-std);
+}
+.close:hover { background: rgba(255, 255, 255, 0.2); border-color: rgba(255, 255, 255, 0.6); }
+
+@media (prefers-reduced-motion: reduce) {
+  .overlay,
+  .frame { animation: none; }
+  .trigger:hover .img { transform: none; }
+}

@@ -56,6 +56,8 @@ export default async function PortfolioPreviewSection({ locale = "ko" }: { local
                   sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 25vw"
                 />
                 <span className={s.badge}>{item.capacity}</span>
+                {/* 26.07.16: 카드별 서로 다른 호버 연출 — 클라이언트 선택용 후보 표기 */}
+                <span className={s.fxTag}>{locale === "en" ? `FX ${i + 1}` : `연출 ${i + 1}안`}</span>
               </div>
               <div className={s.body}>
                 <span className={s.industry}>

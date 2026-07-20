@@ -3,6 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import PageHero from "@/components/subpage/PageHero";
 import ContactBand from "@/components/subpage/ContactBand";
+import ZoomableImage from "@/components/subpage/ZoomableImage";
 import { BUSINESS_AREAS, PRODUCTS } from "@/data/site";
 import s from "@/styles/subpage.module.css";
 
@@ -41,11 +42,10 @@ export default function BusinessPage() {
               {BUSINESS_AREAS.map((area, idx) => (
                 <article key={area.slug} id={area.slug} className={s.areaCard}>
                   <div className={s.areaPhoto}>
-                    <Image
+                    {/* 클릭 시 확대 (26.07.16 클라이언트 요청) */}
+                    <ZoomableImage
                       src={area.image}
                       alt={area.title}
-                      fill
-                      className={s.image}
                       sizes="(max-width: 767px) 100vw, 320px"
                     />
                   </div>
@@ -67,11 +67,9 @@ export default function BusinessPage() {
                       <div className={s.areaThumbs}>
                         {area.photos.slice(1).map((photo, i) => (
                           <div key={photo} className={s.areaThumb}>
-                            <Image
+                            <ZoomableImage
                               src={photo}
                               alt={`${area.title} 시공 사진 ${i + 2}`}
-                              fill
-                              className={s.image}
                               sizes="140px"
                             />
                           </div>

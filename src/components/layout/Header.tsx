@@ -120,11 +120,19 @@ export default function Header() {
             </div>
           </div>
           <div className={s.phones}>
-            <a href="tel:0448650801" className={s.phone}>
-              <span className={s.phoneLabel}>{isEn ? "Tel" : "대표"}</span>044-865-0801
+            {/* 전화기·휴대폰 아이콘 표기 (26.07.16 클라이언트 요청) */}
+            <a href="tel:0448650801" className={s.phone} aria-label={isEn ? "Tel 044-865-0801" : "대표전화 044-865-0801"}>
+              <svg className={s.phoneIcon} width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+                <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.08 4.18 2 2 0 0 1 4.06 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z" />
+              </svg>
+              044-865-0801
             </a>
-            <a href="tel:01076051510" className={s.phone}>
-              <span className={s.phoneLabel}>{isEn ? "Mobile" : "모바일"}</span>010-7605-1510
+            <a href="tel:01076051510" className={s.phone} aria-label={isEn ? "Mobile 010-7605-1510" : "모바일 010-7605-1510"}>
+              <svg className={s.phoneIcon} width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+                <rect x="6.5" y="2" width="11" height="20" rx="2.5" />
+                <path d="M11 18.5h2" />
+              </svg>
+              010-7605-1510
             </a>
           </div>
           <button
@@ -170,11 +178,18 @@ export default function Header() {
                 </Link>
               </div>
               <div className={s.mobileLang}>
-                <a href="tel:0448650801" className={s.mobileLangLink}>
-                  {isEn ? "Tel" : "대표"} 044-865-0801
+                <a href="tel:0448650801" className={s.mobileLangLink} aria-label={isEn ? "Tel 044-865-0801" : "대표전화 044-865-0801"}>
+                  <svg className={s.phoneIcon} width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+                    <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.08 4.18 2 2 0 0 1 4.06 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z" />
+                  </svg>
+                  044-865-0801
                 </a>
-                <a href="tel:01076051510" className={s.mobileLangLink}>
-                  {isEn ? "Mobile" : "모바일"} 010-7605-1510
+                <a href="tel:01076051510" className={s.mobileLangLink} aria-label={isEn ? "Mobile 010-7605-1510" : "모바일 010-7605-1510"}>
+                  <svg className={s.phoneIcon} width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+                    <rect x="6.5" y="2" width="11" height="20" rx="2.5" />
+                    <path d="M11 18.5h2" />
+                  </svg>
+                  010-7605-1510
                 </a>
               </div>
               <Link

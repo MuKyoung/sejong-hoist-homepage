@@ -64,12 +64,14 @@ export default function PortfolioClient({ items }: { items: CmsPortfolioItem[] }
 
       <section className={`${s.section} ${s.sectionAlt}`}>
         <div className="container">
-          <div className={s.portfolioGrid}>
-            {filtered.map((item) => (
+          {/* key: 필터 변경 시 그리드 재마운트 → 카드 페이드인 재생 (26.07.16) */}
+          <div className={s.portfolioGrid} key={`${industry}-${bucket}`}>
+            {filtered.map((item, i) => (
               <Link
                 key={item.slug}
                 href={`/portfolio/${item.slug}`}
                 className={s.portfolioCard}
+                style={{ "--i": i } as React.CSSProperties}
               >
                 <div className={s.portfolioThumb}>
                   <Image

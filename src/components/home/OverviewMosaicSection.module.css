@@ -47,11 +47,11 @@
   color: var(--body);
 }
 
-/* Mosaic grid — 작은 사진 · 시공사례 리스트 · 퀵 블록 (2026-07-13 재구성) */
+/* Mosaic grid — 시공사례 리스트(좌) · 4칸 쿼드(우: 사진·Contact·기술인증·견적) (26.07.16 재구성) */
 .grid {
   display: grid;
-  grid-template-columns: 0.95fr 1.55fr 0.9fr;
-  min-height: 320px;
+  grid-template-columns: 1.5fr 1fr;
+  min-height: 340px;
   gap: 16px;
 }
 
@@ -71,12 +71,12 @@
 :global([data-reveal="off"]) .pfList li,
 :global([data-reveal="off"]) .newsCol { opacity: 0; }
 
-:global([data-reveal="on"]) .photoCard { animation: mosaicIn 0.8s var(--ease-out-expo) both; }
-:global([data-reveal="on"]) .pfPanel { animation: mosaicIn 0.8s var(--ease-out-expo) 0.12s both; }
+:global([data-reveal="on"]) .pfPanel { animation: mosaicIn 0.8s var(--ease-out-expo) both; }
+:global([data-reveal="on"]) .photoCard { animation: mosaicIn 0.8s var(--ease-out-expo) 0.16s both; }
 :global([data-reveal="on"]) .block { animation: mosaicIn 0.8s var(--ease-out-expo) both; }
-:global([data-reveal="on"]) .block:nth-child(1) { animation-delay: 0.24s; }
-:global([data-reveal="on"]) .block:nth-child(2) { animation-delay: 0.32s; }
-:global([data-reveal="on"]) .block:nth-child(3) { animation-delay: 0.4s; }
+:global([data-reveal="on"]) .quad > *:nth-child(2) { animation-delay: 0.26s; }
+:global([data-reveal="on"]) .quad > *:nth-child(3) { animation-delay: 0.36s; }
+:global([data-reveal="on"]) .quad > *:nth-child(4) { animation-delay: 0.46s; }
 
 /* 시공사례 행 — 패널 등장 후 좌측에서 순차 진입 */
 :global([data-reveal="on"]) .pfList li {
@@ -108,9 +108,10 @@
 }
 .photoImg {
   object-fit: cover;
-  transition: transform 0.6s var(--ease-std);
+  /* 26.07.16: 두 배 느리게(무겁게) + 확대폭 증가 */
+  transition: transform 1.2s var(--ease-out-expo);
 }
-.photoCard:hover .photoImg { transform: scale(1.05); }
+.photoCard:hover .photoImg { transform: scale(1.1); }
 
 /* 화살표 글리프 — 호버 시 우측으로 슬라이드 */
 .photoLabel svg,
@@ -225,20 +226,20 @@
   aspect-ratio: 4 / 3;
   overflow: hidden;
   background: var(--brand-deep);
-  /* display none → flex 전환 시마다 재생 — 바텀업 와이프 */
-  animation: shotWipe 0.65s var(--ease-out-expo) both;
-  animation-delay: calc(85ms * var(--j, 0));
+  /* display none → flex 전환 시마다 재생 — 26.07.16: 옆으로 슬라이딩 등장, 두 배 느리게 */
+  animation: shotWipe 0.9s var(--ease-out-expo) both;
+  animation-delay: calc(110ms * var(--j, 0));
 }
 .pfShotImg {
   object-fit: cover;
-  /* 와이프와 동시에 줌이 풀리며 내려앉는 세틀 */
-  animation: shotZoom 1s var(--ease-out-expo) both;
-  animation-delay: calc(85ms * var(--j, 0));
+  /* 슬라이드와 동시에 줌이 풀리며 내려앉는 세틀 */
+  animation: shotZoom 1.4s var(--ease-out-expo) both;
+  animation-delay: calc(110ms * var(--j, 0));
 }
 
 @keyframes shotWipe {
-  from { clip-path: inset(100% 0 0 0); opacity: 0.4; }
-  to { clip-path: inset(0 0 0 0); opacity: 1; }
+  from { clip-path: inset(0 100% 0 0); transform: translateX(-18px); opacity: 0.4; }
+  to { clip-path: inset(0 0 0 0); transform: none; opacity: 1; }
 }
 @keyframes shotZoom {
   from { transform: scale(1.22); }
@@ -309,10 +310,11 @@
   .pfList li:hover .pfArrow { color: #fff; transform: translateX(6px); }
 }
 
-/* ③ Stacked color blocks */
-.blockCol {
-  display: flex;
-  flex-direction: column;
+/* ③ 우측 4칸 쿼드 — 사진 · CONTACT US · 기술·인증 · 견적 문의 (2×2) */
+.quad {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-auto-rows: 1fr;
   gap: 16px;
 }
 
@@ -453,26 +455,20 @@
 /* Responsive */
 @media (max-width: 1023.98px) {
   .grid {
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr;
     min-height: 0;
   }
-  .photoCard {
-    grid-column: span 2;
-    height: 220px;
-  }
-  .pfPanel { grid-column: span 2; }
   .pfRow { padding: 12px 20px; }
-  .blockCol { grid-column: span 2; flex-direction: row; }
-  .block { min-height: 96px; }
+  .photoCard { min-height: 180px; }
+  .block { min-height: 120px; }
 }
 
 @media (max-width: 639.98px) {
-  .grid { grid-template-columns: 1fr; }
-  .photoCard { grid-column: auto; height: 200px; }
-  .pfPanel { grid-column: auto; }
   .pfIndustry { display: none; }
-  .blockCol { grid-column: auto; flex-direction: column; }
-  .block { min-height: 84px; }
+  .quad { gap: 12px; }
+  .photoCard { min-height: 140px; }
+  .block { min-height: 96px; }
+  .blockLabel { font-size: 16px; }
   .newsCols { grid-template-columns: 1fr; }
   .newsCol + .newsCol {
     border-left: none;
