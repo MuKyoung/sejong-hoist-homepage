@@ -350,21 +350,28 @@ export default function YsConcept() {
                 key={idx}
                 custom={dir}
                 variants={{
-                  enter: (d: number) => ({ x: d * 90, opacity: 0 }),
+                  enter: (d: number) => ({ x: d * 36, opacity: 0 }),
                   center: { x: 0, opacity: 1 },
-                  exit: (d: number) => ({ x: d * -90, opacity: 0 }),
+                  exit: (d: number) => ({ x: d * -36, opacity: 0 }),
                 }}
                 initial="enter" animate="center" exit="exit"
                 transition={{ duration: 0.65, ease: E }}
                 className="absolute inset-0"
               >
-                <Image
-                  src={SLIDES[idx].img}
-                  alt={SLIDES[idx].title.replace("\n", " ")}
-                  fill priority={idx === 0}
-                  sizes="(max-width: 1280px) 100vw, 1216px"
-                  className="object-cover"
-                />
+                <motion.div
+                  className="absolute inset-0"
+                  initial={{ scale: reduced ? 1 : 1.06 }}
+                  animate={{ scale: 1 }}
+                  transition={{ duration: 7, ease: "linear" }}
+                >
+                  <Image
+                    src={SLIDES[idx].img}
+                    alt={SLIDES[idx].title.replace("\n", " ")}
+                    fill priority={idx === 0}
+                    sizes="(max-width: 1280px) 100vw, 1216px"
+                    className="object-cover"
+                  />
+                </motion.div>
                 <div
                   className="absolute inset-0"
                   style={{ background: "linear-gradient(76deg, rgba(12,20,32,0.68) 0%, rgba(12,20,32,0.32) 55%, rgba(12,20,32,0.08) 100%)" }}
@@ -401,7 +408,7 @@ export default function YsConcept() {
                   >
                     <Link
                       href={SLIDES[idx].href}
-                      className="inline-flex items-center gap-1.5 mt-5 text-[13.5px] font-semibold text-white underline underline-offset-4 decoration-white/45 hover:decoration-white transition-all"
+                      className="inline-flex items-center gap-2 mt-6 h-11 px-5 rounded-full bg-white/95 text-[#16273C] text-[13.5px] font-bold hover:bg-white transition-colors"
                     >
                       {SLIDES[idx].cta} <span aria-hidden>→</span>
                     </Link>
@@ -412,7 +419,7 @@ export default function YsConcept() {
 
             {/* 컨트롤 클러스터 */}
             <div
-              className="absolute right-4 bottom-4 sm:right-5 sm:bottom-5 flex items-center h-11 px-1.5 rounded-full"
+              className="absolute right-4 top-4 sm:top-auto sm:right-5 sm:bottom-5 flex items-center h-10 sm:h-11 px-1.5 rounded-full"
               style={{ background: "rgba(10,18,30,0.42)", backdropFilter: "blur(8px)" }}
             >
               <button type="button" onClick={() => go(-1)} aria-label="이전 배너"

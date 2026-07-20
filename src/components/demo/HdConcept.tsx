@@ -2,12 +2,12 @@
 
 /**
  * DEMO 5 · 시안 A "IMMERSIVE" : 현대일렉트릭 스타일 헤더 + 히어로
- * - 히어로 위 투명 헤더 → 스크롤/메뉴 오픈 시 화이트 전환, 호버 시 풀와이드 메가 메뉴
- * - 100svh 영상 슬라이드 히어로 : 클립 리빌 타이포, 오토플레이 프로그레스, 카운터 롤
+ * - 히어로 위 투명 헤더 → 스크롤/메뉴 오픈 시 화이트 전환, 호버 시 풀와이드 메가 메뉴(+프로모 카드)
+ * - 100svh 실사 Ken Burns 슬라이드 : 클립 리빌 타이포, 오토플레이 프로그레스, 카운터 롤
  * - 이 컴포넌트는 헤더+히어로만 담당. 이하 섹션은 /demo/5 page.tsx에서 실제 홈 섹션을 연결
  */
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
@@ -19,29 +19,26 @@ const NAVY_DEEP = "#0D1726";
 
 const SLIDES = [
   {
-    video: "/videos/12716-241674181_medium.mp4",
-    poster: "/images/hero-01.jpg",
+    img: "/images/hero-01.jpg",
     eyebrow: "GANTRY · OVERHEAD · HOIST",
     lines: ["산업의 무게를", "들어 올리는 기술"],
     sub: "350TON급 겐트리 크레인 시공 실적. 1999년부터 축적해 온 운반하역 설비 엔지니어링의 기준을 제시합니다.",
   },
   {
-    video: "/videos/4768-179741152_medium.mp4",
-    poster: "/images/hero-02.jpg",
+    img: "/images/hero-02.jpg",
     eyebrow: "ONE-STOP ENGINEERING",
     lines: ["설계에서 유지보수까지", "하나의 책임으로"],
     sub: "설계 · 제작 · 설치 · 검사 · 유지보수. 전 과정을 자체 엔지니어가 직접 수행합니다.",
   },
   {
-    video: "/videos/48420-453832153_medium.mp4",
-    poster: "/images/hero-03.jpg",
+    img: "/images/hero-03.jpg",
     eyebrow: "CERTIFIED SAFETY",
     lines: ["안전은 약속이 아니라", "증명입니다"],
     sub: "KCs 안전인증 5건과 서면심사도서 11권. 문서로 증명하는 안전관리 체계를 갖췄습니다.",
   },
 ];
 
-const DUR = 7000;
+const DUR = 6500;
 
 export default function HdConcept() {
   const reduced = useReducedMotion();
@@ -50,7 +47,6 @@ export default function HdConcept() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [idx, setIdx] = useState(0);
   const [playing, setPlaying] = useState(true);
-  const vids = useRef<(HTMLVideoElement | null)[]>([]);
 
   const solid = scrolled || mega || mobileOpen;
   const fg = solid ? INK : "#FFFFFF";
@@ -70,15 +66,6 @@ export default function HdConcept() {
     return () => clearInterval(t);
   }, [playing, reduced, idx]);
 
-  /* 활성 슬라이드 영상만 재생 */
-  useEffect(() => {
-    vids.current.forEach((v, i) => {
-      if (!v) return;
-      if (i === idx && !reduced) v.play().catch(() => {});
-      else v.pause();
-    });
-  }, [idx, reduced]);
-
   const go = (d: number) => setIdx((i) => (i + d + SLIDES.length) % SLIDES.length);
 
   return (
@@ -89,11 +76,12 @@ export default function HdConcept() {
         onMouseLeave={() => setMega(false)}
         style={{
           background: solid ? "rgba(255,255,255,0.98)" : "transparent",
-          borderBottom: solid ? "1px solid #EEF1F5" : "1px solid rgba(255,255,255,0.14)",
-          transition: "background .3s ease, border-color .3s ease",
+          borderBottom: solid ? "1px solid #EEF1F5" : "1px solid rgba(255,255,255,0.16)",
+          boxShadow: scrolled && !mega ? "0 6px 24px rgba(10,20,35,0.07)" : "none",
+          transition: "background .3s ease, border-color .3s ease, box-shadow .3s ease",
         }}
       >
-        <div className="max-w-[1440px] mx-auto px-5 sm:px-8 lg:px-10 h-[64px] lg:h-[76px] flex items-center justify-between gap-6">
+        <div className="max-w-[1440px] mx-auto px-5 sm:px-8 xl:px-10 h-[64px] lg:h-[76px] flex items-center justify-between gap-4">
           {/* 로고 */}
           <Link href="/demo/5" className="shrink-0" aria-label="세종호이스트크레인">
             <Image
@@ -110,12 +98,12 @@ export default function HdConcept() {
               <div key={item.href} className="relative flex" onMouseEnter={() => setMega(true)}>
                 <Link
                   href={item.href}
-                  className="group relative flex items-center px-6 text-[15.5px] font-bold tracking-[-0.01em] transition-colors duration-200"
+                  className="group relative flex items-center px-4 xl:px-6 text-[15px] xl:text-[15.5px] font-bold tracking-[-0.01em] whitespace-nowrap transition-colors duration-200"
                   style={{ color: fg }}
                 >
                   {item.label}
                   <span
-                    className="absolute left-4 right-4 bottom-0 h-[2px] origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-300"
+                    className="absolute left-3 right-3 xl:left-4 xl:right-4 bottom-0 h-[2px] origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-300"
                     style={{ background: solid ? "#2C4A6E" : "#FFFFFF" }}
                   />
                 </Link>
@@ -124,19 +112,19 @@ export default function HdConcept() {
           </nav>
 
           {/* 우측 유틸 */}
-          <div className="flex items-center gap-4 lg:gap-5">
+          <div className="flex items-center gap-3 xl:gap-5 shrink-0">
             <div className="hidden md:flex items-center gap-2 text-[12px] font-semibold tracking-wide" style={{ color: fg }}>
               <Link href="/" className="opacity-100 hover:opacity-70 transition-opacity">KOR</Link>
               <span className="opacity-30">|</span>
               <Link href="/en" className="opacity-45 hover:opacity-90 transition-opacity">ENG</Link>
             </div>
             <span className="hidden xl:block w-px h-4" style={{ background: solid ? "#DDE3EA" : "rgba(255,255,255,0.25)" }} />
-            <a href="tel:044-865-0801" className="hidden xl:block text-[13px] font-medium tracking-wide opacity-80 hover:opacity-100 transition-opacity" style={{ color: fg }}>
+            <a href="tel:044-865-0801" className="hidden xl:block text-[13px] font-medium tracking-wide whitespace-nowrap opacity-80 hover:opacity-100 transition-opacity" style={{ color: fg }}>
               044-865-0801
             </a>
             <Link
               href="/support/inquiry"
-              className="hidden sm:flex items-center h-10 px-5 rounded-full text-[13px] font-bold transition-all duration-200"
+              className="hidden sm:flex items-center h-10 px-5 rounded-full text-[13px] font-bold whitespace-nowrap transition-all duration-200"
               style={{
                 border: `1.5px solid ${solid ? "#2C4A6E" : "rgba(255,255,255,0.55)"}`,
                 color: solid ? "#2C4A6E" : "#fff",
@@ -174,14 +162,14 @@ export default function HdConcept() {
               className="hidden lg:block absolute left-0 right-0 top-full overflow-hidden bg-white"
               style={{ borderTop: "1px solid #EEF1F5", boxShadow: "0 28px 48px rgba(10,20,35,0.12)" }}
             >
-              <div className="max-w-[1440px] mx-auto grid grid-cols-5 gap-10 px-10 py-10">
+              <div className="max-w-[1440px] mx-auto grid grid-cols-6 gap-8 px-8 xl:px-10 py-10">
                 {NAV.map((item, ci) => (
                   <div key={item.href}>
                     <Link href={item.href} className="group inline-block">
                       <p className="text-[15px] font-extrabold group-hover:text-[#2C4A6E] transition-colors" style={{ color: INK }}>
                         {item.label}
                       </p>
-                      <p className="text-[10px] font-mono font-semibold tracking-[0.22em] uppercase mt-1" style={{ color: "rgba(28,40,54,0.35)" }}>
+                      <p className="text-[10px] font-mono font-semibold tracking-[0.2em] uppercase mt-1" style={{ color: "rgba(28,40,54,0.35)" }}>
                         {item.en}
                       </p>
                     </Link>
@@ -200,6 +188,25 @@ export default function HdConcept() {
                     </div>
                   </div>
                 ))}
+
+                {/* 프로모 카드 */}
+                <motion.div
+                  initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.12, duration: 0.4, ease: E }}
+                >
+                  <Link href="/portfolio" className="group block relative overflow-hidden rounded-xl h-full min-h-[190px]">
+                    <Image
+                      src="/images/pf-gantry350.jpg" alt="350TON 겐트리 크레인 시공"
+                      fill sizes="240px"
+                      className="object-cover transition-transform duration-700 group-hover:scale-[1.06]"
+                    />
+                    <div className="absolute inset-0" style={{ background: "linear-gradient(0deg, rgba(13,23,38,0.82) 0%, rgba(13,23,38,0.15) 60%)" }} />
+                    <div className="absolute left-4 right-4 bottom-4">
+                      <p className="text-[10px] font-mono font-semibold tracking-[0.2em] uppercase text-white/60">Featured</p>
+                      <p className="mt-1 text-[14px] font-bold text-white leading-snug">350TON 겐트리<br />시공 실적 보기 →</p>
+                    </div>
+                  </Link>
+                </motion.div>
               </div>
             </motion.div>
           )}
@@ -258,35 +265,45 @@ export default function HdConcept() {
         aria-roledescription="carousel"
         aria-label="메인 비주얼"
       >
-        {/* 배경 영상 슬라이드 */}
+        {/* 배경 슬라이드 : 실사 Ken Burns */}
         {SLIDES.map((s, i) => (
-          <video
-            key={s.video}
-            ref={(el) => { vids.current[i] = el; }}
-            src={s.video}
-            poster={s.poster}
-            muted loop playsInline
-            preload={i === 0 ? "auto" : "metadata"}
-            className="absolute inset-0 w-full h-full object-cover"
-            style={{ opacity: idx === i ? 1 : 0, transition: "opacity 1.1s ease" }}
-          />
+          <motion.div
+            key={s.img}
+            className="absolute inset-0"
+            initial={false}
+            animate={{
+              opacity: idx === i ? 1 : 0,
+              scale: reduced ? 1 : idx === i ? 1.07 : 1,
+            }}
+            transition={{
+              opacity: { duration: 1.1, ease: "easeInOut" },
+              scale: { duration: DUR / 1000 + 1.5, ease: "linear" },
+            }}
+          >
+            <Image
+              src={s.img} alt=""
+              fill priority={i === 0}
+              sizes="100vw"
+              className="object-cover"
+            />
+          </motion.div>
         ))}
 
         {/* 스크림 : 좌측 네이비 강조 + 상/하단 그라데이션 */}
-        <div className="absolute inset-0" style={{ background: "linear-gradient(100deg, rgba(10,17,28,0.78) 0%, rgba(10,17,28,0.45) 52%, rgba(10,17,28,0.22) 100%)" }} />
+        <div className="absolute inset-0" style={{ background: "linear-gradient(100deg, rgba(10,17,28,0.82) 0%, rgba(10,17,28,0.5) 52%, rgba(10,17,28,0.24) 100%)" }} />
         <div className="absolute inset-x-0 top-0 h-36" style={{ background: "linear-gradient(180deg, rgba(6,12,22,0.55) 0%, transparent 100%)" }} />
-        <div className="absolute inset-x-0 bottom-0 h-44" style={{ background: "linear-gradient(0deg, rgba(6,12,22,0.6) 0%, transparent 100%)" }} />
+        <div className="absolute inset-x-0 bottom-0 h-48" style={{ background: "linear-gradient(0deg, rgba(6,12,22,0.68) 0%, transparent 100%)" }} />
 
         {/* 카피 */}
         <div className="absolute inset-0 flex items-center">
-          <div className="w-full max-w-[1440px] mx-auto px-5 sm:px-8 lg:px-10">
-            <div className="max-w-[820px] pt-10">
+          <div className="w-full max-w-[1440px] mx-auto px-5 sm:px-8 xl:px-10">
+            <div className="max-w-[820px] pt-8 pb-24 sm:pb-16">
               <AnimatePresence mode="wait">
-                <motion.div key={idx} exit={{ opacity: 0, y: -16, transition: { duration: 0.3 } }}>
+                <motion.div key={idx} exit={{ opacity: 0, y: -14, transition: { duration: 0.22 } }}>
                   <motion.div
                     initial={{ opacity: 0, x: -14 }} animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: 0.1, duration: 0.6, ease: E }}
-                    className="flex items-center gap-3 mb-6 sm:mb-8"
+                    transition={{ delay: 0.05, duration: 0.55, ease: E }}
+                    className="flex items-center gap-3 mb-5 sm:mb-7"
                   >
                     <span className="h-px w-8 bg-white/60" />
                     <span className="text-[11px] font-bold tracking-[0.32em] uppercase text-white/70">
@@ -297,10 +314,10 @@ export default function HdConcept() {
                   {SLIDES[idx].lines.map((line, li) => (
                     <div key={li} className="overflow-hidden">
                       <motion.h2
-                        initial={{ y: "110%" }} animate={{ y: 0 }}
-                        transition={{ delay: 0.18 + li * 0.1, duration: 0.9, ease: E }}
+                        initial={{ y: "112%" }} animate={{ y: 0 }}
+                        transition={{ delay: 0.12 + li * 0.09, duration: 0.85, ease: E }}
                         className="text-white font-extrabold leading-[1.08]"
-                        style={{ fontSize: "clamp(34px, 5.6vw, 66px)", letterSpacing: "-0.04em", textShadow: "0 2px 24px rgba(0,0,0,0.25)" }}
+                        style={{ fontSize: "clamp(32px, 5.4vw, 64px)", letterSpacing: "-0.04em", textShadow: "0 2px 28px rgba(0,0,0,0.35)" }}
                       >
                         {line}
                       </motion.h2>
@@ -309,8 +326,8 @@ export default function HdConcept() {
 
                   <motion.p
                     initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.52, duration: 0.7, ease: E }}
-                    className="mt-6 text-[14px] sm:text-[16px] leading-[1.8] text-white/75 max-w-[560px]"
+                    transition={{ delay: 0.44, duration: 0.65, ease: E }}
+                    className="mt-5 sm:mt-6 text-[14px] sm:text-[16px] leading-[1.8] text-white/75 max-w-[560px]"
                   >
                     {SLIDES[idx].sub}
                   </motion.p>
@@ -319,15 +336,15 @@ export default function HdConcept() {
 
               <motion.div
                 initial={{ opacity: 0, y: 14 }} animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.7, duration: 0.7, ease: E }}
-                className="flex flex-wrap gap-3 mt-9"
+                transition={{ delay: 0.6, duration: 0.7, ease: E }}
+                className="flex flex-wrap gap-3 mt-8 sm:mt-9"
               >
                 <Link href="/business"
-                  className="h-[50px] px-8 rounded-full bg-white text-[#16273C] text-[14px] font-bold flex items-center gap-2 hover:bg-[#E8EDF3] transition-colors">
+                  className="h-12 sm:h-[50px] px-7 sm:px-8 rounded-full bg-white text-[#16273C] text-[14px] font-bold flex items-center gap-2 hover:bg-[#E8EDF3] transition-colors">
                   사업영역 보기 <span aria-hidden>→</span>
                 </Link>
                 <Link href="/support/inquiry"
-                  className="h-[50px] px-8 rounded-full border border-white/45 text-white text-[14px] font-semibold flex items-center hover:bg-white/10 hover:border-white/70 transition-all">
+                  className="h-12 sm:h-[50px] px-7 sm:px-8 rounded-full border border-white/45 text-white text-[14px] font-semibold flex items-center hover:bg-white/10 hover:border-white/70 transition-all">
                   견적 문의
                 </Link>
               </motion.div>
@@ -335,18 +352,18 @@ export default function HdConcept() {
           </div>
         </div>
 
-        {/* 슬라이드 컨트롤 */}
-        <div className="absolute inset-x-0 bottom-9 sm:bottom-11">
-          <div className="max-w-[1440px] mx-auto px-5 sm:px-8 lg:px-10 flex items-end justify-between gap-6">
-            <div className="flex items-center gap-4 sm:gap-5 flex-1 max-w-[460px]">
+        {/* 슬라이드 컨트롤 : 플로팅 요소(FAB · 시안 스위처)와 겹치지 않게 위로 띄움 */}
+        <div className="absolute inset-x-0 bottom-24 lg:bottom-20">
+          <div className="max-w-[1440px] mx-auto px-5 sm:px-8 xl:px-10 flex items-end justify-between gap-5">
+            <div className="flex items-center gap-4 sm:gap-5 flex-1 max-w-[420px]">
               {/* 카운터 롤 */}
-              <div className="relative h-9 overflow-hidden" aria-hidden>
+              <div className="relative h-8 sm:h-9 overflow-hidden" aria-hidden>
                 <AnimatePresence mode="popLayout">
                   <motion.span
                     key={idx}
                     initial={{ y: 18, opacity: 0 }} animate={{ y: 0, opacity: 1 }} exit={{ y: -18, opacity: 0 }}
                     transition={{ duration: 0.45, ease: E }}
-                    className="block text-[28px] font-extrabold text-white leading-9 tabular-nums"
+                    className="block text-[24px] sm:text-[28px] font-extrabold text-white leading-8 sm:leading-9 tabular-nums"
                   >
                     {String(idx + 1).padStart(2, "0")}
                   </motion.span>
@@ -366,7 +383,7 @@ export default function HdConcept() {
               <span className="text-[13px] text-white/50 tabular-nums" aria-hidden>/ {String(SLIDES.length).padStart(2, "0")}</span>
             </div>
 
-            <div className="flex items-center gap-2.5">
+            <div className="flex items-center gap-2 sm:gap-2.5">
               <button type="button" onClick={() => setPlaying((v) => !v)}
                 aria-label={playing ? "슬라이드 일시정지" : "슬라이드 재생"}
                 className="w-10 h-10 sm:w-11 sm:h-11 rounded-full border border-white/30 text-white flex items-center justify-center hover:bg-white/10 hover:border-white/60 transition-all">
@@ -389,7 +406,7 @@ export default function HdConcept() {
         </div>
 
         {/* 스크롤 큐 */}
-        <div className="hidden sm:flex absolute left-1/2 -translate-x-1/2 bottom-4 flex-col items-center gap-2" aria-hidden>
+        <div className="hidden lg:flex absolute left-1/2 -translate-x-1/2 bottom-4 flex-col items-center gap-2" aria-hidden>
           <span className="text-[10px] font-semibold tracking-[0.35em] text-white/45">SCROLL</span>
           <span className="relative block w-px h-9 bg-white/20 overflow-hidden">
             <motion.span

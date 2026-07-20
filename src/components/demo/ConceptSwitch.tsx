@@ -34,8 +34,8 @@ export default function ConceptSwitch({ current }: { current: "5" | "6" }) {
       >
         시안 B
       </Link>
-      <span className="w-px h-4 bg-white/15" aria-hidden />
-      <Link href="/" className="px-2.5 text-[12px] text-white/50 hover:text-white transition-colors">
+      <span className="hidden sm:block w-px h-4 bg-white/15" aria-hidden />
+      <Link href="/" className="hidden sm:block px-2.5 text-[12px] text-white/50 hover:text-white transition-colors">
         현재 사이트
       </Link>
     </div>

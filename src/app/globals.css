@@ -87,7 +87,12 @@
   --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+/* Tailwind v4 유틸리티(@layer utilities)가 여백을 제어할 수 있도록 base 레이어에 둔다.
+   무계층 * 리셋은 모든 캐스케이드 레이어보다 우선해 p-* / m-* 유틸을 전부 무력화함.
+   (내용은 Tailwind preflight와 동일 — 특이도 0이라 기존 클래스 규칙엔 영향 없음) */
+@layer base {
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+}
 
 html {
   font-size: 16px;
