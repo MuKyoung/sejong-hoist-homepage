@@ -182,12 +182,13 @@ export default function YsConcept() {
 
         {/* 메인 바 */}
         <div style={{ borderBottom: "1px solid #E8EDF3" }}>
-          <div className="max-w-[1280px] mx-auto px-5 sm:px-8 h-16 lg:h-[72px] flex items-center justify-between gap-6">
-            <Link href="/demo/6" className="shrink-0" aria-label="세종호이스트크레인">
+          <div className="max-w-[1280px] mx-auto px-5 sm:px-8 h-16 lg:h-[68px] flex items-stretch justify-between gap-6">
+            {/* 로고 — 바 높이 대비 크게 (26.07 헤더 가독성 피드백) */}
+            <Link href="/demo/6" className="shrink-0 flex items-center" aria-label="세종호이스트크레인">
               <Image
                 src="/images/sejong-logo.png" alt="세종호이스트크레인"
-                width={180} height={44} priority
-                className="w-auto h-8 lg:h-9" style={{ objectFit: "contain" }}
+                width={220} height={54} priority
+                className="w-auto h-9 lg:h-10" style={{ objectFit: "contain" }}
               />
             </Link>
 
@@ -219,7 +220,7 @@ export default function YsConcept() {
             <div className="flex items-center gap-3">
               <Link
                 href="/support/inquiry"
-                className="hidden sm:flex items-center h-11 px-[22px] rounded-full text-white text-[13.5px] font-bold bg-[#2C4A6E] hover:bg-[#213956] transition-colors"
+                className="hidden sm:flex items-center h-10 px-[22px] rounded-full text-white text-[13.5px] font-bold bg-[#2C4A6E] hover:bg-[#213956] transition-colors"
               >
                 견적 문의
               </Link>
@@ -334,7 +335,7 @@ export default function YsConcept() {
 
       {/* ══ 히어로 ══ */}
       <section
-        className="pt-[88px] lg:pt-[140px]"
+        className="pt-[88px] lg:pt-[136px]"
         style={{ background: "linear-gradient(180deg, #F7F9FC 0%, #FFFFFF 100%)" }}
       >
         <div className="max-w-[1280px] mx-auto px-5 sm:px-8">

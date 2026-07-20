@@ -78,13 +78,13 @@ export default function HdConcept() {
           transition: "background .3s ease, border-color .3s ease, box-shadow .3s ease",
         }}
       >
-        <div className="max-w-[1440px] mx-auto px-5 sm:px-8 xl:px-10 h-[64px] lg:h-[76px] flex items-center justify-between gap-4">
-          {/* 로고 */}
-          <Link href="/demo/5" className="shrink-0" aria-label="세종호이스트크레인">
+        <div className="max-w-[1440px] mx-auto px-5 sm:px-8 xl:px-10 h-[60px] lg:h-[68px] flex items-stretch justify-between gap-4">
+          {/* 로고 — 가독성 위해 바 높이 대비 크게 (26.07 헤더 가독성 피드백) */}
+          <Link href="/demo/5" className="shrink-0 flex items-center" aria-label="세종호이스트크레인">
             <Image
               src="/images/sejong-logo.png" alt="세종호이스트크레인"
-              width={180} height={44} priority
-              className="w-auto h-8 lg:h-9 transition-[filter] duration-300"
+              width={220} height={54} priority
+              className="w-auto h-9 lg:h-10 transition-[filter] duration-300"
               style={{ filter: solid ? "none" : "brightness(0) invert(1)", objectFit: "contain" }}
             />
           </Link>
@@ -95,8 +95,8 @@ export default function HdConcept() {
               <div key={item.href} className="relative flex" onMouseEnter={() => setMega(true)}>
                 <Link
                   href={item.href}
-                  className="group relative flex items-center px-4 xl:px-6 text-[15px] xl:text-[15.5px] font-bold tracking-[-0.01em] whitespace-nowrap transition-colors duration-200"
-                  style={{ color: fg }}
+                  className="group relative flex items-center px-4 xl:px-6 text-[16px] font-bold tracking-[-0.01em] whitespace-nowrap transition-colors duration-200"
+                  style={{ color: fg, textShadow: solid ? "none" : "0 1px 14px rgba(0,0,0,0.5)" }}
                 >
                   {item.label}
                   <span
@@ -109,7 +109,7 @@ export default function HdConcept() {
           </nav>
 
           {/* 우측 유틸 */}
-          <div className="flex items-center gap-3 xl:gap-5 shrink-0">
+          <div className="flex items-center gap-3 xl:gap-5 shrink-0" style={{ textShadow: solid ? "none" : "0 1px 12px rgba(0,0,0,0.45)" }}>
             <div className="hidden md:flex items-center gap-2 text-[12px] font-semibold tracking-wide" style={{ color: fg }}>
               <Link href="/" className="opacity-100 hover:opacity-70 transition-opacity">KOR</Link>
               <span className="opacity-30">|</span>
@@ -216,7 +216,7 @@ export default function HdConcept() {
             initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
             transition={{ duration: 0.3 }}
             className="fixed inset-0 z-40 lg:hidden overflow-y-auto"
-            style={{ background: NAVY_DEEP, paddingTop: "64px" }}
+            style={{ background: NAVY_DEEP, paddingTop: "60px" }}
           >
             <nav className="px-7 py-8 flex flex-col" aria-label="모바일 메뉴">
               {NAV.map((item, i) => (
@@ -287,7 +287,7 @@ export default function HdConcept() {
 
         {/* 스크림 : 좌측 네이비 강조 + 상/하단 그라데이션 */}
         <div className="absolute inset-0" style={{ background: "linear-gradient(100deg, rgba(10,17,28,0.82) 0%, rgba(10,17,28,0.5) 52%, rgba(10,17,28,0.24) 100%)" }} />
-        <div className="absolute inset-x-0 top-0 h-36" style={{ background: "linear-gradient(180deg, rgba(6,12,22,0.55) 0%, transparent 100%)" }} />
+        <div className="absolute inset-x-0 top-0 h-44" style={{ background: "linear-gradient(180deg, rgba(6,12,22,0.74) 0%, transparent 100%)" }} />
         <div className="absolute inset-x-0 bottom-0 h-48" style={{ background: "linear-gradient(0deg, rgba(6,12,22,0.68) 0%, transparent 100%)" }} />
 
         {/* 카피 */}

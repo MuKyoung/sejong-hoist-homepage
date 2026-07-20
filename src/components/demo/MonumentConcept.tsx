@@ -175,42 +175,43 @@ export default function MonumentConcept() {
         }}
       >
         <div
-          className="mx-auto flex items-center justify-between gap-6"
+          className="mx-auto flex items-stretch justify-between gap-6"
           style={{
             maxWidth: 1440,
             paddingInline: "clamp(20px, 4vw, 56px)",
-            height: solid ? 76 : 92,
+            height: solid ? 64 : 76,
             transition: "height .6s cubic-bezier(0.16,1,0.3,1)",
           }}
         >
-          <Link href="/demo/7" aria-label={COMPANY.name} className="shrink-0">
+          {/* 로고 — 바 높이 대비 크게 (26.07 헤더 가독성 피드백) */}
+          <Link href="/demo/7" aria-label={COMPANY.name} className="shrink-0 flex items-center">
             <Image
               src="/images/sejong-logo.png"
               alt={COMPANY.name}
-              width={200} height={48} priority
-              className="w-auto h-9 lg:h-10"
+              width={220} height={54} priority
+              className="w-auto h-10 lg:h-11"
               style={{ filter: "brightness(0) invert(1)", objectFit: "contain" }}
             />
           </Link>
 
-          <nav className="hidden lg:flex items-center" aria-label="주요 메뉴">
+          <nav className="hidden lg:flex items-stretch self-stretch" aria-label="주요 메뉴">
             {NAV.map((item) => (
               <Link
                 key={item.href}
                 href={item.href}
-                className="group relative px-5 xl:px-7 py-3 text-[15px] font-semibold whitespace-nowrap transition-colors duration-500"
-                style={{ color: TEXT, letterSpacing: "-0.01em" }}
+                className="group relative flex items-center px-5 xl:px-6 text-[16px] font-bold whitespace-nowrap transition-colors duration-500"
+                style={{ color: TEXT, letterSpacing: "-0.01em", textShadow: solid ? "none" : "0 1px 12px rgba(0,0,0,0.45)" }}
               >
                 {item.label}
                 <span
-                  className="absolute left-5 right-5 xl:left-7 xl:right-7 bottom-1 h-px origin-left scale-x-0 group-hover:scale-x-100"
+                  className="absolute left-5 right-5 xl:left-6 xl:right-6 bottom-0 h-[2px] origin-left scale-x-0 group-hover:scale-x-100"
                   style={{ background: BRASS, transition: "transform .7s cubic-bezier(0.16,1,0.3,1)" }}
                 />
               </Link>
             ))}
           </nav>
 
-          <div className="flex items-center gap-5 shrink-0">
+          <div className="flex items-center gap-5 shrink-0" style={{ textShadow: solid ? "none" : "0 1px 12px rgba(0,0,0,0.4)" }}>
             <a
               href={`tel:${COMPANY.tel.replace(/-/g, "")}`}
               className="hidden xl:flex items-center gap-2 text-[14px] font-medium tracking-wide transition-colors duration-500"
@@ -254,7 +255,7 @@ export default function MonumentConcept() {
             initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
             transition={{ duration: 0.5, ease: E }}
             className="fixed inset-0 z-40 lg:hidden overflow-y-auto"
-            style={{ background: INK, paddingTop: 76 }}
+            style={{ background: INK, paddingTop: 64 }}
           >
             <nav className="px-6 py-10" aria-label="모바일 메뉴">
               {NAV.map((item, i) => (

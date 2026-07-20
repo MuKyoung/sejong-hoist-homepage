@@ -132,7 +132,7 @@ export default function EditorialConcept() {
     <div style={{ background: "#fff", color: INK }}>
       {/* ══════════ 헤더 : 명지대式 2단 (다크 유틸 + 라이트 메인) ══════════ */}
       <div style={{ background: "#0E1420" }}>
-        <div className="mx-auto hidden md:flex items-center justify-between h-10 text-[12.5px]"
+        <div className="mx-auto hidden md:flex items-center justify-between h-9 text-[12.5px]"
           style={{ maxWidth: 1400, paddingInline: "clamp(20px, 3.5vw, 48px)", color: "rgba(255,255,255,0.66)" }}>
           <div className="flex items-center gap-5">
             <span>{COMPANY.address}</span>
@@ -159,25 +159,26 @@ export default function EditorialConcept() {
           transition: "box-shadow .5s ease, border-color .5s ease",
         }}
       >
-        <div className="mx-auto flex items-center justify-between gap-6 h-[76px] lg:h-[88px]"
+        <div className="mx-auto flex items-stretch justify-between gap-6 h-[64px] lg:h-[72px]"
           style={{ maxWidth: 1400, paddingInline: "clamp(20px, 3.5vw, 48px)" }}>
-          <Link href="/demo/8" aria-label={COMPANY.name} className="shrink-0">
+          {/* 로고 — 바 높이 대비 크게 (26.07 헤더 가독성 피드백) */}
+          <Link href="/demo/8" aria-label={COMPANY.name} className="shrink-0 flex items-center">
             <Image
               src="/images/sejong-logo.png" alt={COMPANY.name}
-              width={200} height={48} priority
-              className="w-auto h-9 lg:h-10" style={{ objectFit: "contain" }}
+              width={220} height={54} priority
+              className="w-auto h-10 lg:h-11" style={{ objectFit: "contain" }}
             />
           </Link>
 
-          <nav className="hidden lg:flex items-center" aria-label="주요 메뉴">
+          <nav className="hidden lg:flex items-stretch self-stretch" aria-label="주요 메뉴">
             {NAV.map((item) => (
               <Link
                 key={item.href} href={item.href}
-                className="group relative px-5 xl:px-7 py-3 text-[16px] font-bold whitespace-nowrap transition-colors duration-300 hover:text-[#2E5AA7]"
+                className="group relative flex items-center px-5 xl:px-6 text-[16px] font-bold whitespace-nowrap transition-colors duration-300 hover:text-[#2E5AA7]"
                 style={{ letterSpacing: "-0.01em" }}
               >
                 {item.label}
-                <span className="absolute left-5 right-5 xl:left-7 xl:right-7 -bottom-[1px] h-[2.5px] origin-center scale-x-0 group-hover:scale-x-100"
+                <span className="absolute left-5 right-5 xl:left-6 xl:right-6 bottom-0 h-[2.5px] origin-center scale-x-0 group-hover:scale-x-100"
                   style={{ background: ROYAL, transition: "transform .6s cubic-bezier(0.16,1,0.3,1)" }} />
               </Link>
             ))}
@@ -185,7 +186,7 @@ export default function EditorialConcept() {
 
           <div className="flex items-center gap-4">
             <Link href="/support/inquiry"
-              className="hidden sm:flex items-center gap-2 h-11 px-6 rounded-full text-[13.5px] font-bold text-white transition-colors duration-300 hover:bg-[#1d3f7c]"
+              className="hidden sm:flex items-center gap-2 h-10 px-6 rounded-full text-[13.5px] font-bold text-white transition-colors duration-300 hover:bg-[#1d3f7c]"
               style={{ background: ROYAL }}>
               견적 문의 <NE />
             </Link>
@@ -214,7 +215,7 @@ export default function EditorialConcept() {
             initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
             transition={{ duration: 0.5, ease: E }}
             className="fixed inset-0 z-40 overflow-y-auto"
-            style={{ background: "rgba(14,20,32,0.98)", paddingTop: 120 }}
+            style={{ background: "rgba(14,20,32,0.98)", paddingTop: 104 }}
           >
             <div className="mx-auto grid sm:grid-cols-2 lg:grid-cols-5 gap-x-10 gap-y-12 pb-20"
               style={{ maxWidth: 1400, paddingInline: "clamp(20px, 3.5vw, 48px)" }}>
