@@ -57,6 +57,111 @@ const DEMOS = [
   },
 ] as const;
 
+type DemoEntry = {
+  num: string; name: string; subtitle: string; ref: string;
+  palette: readonly string[]; desc: string; keys: readonly string[];
+  img: string; href: string; dark: boolean;
+};
+
+/* Round 2 (2026-07) : 운영 사이트의 헤더 · 히어로만 교체하는 A/B 시안 */
+const HERO_DEMOS: readonly DemoEntry[] = [
+  {
+    num: "05",
+    name: "IMMERSIVE",
+    subtitle: "시안 A · 풀스크린 몰입형",
+    ref: "현대일렉트릭 스타일 · 헤더 + 히어로",
+    palette: ["#0B1523", "#FFFFFF", "#2C4A6E"],
+    desc: "화면 전체를 채우는 영상 히어로 위에 투명 헤더. 스크롤하면 화이트 헤더로 전환되고, 메뉴에 올리면 풀와이드 메가 메뉴가 펼쳐집니다.",
+    keys: ["풀스크린 영상 슬라이드", "투명 → 화이트 헤더", "풀와이드 메가 메뉴", "오토플레이 프로그레스"],
+    img: "/images/hero-01.jpg",
+    href: "/demo/5",
+    dark: true,
+  },
+  {
+    num: "06",
+    name: "PORTAL",
+    subtitle: "시안 B · 라운드 포털형",
+    ref: "연세대학교 스타일 · 헤더 + 히어로",
+    palette: ["#FFFFFF", "#2C4A6E", "#F1F4F9"],
+    desc: "네이비 유틸 바를 얹은 2단 헤더, 라운드 배너 슬라이더, 아이콘 퀵링크 카드. 밝고 정돈된 포털형 첫인상입니다.",
+    keys: ["2단 헤더 + 유틸 바", "라운드 배너 슬라이더", "아이콘 퀵링크 6종", "소프트 섀도 카드"],
+    img: "/images/hero-02.jpg",
+    href: "/demo/6",
+    dark: false,
+  },
+];
+
+function DemoCard({ d, i }: { d: DemoEntry; i: number }) {
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 28 }} animate={{ opacity: 1, y: 0 }}
+      transition={{ delay: 0.15 + i * 0.08, duration: 0.8, ease: E }}
+    >
+      <Link href={d.href} className="block group relative overflow-hidden"
+        style={{ background: d.dark ? "#111" : "#f9f6f1" }}>
+
+        {/* 이미지 */}
+        <div className="relative overflow-hidden" style={{ aspectRatio: "16/10" }}>
+          <Image src={d.img} alt={d.name} fill className="object-cover transition-transform duration-700 group-hover:scale-[1.04]"
+            style={{ filter: d.dark ? "brightness(0.25)" : "brightness(0.45) saturate(0.7)" }}
+            sizes="(max-width:768px)100vw,50vw" />
+          <div className="absolute inset-0" style={{
+            background: d.dark
+              ? "linear-gradient(to top, #111 0%, transparent 50%)"
+              : "linear-gradient(to top, #f9f6f1 0%, transparent 50%)"
+          }} />
+
+          {/* 번호 */}
+          <div className="absolute top-6 left-6">
+            <span className="text-[11px] font-mono" style={{ color: d.dark ? "rgba(240,240,240,0.25)" : "rgba(17,17,17,0.3)" }}>
+              {d.num}
+            </span>
+          </div>
+
+          {/* 팔레트 */}
+          <div className="absolute top-6 right-6 flex gap-1.5">
+            {d.palette.map(c => (
+              <span key={c} className="block w-4 h-4 rounded-full" style={{ background: c, border: "1px solid rgba(255,255,255,0.15)" }} />
+            ))}
+          </div>
+        </div>
+
+        {/* 텍스트 영역 */}
+        <div className="p-7 md:p-8" style={{ color: d.dark ? "#f0f0f0" : "#111" }}>
+          <div className="flex items-start justify-between mb-4">
+            <div>
+              <p className="text-[11px] font-mono mb-1.5" style={{ color: d.dark ? "rgba(240,240,240,0.28)" : "rgba(17,17,17,0.35)" }}>
+                {d.subtitle}
+              </p>
+              <h2 className="text-2xl font-black tracking-tight">{d.name}</h2>
+            </div>
+            <span className="text-xl font-light opacity-25 group-hover:opacity-60 group-hover:translate-x-1 transition-all duration-300">→</span>
+          </div>
+
+          <p className="text-[12px] mb-5" style={{ color: d.dark ? "rgba(240,240,240,0.28)" : "rgba(17,17,17,0.38)" }}>
+            레퍼런스: {d.ref}
+          </p>
+          <p className="text-[14px] leading-[1.75] mb-7" style={{ color: d.dark ? "rgba(240,240,240,0.5)" : "rgba(17,17,17,0.55)" }}>
+            {d.desc}
+          </p>
+
+          <div className="flex flex-wrap gap-2">
+            {d.keys.map(k => (
+              <span key={k} className="text-[11px] px-2.5 py-1"
+                style={{
+                  background: d.dark ? "rgba(255,255,255,0.06)" : "rgba(17,17,17,0.06)",
+                  color: d.dark ? "rgba(240,240,240,0.38)" : "rgba(17,17,17,0.42)",
+                }}>
+                {k}
+              </span>
+            ))}
+          </div>
+        </div>
+      </Link>
+    </motion.div>
+  );
+}
+
 export default function DemoSelector() {
   return (
     <div className="min-h-screen font-sans" style={{ background: "#0a0a0a", color: "#f0f0f0" }}>
@@ -76,8 +181,9 @@ export default function DemoSelector() {
           </p>
           <h1 className="text-h1 mb-5">데모 디자인 선택</h1>
           <p className="text-[15px] leading-[1.8] max-w-xl" style={{ color: "rgba(240,240,240,0.4)" }}>
-            4가지 디자인 방향성 중 하나를 선택하면 그 방향으로 전체 사이트를 구축합니다.
-            각 데모는 완전히 다른 철학과 레퍼런스를 기반으로 합니다.
+            시안을 선택하면 그 방향으로 사이트에 반영합니다. 라운드 2는 현재 운영
+            사이트에서 헤더 · 히어로 영역만 교체한 A/B 시안이고, 라운드 1은 전체
+            디자인 방향 데모입니다.
           </p>
         </motion.div>
 
@@ -96,77 +202,48 @@ export default function DemoSelector() {
         </motion.div>
       </div>
 
-      {/* 데모 카드 그리드 */}
+      {/* ── Round 2 : 헤더 · 히어로 A/B 시안 ── */}
+      <div className="container-xl pb-16">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.2, duration: 0.8, ease: E }}
+          className="mb-8"
+        >
+          <div className="flex items-center gap-3 mb-4">
+            <span className="text-[10px] font-mono font-bold tracking-[0.28em] uppercase px-2.5 py-1.5"
+              style={{ background: "rgba(244,124,32,0.14)", color: "#f47c20" }}>
+              NEW · Round 2
+            </span>
+            <span className="text-[11px] font-mono" style={{ color: "rgba(240,240,240,0.3)" }}>
+              헤더 · 히어로 A/B 시안 · 2026-07
+            </span>
+          </div>
+          <h2 className="text-2xl font-black tracking-tight mb-3">메인 헤더 · 히어로 시안 선택</h2>
+          <p className="text-[14px] leading-[1.8] max-w-xl" style={{ color: "rgba(240,240,240,0.4)" }}>
+            현재 운영 중인 사이트에서 헤더와 히어로 영역만 교체한 시안입니다.
+            히어로 아래 섹션은 운영 사이트와 동일하게 이어지므로 첫인상 차이만 비교하시면 됩니다.
+          </p>
+        </motion.div>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+          {HERO_DEMOS.map((d, i) => (
+            <DemoCard key={d.num} d={d} i={i} />
+          ))}
+        </div>
+      </div>
+
+      {/* ── Round 1 : 전체 디자인 방향 데모 ── */}
       <div className="container-xl pb-24">
+        <motion.p
+          initial={{ opacity: 0 }} animate={{ opacity: 1 }}
+          transition={{ delay: 0.3, duration: 0.8 }}
+          className="text-[10px] font-mono tracking-[0.28em] uppercase mb-6"
+          style={{ color: "rgba(240,240,240,0.25)" }}
+        >
+          Round 1 · 전체 디자인 방향
+        </motion.p>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
           {DEMOS.map((d, i) => (
-            <motion.div
-              key={d.num}
-              initial={{ opacity: 0, y: 28 }} animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.15 + i * 0.08, duration: 0.8, ease: E }}
-            >
-              <Link href={d.href} className="block group relative overflow-hidden"
-                style={{ background: d.dark ? "#111" : "#f9f6f1" }}>
-
-                {/* 이미지 */}
-                <div className="relative overflow-hidden" style={{ aspectRatio: "16/10" }}>
-                  <Image src={d.img} alt={d.name} fill className="object-cover transition-transform duration-700 group-hover:scale-[1.04]"
-                    style={{ filter: d.dark ? "brightness(0.25)" : "brightness(0.45) saturate(0.7)" }}
-                    sizes="(max-width:768px)100vw,50vw" />
-                  <div className="absolute inset-0" style={{
-                    background: d.dark
-                      ? "linear-gradient(to top, #111 0%, transparent 50%)"
-                      : "linear-gradient(to top, #f9f6f1 0%, transparent 50%)"
-                  }} />
-
-                  {/* 번호 */}
-                  <div className="absolute top-6 left-6">
-                    <span className="text-[11px] font-mono" style={{ color: d.dark ? "rgba(240,240,240,0.25)" : "rgba(17,17,17,0.3)" }}>
-                      {d.num}
-                    </span>
-                  </div>
-
-                  {/* 팔레트 */}
-                  <div className="absolute top-6 right-6 flex gap-1.5">
-                    {d.palette.map(c => (
-                      <span key={c} className="block w-4 h-4 rounded-full" style={{ background: c, border: "1px solid rgba(255,255,255,0.15)" }} />
-                    ))}
-                  </div>
-                </div>
-
-                {/* 텍스트 영역 */}
-                <div className="p-7 md:p-8" style={{ color: d.dark ? "#f0f0f0" : "#111" }}>
-                  <div className="flex items-start justify-between mb-4">
-                    <div>
-                      <p className="text-[11px] font-mono mb-1.5" style={{ color: d.dark ? "rgba(240,240,240,0.28)" : "rgba(17,17,17,0.35)" }}>
-                        {d.subtitle}
-                      </p>
-                      <h2 className="text-2xl font-black tracking-tight">{d.name}</h2>
-                    </div>
-                    <span className="text-xl font-light opacity-25 group-hover:opacity-60 group-hover:translate-x-1 transition-all duration-300">→</span>
-                  </div>
-
-                  <p className="text-[12px] mb-5" style={{ color: d.dark ? "rgba(240,240,240,0.28)" : "rgba(17,17,17,0.38)" }}>
-                    레퍼런스: {d.ref}
-                  </p>
-                  <p className="text-[14px] leading-[1.75] mb-7" style={{ color: d.dark ? "rgba(240,240,240,0.5)" : "rgba(17,17,17,0.55)" }}>
-                    {d.desc}
-                  </p>
-
-                  <div className="flex flex-wrap gap-2">
-                    {d.keys.map(k => (
-                      <span key={k} className="text-[11px] px-2.5 py-1"
-                        style={{
-                          background: d.dark ? "rgba(255,255,255,0.06)" : "rgba(17,17,17,0.06)",
-                          color: d.dark ? "rgba(240,240,240,0.38)" : "rgba(17,17,17,0.42)",
-                        }}>
-                        {k}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-              </Link>
-            </motion.div>
+            <DemoCard key={d.num} d={d} i={i} />
           ))}
         </div>
       </div>
@@ -175,7 +252,8 @@ export default function DemoSelector() {
       <div className="container-xl pb-16" style={{ borderTop: "1px solid rgba(255,255,255,0.05)" }}>
         <p className="text-[12px] mt-10" style={{ color: "rgba(240,240,240,0.2)" }}>
           * 각 데모는 동일한 세종호이스트크레인 콘텐츠를 기반으로 하되, 완전히 다른 디자인 철학을 적용합니다.
-          <br />* 선택 후 해당 방향으로 전체 사이트 (메인, 회사소개, 사업영역, 납품실적, 고객지원) 를 완성합니다.
+          <br />* 라운드 2 시안(05 · 06)은 헤더와 히어로만 교체되며, 이하 섹션과 푸터는 운영 사이트 그대로입니다.
+          <br />* 선택 후 해당 방향으로 실제 사이트에 반영합니다.
         </p>
       </div>
     </div>
