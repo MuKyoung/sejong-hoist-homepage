@@ -4,7 +4,13 @@
 
 import Link from "next/link";
 
-export default function ConceptSwitch({ current }: { current: "5" | "6" }) {
+const CONCEPTS = [
+  { id: "5", label: "시안 A" },
+  { id: "6", label: "시안 B" },
+  { id: "7", label: "시안 C" },
+] as const;
+
+export default function ConceptSwitch({ current }: { current: "5" | "6" | "7" }) {
   return (
     <div
       className="fixed left-3 sm:left-4 bottom-3 sm:bottom-4 z-[70] flex items-center gap-0.5 h-11 px-1.5 rounded-full backdrop-blur"
@@ -16,24 +22,18 @@ export default function ConceptSwitch({ current }: { current: "5" | "6" }) {
         ← 목록
       </Link>
       <span className="w-px h-4 bg-white/15" aria-hidden />
-      <Link
-        href="/demo/5"
-        className={`h-8 px-3 rounded-full flex items-center text-[12px] font-bold transition-colors ${
-          current === "5" ? "bg-white text-[#16273C]" : "text-white/70 hover:text-white"
-        }`}
-        aria-current={current === "5" ? "page" : undefined}
-      >
-        시안 A
-      </Link>
-      <Link
-        href="/demo/6"
-        className={`h-8 px-3 rounded-full flex items-center text-[12px] font-bold transition-colors ${
-          current === "6" ? "bg-white text-[#16273C]" : "text-white/70 hover:text-white"
-        }`}
-        aria-current={current === "6" ? "page" : undefined}
-      >
-        시안 B
-      </Link>
+      {CONCEPTS.map((c) => (
+        <Link
+          key={c.id}
+          href={`/demo/${c.id}`}
+          className={`h-8 px-3 rounded-full flex items-center text-[12px] font-bold transition-colors ${
+            current === c.id ? "bg-white text-[#16273C]" : "text-white/70 hover:text-white"
+          }`}
+          aria-current={current === c.id ? "page" : undefined}
+        >
+          {c.label}
+        </Link>
+      ))}
       <span className="hidden sm:block w-px h-4 bg-white/15" aria-hidden />
       <Link href="/" className="hidden sm:block px-2.5 text-[12px] text-white/50 hover:text-white transition-colors">
         현재 사이트

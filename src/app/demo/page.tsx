@@ -89,6 +89,18 @@ const HERO_DEMOS: readonly DemoEntry[] = [
     href: "/demo/6",
     dark: false,
   },
+  {
+    num: "07",
+    name: "MONUMENT",
+    subtitle: "시안 C · 웅장한 헤비인더스트리",
+    ref: "중공업 스탠다드 · 전체 페이지 리뉴얼",
+    palette: ["#0C0F13", "#C69B54", "#EFECE6"],
+    desc: "스틸 차콜에 브라스 골드를 얹은 대형 타이포 구성. 헤더부터 푸터까지 전체를 새로 짰고, 모션은 느리고 무겁게 흐릅니다.",
+    keys: ["100svh 시네마틱 히어로", "하단 스펙바로 여백 마감", "느린 모션(리빌 1.3초)", "21:9 대표 시공사례"],
+    img: "/images/hero-03.jpg",
+    href: "/demo/7",
+    dark: true,
+  },
 ];
 
 function DemoCard({ d, i }: { d: DemoEntry; i: number }) {
@@ -218,10 +230,10 @@ export default function DemoSelector() {
               헤더 · 히어로 A/B 시안 · 2026-07
             </span>
           </div>
-          <h2 className="text-2xl font-black tracking-tight mb-3">메인 헤더 · 히어로 시안 선택</h2>
+          <h2 className="text-2xl font-black tracking-tight mb-3">메인 리뉴얼 시안 선택</h2>
           <p className="text-[14px] leading-[1.8] max-w-xl" style={{ color: "rgba(240,240,240,0.4)" }}>
-            현재 운영 중인 사이트에서 헤더와 히어로 영역만 교체한 시안입니다.
-            히어로 아래 섹션은 운영 사이트와 동일하게 이어지므로 첫인상 차이만 비교하시면 됩니다.
+            시안 A · B는 현재 운영 사이트에서 헤더와 히어로만 교체해 첫인상을 비교하는 안이고,
+            시안 C는 헤더부터 푸터까지 전체를 새로 구성한 안입니다.
           </p>
         </motion.div>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
