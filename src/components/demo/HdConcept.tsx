@@ -20,21 +20,18 @@ const NAVY_DEEP = "#0D1726";
 const SLIDES = [
   {
     img: "/images/hero-01.jpg",
-    eyebrow: "GANTRY · OVERHEAD · HOIST",
-    lines: ["산업의 무게를", "들어 올리는 기술"],
-    sub: "350TON급 겐트리 크레인 시공 실적. 1999년부터 축적해 온 운반하역 설비 엔지니어링의 기준을 제시합니다.",
+    lines: ["산업 현장의 무게를", "들어 올립니다"],
+    sub: "1999년 설립 운반하역 설비 전문기업, 세종호이스트크레인입니다.",
   },
   {
     img: "/images/hero-02.jpg",
-    eyebrow: "ONE-STOP ENGINEERING",
-    lines: ["설계에서 유지보수까지", "하나의 책임으로"],
-    sub: "설계 · 제작 · 설치 · 검사 · 유지보수. 전 과정을 자체 엔지니어가 직접 수행합니다.",
+    lines: ["설계부터 유지보수까지", "원스톱으로 수행합니다"],
+    sub: "설계 · 제작 · 설치 · 검사 · 유지보수, 전 과정을 자체 인력으로 진행합니다.",
   },
   {
     img: "/images/hero-03.jpg",
-    eyebrow: "CERTIFIED SAFETY",
-    lines: ["안전은 약속이 아니라", "증명입니다"],
-    sub: "KCs 안전인증 5건과 서면심사도서 11권. 문서로 증명하는 안전관리 체계를 갖췄습니다.",
+    lines: ["KCs 안전인증으로", "검증된 안전관리"],
+    sub: "KCs 안전인증 5건과 서면심사도서 11권을 보유하고 있습니다.",
   },
 ];
 
@@ -169,9 +166,6 @@ export default function HdConcept() {
                       <p className="text-[15px] font-extrabold group-hover:text-[#2C4A6E] transition-colors" style={{ color: INK }}>
                         {item.label}
                       </p>
-                      <p className="text-[10px] font-mono font-semibold tracking-[0.2em] uppercase mt-1" style={{ color: "rgba(28,40,54,0.35)" }}>
-                        {item.en}
-                      </p>
                     </Link>
                     <div className="flex flex-col gap-2 mt-4 pt-4" style={{ borderTop: "1px solid #EEF1F5" }}>
                       {item.children.map((c, i) => (
@@ -202,8 +196,7 @@ export default function HdConcept() {
                     />
                     <div className="absolute inset-0" style={{ background: "linear-gradient(0deg, rgba(13,23,38,0.82) 0%, rgba(13,23,38,0.15) 60%)" }} />
                     <div className="absolute left-4 right-4 bottom-4">
-                      <p className="text-[10px] font-mono font-semibold tracking-[0.2em] uppercase text-white/60">Featured</p>
-                      <p className="mt-1 text-[14px] font-bold text-white leading-snug">350TON 겐트리<br />시공 실적 보기 →</p>
+                      <p className="text-[14px] font-bold text-white leading-snug">350TON 겐트리<br />시공 실적 보기</p>
                     </div>
                   </Link>
                 </motion.div>
@@ -300,17 +293,6 @@ export default function HdConcept() {
             <div className="max-w-[820px] pt-8 pb-24 sm:pb-16">
               <AnimatePresence mode="wait">
                 <motion.div key={idx} exit={{ opacity: 0, y: -14, transition: { duration: 0.22 } }}>
-                  <motion.div
-                    initial={{ opacity: 0, x: -14 }} animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: 0.05, duration: 0.55, ease: E }}
-                    className="flex items-center gap-3 mb-5 sm:mb-7"
-                  >
-                    <span className="h-px w-8 bg-white/60" />
-                    <span className="text-[11px] font-bold tracking-[0.32em] uppercase text-white/70">
-                      {SLIDES[idx].eyebrow}
-                    </span>
-                  </motion.div>
-
                   {SLIDES[idx].lines.map((line, li) => (
                     <div key={li} className="overflow-hidden">
                       <motion.h2
@@ -340,8 +322,8 @@ export default function HdConcept() {
                 className="flex flex-wrap gap-3 mt-8 sm:mt-9"
               >
                 <Link href="/business"
-                  className="h-12 sm:h-[50px] px-7 sm:px-8 rounded-full bg-white text-[#16273C] text-[14px] font-bold flex items-center gap-2 hover:bg-[#E8EDF3] transition-colors">
-                  사업영역 보기 <span aria-hidden>→</span>
+                  className="h-12 sm:h-[50px] px-7 sm:px-8 rounded-full bg-white text-[#16273C] text-[14px] font-bold flex items-center hover:bg-[#E8EDF3] transition-colors">
+                  사업영역 보기
                 </Link>
                 <Link href="/support/inquiry"
                   className="h-12 sm:h-[50px] px-7 sm:px-8 rounded-full border border-white/45 text-white text-[14px] font-semibold flex items-center hover:bg-white/10 hover:border-white/70 transition-all">
@@ -354,33 +336,31 @@ export default function HdConcept() {
 
         {/* 슬라이드 컨트롤 : 플로팅 요소(FAB · 시안 스위처)와 겹치지 않게 위로 띄움 */}
         <div className="absolute inset-x-0 bottom-24 lg:bottom-20">
-          <div className="max-w-[1440px] mx-auto px-5 sm:px-8 xl:px-10 flex items-end justify-between gap-5">
-            <div className="flex items-center gap-4 sm:gap-5 flex-1 max-w-[420px]">
-              {/* 카운터 롤 */}
-              <div className="relative h-8 sm:h-9 overflow-hidden" aria-hidden>
-                <AnimatePresence mode="popLayout">
-                  <motion.span
-                    key={idx}
-                    initial={{ y: 18, opacity: 0 }} animate={{ y: 0, opacity: 1 }} exit={{ y: -18, opacity: 0 }}
-                    transition={{ duration: 0.45, ease: E }}
-                    className="block text-[24px] sm:text-[28px] font-extrabold text-white leading-8 sm:leading-9 tabular-nums"
-                  >
-                    {String(idx + 1).padStart(2, "0")}
-                  </motion.span>
-                </AnimatePresence>
-              </div>
-
-              {/* 프로그레스 */}
-              <div className="flex-1 h-[2px] bg-white/20 overflow-hidden rounded-full">
-                <motion.div
-                  key={`${idx}-${playing ? "p" : "s"}`}
-                  initial={{ scaleX: 0 }}
-                  animate={{ scaleX: playing && !reduced ? 1 : 0 }}
-                  transition={{ duration: playing ? DUR / 1000 : 0.3, ease: "linear" }}
-                  className="h-full bg-white/90 origin-left"
-                />
-              </div>
-              <span className="text-[13px] text-white/50 tabular-nums" aria-hidden>/ {String(SLIDES.length).padStart(2, "0")}</span>
+          <div className="max-w-[1440px] mx-auto px-5 sm:px-8 xl:px-10 flex items-center justify-between gap-5">
+            {/* 슬라이드 인디케이터 : 활성 바가 자동재생 시간만큼 채워짐 */}
+            <div className="flex items-center gap-2.5">
+              {SLIDES.map((_, i) => (
+                <button
+                  key={i}
+                  type="button"
+                  onClick={() => setIdx(i)}
+                  aria-label={`${i + 1}번 슬라이드`}
+                  aria-current={idx === i}
+                  className="h-6 flex items-center"
+                >
+                  <span className="block w-9 sm:w-11 h-[2px] bg-white/25 overflow-hidden rounded-full">
+                    {idx === i && (
+                      <motion.span
+                        key={`${i}-${playing ? "p" : "s"}`}
+                        initial={{ scaleX: 0 }}
+                        animate={{ scaleX: 1 }}
+                        transition={{ duration: playing && !reduced ? DUR / 1000 : 0.3, ease: "linear" }}
+                        className="block h-full bg-white origin-left"
+                      />
+                    )}
+                  </span>
+                </button>
+              ))}
             </div>
 
             <div className="flex items-center gap-2 sm:gap-2.5">
@@ -405,17 +385,6 @@ export default function HdConcept() {
           </div>
         </div>
 
-        {/* 스크롤 큐 */}
-        <div className="hidden lg:flex absolute left-1/2 -translate-x-1/2 bottom-4 flex-col items-center gap-2" aria-hidden>
-          <span className="text-[10px] font-semibold tracking-[0.35em] text-white/45">SCROLL</span>
-          <span className="relative block w-px h-9 bg-white/20 overflow-hidden">
-            <motion.span
-              className="absolute left-0 top-0 w-px h-3 bg-white"
-              animate={reduced ? undefined : { y: [0, 26, 26], opacity: [1, 1, 0] }}
-              transition={{ duration: 1.6, repeat: Infinity, ease: "easeInOut" }}
-            />
-          </span>
-        </div>
       </section>
     </>
   );
