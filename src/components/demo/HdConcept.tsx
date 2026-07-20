@@ -319,51 +319,39 @@ export default function HdConcept() {
                 </motion.div>
               </AnimatePresence>
 
-              <motion.div
-                initial={{ opacity: 0, y: 14 }} animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.6, duration: 0.7, ease: E }}
-                className="flex flex-wrap gap-3 mt-8 sm:mt-9"
-              >
-                <Link href="/business"
-                  className="h-12 sm:h-[50px] px-7 sm:px-8 rounded-full bg-white text-[#16273C] text-[14px] font-bold flex items-center hover:bg-[#E8EDF3] transition-colors">
-                  사업영역 보기
-                </Link>
-                <Link href="/support/inquiry"
-                  className="h-12 sm:h-[50px] px-7 sm:px-8 rounded-full border border-white/45 text-white text-[14px] font-semibold flex items-center hover:bg-white/10 hover:border-white/70 transition-all">
-                  견적 문의
-                </Link>
-              </motion.div>
             </div>
           </div>
         </div>
 
         {/* 슬라이드 컨트롤 : 플로팅 요소(FAB · 시안 스위처)와 겹치지 않게 위로 띄움 */}
         <div className="absolute inset-x-0 bottom-24 lg:bottom-20">
-          <div className="max-w-[1440px] mx-auto px-5 sm:px-8 xl:px-10 flex items-center justify-between gap-5">
-            {/* 슬라이드 인디케이터 : 활성 바가 자동재생 시간만큼 채워짐 */}
-            <div className="flex items-center gap-2.5">
-              {SLIDES.map((_, i) => (
-                <button
-                  key={i}
-                  type="button"
-                  onClick={() => setIdx(i)}
-                  aria-label={`${i + 1}번 슬라이드`}
-                  aria-current={idx === i}
-                  className="h-6 flex items-center"
-                >
-                  <span className="block w-9 sm:w-11 h-[2px] bg-white/25 overflow-hidden rounded-full">
-                    {idx === i && (
-                      <motion.span
-                        key={`${i}-${playing ? "p" : "s"}`}
-                        initial={{ scaleX: 0 }}
-                        animate={{ scaleX: 1 }}
-                        transition={{ duration: playing && !reduced ? DUR / 1000 : 0.3, ease: "linear" }}
-                        className="block h-full bg-white origin-left"
-                      />
-                    )}
-                  </span>
-                </button>
-              ))}
+          <div className="max-w-[1440px] mx-auto px-5 sm:px-8 xl:px-10 flex items-end justify-between gap-5">
+            <div className="flex items-center gap-4 sm:gap-5 flex-1 max-w-[420px]">
+              {/* 카운터 롤 */}
+              <div className="relative h-8 sm:h-9 overflow-hidden" aria-hidden>
+                <AnimatePresence mode="popLayout">
+                  <motion.span
+                    key={idx}
+                    initial={{ y: 18, opacity: 0 }} animate={{ y: 0, opacity: 1 }} exit={{ y: -18, opacity: 0 }}
+                    transition={{ duration: 0.45, ease: E }}
+                    className="block text-[24px] sm:text-[28px] font-extrabold text-white leading-8 sm:leading-9 tabular-nums"
+                  >
+                    {String(idx + 1).padStart(2, "0")}
+                  </motion.span>
+                </AnimatePresence>
+              </div>
+
+              {/* 프로그레스 */}
+              <div className="flex-1 h-[2px] bg-white/20 overflow-hidden rounded-full">
+                <motion.div
+                  key={`${idx}-${playing ? "p" : "s"}`}
+                  initial={{ scaleX: 0 }}
+                  animate={{ scaleX: playing && !reduced ? 1 : 0 }}
+                  transition={{ duration: playing ? DUR / 1000 : 0.3, ease: "linear" }}
+                  className="h-full bg-white/90 origin-left"
+                />
+              </div>
+              <span className="text-[13px] text-white/50 tabular-nums" aria-hidden>/ {String(SLIDES.length).padStart(2, "0")}</span>
             </div>
 
             <div className="flex items-center gap-2 sm:gap-2.5">
