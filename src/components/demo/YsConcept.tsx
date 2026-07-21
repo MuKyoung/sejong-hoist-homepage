@@ -21,7 +21,7 @@ const INK = "#22303F";
 const SLIDES = [
   {
     img: "/images/hero-01.jpg",
-    chip: "SINCE 1999",
+    chip: "설립 1999년",
     title: "신뢰를 들어 올리는\n운반하역 설비 파트너",
     sub: "설계부터 유지보수까지, 27년 한 길을 걸어온 크레인 · 호이스트 전문기업입니다.",
     href: "/about",
@@ -29,7 +29,7 @@ const SLIDES = [
   },
   {
     img: "/images/hero-02.jpg",
-    chip: "350TON CLASS",
+    chip: "350톤급 시공 실적",
     title: "국내 최대급\n350TON 겐트리 크레인",
     sub: "대형 시공 실적으로 검증된 설계 · 제작 기술력을 확인하세요.",
     href: "/portfolio",
@@ -37,7 +37,7 @@ const SLIDES = [
   },
   {
     img: "/images/hero-03.jpg",
-    chip: "KCs CERTIFIED",
+    chip: "KCs 안전인증",
     title: "문서로 증명하는\n안전관리 체계",
     sub: "KCs 안전인증과 서면심사도서, 보유 자격 인력까지 안전을 체계로 관리합니다.",
     href: "/technology",
@@ -45,7 +45,7 @@ const SLIDES = [
   },
   {
     img: "/images/hero-04.jpg",
-    chip: "ONE-STOP",
+    chip: "원스톱 서비스",
     title: "견적부터 설치까지\n원스톱 서비스",
     sub: "현장 조건만 알려주시면 최적 사양과 견적을 빠르게 제안해 드립니다.",
     href: "/support/inquiry",
@@ -383,7 +383,7 @@ export default function YsConcept() {
                   <motion.span
                     initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.15, duration: 0.5, ease: E }}
-                    className="inline-flex items-center h-7 px-3 rounded-full text-[11px] font-bold tracking-[0.18em]"
+                    className="inline-flex items-center h-7 px-3.5 rounded-full text-[12px] font-bold"
                     style={{ background: "rgba(198,155,84,0.3)", color: "#F2DCAE", backdropFilter: "blur(6px)" }}
                   >
                     {SLIDES[idx].chip}

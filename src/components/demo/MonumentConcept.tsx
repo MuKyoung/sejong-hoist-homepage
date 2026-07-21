@@ -333,7 +333,7 @@ export default function MonumentConcept() {
                     className="flex items-center gap-4 mb-8"
                   >
                     <span style={{ width: 56, height: 1, background: BRASS }} />
-                    <span className="text-[13px] font-semibold tracking-[0.18em]" style={{ color: BRASS }}>
+                    <span className="text-[13.5px] font-semibold" style={{ color: BRASS, letterSpacing: "0.03em" }}>
                       {SLIDES[idx].kicker}
                     </span>
                   </motion.div>
