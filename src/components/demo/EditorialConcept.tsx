@@ -344,20 +344,43 @@ export default function EditorialConcept() {
       {/* ══════════ 에디토리얼 인트로 + 비대칭 매거진 그리드 (연세대) ══════════ */}
       <section style={{ paddingBlock: "clamp(80px, 9vw, 136px)" }}>
         <div className="mx-auto" style={{ maxWidth: 1400, paddingInline: "clamp(20px, 3.5vw, 48px)" }}>
-          <Rise x={-100}>
-            <div className="flex flex-wrap items-end gap-x-8 gap-y-4 mb-6">
-              <h2 className="font-extrabold" style={{ fontSize: "clamp(34px, 4.8vw, 64px)", lineHeight: 1.14, letterSpacing: "-0.045em" }}>
-                무게를 아는 회사,
-                <br />
-                세종다움
-              </h2>
-              <span className="hidden sm:block mb-5" style={{ width: "clamp(120px, 16vw, 240px)", height: 2, background: INK }} />
-            </div>
-            <p className="text-[15.5px] leading-[1.9]" style={{ color: BODY, maxWidth: 560 }}>
-              (주)세종호이스트크레인은 27년의 현장 경험을 바탕으로 설계 · 제작 · 설치 ·
-              유지보수 전 과정을 직접 수행하며, 산업 현장의 안전과 생산성을 책임집니다.
-            </p>
-          </Rise>
+          <div className="grid lg:grid-cols-[1.5fr_1fr] gap-x-16 gap-y-12 items-start">
+            <Rise x={-100}>
+              <div className="flex flex-wrap items-end gap-x-8 gap-y-4 mb-6">
+                <h2 className="font-extrabold" style={{ fontSize: "clamp(34px, 4.8vw, 64px)", lineHeight: 1.14, letterSpacing: "-0.045em" }}>
+                  무게를 아는 회사,
+                  <br />
+                  세종다움
+                </h2>
+                <span className="hidden sm:block mb-5" style={{ width: "clamp(100px, 12vw, 200px)", height: 2, background: INK }} />
+              </div>
+              <p className="text-[15.5px] leading-[1.9]" style={{ color: BODY, maxWidth: 560 }}>
+                (주)세종호이스트크레인은 27년의 현장 경험을 바탕으로 설계 · 제작 · 설치 ·
+                유지보수 전 과정을 직접 수행하며, 산업 현장의 안전과 생산성을 책임집니다.
+              </p>
+            </Rise>
+
+            {/* 실적 수치 스택 — 인트로 우측 여백을 데이터로 마감 */}
+            <Rise x={90} delay={0.15}>
+              <div style={{ borderTop: `2px solid ${INK}` }}>
+                {[
+                  { v: "25년+", k: "업력", d: "1999년 설립, 운반하역 설비 외길" },
+                  { v: "520건+", k: "누적 시공", d: "전국 산업 현장 납품 · 설치" },
+                  { v: "350TON", k: "최대 하중", d: "겐트리 크랩 크레인 시공 실적" },
+                ].map((s) => (
+                  <div key={s.k} className="flex items-baseline justify-between gap-6 py-5" style={{ borderBottom: `1px solid ${HAIR}` }}>
+                    <div>
+                      <p className="text-[13px] font-bold" style={{ color: "#C69B54" }}>{s.k}</p>
+                      <p className="mt-1 text-[12.5px]" style={{ color: "rgba(16,24,40,0.45)" }}>{s.d}</p>
+                    </div>
+                    <p className="font-extrabold tabular-nums whitespace-nowrap" style={{ fontSize: "clamp(26px, 2.6vw, 38px)", letterSpacing: "-0.04em" }}>
+                      {s.v}
+                    </p>
+                  </div>
+                ))}
+              </div>
+            </Rise>
+          </div>
 
           {/* 비대칭 그리드: 컬러 카드 / 포토 카드 / 디스플레이 워드 */}
           <div className="grid lg:grid-cols-[1fr_1.1fr] gap-6 lg:gap-8 mt-14 lg:mt-20">
@@ -410,9 +433,15 @@ export default function EditorialConcept() {
               </Rise>
 
               <Rise delay={0.22} x={90}>
-                <Link href="/technology" className="group flex items-center justify-between gap-6 rounded-[20px] rounded-tr-none p-8 lg:p-10 min-h-[150px]"
+                <Link href="/technology" className="group relative overflow-hidden flex items-center justify-between gap-6 rounded-[20px] rounded-tr-none p-8 lg:p-10 min-h-[150px]"
                   style={{ background: PALE }}>
-                  <div>
+                  {/* 웨이브 라인 — 인증 패널의 여백 마감 */}
+                  <svg className="absolute -right-8 -top-14 opacity-70 pointer-events-none" width="420" height="300" viewBox="0 0 420 300" fill="none" aria-hidden>
+                    <path d="M-20 230C120 190 180 70 440 100" stroke="#CFDDF1" strokeWidth="1.5" />
+                    <path d="M-20 260C130 220 200 100 440 130" stroke="#DBE6F5" strokeWidth="1.5" />
+                    <path d="M-20 290C140 250 220 130 440 160" stroke="#E7EEF9" strokeWidth="1.5" />
+                  </svg>
+                  <div className="relative">
                     <p className="font-extrabold" style={{ fontSize: "clamp(28px, 3vw, 42px)", letterSpacing: "-0.03em", color: ROYAL }}>
                       Technology
                     </p>
@@ -539,7 +568,7 @@ export default function EditorialConcept() {
                   <span className="transition-transform duration-500 group-hover:translate-x-1.5" style={{ color: ROYAL }}><NE /></span>
                 </Link>
 
-                <div className="relative overflow-hidden mt-8" style={{ aspectRatio: "16 / 9" }}>
+                <div className="relative overflow-hidden mt-8 rounded-tr-[24px]" style={{ aspectRatio: "16 / 9" }}>
                   <Image src="/images/tech-analysis.jpg" alt="350TON 크레인 와이어 로프 작업" fill
                     sizes="(max-width: 1024px) 100vw, 460px" className="object-cover" />
                   <span className="absolute inset-0" style={{ background: "linear-gradient(0deg, rgba(10,16,28,0.4), transparent 55%)" }} />
@@ -607,15 +636,44 @@ export default function EditorialConcept() {
                       <h3 className="text-[16.5px] font-bold leading-[1.45] transition-colors duration-300 group-hover:text-[#E8762C]">
                         {item.title}
                       </h3>
-                      <p className="mt-auto pt-5 text-[13px]" style={{ color: "rgba(16,24,40,0.5)" }}>
-                        {item.client} · {item.year}
-                      </p>
+                      <div className="mt-auto pt-5 flex items-center justify-between gap-4">
+                        <p className="text-[13px]" style={{ color: "rgba(16,24,40,0.5)" }}>
+                          {item.client} · {item.year}
+                        </p>
+                        <span className="shrink-0 transition-all duration-500 group-hover:translate-x-1 group-hover:text-[#E8762C]"
+                          style={{ color: "rgba(16,24,40,0.35)" }}>
+                          <NE />
+                        </span>
+                      </div>
                     </div>
                   </Link>
                 </Rise>
               ))}
             </div>
           </div>
+        </div>
+      </section>
+
+      {/* ══════════ 주요 고객사 스트립 — 실적 기반 신뢰 요소 ══════════ */}
+      <section className="bg-white" style={{ paddingBlock: "clamp(44px, 5vw, 68px)" }}>
+        <div className="mx-auto flex flex-col sm:flex-row sm:items-center gap-x-14 gap-y-5"
+          style={{ maxWidth: 1400, paddingInline: "clamp(20px, 3.5vw, 48px)" }}>
+          <Rise x={-60}>
+            <p className="shrink-0 text-[13.5px] font-bold" style={{ color: BODY }}>
+              함께해 온 주요 고객사
+            </p>
+          </Rise>
+          <Rise x={60} delay={0.1} className="flex-1">
+            <div className="flex flex-wrap items-baseline gap-x-12 gap-y-3">
+              {["LS ELECTRIC", "두산중공업", "현대위아"].map((n) => (
+                <span key={n} className="font-extrabold tracking-tight transition-colors duration-500 hover:text-[#E8762C]"
+                  style={{ fontSize: "clamp(18px, 1.9vw, 26px)", color: "rgba(16,24,40,0.34)" }}>
+                  {n}
+                </span>
+              ))}
+              <span className="text-[13.5px]" style={{ color: "rgba(16,24,40,0.42)" }}>외 전국 산업 현장</span>
+            </div>
+          </Rise>
         </div>
       </section>
 
@@ -628,12 +686,14 @@ export default function EditorialConcept() {
         <div className="mx-auto" style={{ maxWidth: 1400, paddingInline: "clamp(20px, 3.5vw, 48px)", paddingBlock: "clamp(72px, 8vw, 116px)" }}>
           <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-10">
             <Rise x={-90}>
-              <h2 className="font-extrabold text-white" style={{ fontSize: "clamp(28px, 3.8vw, 52px)", letterSpacing: "-0.04em", lineHeight: 1.2 }}>
-                Today is Safer than Yesterday
+              <h2 className="font-extrabold text-white" style={{ fontSize: "clamp(28px, 3.8vw, 52px)", letterSpacing: "-0.04em", lineHeight: 1.24 }}>
+                어제보다 안전한 현장을
+                <br />
+                오늘 만들어 갑니다
               </h2>
               <p className="mt-5 text-[15px] leading-[1.85]" style={{ color: "rgba(255,255,255,0.62)", maxWidth: 560 }}>
-                어제보다 안전한 현장을 위해, 세종호이스트크레인이 설계부터
-                유지보수까지 함께합니다. 현장 조건만 알려주시면 최적 사양과 견적을 제안해 드립니다.
+                설계부터 유지보수까지 세종호이스트크레인이 현장과 함께합니다.
+                조건만 알려주시면 최적 사양과 견적을 제안해 드립니다.
               </p>
             </Rise>
             <Rise delay={0.15} x={90}>
