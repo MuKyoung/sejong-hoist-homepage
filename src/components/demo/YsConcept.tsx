@@ -252,7 +252,7 @@ export default function YsConcept() {
               animate={{ height: "auto", opacity: 1 }}
               exit={{ height: 0, opacity: 0 }}
               transition={{ duration: 0.65, ease: E }}
-              className="hidden lg:block absolute left-0 right-0 top-full overflow-hidden bg-white rounded-b-[10px]"
+              className="hidden lg:block absolute left-0 right-0 top-full overflow-hidden bg-white rounded-b-[24px]"
               style={{ boxShadow: "0 32px 56px rgba(23,42,69,0.14)" }}
             >
               <div className="max-w-[1280px] mx-auto grid grid-cols-5 gap-8 px-8 pt-8 pb-10">
@@ -341,7 +341,7 @@ export default function YsConcept() {
         <div className="max-w-[1280px] mx-auto px-5 sm:px-8">
           {/* 라운드 배너 슬라이더 */}
           <div
-            className="relative overflow-hidden rounded-[10px]"
+            className="relative overflow-hidden rounded-[26px] rounded-tl-none"
             style={{ height: "clamp(380px, 44vw, 520px)", background: NAVY_DEEP }}
             aria-roledescription="carousel"
             aria-label="메인 배너"
@@ -456,10 +456,10 @@ export default function YsConcept() {
               >
                 <Link
                   href={q.href}
-                  className="group flex flex-col items-center justify-center gap-2.5 rounded-[10px] bg-white py-5 sm:py-6 border border-[#E7ECF2] hover:border-[#B9C7D8] shadow-[0_8px_24px_rgba(23,42,69,0.06)] hover:shadow-[0_16px_36px_rgba(23,42,69,0.12)] transition-all duration-700 hover:-translate-y-1"
+                  className="group flex flex-col items-center justify-center gap-2.5 rounded-[18px] rounded-br-none bg-white py-5 sm:py-6 border border-[#E7ECF2] hover:border-[#B9C7D8] shadow-[0_8px_24px_rgba(23,42,69,0.06)] hover:shadow-[0_16px_36px_rgba(23,42,69,0.12)] transition-all duration-700 hover:-translate-y-1"
                 >
                   <span
-                    className="w-11 h-11 rounded-full flex items-center justify-center bg-[#EEF3F9] group-hover:bg-[#E8762C] group-hover:text-white transition-colors duration-300"
+                    className="w-11 h-11 rounded-full flex items-center justify-center bg-[#EEF3F9] group-hover:bg-[#E8762C] group-hover:text-white group-hover:rotate-[360deg] transition-all duration-1000"
                     style={{ color: NAVY }}
                   >
                     {q.icon}

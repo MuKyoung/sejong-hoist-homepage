@@ -363,10 +363,18 @@ export default function EditorialConcept() {
           <div className="grid lg:grid-cols-[1fr_1.1fr] gap-6 lg:gap-8 mt-14 lg:mt-20">
             {/* 좌: 딥 네이비 컬러 카드 — 연세대 Research 카드 */}
             <Rise x={-90} className="h-full">
-              <Link href="/business" className="group relative flex flex-col justify-between overflow-hidden h-full min-h-[420px] lg:min-h-[540px] p-9 lg:p-12"
+              <Link href="/business" className="group relative flex flex-col justify-between overflow-hidden rounded-[28px] rounded-bl-none h-full min-h-[420px] lg:min-h-[540px] p-9 lg:p-12"
                 style={{ background: NAVY, color: "#fff" }}>
-                <div className="absolute -right-24 -bottom-24 w-[340px] h-[340px] rounded-full opacity-60 transition-transform duration-[1400ms] group-hover:scale-125"
-                  style={{ background: "radial-gradient(circle, rgba(46,90,167,0.55), transparent 68%)", transitionTimingFunction: "cubic-bezier(0.16,1,0.3,1)" }} aria-hidden />
+                {/* 라디얼 글로우 — 상하좌우 드리프트 복합 모션 */}
+                <motion.div
+                  aria-hidden
+                  className="absolute -right-24 -bottom-24 w-[340px] h-[340px] pointer-events-none"
+                  animate={reduced ? undefined : { x: [0, -22, 0], y: [0, 16, 0] }}
+                  transition={{ duration: 16, repeat: Infinity, ease: "easeInOut" }}
+                >
+                  <div className="w-full h-full rounded-full opacity-60 transition-transform duration-[1400ms] group-hover:scale-125"
+                    style={{ background: "radial-gradient(circle, rgba(46,90,167,0.55), transparent 68%)", transitionTimingFunction: "cubic-bezier(0.16,1,0.3,1)" }} />
+                </motion.div>
                 <div>
                   <p className="font-extrabold" style={{ fontSize: "clamp(34px, 3.6vw, 52px)", letterSpacing: "-0.03em" }}>Business</p>
                   <p className="mt-5 text-[15px] leading-[1.85]" style={{ color: "rgba(255,255,255,0.7)", maxWidth: 380 }}>
@@ -384,7 +392,7 @@ export default function EditorialConcept() {
             {/* 우: 포토 카드 (History) + 디스플레이 워드 (Giving to) */}
             <div className="flex flex-col gap-6 lg:gap-8">
               <Rise delay={0.12} x={90}>
-                <Link href="/portfolio" className="group relative block overflow-hidden min-h-[300px] lg:min-h-[340px]">
+                <Link href="/portfolio" className="group relative block overflow-hidden rounded-tr-[24px] min-h-[300px] lg:min-h-[340px]">
                   <Image src="/images/pf-gantry350.jpg" alt="350TON 겐트리 크레인" fill sizes="(max-width: 1024px) 100vw, 640px"
                     className="object-cover group-hover:scale-[1.07]" style={{ transition: "transform 1.3s cubic-bezier(0.16,1,0.3,1)" }} />
                   <span className="absolute inset-0" style={{ background: "linear-gradient(0deg, rgba(10,16,28,0.72) 8%, rgba(10,16,28,0.18) 55%, transparent)" }} />
@@ -402,7 +410,7 @@ export default function EditorialConcept() {
               </Rise>
 
               <Rise delay={0.22} x={90}>
-                <Link href="/technology" className="group flex items-center justify-between gap-6 p-8 lg:p-10 min-h-[150px]"
+                <Link href="/technology" className="group flex items-center justify-between gap-6 rounded-[20px] rounded-tr-none p-8 lg:p-10 min-h-[150px]"
                   style={{ background: PALE }}>
                   <div>
                     <p className="font-extrabold" style={{ fontSize: "clamp(28px, 3vw, 42px)", letterSpacing: "-0.03em", color: ROYAL }}>
@@ -586,7 +594,7 @@ export default function EditorialConcept() {
             <div className="grid sm:grid-cols-3 gap-5">
               {cards.map((item, i) => (
                 <Rise key={item.slug} delay={0.12 + i * 0.14} x={80} className="h-full">
-                  <Link href={`/portfolio/${item.slug}`} className="group flex flex-col h-full backdrop-blur-[3px] transition-colors duration-500 hover:bg-white"
+                  <Link href={`/portfolio/${item.slug}`} className="group flex flex-col h-full overflow-hidden rounded-[14px] rounded-bl-none backdrop-blur-[3px] transition-colors duration-500 hover:bg-white"
                     style={{ background: "rgba(255,255,255,0.92)" }}>
                     <div className="relative overflow-hidden" style={{ aspectRatio: "4 / 3" }}>
                       <Image src={item.src} alt={item.title} fill sizes="(max-width: 640px) 100vw, 320px"
@@ -674,8 +682,16 @@ export default function EditorialConcept() {
       {/* 연세대式 원형 플로팅: QUICK(견적) + TOP */}
       <div className="fixed right-4 sm:right-5 bottom-32 sm:bottom-24 z-[60] flex flex-col gap-3">
         <Link href="/support/inquiry" aria-label="견적 문의"
-          className="w-14 h-14 sm:w-[64px] sm:h-[64px] rounded-full flex flex-col items-center justify-center gap-0.5 text-white text-[11px] font-bold shadow-[0_10px_30px_rgba(16,24,40,0.35)] transition-transform duration-500 hover:scale-110"
+          className="relative w-14 h-14 sm:w-[64px] sm:h-[64px] rounded-full flex flex-col items-center justify-center gap-0.5 text-white text-[11px] font-bold shadow-[0_10px_30px_rgba(16,24,40,0.35)] transition-transform duration-500 hover:scale-110"
           style={{ background: ROYAL }}>
+          {/* 회전 대시 링 */}
+          <motion.span
+            aria-hidden
+            className="absolute -inset-[7px] rounded-full pointer-events-none"
+            style={{ border: "1.5px dashed rgba(46,90,167,0.55)" }}
+            animate={reduced ? undefined : { rotate: 360 }}
+            transition={{ duration: 26, repeat: Infinity, ease: "linear" }}
+          />
           <NE />
           견적
         </Link>

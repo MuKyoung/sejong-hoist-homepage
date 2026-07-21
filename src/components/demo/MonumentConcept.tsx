@@ -435,8 +435,25 @@ export default function MonumentConcept() {
       </section>
 
       {/* ══════════ 스케일 (수치) ══════════ */}
-      <section style={{ background: PANEL, paddingBlock: "clamp(76px, 8.5vw, 124px)" }}>
-        <div className="mx-auto" style={{ maxWidth: 1440, paddingInline: "clamp(20px, 4vw, 56px)" }}>
+      <section className="relative overflow-hidden" style={{ background: PANEL, paddingBlock: "clamp(76px, 8.5vw, 124px)" }}>
+        {/* 회전 브라스 링 — 느린 스핀 + 플로트 (복합 장식 모션) */}
+        <motion.div
+          aria-hidden
+          className="pointer-events-none absolute hidden xl:block"
+          style={{ right: "-90px", top: "-70px", width: 420, height: 420 }}
+          animate={reduced ? undefined : { y: [0, 22, 0] }}
+          transition={{ duration: 17, repeat: Infinity, ease: "easeInOut" }}
+        >
+          <motion.div
+            className="w-full h-full rounded-full"
+            style={{ border: "1px dashed rgba(198,155,84,0.3)" }}
+            animate={reduced ? undefined : { rotate: 360 }}
+            transition={{ duration: 95, repeat: Infinity, ease: "linear" }}
+          />
+          <div className="absolute inset-8 rounded-full" style={{ border: "1px solid rgba(198,155,84,0.14)" }} />
+        </motion.div>
+
+        <div className="relative mx-auto" style={{ maxWidth: 1440, paddingInline: "clamp(20px, 4vw, 56px)" }}>
           <div className="grid lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.6fr)] gap-x-16 gap-y-14 items-start">
             <Rise x={-90}>
               <p className="text-[13px] font-semibold tracking-[0.18em] mb-6" style={{ color: BRASS }}>규모</p>
@@ -514,7 +531,7 @@ export default function MonumentConcept() {
             {BUSINESS_AREAS.map((area, i) => (
               <Rise key={area.slug} delay={(i % 3) * 0.14} x={i % 3 === 0 ? -80 : i % 3 === 2 ? 80 : 0}>
                 <Link href={area.href} className="group block">
-                  <div className="relative overflow-hidden" style={{ aspectRatio: "4 / 3", background: "#DED9D0" }}>
+                  <div className="relative overflow-hidden rounded-tr-[26px]" style={{ aspectRatio: "4 / 3", background: "#DED9D0" }}>
                     <Image
                       src={area.image}
                       alt={area.title}
@@ -576,7 +593,7 @@ export default function MonumentConcept() {
           {/* 대표 사례 — 가로 전체를 쓰는 시네마틱 프레임 */}
           <Rise x={110}>
             <Link href={`/portfolio/${featured.slug}`} className="group block">
-              <div className="relative overflow-hidden" style={{ aspectRatio: "21 / 9", background: PANEL }}>
+              <div className="relative overflow-hidden rounded-tl-[30px]" style={{ aspectRatio: "21 / 9", background: PANEL }}>
                 <Image
                   src={featured.src} alt={featured.title} fill sizes="100vw"
                   className="object-cover group-hover:scale-[1.05]"
@@ -608,7 +625,7 @@ export default function MonumentConcept() {
             {rest.map((item, i) => (
               <Rise key={item.slug} delay={i * 0.14} x={i === 0 ? -80 : i === 2 ? 80 : 0}>
                 <Link href={`/portfolio/${item.slug}`} className="group block">
-                  <div className="relative overflow-hidden" style={{ aspectRatio: "3 / 2", background: PANEL }}>
+                  <div className="relative overflow-hidden rounded-br-[22px]" style={{ aspectRatio: "3 / 2", background: PANEL }}>
                     <Image
                       src={item.src} alt={item.title} fill
                       sizes="(max-width: 640px) 100vw, 420px"

@@ -191,7 +191,7 @@ export default function HdConcept() {
                   initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.12, duration: 0.4, ease: E }}
                 >
-                  <Link href="/portfolio" className="group block relative overflow-hidden rounded-[10px] h-full min-h-[190px]">
+                  <Link href="/portfolio" className="group block relative overflow-hidden rounded-[26px] rounded-bl-none h-full min-h-[190px]">
                     <Image
                       src="/images/pf-gantry350.jpg" alt="350TON 겐트리 크레인 시공"
                       fill sizes="240px"
@@ -290,6 +290,24 @@ export default function HdConcept() {
         <div className="absolute inset-x-0 top-0 h-44" style={{ background: "linear-gradient(180deg, rgba(6,12,22,0.74) 0%, transparent 100%)" }} />
         <div className="absolute inset-x-0 bottom-0 h-48" style={{ background: "linear-gradient(0deg, rgba(6,12,22,0.68) 0%, transparent 100%)" }} />
 
+        {/* 회전 장식 링 — 느린 스핀 + 상하 플로트 (복합 모션, 장식) */}
+        <motion.div
+          aria-hidden
+          className="pointer-events-none absolute hidden lg:block"
+          style={{ right: "7%", top: "13%", width: 360, height: 360 }}
+          animate={reduced ? undefined : { y: [0, -26, 0] }}
+          transition={{ duration: 15, repeat: Infinity, ease: "easeInOut" }}
+        >
+          <motion.div
+            className="w-full h-full rounded-full"
+            style={{ border: "1px dashed rgba(255,255,255,0.22)" }}
+            animate={reduced ? undefined : { rotate: 360 }}
+            transition={{ duration: 85, repeat: Infinity, ease: "linear" }}
+          />
+          <div className="absolute inset-7 rounded-full" style={{ border: "1px solid rgba(255,255,255,0.1)" }} />
+          <div className="absolute rounded-full" style={{ top: -4, left: "50%", width: 9, height: 9, background: "#C69B54" }} />
+        </motion.div>
+
         {/* 카피 */}
         <div className="absolute inset-0 flex items-center">
           <div className="w-full max-w-[1440px] mx-auto px-5 sm:px-8 xl:px-10">
@@ -364,7 +382,7 @@ export default function HdConcept() {
               className="flex items-center gap-2 sm:gap-2.5">
               <button type="button" onClick={() => setPlaying((v) => !v)}
                 aria-label={playing ? "슬라이드 일시정지" : "슬라이드 재생"}
-                className="w-10 h-10 sm:w-11 sm:h-11 rounded-full border border-white/30 text-white flex items-center justify-center hover:bg-white/10 hover:border-[#E8762C] hover:text-[#E8762C] transition-all duration-500">
+                className="w-10 h-10 sm:w-11 sm:h-11 rounded-full border border-white/30 text-white flex items-center justify-center hover:bg-white/10 hover:border-[#E8762C] hover:text-[#E8762C] hover:rotate-180 transition-all duration-700">
                 {playing ? (
                   <svg width="11" height="12" viewBox="0 0 11 12" fill="currentColor" aria-hidden><rect x="1" width="3" height="12" rx="1" /><rect x="7" width="3" height="12" rx="1" /></svg>
                 ) : (
