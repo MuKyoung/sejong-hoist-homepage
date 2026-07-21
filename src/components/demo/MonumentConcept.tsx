@@ -312,7 +312,7 @@ export default function MonumentConcept() {
               scale: { duration: 16, ease: "linear" },
             }}
           >
-            <Image src={s.img} alt="" fill priority={i === 0} sizes="100vw" className="object-cover" />
+            <Image src={s.img} alt="" fill priority={i === 0} quality={85} sizes="100vw" className="object-cover" />
           </motion.div>
         ))}
 
@@ -595,7 +595,7 @@ export default function MonumentConcept() {
             <Link href={`/portfolio/${featured.slug}`} className="group block">
               <div className="relative overflow-hidden rounded-tl-[30px]" style={{ aspectRatio: "21 / 9", background: PANEL }}>
                 <Image
-                  src={featured.src} alt={featured.title} fill sizes="100vw"
+                  src={featured.src} alt={featured.title} fill quality={85} sizes="100vw"
                   className="object-cover group-hover:scale-[1.05]"
                   style={{ transition: "transform 1.6s cubic-bezier(0.16,1,0.3,1)" }}
                 />

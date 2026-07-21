@@ -278,7 +278,7 @@ export default function HdConcept() {
           >
             <Image
               src={s.img} alt=""
-              fill priority={i === 0}
+              fill priority={i === 0} quality={85}
               sizes="100vw"
               className="object-cover"
             />

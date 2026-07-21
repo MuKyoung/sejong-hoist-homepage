@@ -133,7 +133,7 @@ export default function EditorialConcept() {
       {/* ══════════ 헤더 : 명지대式 2단 (다크 유틸 + 라이트 메인) ══════════ */}
       <div style={{ background: "#0E1420" }}>
         <div className="mx-auto hidden md:flex items-center justify-between h-9 text-[12.5px]"
-          style={{ maxWidth: 1400, paddingInline: "clamp(20px, 3.5vw, 48px)", color: "rgba(255,255,255,0.66)" }}>
+          style={{ maxWidth: 1400, paddingInline: "clamp(20px, 3.5vw, 48px)", color: "rgba(255,255,255,0.74)" }}>
           <div className="flex items-center gap-5">
             <span>{COMPANY.address}</span>
           </div>
@@ -256,7 +256,7 @@ export default function EditorialConcept() {
             animate={{ opacity: idx === i ? 1 : 0, scale: reduced ? 1 : idx === i ? 1.08 : 1 }}
             transition={{ opacity: { duration: 1.6, ease: "easeInOut" }, scale: { duration: 14, ease: "linear" } }}
           >
-            <Image src={s.img} alt="" fill priority={i === 0} sizes="100vw" className="object-cover" />
+            <Image src={s.img} alt="" fill priority={i === 0} quality={85} sizes="100vw" className="object-cover" />
           </motion.div>
         ))}
         <div className="absolute inset-0" style={{ background: "linear-gradient(94deg, rgba(10,16,28,0.86) 0%, rgba(10,16,28,0.52) 48%, rgba(10,16,28,0.18) 100%)" }} />
@@ -370,7 +370,7 @@ export default function EditorialConcept() {
                 ].map((s) => (
                   <div key={s.k} className="flex items-baseline justify-between gap-6 py-5" style={{ borderBottom: `1px solid ${HAIR}` }}>
                     <div>
-                      <p className="text-[13px] font-bold" style={{ color: "#C69B54" }}>{s.k}</p>
+                      <p className="text-[13px] font-bold" style={{ color: "#A17A35" }}>{s.k}</p>
                       <p className="mt-1 text-[12.5px]" style={{ color: "rgba(16,24,40,0.45)" }}>{s.d}</p>
                     </div>
                     <p className="font-extrabold tabular-nums whitespace-nowrap" style={{ fontSize: "clamp(26px, 2.6vw, 38px)", letterSpacing: "-0.04em" }}>
@@ -416,7 +416,7 @@ export default function EditorialConcept() {
             <div className="flex flex-col gap-6 lg:gap-8">
               <Rise delay={0.12} x={90}>
                 <Link href="/portfolio" className="group relative block overflow-hidden rounded-tr-[24px] min-h-[300px] lg:min-h-[340px]">
-                  <Image src="/images/pf-gantry350.jpg" alt="350TON 겐트리 크레인" fill sizes="(max-width: 1024px) 100vw, 640px"
+                  <Image src="/images/pf-gantry350.jpg" alt="350TON 겐트리 크레인" fill quality={85} sizes="(max-width: 1024px) 100vw, 720px"
                     className="object-cover group-hover:scale-[1.07]" style={{ transition: "transform 1.3s cubic-bezier(0.16,1,0.3,1)" }} />
                   <span className="absolute inset-0" style={{ background: "linear-gradient(0deg, rgba(10,16,28,0.72) 8%, rgba(10,16,28,0.18) 55%, transparent)" }} />
                   <div className="absolute left-0 right-0 bottom-0 p-8 lg:p-10 text-white">
@@ -465,7 +465,7 @@ export default function EditorialConcept() {
         {/* 대형 페이드 워드마크 — 좌측에서 크게 슬라이드 인 */}
         <Rise x={-160} className="pointer-events-none select-none absolute -top-4 left-0" >
           <p className="font-extrabold leading-none" aria-hidden
-            style={{ fontSize: "clamp(90px, 13vw, 200px)", letterSpacing: "-0.04em", color: "rgba(16,24,40,0.045)", whiteSpace: "nowrap" }}>
+            style={{ fontSize: "clamp(90px, 13vw, 200px)", letterSpacing: "-0.04em", color: "rgba(16,24,40,0.06)", whiteSpace: "nowrap" }}>
             Sejong Hoist
           </p>
         </Rise>
@@ -520,7 +520,7 @@ export default function EditorialConcept() {
                         <span className="shrink-0 min-w-[64px] text-center text-[11.5px] font-bold px-2.5 py-1.5"
                           style={{
                             background: i === 0 ? "#C69B54" : "rgba(16,24,40,0.06)",
-                            color: i === 0 ? "#fff" : "rgba(16,24,40,0.55)",
+                            color: i === 0 ? "#231909" : "rgba(16,24,40,0.55)",
                           }}>
                           {row.chip}
                         </span>
@@ -570,7 +570,7 @@ export default function EditorialConcept() {
 
                 <div className="relative overflow-hidden mt-8 rounded-tr-[24px]" style={{ aspectRatio: "16 / 9" }}>
                   <Image src="/images/tech-analysis.jpg" alt="350TON 크레인 와이어 로프 작업" fill
-                    sizes="(max-width: 1024px) 100vw, 460px" className="object-cover" />
+                    quality={82} sizes="(max-width: 1024px) 100vw, 460px" className="object-cover" />
                   <span className="absolute inset-0" style={{ background: "linear-gradient(0deg, rgba(10,16,28,0.4), transparent 55%)" }} />
                   <p className="absolute left-5 bottom-4 text-[13px] font-semibold text-white">350TON 와이어 로프 위빙 작업</p>
                 </div>
@@ -590,7 +590,7 @@ export default function EditorialConcept() {
         <div className="relative mx-auto" style={{ maxWidth: 1400, paddingInline: "clamp(20px, 3.5vw, 48px)" }}>
           <Rise x={160}>
             <p className="font-extrabold leading-none select-none" aria-hidden
-              style={{ fontSize: "clamp(64px, 9vw, 150px)", letterSpacing: "-0.04em", color: "rgba(255,255,255,0.08)" }}>
+              style={{ fontSize: "clamp(64px, 9vw, 150px)", letterSpacing: "-0.04em", color: "rgba(255,255,255,0.1)" }}>
               Field Proven
             </p>
           </Rise>
@@ -624,7 +624,7 @@ export default function EditorialConcept() {
               {cards.map((item, i) => (
                 <Rise key={item.slug} delay={0.12 + i * 0.14} x={80} className="h-full">
                   <Link href={`/portfolio/${item.slug}`} className="group flex flex-col h-full overflow-hidden rounded-[14px] rounded-bl-none backdrop-blur-[3px] transition-colors duration-500 hover:bg-white"
-                    style={{ background: "rgba(255,255,255,0.92)" }}>
+                    style={{ background: "rgba(255,255,255,0.96)" }}>
                     <div className="relative overflow-hidden" style={{ aspectRatio: "4 / 3" }}>
                       <Image src={item.src} alt={item.title} fill sizes="(max-width: 640px) 100vw, 320px"
                         className="object-cover group-hover:scale-[1.08]" style={{ transition: "transform 1.3s cubic-bezier(0.16,1,0.3,1)" }} />
@@ -667,7 +667,7 @@ export default function EditorialConcept() {
             <div className="flex flex-wrap items-baseline gap-x-12 gap-y-3">
               {["LS ELECTRIC", "두산중공업", "현대위아"].map((n) => (
                 <span key={n} className="font-extrabold tracking-tight transition-colors duration-500 hover:text-[#E8762C]"
-                  style={{ fontSize: "clamp(18px, 1.9vw, 26px)", color: "rgba(16,24,40,0.34)" }}>
+                  style={{ fontSize: "clamp(18px, 1.9vw, 26px)", color: "rgba(16,24,40,0.42)" }}>
                   {n}
                 </span>
               ))}

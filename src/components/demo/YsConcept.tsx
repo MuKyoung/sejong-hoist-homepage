@@ -368,7 +368,7 @@ export default function YsConcept() {
                   <Image
                     src={SLIDES[idx].img}
                     alt={SLIDES[idx].title.replace("\n", " ")}
-                    fill priority={idx === 0}
+                    fill priority={idx === 0} quality={85}
                     sizes="(max-width: 1280px) 100vw, 1216px"
                     className="object-cover"
                   />
