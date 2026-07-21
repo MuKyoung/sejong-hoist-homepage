@@ -1,16 +1,14 @@
 "use client";
 
 /**
- * DEMO 8 · 시안 D "EDITORIAL" : 연세대학교(미래캠퍼스) 문법 최대 반영 (자체 완결형 풀페이지)
- * - 화이트 캔버스 + 브라이트 로열블루/딥네이비 투톤, 연블루그레이 밴드
- * - 풀블리드 히어로 + 우하단 대형 "01 / 03" 카운터와 얇은 컨트롤
- * - 컬러 패널 매거진 그리드(Business 블루 / Projects 포토 / Technology 워드)
- * - 뉴스 밴드(View More 필 버튼 + 카드 3장) · 필 탭 공지 + 연블루 서비스 패널
- * - 모션: 느리고 무겁게 (리빌 1.2s / 슬라이드 8s / 켄번스 14s) · 호버 강조 = 크레인 오렌지
- * - 라운드 규칙: ≤10px / 완전 원형 / 직각만
+ * DEMO 8 · 시안 D "EDITORIAL" : 연세대 메인 × 명지대 산학협력단 믹스 (자체 완결형 풀페이지)
+ * - 연세대: 풀블리드 대형 타이포 히어로, 비대칭 매거진 그리드, 곡면 마스크, 원형 플로팅 버튼(QUICK/TOP)
+ * - 명지대: 2단 다크 유틸 헤더, 좌측 정렬 디스플레이 + 라인 프로그레스 페이지네이션,
+ *   탭형 게시판 패널, 대형 페이드 영문 워드마크, 사선 컬러 밴드
+ * - 모션: 전반적으로 느리게 (리빌 1.2s / 슬라이드 8s / 켄번스 14s / 호버 줌 1.3s)
  */
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
@@ -19,15 +17,12 @@ import { CONCEPT_NAV as NAV } from "./conceptNav";
 
 const E = [0.16, 1, 0.3, 1] as never;
 
-const INK = "#12203A";
-const BLUE = "#1A5FCF";
-const DEEP = "#0E1B36";
-const BAND = "#E9EFF7";
-const PANEL = "#F0F5FB";
-const BODY = "rgba(18,32,58,0.62)";
-const HAIR = "rgba(18,32,58,0.12)";
-const HOT = "#E8762C";
-const GOLD = "#C69B54";
+const INK = "#101828";
+const NAVY = "#16273C";
+const ROYAL = "#2E5AA7";
+const PALE = "#F3F6FA";
+const BODY = "rgba(16,24,40,0.62)";
+const HAIR = "rgba(16,24,40,0.12)";
 
 const SLIDE_MS = 8000;
 
@@ -49,48 +44,39 @@ const SLIDES = [
   },
 ];
 
-const SERVICES = [
+const QUICK_RAIL = [
   {
-    label: "회사소개서 다운로드", href: "/downloads/sejong-company-profile.pdf",
+    label: "회사소개서", href: "/downloads/sejong-company-profile.pdf",
     icon: (
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
         <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20V4a2 2 0 0 0-2-2H6.5A2.5 2.5 0 0 0 4 4.5v15z" />
         <path d="M20 22H6.5a2.5 2.5 0 0 1 0-5H20" />
       </svg>
     ),
   },
   {
-    label: "인증 자료 열람", href: "/technology#certs",
+    label: "인증 자료", href: "/technology#certs",
     icon: (
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
         <path d="M12 3l7 2.8v5.4c0 4.4-2.9 7.7-7 9.8-4.1-2.1-7-5.4-7-9.8V5.8L12 3z" />
         <path d="M8.8 11.6l2.3 2.3 4.1-4.4" />
       </svg>
     ),
   },
   {
-    label: "온라인 견적 문의", href: "/support/inquiry",
+    label: "견적 문의", href: "/support/inquiry",
     icon: (
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
         <path d="M21 11.5c0 4.1-4 7.5-9 7.5-1 0-2-.13-2.9-.38L4 20l1.3-3.1C3.9 15.5 3 13.6 3 11.5 3 7.4 7 4 12 4s9 3.4 9 7.5z" />
-      </svg>
-    ),
-  },
-  {
-    label: "오시는 길", href: "/about/location",
-    icon: (
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
-        <path d="M12 21.5s-7-5.5-7-11a7 7 0 0 1 14 0c0 5.5-7 11-7 11z" />
-        <circle cx="12" cy="10.3" r="2.4" />
       </svg>
     ),
   },
 ];
 
-/* ↗ 외부/이동 글리프 (연세 버튼 시그니처) */
+/* 화살표 ↗ 글리프 (연세대 아웃라인 버튼) */
 function NE() {
   return (
-    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
       <path d="M7 17 17 7M8 7h9v9" />
     </svg>
   );
@@ -121,7 +107,7 @@ export default function EditorialConcept() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [idx, setIdx] = useState(0);
   const [playing, setPlaying] = useState(true);
-  const [noticeTab, setNoticeTab] = useState("전체");
+  const [tab, setTab] = useState<"notice" | "news">("notice");
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 30);
@@ -138,23 +124,19 @@ export default function EditorialConcept() {
 
   const go = (d: number) => setIdx((i) => (i + d + SLIDES.length) % SLIDES.length);
 
-  const noticeCats = useMemo(
-    () => ["전체", ...new Set(NOTICES.map((n) => n.category))],
-    []
-  );
-  const noticeRows = (noticeTab === "전체"
-    ? NOTICES
-    : NOTICES.filter((n) => n.category === noticeTab)
-  ).slice(0, 4);
+  const noticeRows = NOTICES.slice(0, 5);
+  const newsRows = PORTFOLIO.slice(0, 5);
   const cards = PORTFOLIO.slice(0, 3);
 
   return (
     <div className="overflow-x-clip" style={{ background: "#fff", color: INK }}>
-      {/* ══════════ 헤더 : 다크 유틸 + 화이트 메인 (MENU 블루 시그니처) ══════════ */}
-      <div style={{ background: DEEP }}>
+      {/* ══════════ 헤더 : 명지대式 2단 (다크 유틸 + 라이트 메인) ══════════ */}
+      <div style={{ background: "#0E1420" }}>
         <div className="mx-auto hidden md:flex items-center justify-between h-9 text-[12.5px]"
           style={{ maxWidth: 1400, paddingInline: "clamp(20px, 3.5vw, 48px)", color: "rgba(255,255,255,0.66)" }}>
-          <span>{COMPANY.address}</span>
+          <div className="flex items-center gap-5">
+            <span>{COMPANY.address}</span>
+          </div>
           <div className="flex items-center gap-5">
             <a href={`tel:${COMPANY.tel.replace(/-/g, "")}`} className="hover:text-white transition-colors duration-300">
               대표전화 {COMPANY.tel}
@@ -164,9 +146,7 @@ export default function EditorialConcept() {
               {COMPANY.email}
             </a>
             <span style={{ width: 1, height: 11, background: "rgba(255,255,255,0.2)" }} />
-            <Link href="/en" className="inline-flex items-center gap-1 hover:text-white transition-colors duration-300">
-              ENG <NE />
-            </Link>
+            <Link href="/en" className="hover:text-white transition-colors duration-300">ENG</Link>
           </div>
         </div>
       </div>
@@ -174,13 +154,14 @@ export default function EditorialConcept() {
       <header
         className="sticky top-0 z-50 bg-white"
         style={{
-          borderBottom: `1px solid ${scrolled ? HAIR : "rgba(18,32,58,0.06)"}`,
-          boxShadow: scrolled ? "0 12px 32px rgba(18,32,58,0.08)" : "none",
+          borderBottom: `1px solid ${scrolled ? HAIR : "rgba(16,24,40,0.06)"}`,
+          boxShadow: scrolled ? "0 12px 32px rgba(16,24,40,0.08)" : "none",
           transition: "box-shadow .5s ease, border-color .5s ease",
         }}
       >
-        <div className="mx-auto flex items-stretch justify-between gap-6 h-[64px] lg:h-[76px]"
+        <div className="mx-auto flex items-stretch justify-between gap-6 h-[64px] lg:h-[72px]"
           style={{ maxWidth: 1400, paddingInline: "clamp(20px, 3.5vw, 48px)" }}>
+          {/* 로고 — 바 높이 대비 크게 (26.07 헤더 가독성 피드백) */}
           <Link href="/demo/8" aria-label={COMPANY.name} className="shrink-0 flex items-center">
             <Image
               src="/images/sejong-logo.png" alt={COMPANY.name}
@@ -198,50 +179,43 @@ export default function EditorialConcept() {
               >
                 {item.label}
                 <span className="absolute left-5 right-5 xl:left-6 xl:right-6 bottom-0 h-[2.5px] origin-center scale-x-0 group-hover:scale-x-100"
-                  style={{ background: HOT, transition: "transform .6s cubic-bezier(0.16,1,0.3,1)" }} />
+                  style={{ background: "#E8762C", transition: "transform .6s cubic-bezier(0.16,1,0.3,1)" }} />
               </Link>
             ))}
           </nav>
 
-          <div className="flex items-center gap-5">
+          <div className="flex items-center gap-4">
             <Link href="/support/inquiry"
               className="hidden sm:flex items-center gap-2 h-10 px-6 rounded-full text-[13.5px] font-bold text-white transition-colors duration-300 hover:bg-[#E8762C]"
-              style={{ background: BLUE }}>
+              style={{ background: ROYAL }}>
               견적 문의 <NE />
             </Link>
-
-            {/* 연세식 MENU : 블루 텍스트 + 3선 */}
             <button
               type="button"
               onClick={() => setMenuOpen((v) => !v)}
-              className="flex items-center gap-2.5"
+              className="relative w-10 h-10 flex flex-col justify-center items-end gap-[6px]"
               aria-label={menuOpen ? "메뉴 닫기" : "메뉴 열기"}
               aria-expanded={menuOpen}
             >
-              <span className="relative w-6 h-4 flex flex-col justify-between">
-                <motion.span className="block h-[2.5px] rounded-full" style={{ background: BLUE, originX: "right" }}
-                  animate={{ width: menuOpen ? 24 : 24, rotate: menuOpen ? -45 : 0, y: menuOpen ? 7 : 0 }} transition={{ duration: 0.4, ease: E }} />
-                <motion.span className="block h-[2.5px] w-4 rounded-full" style={{ background: BLUE }}
-                  animate={{ opacity: menuOpen ? 0 : 1 }} transition={{ duration: 0.25 }} />
-                <motion.span className="block h-[2.5px] rounded-full" style={{ background: BLUE, originX: "right" }}
-                  animate={{ width: menuOpen ? 24 : 18, rotate: menuOpen ? 45 : 0, y: menuOpen ? -7 : 0 }} transition={{ duration: 0.4, ease: E }} />
-              </span>
-              <span className="hidden sm:block text-[15px] font-extrabold tracking-wide" style={{ color: BLUE }}>
-                {menuOpen ? "CLOSE" : "MENU"}
-              </span>
+              <motion.span className="block h-[2px] w-6 rounded-full" style={{ background: INK, originX: "right" }}
+                animate={{ rotate: menuOpen ? -45 : 0, y: menuOpen ? 8 : 0 }} transition={{ duration: 0.4, ease: E }} />
+              <motion.span className="block h-[2px] w-4 rounded-full" style={{ background: INK }}
+                animate={{ opacity: menuOpen ? 0 : 1 }} transition={{ duration: 0.25 }} />
+              <motion.span className="block h-[2px] rounded-full" style={{ background: INK, originX: "right" }}
+                animate={{ width: menuOpen ? 24 : 20, rotate: menuOpen ? 45 : 0, y: menuOpen ? -8 : 0 }} transition={{ duration: 0.4, ease: E }} />
             </button>
           </div>
         </div>
       </header>
 
-      {/* 전체 메뉴 오버레이 */}
+      {/* 전체 메뉴 오버레이 (연세대 MENU) */}
       <AnimatePresence>
         {menuOpen && (
           <motion.div
             initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
             transition={{ duration: 0.5, ease: E }}
             className="fixed inset-0 z-40 overflow-y-auto"
-            style={{ background: "rgba(14,27,54,0.98)", paddingTop: 110 }}
+            style={{ background: "rgba(14,20,32,0.98)", paddingTop: 104 }}
           >
             <div className="mx-auto grid sm:grid-cols-2 lg:grid-cols-5 gap-x-10 gap-y-12 pb-20"
               style={{ maxWidth: 1400, paddingInline: "clamp(20px, 3.5vw, 48px)" }}>
@@ -251,14 +225,14 @@ export default function EditorialConcept() {
                   transition={{ delay: 0.1 + i * 0.08, duration: 0.9, ease: E }}
                 >
                   <Link href={item.href} onClick={() => setMenuOpen(false)}
-                    className="block text-[22px] font-extrabold text-white tracking-tight pb-4 mb-4 transition-colors duration-300 hover:text-[#E8762C]"
+                    className="block text-[22px] font-extrabold text-white tracking-tight pb-4 mb-4"
                     style={{ borderBottom: "1px solid rgba(255,255,255,0.14)" }}>
                     {item.label}
                   </Link>
                   <div className="flex flex-col gap-3">
                     {item.children.map((c) => (
                       <Link key={c.href} href={c.href} onClick={() => setMenuOpen(false)}
-                        className="text-[14px] transition-colors duration-300 hover:text-[#E8762C]"
+                        className="text-[14px] transition-colors duration-300 hover:text-white"
                         style={{ color: "rgba(255,255,255,0.55)" }}>
                         {c.label}
                       </Link>
@@ -271,7 +245,7 @@ export default function EditorialConcept() {
         )}
       </AnimatePresence>
 
-      {/* ══════════ 히어로 : 풀블리드 + 우하단 대형 카운터 (연세 시그니처) ══════════ */}
+      {/* ══════════ 히어로 : 연세대 풀블리드 + 명지대 좌측 타이포/페이지네이션 ══════════ */}
       <section className="relative overflow-hidden" style={{ height: "min(86svh, 860px)", minHeight: 560 }}
         aria-roledescription="carousel" aria-label="메인 비주얼">
         {SLIDES.map((s, i) => (
@@ -285,34 +259,35 @@ export default function EditorialConcept() {
             <Image src={s.img} alt="" fill priority={i === 0} sizes="100vw" className="object-cover" />
           </motion.div>
         ))}
-        <div className="absolute inset-0" style={{ background: "linear-gradient(94deg, rgba(10,18,36,0.84) 0%, rgba(10,18,36,0.5) 48%, rgba(10,18,36,0.16) 100%)" }} />
-        <div className="absolute inset-x-0 bottom-0 h-48" style={{ background: "linear-gradient(0deg, rgba(10,18,36,0.7), transparent)" }} />
+        <div className="absolute inset-0" style={{ background: "linear-gradient(94deg, rgba(10,16,28,0.86) 0%, rgba(10,16,28,0.52) 48%, rgba(10,16,28,0.18) 100%)" }} />
+        <div className="absolute inset-x-0 bottom-0 h-48" style={{ background: "linear-gradient(0deg, rgba(10,16,28,0.72), transparent)" }} />
 
         <div className="absolute inset-0 flex items-center">
           <div className="w-full mx-auto" style={{ maxWidth: 1400, paddingInline: "clamp(20px, 3.5vw, 48px)" }}>
             <AnimatePresence mode="wait">
               <motion.div key={idx} exit={{ opacity: 0, y: -18, transition: { duration: 0.5, ease: E } }} style={{ maxWidth: 880 }}>
+                {/* 명지대식 짧은 룰 */}
                 <motion.span
                   className="block mb-9"
-                  style={{ width: 104, height: 2, background: GOLD }}
+                  style={{ width: 104, height: 1, background: "rgba(255,255,255,0.55)" }}
                   initial={{ scaleX: 0, originX: 0 }} animate={{ scaleX: 1 }}
                   transition={{ duration: 1.1, ease: E }}
                 />
                 {SLIDES[idx].lines.map((line, li) => (
-                  <motion.h2
-                    key={li}
-                    initial={{ opacity: 0, x: li % 2 === 0 ? -110 : 110 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: 0.1 + li * 0.13, duration: 1.2, ease: E }}
-                    className="font-extrabold text-white"
-                    style={{ fontSize: "clamp(38px, 6.4vw, 88px)", lineHeight: 1.1, letterSpacing: "-0.045em", textShadow: "0 4px 36px rgba(0,0,0,0.35)" }}
-                  >
-                    {line}
-                  </motion.h2>
+                  <div key={li} className="overflow-hidden">
+                    <motion.h2
+                      initial={{ y: "114%" }} animate={{ y: 0 }}
+                      transition={{ delay: 0.1 + li * 0.13, duration: 1.35, ease: E }}
+                      className="font-extrabold text-white"
+                      style={{ fontSize: "clamp(38px, 6.4vw, 88px)", lineHeight: 1.1, letterSpacing: "-0.045em", textShadow: "0 4px 36px rgba(0,0,0,0.35)" }}
+                    >
+                      {line}
+                    </motion.h2>
+                  </div>
                 ))}
                 <motion.p
-                  initial={{ opacity: 0, x: -70 }} animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: 0.6, duration: 1, ease: E }}
+                  initial={{ opacity: 0, y: 18 }} animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.62, duration: 1.1, ease: E }}
                   className="mt-8 text-[15px] sm:text-[17px] leading-[1.85]"
                   style={{ color: "rgba(255,255,255,0.78)", maxWidth: 600 }}
                 >
@@ -323,130 +298,122 @@ export default function EditorialConcept() {
           </div>
         </div>
 
-        {/* 우하단 : 대형 카운터 + 얇은 컨트롤 (연세 미래캠퍼스 문법) */}
-        <div className="absolute inset-x-0 bottom-8">
-          <div className="mx-auto flex items-end justify-end"
+        {/* 명지대식 라인 프로그레스 (좌하단) + 연세대식 컨트롤 (우하단) */}
+        <div className="absolute inset-x-0 bottom-9">
+          <div className="mx-auto flex items-center justify-between gap-6"
             style={{ maxWidth: 1400, paddingInline: "clamp(20px, 3.5vw, 48px)" }}>
-            <motion.div
-              initial={{ opacity: 0, x: 70 }} animate={{ opacity: 1, x: 0 }}
-              transition={{ delay: 0.9, duration: 1, ease: E }}
-              className="flex items-center gap-7 text-white"
-            >
-              <p className="flex items-baseline gap-2 tabular-nums" aria-hidden>
-                <span className="text-[30px] font-extrabold leading-none" style={{ color: GOLD }}>
-                  {String(idx + 1).padStart(2, "0")}
-                </span>
-                <span className="text-[17px] font-light" style={{ color: "rgba(255,255,255,0.55)" }}>/</span>
-                <span className="text-[17px] font-semibold" style={{ color: "rgba(255,255,255,0.75)" }}>
-                  {String(SLIDES.length).padStart(2, "0")}
-                </span>
-              </p>
-              <div className="flex items-center gap-5">
-                <button type="button" onClick={() => go(-1)} aria-label="이전 슬라이드"
-                  className="transition-colors duration-500 hover:text-[#E8762C]">
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden><polyline points="15 18 9 12 15 6" /></svg>
-                </button>
-                <button type="button" onClick={() => setPlaying((v) => !v)}
-                  aria-label={playing ? "슬라이드 일시정지" : "슬라이드 재생"}
-                  className="transition-colors duration-500 hover:text-[#E8762C]">
-                  {playing ? (
-                    <svg width="14" height="16" viewBox="0 0 11 12" fill="currentColor" aria-hidden><rect x="1.5" width="2.2" height="12" rx="0.4" /><rect x="7.3" width="2.2" height="12" rx="0.4" /></svg>
-                  ) : (
-                    <svg width="14" height="16" viewBox="0 0 11 12" fill="currentColor" aria-hidden><path d="M.8.9c0-.7.8-1.1 1.4-.8l8.3 5.1c.6.4.6 1.2 0 1.6l-8.3 5.1c-.6.4-1.4 0-1.4-.8V.9z" /></svg>
-                  )}
-                </button>
-                <button type="button" onClick={() => go(1)} aria-label="다음 슬라이드"
-                  className="transition-colors duration-500 hover:text-[#E8762C]">
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden><polyline points="9 18 15 12 9 6" /></svg>
-                </button>
-              </div>
-            </motion.div>
+            <div className="flex items-center gap-4 flex-1 max-w-[300px]" aria-hidden>
+              <span className="text-[13px] font-bold text-[#E5C285] tabular-nums">{String(idx + 1).padStart(2, "0")}</span>
+              <span className="relative flex-1 h-px overflow-hidden" style={{ background: "rgba(255,255,255,0.28)" }}>
+                <motion.span
+                  key={`${idx}-${playing ? "p" : "s"}`}
+                  className="absolute inset-y-0 left-0 w-full origin-left bg-[#C69B54]"
+                  initial={{ scaleX: 0 }}
+                  animate={{ scaleX: playing && !reduced ? 1 : 0 }}
+                  transition={{ duration: playing && !reduced ? SLIDE_MS / 1000 : 0.4, ease: "linear" }}
+                />
+              </span>
+              <span className="text-[13px] tabular-nums" style={{ color: "rgba(255,255,255,0.55)" }}>
+                {String(SLIDES.length).padStart(2, "0")}
+              </span>
+            </div>
+
+            <div className="flex items-center gap-2.5 text-white">
+              <button type="button" onClick={() => go(-1)} aria-label="이전 슬라이드"
+                className="w-11 h-11 rounded-full flex items-center justify-center border border-white/35 transition-all duration-500 hover:bg-white/15 hover:border-white/70">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden><polyline points="15 18 9 12 15 6" /></svg>
+              </button>
+              <button type="button" onClick={() => setPlaying((v) => !v)}
+                aria-label={playing ? "슬라이드 일시정지" : "슬라이드 재생"}
+                className="w-11 h-11 rounded-full flex items-center justify-center border border-white/35 transition-all duration-500 hover:bg-white/15 hover:border-white/70">
+                {playing ? (
+                  <svg width="10" height="11" viewBox="0 0 11 12" fill="currentColor" aria-hidden><rect x="1" width="3" height="12" rx="1" /><rect x="7" width="3" height="12" rx="1" /></svg>
+                ) : (
+                  <svg width="10" height="11" viewBox="0 0 11 12" fill="currentColor" aria-hidden><path d="M.8.9c0-.7.8-1.1 1.4-.8l8.3 5.1c.6.4.6 1.2 0 1.6l-8.3 5.1c-.6.4-1.4 0-1.4-.8V.9z" /></svg>
+                )}
+              </button>
+              <button type="button" onClick={() => go(1)} aria-label="다음 슬라이드"
+                className="w-11 h-11 rounded-full flex items-center justify-center border border-white/35 transition-all duration-500 hover:bg-white/15 hover:border-white/70">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden><polyline points="9 18 15 12 9 6" /></svg>
+              </button>
+            </div>
           </div>
         </div>
       </section>
 
-      {/* ══════════ 에디토리얼 인트로 + 컬러 패널 매거진 그리드 (연세 Research/History/Value) ══════════ */}
+      {/* ══════════ 에디토리얼 인트로 + 비대칭 매거진 그리드 (연세대) ══════════ */}
       <section style={{ paddingBlock: "clamp(80px, 9vw, 136px)" }}>
         <div className="mx-auto" style={{ maxWidth: 1400, paddingInline: "clamp(20px, 3.5vw, 48px)" }}>
           <Rise x={-100}>
-            <h2 className="font-extrabold" style={{ fontSize: "clamp(34px, 4.8vw, 62px)", lineHeight: 1.14, letterSpacing: "-0.045em" }}>
-              무게를 아는 회사, 세종다움
-            </h2>
-            <span className="block mt-7 mb-7" style={{ width: "min(46%, 620px)", height: 2, background: INK }} />
-            <p className="text-[15.5px] leading-[1.9]" style={{ color: BODY, maxWidth: 580 }}>
+            <div className="flex flex-wrap items-end gap-x-8 gap-y-4 mb-6">
+              <h2 className="font-extrabold" style={{ fontSize: "clamp(34px, 4.8vw, 64px)", lineHeight: 1.14, letterSpacing: "-0.045em" }}>
+                무게를 아는 회사,
+                <br />
+                세종다움
+              </h2>
+              <span className="hidden sm:block mb-5" style={{ width: "clamp(120px, 16vw, 240px)", height: 2, background: INK }} />
+            </div>
+            <p className="text-[15.5px] leading-[1.9]" style={{ color: BODY, maxWidth: 560 }}>
               (주)세종호이스트크레인은 27년의 현장 경험을 바탕으로 설계 · 제작 · 설치 ·
               유지보수 전 과정을 직접 수행하며, 산업 현장의 안전과 생산성을 책임집니다.
             </p>
           </Rise>
 
-          <div className="grid lg:grid-cols-2 gap-6 lg:gap-8 mt-14 lg:mt-20">
-            {/* 좌: 브라이트 블루 컬러 패널 — 연세 Research */}
+          {/* 비대칭 그리드: 컬러 카드 / 포토 카드 / 디스플레이 워드 */}
+          <div className="grid lg:grid-cols-[1fr_1.1fr] gap-6 lg:gap-8 mt-14 lg:mt-20">
+            {/* 좌: 딥 네이비 컬러 카드 — 연세대 Research 카드 */}
             <Rise x={-90} className="h-full">
-              <Link href="/business" className="group relative flex flex-col items-center justify-center text-center overflow-hidden h-full min-h-[440px] lg:min-h-[560px] p-10"
-                style={{ background: BLUE, color: "#fff" }}>
-                <Image src="/images/pf-ceiling30.jpg" alt="" fill sizes="(max-width: 1024px) 100vw, 680px"
-                  className="object-cover group-hover:scale-[1.06]"
-                  style={{ opacity: 0.28, mixBlendMode: "luminosity", transition: "transform 1.4s cubic-bezier(0.16,1,0.3,1)" }} />
-                <span className="absolute inset-0" style={{ background: "linear-gradient(180deg, rgba(26,95,207,0.4), rgba(14,45,110,0.55))" }} />
-                <div className="relative">
-                  <p className="font-extrabold" style={{ fontSize: "clamp(40px, 4.2vw, 60px)", letterSpacing: "-0.03em" }}>Business</p>
-                  <p className="mt-6 text-[15.5px] leading-[1.9]" style={{ color: "rgba(255,255,255,0.82)", maxWidth: 400 }}>
-                    현장을 바꾸는 운반하역 설비,
-                    <br />
-                    산업을 향한 세종의 기술
+              <Link href="/business" className="group relative flex flex-col justify-between overflow-hidden h-full min-h-[420px] lg:min-h-[540px] p-9 lg:p-12"
+                style={{ background: NAVY, color: "#fff" }}>
+                <div className="absolute -right-24 -bottom-24 w-[340px] h-[340px] rounded-full opacity-60 transition-transform duration-[1400ms] group-hover:scale-125"
+                  style={{ background: "radial-gradient(circle, rgba(46,90,167,0.55), transparent 68%)", transitionTimingFunction: "cubic-bezier(0.16,1,0.3,1)" }} aria-hidden />
+                <div>
+                  <p className="font-extrabold" style={{ fontSize: "clamp(34px, 3.6vw, 52px)", letterSpacing: "-0.03em" }}>Business</p>
+                  <p className="mt-5 text-[15px] leading-[1.85]" style={{ color: "rgba(255,255,255,0.7)", maxWidth: 380 }}>
+                    오버헤드 · 겐트리 · 모노레일 · 서스펜션 · 지브까지,
+                    현장이 요구하는 모든 형태의 크레인을 공급합니다.
                   </p>
-                  <span className="inline-flex items-center gap-2.5 h-12 px-7 mt-10 text-[13.5px] font-bold transition-colors duration-500 group-hover:bg-[#E8762C] group-hover:border-[#E8762C]"
-                    style={{ border: "1px solid rgba(255,255,255,0.6)" }}>
-                    사업영역 보기 <NE />
-                  </span>
                 </div>
+                <span className="inline-flex items-center gap-2.5 h-12 px-6 self-start text-[13.5px] font-semibold transition-colors duration-500 group-hover:bg-white group-hover:text-[#16273C]"
+                  style={{ border: "1px solid rgba(255,255,255,0.45)" }}>
+                  사업영역 보기 <NE />
+                </span>
               </Link>
             </Rise>
 
-            {/* 우: History 포토 패널 + Value 워드 패널 */}
+            {/* 우: 포토 카드 (History) + 디스플레이 워드 (Giving to) */}
             <div className="flex flex-col gap-6 lg:gap-8">
-              <Rise x={90}>
-                <div className="group relative overflow-hidden min-h-[300px] lg:min-h-[340px]">
-                  <Image src="/images/pf-gantry350.jpg" alt="350TON 겐트리 크레인" fill sizes="(max-width: 1024px) 100vw, 680px"
-                    className="object-cover group-hover:scale-[1.06]" style={{ transition: "transform 1.4s cubic-bezier(0.16,1,0.3,1)" }} />
-                  <span className="absolute inset-0" style={{ background: "linear-gradient(0deg, rgba(10,18,36,0.66) 10%, rgba(10,18,36,0.14) 60%, transparent)" }} />
+              <Rise delay={0.12} x={90}>
+                <Link href="/portfolio" className="group relative block overflow-hidden min-h-[300px] lg:min-h-[340px]">
+                  <Image src="/images/pf-gantry350.jpg" alt="350TON 겐트리 크레인" fill sizes="(max-width: 1024px) 100vw, 640px"
+                    className="object-cover group-hover:scale-[1.07]" style={{ transition: "transform 1.3s cubic-bezier(0.16,1,0.3,1)" }} />
+                  <span className="absolute inset-0" style={{ background: "linear-gradient(0deg, rgba(10,16,28,0.72) 8%, rgba(10,16,28,0.18) 55%, transparent)" }} />
                   <div className="absolute left-0 right-0 bottom-0 p-8 lg:p-10 text-white">
-                    <p className="font-extrabold" style={{ fontSize: "clamp(30px, 3.2vw, 46px)", letterSpacing: "-0.03em" }}>Projects</p>
-                    <p className="mt-2.5 text-[14.5px]" style={{ color: "rgba(255,255,255,0.78)" }}>
-                      대형 현장이 증명한 시공의 발자취
+                    <p className="font-extrabold" style={{ fontSize: "clamp(28px, 3vw, 42px)", letterSpacing: "-0.03em" }}>Projects</p>
+                    <p className="mt-2.5 text-[14px]" style={{ color: "rgba(255,255,255,0.75)" }}>
+                      350TON 겐트리부터 0.5TON 윈치까지, 현장이 증명한 시공 기록
                     </p>
-                    {/* 연세 History의 다크 사각 버튼 */}
-                    <Link href="/portfolio"
-                      className="inline-flex items-center gap-2.5 h-12 px-6 mt-6 text-[13.5px] font-bold text-white transition-colors duration-500 hover:bg-[#E8762C]"
-                      style={{ background: DEEP }}>
-                      시공의 발자취 <NE />
-                    </Link>
+                    <span className="inline-flex items-center gap-2.5 h-11 px-5 mt-6 text-[13px] font-semibold backdrop-blur-[2px] transition-colors duration-500 group-hover:bg-white group-hover:text-[#16273C]"
+                      style={{ border: "1px solid rgba(255,255,255,0.5)", background: "rgba(10,16,28,0.25)" }}>
+                      시공사례 보기 <NE />
+                    </span>
                   </div>
-                </div>
+                </Link>
               </Rise>
 
-              <Rise x={90} delay={0.14}>
-                <Link href="/technology" className="group relative flex items-center justify-between gap-6 p-8 lg:p-10 min-h-[180px] overflow-hidden rounded-[10px]"
-                  style={{ background: PANEL }}>
-                  {/* 연세 Value 밴드의 웨이브 라인 무드 */}
-                  <svg className="absolute -right-10 -top-16 opacity-60" width="420" height="320" viewBox="0 0 420 320" fill="none" aria-hidden>
-                    <path d="M-20 240C120 200 180 80 430 110" stroke="#C9DAF2" strokeWidth="1.5" />
-                    <path d="M-20 270C130 230 200 110 430 140" stroke="#D6E3F5" strokeWidth="1.5" />
-                    <path d="M-20 300C140 260 220 140 430 170" stroke="#E2ECF9" strokeWidth="1.5" />
-                  </svg>
-                  <div className="relative">
-                    <p className="font-extrabold" style={{ fontSize: "clamp(30px, 3.2vw, 46px)", letterSpacing: "-0.03em", color: BLUE }}>
+              <Rise delay={0.22} x={90}>
+                <Link href="/technology" className="group flex items-center justify-between gap-6 p-8 lg:p-10 min-h-[150px]"
+                  style={{ background: PALE }}>
+                  <div>
+                    <p className="font-extrabold" style={{ fontSize: "clamp(28px, 3vw, 42px)", letterSpacing: "-0.03em", color: ROYAL }}>
                       Technology
                     </p>
-                    <p className="mt-3 text-[14.5px] leading-[1.8]" style={{ color: BODY }}>
+                    <p className="mt-2 text-[14px]" style={{ color: BODY }}>
                       KCs 안전인증 5건 · 서면심사도서 11권 · ISO 3종
-                      <br />
-                      검증 가능한 기술이 세종의 가치를 만듭니다.
                     </p>
                   </div>
-                  <span
-                    className="relative shrink-0 rounded-full flex items-center justify-center w-[52px] h-[52px] transition-all duration-500 group-hover:bg-[#E8762C] group-hover:border-[#E8762C] group-hover:text-white group-hover:rotate-45"
-                    style={{ border: `1.5px solid ${BLUE}`, color: BLUE }}>
+                  <span className="w-13 h-13 shrink-0 rounded-full flex items-center justify-center w-[52px] h-[52px] transition-all duration-500 group-hover:bg-[#E8762C] group-hover:text-white group-hover:rotate-45"
+                    style={{ border: `1.5px solid ${ROYAL}`, color: ROYAL }}>
                     <NE />
                   </span>
                 </Link>
@@ -456,174 +423,119 @@ export default function EditorialConcept() {
         </div>
       </section>
 
-      {/* ══════════ 뉴스 밴드 (연블루그레이 + View More 필 버튼 + 카드 3장) ══════════ */}
-      <section style={{ background: BAND, paddingBlock: "clamp(76px, 8.5vw, 120px)" }}>
-        <div className="mx-auto" style={{ maxWidth: 1400, paddingInline: "clamp(20px, 3.5vw, 48px)" }}>
-          <div className="flex flex-col lg:flex-row lg:items-center gap-x-12 gap-y-7 mb-12 lg:mb-14">
+      {/* ══════════ 게시판 패널 (명지대) : 탭 리스트 + 우측 룰 블록 ══════════ */}
+      <section className="relative" style={{ background: PALE, paddingBlock: "clamp(80px, 9vw, 136px)", overflow: "hidden" }}>
+        {/* 대형 페이드 워드마크 — 좌측에서 크게 슬라이드 인 */}
+        <Rise x={-160} className="pointer-events-none select-none absolute -top-4 left-0" >
+          <p className="font-extrabold leading-none" aria-hidden
+            style={{ fontSize: "clamp(90px, 13vw, 200px)", letterSpacing: "-0.04em", color: "rgba(16,24,40,0.045)", whiteSpace: "nowrap" }}>
+            Sejong Hoist
+          </p>
+        </Rise>
+
+        <div className="relative mx-auto" style={{ maxWidth: 1400, paddingInline: "clamp(20px, 3.5vw, 48px)" }}>
+          <div className="grid lg:grid-cols-[1.5fr_1fr] gap-x-16 gap-y-16">
+            {/* 좌: 탭 게시판 */}
             <Rise x={-90}>
-              <p className="text-[16px] font-extrabold" style={{ color: BLUE }}>Sejong News</p>
-              <h2 className="mt-1 font-extrabold" style={{ fontSize: "clamp(28px, 3.4vw, 44px)", letterSpacing: "-0.04em" }}>
-                시공 소식
-              </h2>
-            </Rise>
-            <Rise x={-60} delay={0.12} className="lg:flex-1">
-              <p className="text-[14.5px] leading-[1.85]" style={{ color: BODY, maxWidth: 520 }}>
-                350TON 겐트리부터 0.5TON 윈치까지, 전국 산업 현장에서 진행 중인
-                세종호이스트크레인의 생생한 시공 기록을 전해드립니다.
-              </p>
-            </Rise>
-            <Rise x={90} delay={0.18}>
-              <Link href="/portfolio"
-                className="inline-flex items-center gap-2 h-12 px-7 rounded-full text-[14px] font-bold text-white transition-colors duration-500 hover:bg-[#E8762C]"
-                style={{ background: BLUE }}>
-                View More <span className="text-[16px] leading-none">+</span>
-              </Link>
-            </Rise>
-          </div>
-
-          <div className="relative">
-            <div className="grid sm:grid-cols-3 gap-6">
-              {cards.map((item, i) => (
-                <Rise key={item.slug} delay={0.1 + i * 0.14} x={i === 0 ? -80 : i === 2 ? 80 : 0}>
-                  <Link href={`/portfolio/${item.slug}`} className="group block bg-white">
-                    <div className="relative overflow-hidden" style={{ aspectRatio: "16 / 10" }}>
-                      <Image src={item.src} alt={item.title} fill sizes="(max-width: 640px) 100vw, 420px"
-                        className="object-cover group-hover:scale-[1.07]" style={{ transition: "transform 1.3s cubic-bezier(0.16,1,0.3,1)" }} />
-                    </div>
-                    <div className="p-6">
-                      <div className="flex items-center gap-2.5 mb-3">
-                        <span className="text-[11.5px] font-bold px-2.5 py-1" style={{ background: DEEP, color: "#fff" }}>
-                          {item.capacity}
-                        </span>
-                        <span className="text-[12.5px]" style={{ color: "rgba(18,32,58,0.45)" }}>{item.year}</span>
-                      </div>
-                      <h3 className="text-[16.5px] font-bold leading-[1.45] transition-colors duration-500 group-hover:text-[#E8762C]">
-                        {item.title}
-                      </h3>
-                      <p className="mt-2 text-[13px]" style={{ color: "rgba(18,32,58,0.5)" }}>{item.client}</p>
-                    </div>
-                  </Link>
-                </Rise>
-              ))}
-            </div>
-
-            {/* 연세식 원형 좌우 화살표 (데스크톱 장식 내비 — 전체 목록으로 연결) */}
-            <Link href="/portfolio" aria-label="시공사례 더 보기"
-              className="hidden xl:flex absolute top-[104px] -left-20 w-[54px] h-[54px] rounded-full bg-white items-center justify-center shadow-[0_8px_24px_rgba(18,32,58,0.12)] transition-colors duration-500 hover:bg-[#E8762C] hover:text-white">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden><polyline points="15 18 9 12 15 6" /></svg>
-            </Link>
-            <Link href="/portfolio" aria-label="시공사례 더 보기"
-              className="hidden xl:flex absolute top-[104px] -right-20 w-[54px] h-[54px] rounded-full bg-white items-center justify-center shadow-[0_8px_24px_rgba(18,32,58,0.12)] transition-colors duration-500 hover:bg-[#E8762C] hover:text-white">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden><polyline points="9 18 15 12 9 6" /></svg>
-            </Link>
-          </div>
-        </div>
-      </section>
-
-      {/* ══════════ 공지사항(필 탭) + 세종 서비스 패널 (연세 공지+캘린더 2열) ══════════ */}
-      <section style={{ paddingBlock: "clamp(76px, 8.5vw, 120px)" }}>
-        <div className="mx-auto" style={{ maxWidth: 1400, paddingInline: "clamp(20px, 3.5vw, 48px)" }}>
-          <div className="grid lg:grid-cols-[1.45fr_1fr] gap-x-16 gap-y-16 items-start">
-            {/* 좌: 공지사항 + 필 탭 */}
-            <Rise x={-90}>
-              <div className="flex flex-wrap items-center gap-x-6 gap-y-4">
-                <h2 className="font-extrabold" style={{ fontSize: "clamp(24px, 2.6vw, 34px)", letterSpacing: "-0.04em" }}>
-                  공지사항
-                </h2>
-                <div className="flex flex-wrap items-center gap-1.5" role="tablist" aria-label="공지 분류">
-                  {noticeCats.map((cat) => (
-                    <button
-                      key={cat}
-                      type="button"
-                      role="tab"
-                      aria-selected={noticeTab === cat}
-                      onClick={() => setNoticeTab(cat)}
-                      className="h-9 px-4 rounded-full text-[13.5px] font-bold transition-colors duration-500"
-                      style={noticeTab === cat
-                        ? { background: BLUE, color: "#fff" }
-                        : { color: "rgba(18,32,58,0.55)" }}
-                    >
-                      {cat}
-                    </button>
-                  ))}
+              <div className="flex items-baseline justify-between gap-6 pb-5" style={{ borderBottom: `2px solid ${INK}` }}>
+                <div className="flex items-baseline gap-6">
+                  <span className="w-2 h-2 rounded-full self-center hidden sm:block" style={{ background: ROYAL }} aria-hidden />
+                  <button type="button" onClick={() => setTab("notice")}
+                    className="text-[clamp(22px,2.4vw,30px)] font-extrabold tracking-tight transition-colors duration-600"
+                    style={{ color: tab === "notice" ? INK : "rgba(16,24,40,0.3)" }}
+                    aria-pressed={tab === "notice"}>
+                    공지사항
+                  </button>
+                  <span style={{ width: 1, height: 20, background: HAIR, alignSelf: "center" }} aria-hidden />
+                  <button type="button" onClick={() => setTab("news")}
+                    className="text-[clamp(22px,2.4vw,30px)] font-extrabold tracking-tight transition-colors duration-600"
+                    style={{ color: tab === "news" ? INK : "rgba(16,24,40,0.3)" }}
+                    aria-pressed={tab === "news"}>
+                    시공 소식
+                  </button>
                 </div>
-                <Link href="/support/notice"
-                  className="ml-auto text-[13.5px] font-bold underline underline-offset-4 transition-colors duration-500 hover:text-[#E8762C]"
-                  style={{ color: BLUE }}>
-                  View More +
+                <Link href={tab === "notice" ? "/support/notice" : "/portfolio"} aria-label="더보기"
+                  className="text-[28px] font-light leading-none transition-all duration-500 hover:rotate-90 hover:!text-[#E8762C]" style={{ color: INK }}>
+                  +
                 </Link>
               </div>
 
               <AnimatePresence mode="wait">
                 <motion.ul
-                  key={noticeTab}
+                  key={tab}
                   initial={{ opacity: 0, y: 14 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -8 }}
-                  transition={{ duration: 0.7, ease: E }}
-                  className="list-none mt-7"
-                  style={{ borderTop: `2px solid ${INK}` }}
+                  transition={{ duration: 0.85, ease: E }}
+                  className="list-none"
                 >
-                  {noticeRows.map((n, i) => (
-                    <li key={n.id} style={{ borderBottom: `1px solid ${HAIR}` }}>
-                      <Link href={`/support/notice/${n.id}`} className="group block py-[18px] transition-colors duration-500 hover:bg-[#F7FAFD]"
+                  {(tab === "notice"
+                    ? noticeRows.map((n) => ({
+                        key: `n-${n.id}`, href: `/support/notice/${n.id}`,
+                        chip: n.category, title: n.title, meta: n.date,
+                      }))
+                    : newsRows.map((p) => ({
+                        key: p.slug, href: `/portfolio/${p.slug}`,
+                        chip: p.capacity, title: `${p.title} · ${p.client}`, meta: `${p.year}`,
+                      }))
+                  ).map((row, i) => (
+                    <li key={row.key} style={{ borderBottom: `1px solid ${HAIR}` }}>
+                      <Link href={row.href} className="group flex items-center gap-5 py-[18px] transition-colors duration-600 hover:bg-white"
                         style={{ paddingInline: 6 }}>
-                        <p className="text-[15.5px] font-semibold leading-[1.5] truncate transition-colors duration-500 group-hover:text-[#E8762C]"
-                          style={{ color: "rgba(18,32,58,0.85)" }}>
-                          {n.title}
-                          {i === 0 && (
-                            <span className="inline-flex items-center ml-2.5 align-middle text-[10.5px] font-extrabold tracking-wide px-1.5 py-0.5"
-                              style={{ color: HOT, border: `1px solid ${HOT}` }}>
-                              NEW
-                            </span>
-                          )}
-                        </p>
-                        <p className="mt-2 flex items-center gap-3 text-[12.5px]" style={{ color: "rgba(18,32,58,0.45)" }}>
-                          <span className="tabular-nums">{n.date}</span>
-                          <span style={{ width: 1, height: 10, background: HAIR }} />
-                          <span style={{ color: GOLD, fontWeight: 700 }}>{n.category}</span>
-                        </p>
+                        <span className="shrink-0 min-w-[64px] text-center text-[11.5px] font-bold px-2.5 py-1.5"
+                          style={{
+                            background: i === 0 ? "#C69B54" : "rgba(16,24,40,0.06)",
+                            color: i === 0 ? "#fff" : "rgba(16,24,40,0.55)",
+                          }}>
+                          {row.chip}
+                        </span>
+                        <span className="flex-1 min-w-0 text-[15px] font-medium truncate transition-colors duration-300 group-hover:text-[#E8762C]"
+                          style={{ color: "rgba(16,24,40,0.82)" }}>
+                          {row.title}
+                        </span>
+                        <span className="shrink-0 text-[13px] tabular-nums" style={{ color: "rgba(16,24,40,0.4)" }}>
+                          {row.meta}
+                        </span>
                       </Link>
                     </li>
                   ))}
                 </motion.ul>
               </AnimatePresence>
+
+              <Link href={tab === "notice" ? "/support/notice" : "/portfolio"}
+                className="group flex items-center justify-center gap-2.5 h-[58px] mt-8 text-[14px] font-bold transition-colors duration-500 hover:bg-[#16273C] hover:text-white"
+                style={{ border: `1px solid ${INK}` }}>
+                {tab === "notice" ? "공지사항 전체 보기" : "시공사례 전체 보기"}
+                <span className="transition-transform duration-500 group-hover:translate-x-1"><NE /></span>
+              </Link>
             </Rise>
 
-            {/* 우: 세종 서비스 패널 (연세캘린더 자리 — 연블루, 라운드 10) */}
-            <Rise x={90} delay={0.12}>
-              <div className="flex items-baseline justify-between mb-6">
-                <h2 className="font-extrabold" style={{ fontSize: "clamp(24px, 2.6vw, 34px)", letterSpacing: "-0.04em" }}>
-                  고객 지원
-                </h2>
-                <Link href="/support"
-                  className="text-[13.5px] font-bold underline underline-offset-4 transition-colors duration-500 hover:text-[#E8762C]"
-                  style={{ color: BLUE }}>
-                  View More +
-                </Link>
-              </div>
-              <div className="rounded-[10px] p-7 lg:p-8" style={{ background: PANEL }}>
-                <div className="flex items-center justify-between pb-5" style={{ borderBottom: `2px solid ${BLUE}` }}>
-                  <p className="text-[20px] font-extrabold tabular-nums" style={{ color: BLUE }}>
-                    {COMPANY.tel}
+            {/* 우: 룰 블록 (명지대 연구윤리 칼럼) */}
+            <Rise delay={0.15} x={90}>
+              <div style={{ borderTop: `2px solid ${INK}` }}>
+                <div className="py-7" style={{ borderBottom: `1px solid ${HAIR}` }}>
+                  <h3 className="text-[19px] font-extrabold tracking-tight">안전관리 체계</h3>
+                  <p className="mt-3.5 text-[14px] leading-[1.85]" style={{ color: BODY }}>
+                    설치 전 구조 검토부터 하중 시험, 정기점검까지 단계별 안전관리를
+                    운영합니다. 모든 설비는 KCs 개별 제품심사를 거칩니다.
                   </p>
-                  <span className="text-[12.5px] font-semibold" style={{ color: BODY }}>평일 09:00 ~ 18:00</span>
                 </div>
-                <div className="flex flex-col mt-3">
-                  {SERVICES.map((sv) => (
-                    <Link key={sv.href} href={sv.href}
-                      className="group flex items-center gap-4 py-4 transition-colors duration-500"
-                      style={{ borderBottom: "1px solid rgba(18,32,58,0.08)" }}>
-                      <span className="flex items-center justify-center w-10 h-10 rounded-full bg-white transition-colors duration-500 group-hover:bg-[#E8762C] group-hover:text-white"
-                        style={{ color: BLUE }}>
-                        {sv.icon}
-                      </span>
-                      <span className="text-[15px] font-bold transition-colors duration-500 group-hover:text-[#E8762C]">
-                        {sv.label}
-                      </span>
-                      <span className="ml-auto transition-transform duration-500 group-hover:translate-x-1.5" style={{ color: BLUE }}>
-                        <NE />
-                      </span>
-                    </Link>
-                  ))}
+                <Link href="/technology#safety" className="group flex items-center justify-between py-5" style={{ borderBottom: `1px solid ${HAIR}` }}>
+                  <span className="text-[15.5px] font-bold transition-colors duration-300 group-hover:text-[#E8762C]">안전관리 자세히 보기</span>
+                  <span className="transition-transform duration-500 group-hover:translate-x-1.5" style={{ color: ROYAL }}><NE /></span>
+                </Link>
+                <Link href="/technology#license" className="group flex items-center justify-between py-5" style={{ borderBottom: `1px solid ${HAIR}` }}>
+                  <span className="text-[15.5px] font-bold transition-colors duration-300 group-hover:text-[#E8762C]">보유 자격 인력</span>
+                  <span className="transition-transform duration-500 group-hover:translate-x-1.5" style={{ color: ROYAL }}><NE /></span>
+                </Link>
+                <Link href="/support/inquiry" className="group flex items-center justify-between py-5" style={{ borderBottom: `1px solid ${HAIR}` }}>
+                  <span className="text-[15.5px] font-bold transition-colors duration-300 group-hover:text-[#E8762C]">온라인 견적 문의</span>
+                  <span className="transition-transform duration-500 group-hover:translate-x-1.5" style={{ color: ROYAL }}><NE /></span>
+                </Link>
+
+                <div className="relative overflow-hidden mt-8" style={{ aspectRatio: "16 / 9" }}>
+                  <Image src="/images/tech-analysis.jpg" alt="350TON 크레인 와이어 로프 작업" fill
+                    sizes="(max-width: 1024px) 100vw, 460px" className="object-cover" />
+                  <span className="absolute inset-0" style={{ background: "linear-gradient(0deg, rgba(10,16,28,0.4), transparent 55%)" }} />
+                  <p className="absolute left-5 bottom-4 text-[13px] font-semibold text-white">350TON 와이어 로프 위빙 작업</p>
                 </div>
               </div>
             </Rise>
@@ -631,37 +543,111 @@ export default function EditorialConcept() {
         </div>
       </section>
 
-      {/* ══════════ CTA : 딥네이비 밴드 ══════════ */}
-      <section style={{ background: DEEP, paddingBlock: "clamp(72px, 8vw, 112px)" }}>
-        <div className="mx-auto flex flex-col lg:flex-row lg:items-center justify-between gap-10"
-          style={{ maxWidth: 1400, paddingInline: "clamp(20px, 3.5vw, 48px)" }}>
-          <Rise x={-90}>
-            <p className="text-[15px] font-extrabold mb-3" style={{ color: GOLD }}>Contact Us</p>
-            <h2 className="font-extrabold text-white" style={{ fontSize: "clamp(28px, 3.8vw, 50px)", letterSpacing: "-0.04em", lineHeight: 1.22 }}>
-              현장 조건만 알려주시면
-              <br />
-              사양과 견적을 제안합니다
-            </h2>
+      {/* ══════════ 소식 카드 (명지대 Live on) : 딤 배경 + 카드 3장 + 아이콘 레일 ══════════ */}
+      <section className="relative overflow-hidden" style={{ paddingBlock: "clamp(80px, 9vw, 136px)" }}>
+        <div className="absolute inset-0" aria-hidden>
+          <Image src="/images/hero-02.jpg" alt="" fill sizes="100vw" className="object-cover" />
+          <div className="absolute inset-0" style={{ background: "linear-gradient(94deg, rgba(14,20,32,0.94) 0%, rgba(14,20,32,0.82) 55%, rgba(14,20,32,0.7) 100%)" }} />
+        </div>
+
+        <div className="relative mx-auto" style={{ maxWidth: 1400, paddingInline: "clamp(20px, 3.5vw, 48px)" }}>
+          <Rise x={160}>
+            <p className="font-extrabold leading-none select-none" aria-hidden
+              style={{ fontSize: "clamp(64px, 9vw, 150px)", letterSpacing: "-0.04em", color: "rgba(255,255,255,0.08)" }}>
+              Field Proven
+            </p>
           </Rise>
-          <Rise x={90} delay={0.15}>
-            <div className="flex flex-col sm:flex-row gap-4">
-              <Link href="/support/inquiry"
-                className="flex items-center justify-center gap-2.5 h-[58px] px-10 rounded-full text-[15px] font-bold text-white transition-colors duration-500 hover:bg-[#E8762C]"
-                style={{ background: BLUE }}>
-                온라인 견적 문의 <NE />
-              </Link>
-              <a href={`tel:${COMPANY.tel.replace(/-/g, "")}`}
-                className="flex items-center justify-center h-[58px] px-10 rounded-full text-[15px] font-bold text-white transition-colors duration-500 hover:bg-white/10 hover:border-white/70"
-                style={{ border: "1px solid rgba(255,255,255,0.4)" }}>
-                {COMPANY.tel}
-              </a>
+
+          <div className="grid lg:grid-cols-[0.85fr_2fr] gap-x-14 gap-y-14 mt-6">
+            {/* 좌 레일 */}
+            <Rise x={-90}>
+              <h2 className="text-[clamp(24px,2.6vw,34px)] font-extrabold text-white tracking-tight leading-[1.3]">
+                현장이 증명한
+                <br />
+                세종의 기록
+              </h2>
+              <p className="mt-5 text-[14.5px] leading-[1.85]" style={{ color: "rgba(255,255,255,0.6)" }}>
+                대형 시공 실적과 인증 자료를 그대로 공개합니다.
+              </p>
+              <div className="flex flex-col gap-3 mt-10">
+                {QUICK_RAIL.map((q) => (
+                  <Link key={q.label} href={q.href}
+                    className="group flex items-center gap-4 h-[64px] px-6 text-white transition-colors duration-500 hover:bg-white hover:text-[#16273C]"
+                    style={{ border: "1px solid rgba(255,255,255,0.28)" }}>
+                    {q.icon}
+                    <span className="text-[15px] font-bold">{q.label}</span>
+                    <span className="ml-auto transition-transform duration-500 group-hover:translate-x-1.5"><NE /></span>
+                  </Link>
+                ))}
+              </div>
+            </Rise>
+
+            {/* 우: 시공 카드 3장 */}
+            <div className="grid sm:grid-cols-3 gap-5">
+              {cards.map((item, i) => (
+                <Rise key={item.slug} delay={0.12 + i * 0.14} x={80} className="h-full">
+                  <Link href={`/portfolio/${item.slug}`} className="group flex flex-col h-full backdrop-blur-[3px] transition-colors duration-500 hover:bg-white"
+                    style={{ background: "rgba(255,255,255,0.92)" }}>
+                    <div className="relative overflow-hidden" style={{ aspectRatio: "4 / 3" }}>
+                      <Image src={item.src} alt={item.title} fill sizes="(max-width: 640px) 100vw, 320px"
+                        className="object-cover group-hover:scale-[1.08]" style={{ transition: "transform 1.3s cubic-bezier(0.16,1,0.3,1)" }} />
+                    </div>
+                    <div className="flex flex-col flex-1 p-6">
+                      <span className="self-start text-[11.5px] font-bold px-2.5 py-1 mb-4" style={{ background: NAVY, color: "#fff" }}>
+                        {item.capacity}
+                      </span>
+                      <h3 className="text-[16.5px] font-bold leading-[1.45] transition-colors duration-300 group-hover:text-[#E8762C]">
+                        {item.title}
+                      </h3>
+                      <p className="mt-auto pt-5 text-[13px]" style={{ color: "rgba(16,24,40,0.5)" }}>
+                        {item.client} · {item.year}
+                      </p>
+                    </div>
+                  </Link>
+                </Rise>
+              ))}
             </div>
-          </Rise>
+          </div>
+        </div>
+      </section>
+
+      {/* ══════════ 사선 컬러 밴드 + CTA (명지대 하단) ══════════ */}
+      <section className="relative overflow-hidden" style={{ background: NAVY }}>
+        <div className="absolute inset-x-0 top-0 h-4 flex" aria-hidden>
+          <span style={{ width: "26%", background: ROYAL, clipPath: "polygon(0 0, 100% 0, calc(100% - 16px) 100%, 0 100%)" }} />
+          <span style={{ width: "18%", background: "#4E7CC4", clipPath: "polygon(16px 0, 100% 0, calc(100% - 16px) 100%, 0 100%)", marginLeft: -8 }} />
+        </div>
+        <div className="mx-auto" style={{ maxWidth: 1400, paddingInline: "clamp(20px, 3.5vw, 48px)", paddingBlock: "clamp(72px, 8vw, 116px)" }}>
+          <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-10">
+            <Rise x={-90}>
+              <h2 className="font-extrabold text-white" style={{ fontSize: "clamp(28px, 3.8vw, 52px)", letterSpacing: "-0.04em", lineHeight: 1.2 }}>
+                Today is Safer than Yesterday
+              </h2>
+              <p className="mt-5 text-[15px] leading-[1.85]" style={{ color: "rgba(255,255,255,0.62)", maxWidth: 560 }}>
+                어제보다 안전한 현장을 위해, 세종호이스트크레인이 설계부터
+                유지보수까지 함께합니다. 현장 조건만 알려주시면 최적 사양과 견적을 제안해 드립니다.
+              </p>
+            </Rise>
+            <Rise delay={0.15} x={90}>
+              <div className="flex flex-col sm:flex-row gap-4">
+                <Link href="/support/inquiry"
+                  className="flex items-center justify-center gap-2.5 h-[60px] px-10 rounded-full text-[15px] font-bold transition-colors duration-500 hover:bg-[#F6E7D2]"
+                  style={{ background: "#fff", color: NAVY }}>
+                  온라인 견적 문의 <NE />
+                </Link>
+                <a href={`tel:${COMPANY.tel.replace(/-/g, "")}`}
+                  className="flex items-center justify-center h-[60px] px-10 rounded-full text-[15px] font-bold text-white transition-colors duration-500 hover:bg-white/10"
+                  style={{ border: "1px solid rgba(255,255,255,0.4)" }}>
+                  {COMPANY.tel}
+                </a>
+              </div>
+            </Rise>
+          </div>
         </div>
       </section>
 
       {/* ══════════ 푸터 ══════════ */}
-      <footer style={{ background: "#0A1428", paddingBlock: "clamp(48px, 6vw, 72px)" }}>
+      <footer style={{ background: "#0E1420", paddingBlock: "clamp(48px, 6vw, 72px)" }}>
         <div className="mx-auto" style={{ maxWidth: 1400, paddingInline: "clamp(20px, 3.5vw, 48px)" }}>
           <div className="flex flex-col md:flex-row md:items-center justify-between gap-8 pb-9"
             style={{ borderBottom: "1px solid rgba(255,255,255,0.1)" }}>
@@ -669,7 +655,7 @@ export default function EditorialConcept() {
               className="w-auto h-8" style={{ filter: "brightness(0) invert(1)", objectFit: "contain", opacity: 0.85 }} />
             <div className="flex flex-wrap gap-x-7 gap-y-2">
               {NAV.map((n) => (
-                <Link key={n.href} href={n.href} className="text-[13.5px] font-semibold transition-colors duration-500 hover:text-[#E8762C]"
+                <Link key={n.href} href={n.href} className="text-[13.5px] font-semibold transition-colors duration-300 hover:text-white"
                   style={{ color: "rgba(255,255,255,0.55)" }}>
                   {n.label}
                 </Link>
@@ -685,18 +671,18 @@ export default function EditorialConcept() {
         </div>
       </footer>
 
-      {/* 연세식 원형 플로팅 : 견적(블루) + TOP(딥네이비) */}
+      {/* 연세대式 원형 플로팅: QUICK(견적) + TOP */}
       <div className="fixed right-4 sm:right-5 bottom-32 sm:bottom-24 z-[60] flex flex-col gap-3">
         <Link href="/support/inquiry" aria-label="견적 문의"
-          className="w-14 h-14 sm:w-[64px] sm:h-[64px] rounded-full flex flex-col items-center justify-center gap-0.5 text-white text-[11px] font-bold shadow-[0_10px_30px_rgba(14,27,54,0.35)] transition-colors duration-500 hover:bg-[#E8762C]"
-          style={{ background: BLUE }}>
+          className="w-14 h-14 sm:w-[64px] sm:h-[64px] rounded-full flex flex-col items-center justify-center gap-0.5 text-white text-[11px] font-bold shadow-[0_10px_30px_rgba(16,24,40,0.35)] transition-transform duration-500 hover:scale-110"
+          style={{ background: ROYAL }}>
           <NE />
           견적
         </Link>
         <button type="button" aria-label="맨 위로"
           onClick={() => window.scrollTo({ top: 0, behavior: reduced ? "auto" : "smooth" })}
-          className="w-14 h-14 sm:w-[64px] sm:h-[64px] rounded-full flex flex-col items-center justify-center gap-1 text-[11px] font-bold text-white shadow-[0_10px_30px_rgba(14,27,54,0.3)] transition-colors duration-500 hover:bg-[#E8762C]"
-          style={{ background: DEEP }}>
+          className="w-14 h-14 sm:w-[64px] sm:h-[64px] rounded-full flex flex-col items-center justify-center gap-1 text-[11px] font-bold bg-white shadow-[0_10px_30px_rgba(16,24,40,0.18)] transition-transform duration-500 hover:scale-110"
+          style={{ border: `1px solid ${HAIR}`, color: INK }}>
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden><polyline points="18 15 12 9 6 15" /></svg>
           TOP
         </button>
