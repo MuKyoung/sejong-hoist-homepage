@@ -160,13 +160,13 @@ export default function EditorialConcept() {
         }}
       >
         {/* 로고-메뉴-유틸 3분할 그리드 — 메뉴가 항상 정중앙 (26.07 헤더 정렬 피드백) */}
-        <div className="mx-auto grid grid-cols-[1fr_auto_1fr] items-stretch gap-6 h-[64px] lg:h-[72px]"
+        <div className="mx-auto grid grid-cols-[1fr_auto_1fr] items-stretch gap-6 h-14 lg:h-[64px]"
           style={{ maxWidth: 1400, paddingInline: "clamp(20px, 3.5vw, 48px)" }}>
           <Link href="/demo/8" aria-label={COMPANY.name} className="justify-self-start shrink-0 flex items-center">
             <Image
               src="/images/sejong-logo.png" alt={COMPANY.name}
               width={220} height={54} priority
-              className="w-auto h-10 lg:h-11" style={{ objectFit: "contain" }}
+              className="w-auto h-9 lg:h-10" style={{ objectFit: "contain" }}
             />
           </Link>
 
@@ -186,7 +186,7 @@ export default function EditorialConcept() {
 
           <div className="justify-self-end flex items-center gap-5">
             <Link href="/support/inquiry"
-              className="hidden sm:flex items-center gap-2 h-10 px-6 rounded-full text-[13.5px] font-bold text-white transition-colors duration-500 hover:bg-[#E8762C]"
+              className="hidden sm:flex items-center gap-2 h-9 px-6 rounded-full text-[13.5px] font-bold text-white transition-colors duration-500 hover:bg-[#E8762C]"
               style={{ background: ROYAL }}>
               견적 문의 <NE />
             </Link>

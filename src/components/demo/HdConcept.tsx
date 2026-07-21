@@ -79,12 +79,12 @@ export default function HdConcept() {
         }}
       >
         {/* 로고-메뉴-유틸 3분할 그리드 — 메뉴가 항상 정중앙 (26.07 헤더 정렬 피드백) */}
-        <div className="max-w-[1440px] mx-auto px-5 sm:px-8 xl:px-10 h-[60px] lg:h-[68px] grid grid-cols-[1fr_auto_1fr] items-stretch gap-6">
+        <div className="max-w-[1440px] mx-auto px-5 sm:px-8 xl:px-10 h-14 lg:h-[62px] grid grid-cols-[1fr_auto_1fr] items-stretch gap-6">
           <Link href="/demo/5" className="justify-self-start shrink-0 flex items-center" aria-label="세종호이스트크레인">
             <Image
               src="/images/sejong-logo.png" alt="세종호이스트크레인"
               width={220} height={54} priority
-              className="w-auto h-9 lg:h-10 transition-[filter] duration-300"
+              className="w-auto h-8 lg:h-9 transition-[filter] duration-300"
               style={{ filter: solid ? "none" : "brightness(0) invert(1)", objectFit: "contain" }}
             />
           </Link>
@@ -124,7 +124,7 @@ export default function HdConcept() {
             </a>
             <Link
               href="/support/inquiry"
-              className="hidden sm:flex items-center h-10 px-5 rounded-full text-[13px] font-bold whitespace-nowrap transition-all duration-500 hover:!border-[#E8762C] hover:!text-[#E8762C]"
+              className="hidden sm:flex items-center h-9 px-5 rounded-full text-[13px] font-bold whitespace-nowrap transition-all duration-500 hover:!border-[#E8762C] hover:!text-[#E8762C]"
               style={{
                 border: `1.5px solid ${solid ? "#2C4A6E" : "rgba(255,255,255,0.55)"}`,
                 color: solid ? "#2C4A6E" : "#fff",
@@ -216,7 +216,7 @@ export default function HdConcept() {
             initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
             transition={{ duration: 0.3 }}
             className="fixed inset-0 z-40 lg:hidden overflow-y-auto"
-            style={{ background: NAVY_DEEP, paddingTop: "60px" }}
+            style={{ background: NAVY_DEEP, paddingTop: "56px" }}
           >
             <nav className="px-7 py-8 flex flex-col" aria-label="모바일 메뉴">
               {NAV.map((item, i) => (

@@ -182,7 +182,7 @@ export default function MonumentConcept() {
           style={{
             maxWidth: 1440,
             paddingInline: "clamp(20px, 4vw, 56px)",
-            height: solid ? 64 : 76,
+            height: solid ? 56 : 66,
             transition: "height .6s cubic-bezier(0.16,1,0.3,1)",
           }}
         >
@@ -191,7 +191,7 @@ export default function MonumentConcept() {
               src="/images/sejong-logo.png"
               alt={COMPANY.name}
               width={220} height={54} priority
-              className="w-auto h-10 lg:h-11"
+              className="w-auto h-9 lg:h-10"
               style={{ filter: "brightness(0) invert(1)", objectFit: "contain" }}
             />
           </Link>
@@ -226,7 +226,7 @@ export default function MonumentConcept() {
             </a>
             <Link
               href="/support/inquiry"
-              className="hidden sm:flex items-center h-11 px-7 text-[13.5px] font-bold tracking-wide transition-colors duration-500 hover:!border-[#E8762C] hover:!text-[#E8762C]"
+              className="hidden sm:flex items-center h-10 px-6 text-[13.5px] font-bold tracking-wide transition-colors duration-500 hover:!border-[#E8762C] hover:!text-[#E8762C]"
               style={{ border: `1px solid ${BRASS}`, color: BRASS }}
             >
               견적 문의
@@ -257,7 +257,7 @@ export default function MonumentConcept() {
             initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
             transition={{ duration: 0.5, ease: E }}
             className="fixed inset-0 z-40 lg:hidden overflow-y-auto"
-            style={{ background: INK, paddingTop: 64 }}
+            style={{ background: INK, paddingTop: 56 }}
           >
             <nav className="px-6 py-10" aria-label="모바일 메뉴">
               {NAV.map((item, i) => (

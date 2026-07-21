@@ -183,12 +183,12 @@ export default function YsConcept() {
         {/* 메인 바 */}
         <div style={{ borderBottom: "1px solid #E8EDF3" }}>
           {/* 로고-메뉴-유틸 3분할 그리드 — 메뉴가 항상 정중앙 (26.07 헤더 정렬 피드백) */}
-          <div className="max-w-[1280px] mx-auto px-5 sm:px-8 h-16 lg:h-[68px] grid grid-cols-[1fr_auto_1fr] items-stretch gap-6">
+          <div className="max-w-[1280px] mx-auto px-5 sm:px-8 h-14 lg:h-[60px] grid grid-cols-[1fr_auto_1fr] items-stretch gap-6">
             <Link href="/demo/6" className="justify-self-start shrink-0 flex items-center" aria-label="세종호이스트크레인">
               <Image
                 src="/images/sejong-logo.png" alt="세종호이스트크레인"
                 width={220} height={54} priority
-                className="w-auto h-9 lg:h-10" style={{ objectFit: "contain" }}
+                className="w-auto h-8 lg:h-9" style={{ objectFit: "contain" }}
               />
             </Link>
 
@@ -220,7 +220,7 @@ export default function YsConcept() {
             <div className="justify-self-end flex items-center gap-3">
               <Link
                 href="/support/inquiry"
-                className="hidden sm:flex items-center h-10 px-6 rounded-full text-white text-[13.5px] font-bold bg-[#2C4A6E] hover:bg-[#E8762C] transition-colors duration-500"
+                className="hidden sm:flex items-center h-9 px-6 rounded-full text-white text-[13.5px] font-bold bg-[#2C4A6E] hover:bg-[#E8762C] transition-colors duration-500"
               >
                 견적 문의
               </Link>
@@ -294,7 +294,7 @@ export default function YsConcept() {
             initial={{ opacity: 0, x: 44 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: 44 }}
             transition={{ duration: 0.6, ease: E }}
             className="fixed inset-0 z-40 lg:hidden overflow-y-auto bg-white"
-            style={{ paddingTop: "64px" }}
+            style={{ paddingTop: "56px" }}
           >
             <nav className="px-6 py-7 flex flex-col" aria-label="모바일 메뉴">
               {NAV.map((item, i) => (
@@ -335,7 +335,7 @@ export default function YsConcept() {
 
       {/* ══ 히어로 ══ */}
       <section
-        className="pt-[88px] lg:pt-[136px]"
+        className="pt-[80px] lg:pt-[124px]"
         style={{ background: "linear-gradient(180deg, #F7F9FC 0%, #FFFFFF 100%)" }}
       >
         <div className="max-w-[1280px] mx-auto px-5 sm:px-8">
