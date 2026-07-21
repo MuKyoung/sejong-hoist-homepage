@@ -176,8 +176,9 @@ export default function MonumentConcept() {
           transition: "background .6s ease, border-color .6s ease, backdrop-filter .6s ease",
         }}
       >
+        {/* 로고-메뉴-유틸 3분할 그리드 — 메뉴가 항상 정중앙 (26.07 헤더 정렬 피드백) */}
         <div
-          className="mx-auto flex items-stretch justify-between gap-6"
+          className="mx-auto grid grid-cols-[1fr_auto_1fr] items-stretch gap-6"
           style={{
             maxWidth: 1440,
             paddingInline: "clamp(20px, 4vw, 56px)",
@@ -185,8 +186,7 @@ export default function MonumentConcept() {
             transition: "height .6s cubic-bezier(0.16,1,0.3,1)",
           }}
         >
-          {/* 로고 — 바 높이 대비 크게 (26.07 헤더 가독성 피드백) */}
-          <Link href="/demo/7" aria-label={COMPANY.name} className="shrink-0 flex items-center">
+          <Link href="/demo/7" aria-label={COMPANY.name} className="justify-self-start shrink-0 flex items-center">
             <Image
               src="/images/sejong-logo.png"
               alt={COMPANY.name}
@@ -201,7 +201,7 @@ export default function MonumentConcept() {
               <Link
                 key={item.href}
                 href={item.href}
-                className="group relative flex items-center px-5 xl:px-6 text-[16px] font-bold whitespace-nowrap transition-colors duration-500"
+                className="group relative flex items-center px-5 xl:px-6 text-[16px] font-bold whitespace-nowrap transition-colors duration-500 hover:!text-[#E8762C]"
                 style={{ color: TEXT, letterSpacing: "-0.01em", textShadow: solid ? "none" : "0 1px 12px rgba(0,0,0,0.45)" }}
               >
                 {item.label}
@@ -213,10 +213,10 @@ export default function MonumentConcept() {
             ))}
           </nav>
 
-          <div className="flex items-center gap-5 shrink-0" style={{ textShadow: solid ? "none" : "0 1px 12px rgba(0,0,0,0.4)" }}>
+          <div className="justify-self-end flex items-center gap-5 shrink-0" style={{ textShadow: solid ? "none" : "0 1px 12px rgba(0,0,0,0.4)" }}>
             <a
               href={`tel:${COMPANY.tel.replace(/-/g, "")}`}
-              className="hidden xl:flex items-center gap-2 text-[14px] font-medium tracking-wide transition-colors duration-500"
+              className="hidden xl:flex items-center gap-2 text-[13.5px] font-medium tracking-wide transition-colors duration-500 hover:!text-[#E8762C]"
               style={{ color: MUTED }}
             >
               <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke={BRASS} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
@@ -268,13 +268,13 @@ export default function MonumentConcept() {
                   className="py-5" style={{ borderBottom: `1px solid ${LINE}` }}
                 >
                   <Link href={item.href} onClick={() => setMenuOpen(false)}
-                    className="block text-[26px] font-extrabold tracking-tight" style={{ color: TEXT }}>
+                    className="block text-[26px] font-extrabold tracking-tight transition-colors duration-500 hover:!text-[#E8762C]" style={{ color: TEXT }}>
                     {item.label}
                   </Link>
                   <div className="flex flex-wrap gap-x-5 gap-y-2 mt-3">
                     {item.children.map((c) => (
                       <Link key={c.href} href={c.href} onClick={() => setMenuOpen(false)}
-                        className="text-[13.5px]" style={{ color: MUTED }}>
+                        className="text-[13.5px] transition-colors duration-500 hover:!text-[#E8762C]" style={{ color: MUTED }}>
                         {c.label}
                       </Link>
                     ))}
@@ -283,7 +283,7 @@ export default function MonumentConcept() {
               ))}
               <div className="flex flex-col gap-3 pt-9">
                 <Link href="/support/inquiry" onClick={() => setMenuOpen(false)}
-                  className="h-14 flex items-center justify-center text-[15px] font-bold"
+                  className="h-14 flex items-center justify-center text-[15px] font-bold transition-colors duration-500 hover:!bg-[#E8762C] hover:!text-white"
                   style={{ background: BRASS, color: INK }}>
                   견적 문의
                 </Link>
@@ -380,8 +380,8 @@ export default function MonumentConcept() {
                 {SLIDES.map((_, i) => (
                   <button key={i} type="button" onClick={() => setIdx(i)}
                     aria-label={`${i + 1}번 슬라이드`} aria-current={idx === i}
-                    className="h-6 flex items-center" style={{ cursor: "pointer" }}>
-                    <span className="block overflow-hidden" style={{ width: idx === i ? 56 : 22, height: 2, background: "rgba(255,255,255,0.24)", transition: "width .8s cubic-bezier(0.16,1,0.3,1)" }}>
+                    className="group h-6 flex items-center" style={{ cursor: "pointer" }}>
+                    <span className="block overflow-hidden transition-colors duration-500 group-hover:!bg-[#E8762C]" style={{ width: idx === i ? 56 : 22, height: 2, background: "rgba(255,255,255,0.24)", transition: "width .8s cubic-bezier(0.16,1,0.3,1)" }}>
                       {idx === i && (
                         <motion.span
                           key={`${i}-${playing ? "p" : "s"}`}
@@ -398,7 +398,7 @@ export default function MonumentConcept() {
               </div>
               <button type="button" onClick={() => setPlaying((v) => !v)}
                 aria-label={playing ? "슬라이드 일시정지" : "슬라이드 재생"}
-                className="w-10 h-10 flex items-center justify-center transition-colors duration-500"
+                className="w-10 h-10 flex items-center justify-center transition-colors duration-500 hover:!text-[#E8762C] hover:!border-[#E8762C]"
                 style={{ border: `1px solid ${LINE}`, color: TEXT }}>
                 {playing ? (
                   <svg width="10" height="11" viewBox="0 0 11 12" fill="currentColor" aria-hidden><rect x="1" width="3" height="12" rx="0.5" /><rect x="7" width="3" height="12" rx="0.5" /></svg>
@@ -605,11 +605,11 @@ export default function MonumentConcept() {
                     <span className="text-[12.5px] font-bold px-3 py-1.5" style={{ background: BRASS, color: INK }}>
                       {featured.capacity}
                     </span>
-                    <span className="text-[13px]" style={{ color: MUTED }}>
+                    <span className="text-[13px] transition-colors duration-500 hover:!text-[#E8762C]" style={{ color: MUTED }}>
                       {featured.client} · {featured.year}
                     </span>
                   </div>
-                  <h3 className="font-extrabold" style={{ fontSize: "clamp(24px, 3.4vw, 46px)", letterSpacing: "-0.035em", color: TEXT }}>
+                  <h3 className="font-extrabold transition-colors duration-500 group-hover:!text-[#E8762C]" style={{ fontSize: "clamp(24px, 3.4vw, 46px)", letterSpacing: "-0.035em", color: TEXT }}>
                     {featured.title}
                   </h3>
                   <p className="mt-4 text-[14.5px] leading-[1.85] hidden sm:block" style={{ color: "rgba(243,241,237,0.66)", maxWidth: 620 }}>
@@ -715,7 +715,7 @@ export default function MonumentConcept() {
               {PROOFS.map((p, i) => (
                 <Rise key={p.k} delay={0.1 + i * 0.14} x={90}>
                   <div className="h-full p-8 lg:p-10" style={{ background: INK }}>
-                    <p className="text-[13px]" style={{ color: MUTED }}>{p.k}</p>
+                    <p className="text-[13px] transition-colors duration-500 hover:!text-[#E8762C]" style={{ color: MUTED }}>{p.k}</p>
                     <p className="mt-3 font-extrabold leading-none" style={{ fontSize: "clamp(30px, 3.4vw, 44px)", letterSpacing: "-0.04em", color: TEXT }}>
                       {p.v}
                     </p>
@@ -741,15 +741,15 @@ export default function MonumentConcept() {
             </Rise>
             <Rise delay={0.18} x={90}>
               <div style={{ borderTop: "1px solid rgba(12,15,19,0.22)" }}>
-                <a href={`tel:${COMPANY.tel.replace(/-/g, "")}`} className="flex items-baseline justify-between gap-6 py-6" style={{ borderBottom: "1px solid rgba(12,15,19,0.22)" }}>
+                <a href={`tel:${COMPANY.tel.replace(/-/g, "")}`} className="flex items-baseline justify-between gap-6 py-6 transition-colors duration-500 hover:text-[#8A3E10]" style={{ borderBottom: "1px solid rgba(12,15,19,0.22)" }}>
                   <span className="text-[13px] font-semibold" style={{ color: "rgba(12,15,19,0.6)" }}>대표전화</span>
                   <span className="text-[clamp(20px,2.4vw,30px)] font-extrabold tracking-tight tabular-nums">{COMPANY.tel}</span>
                 </a>
-                <a href={`mailto:${COMPANY.email}`} className="flex items-baseline justify-between gap-6 py-6" style={{ borderBottom: "1px solid rgba(12,15,19,0.22)" }}>
+                <a href={`mailto:${COMPANY.email}`} className="flex items-baseline justify-between gap-6 py-6 transition-colors duration-500 hover:text-[#8A3E10]" style={{ borderBottom: "1px solid rgba(12,15,19,0.22)" }}>
                   <span className="text-[13px] font-semibold" style={{ color: "rgba(12,15,19,0.6)" }}>이메일</span>
                   <span className="text-[clamp(15px,1.6vw,20px)] font-bold">{COMPANY.email}</span>
                 </a>
-                <Link href="/support/inquiry" className="flex items-center justify-center h-16 mt-8 text-[15px] font-bold" style={{ background: INK, color: BRASS }}>
+                <Link href="/support/inquiry" className="flex items-center justify-center h-16 mt-8 text-[15px] font-bold transition-colors duration-500 hover:!bg-[#E8762C] hover:!text-white" style={{ background: INK, color: BRASS }}>
                   온라인 견적 문의
                 </Link>
               </div>
@@ -780,7 +780,7 @@ export default function MonumentConcept() {
                   <p className="text-[13.5px] font-bold mb-4" style={{ color: TEXT }}>{item.label}</p>
                   <div className="flex flex-col gap-2.5">
                     {item.children.slice(0, 4).map((c) => (
-                      <Link key={c.href} href={c.href} className="text-[13px]" style={{ color: MUTED }}>
+                      <Link key={c.href} href={c.href} className="text-[13px] transition-colors duration-500 hover:!text-[#E8762C]" style={{ color: MUTED }}>
                         {c.label}
                       </Link>
                     ))}

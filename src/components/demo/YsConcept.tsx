@@ -164,17 +164,17 @@ export default function YsConcept() {
         <div className="hidden lg:block" style={{ background: NAVY_DEEP }}>
           <div className="max-w-[1280px] mx-auto px-8 h-9 flex items-center justify-between text-[12px] text-white/65">
             <div className="flex items-center gap-5">
-              <Link href="/support/notice" className="hover:text-white transition-colors">공지사항</Link>
-              <Link href="/about/location" className="hover:text-white transition-colors">오시는 길</Link>
+              <Link href="/support/notice" className="hover:text-[#E8762C] transition-colors duration-500">공지사항</Link>
+              <Link href="/about/location" className="hover:text-[#E8762C] transition-colors duration-500">오시는 길</Link>
             </div>
             <div className="flex items-center gap-4">
-              <a href="tel:044-865-0801" className="tracking-wide hover:text-white transition-colors">
+              <a href="tel:044-865-0801" className="tracking-wide hover:text-[#E8762C] transition-colors duration-500">
                 044-865-0801
               </a>
               <span className="w-px h-3 bg-white/20" />
               <div className="flex items-center gap-2.5">
-                <Link href="/" className="text-white font-bold">KOR</Link>
-                <Link href="/en" className="hover:text-white transition-colors">ENG</Link>
+                <Link href="/" className="text-white font-bold transition-colors duration-500 hover:text-[#E8762C]">KOR</Link>
+                <Link href="/en" className="hover:text-[#E8762C] transition-colors duration-500">ENG</Link>
               </div>
             </div>
           </div>
@@ -182,9 +182,9 @@ export default function YsConcept() {
 
         {/* 메인 바 */}
         <div style={{ borderBottom: "1px solid #E8EDF3" }}>
-          <div className="max-w-[1280px] mx-auto px-5 sm:px-8 h-16 lg:h-[68px] flex items-stretch justify-between gap-6">
-            {/* 로고 — 바 높이 대비 크게 (26.07 헤더 가독성 피드백) */}
-            <Link href="/demo/6" className="shrink-0 flex items-center" aria-label="세종호이스트크레인">
+          {/* 로고-메뉴-유틸 3분할 그리드 — 메뉴가 항상 정중앙 (26.07 헤더 정렬 피드백) */}
+          <div className="max-w-[1280px] mx-auto px-5 sm:px-8 h-16 lg:h-[68px] grid grid-cols-[1fr_auto_1fr] items-stretch gap-6">
+            <Link href="/demo/6" className="justify-self-start shrink-0 flex items-center" aria-label="세종호이스트크레인">
               <Image
                 src="/images/sejong-logo.png" alt="세종호이스트크레인"
                 width={220} height={54} priority
@@ -200,7 +200,7 @@ export default function YsConcept() {
                 >
                   <Link
                     href={item.href}
-                    className="relative flex items-center px-[22px] text-[16.5px] font-bold transition-colors duration-200"
+                    className="relative flex items-center px-5 xl:px-6 text-[16px] font-bold transition-colors duration-500"
                     style={{ color: hovered === item.href ? "#E8762C" : INK }}
                   >
                     {item.label}
@@ -217,10 +217,10 @@ export default function YsConcept() {
               ))}
             </nav>
 
-            <div className="flex items-center gap-3">
+            <div className="justify-self-end flex items-center gap-3">
               <Link
                 href="/support/inquiry"
-                className="hidden sm:flex items-center h-10 px-[22px] rounded-full text-white text-[13.5px] font-bold bg-[#2C4A6E] hover:bg-[#E8762C] transition-colors"
+                className="hidden sm:flex items-center h-10 px-6 rounded-full text-white text-[13.5px] font-bold bg-[#2C4A6E] hover:bg-[#E8762C] transition-colors duration-500"
               >
                 견적 문의
               </Link>
@@ -259,7 +259,7 @@ export default function YsConcept() {
                 {NAV.map((item, ci) => (
                   <div key={item.href}>
                     <Link href={item.href} className="group inline-block">
-                      <p className="text-[15px] font-extrabold group-hover:text-[#2C4A6E] transition-colors" style={{ color: INK }}>
+                      <p className="text-[15px] font-extrabold group-hover:text-[#E8762C] transition-colors" style={{ color: INK }}>
                         {item.label}
                       </p>
                     </Link>
@@ -304,13 +304,13 @@ export default function YsConcept() {
                   className="py-4" style={{ borderBottom: "1px solid #EEF2F6" }}
                 >
                   <Link href={item.href} onClick={() => setMobileOpen(false)}
-                    className="block text-[20px] font-extrabold tracking-tight" style={{ color: NAVY_DEEP }}>
+                    className="block text-[20px] font-extrabold tracking-tight transition-colors duration-500 hover:!text-[#E8762C]" style={{ color: NAVY_DEEP }}>
                     {item.label}
                   </Link>
                   <div className="flex flex-wrap gap-1.5 mt-3">
                     {item.children.map((c) => (
                       <Link key={c.href} href={c.href} onClick={() => setMobileOpen(false)}
-                        className="text-[12.5px] px-3 py-1.5 rounded-full bg-[#F2F5F9] text-[#44556A] hover:bg-[#E4EAF2] transition-colors">
+                        className="text-[12.5px] px-3 py-1.5 rounded-full bg-[#F2F5F9] text-[#44556A] hover:bg-[#FBF3EA] hover:text-[#E8762C] transition-colors duration-500">
                         {c.label}
                       </Link>
                     ))}
@@ -319,7 +319,7 @@ export default function YsConcept() {
               ))}
               <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.35 }} className="pt-6 flex gap-3">
                 <Link href="/support/inquiry" onClick={() => setMobileOpen(false)}
-                  className="flex-1 h-12 rounded-full bg-[#2C4A6E] text-white text-[14px] font-bold flex items-center justify-center">
+                  className="flex-1 h-12 rounded-full bg-[#2C4A6E] text-white text-[14px] font-bold flex items-center justify-center transition-colors duration-500 hover:bg-[#E8762C]">
                   견적 문의
                 </Link>
                 <a href="tel:044-865-0801"
@@ -409,7 +409,7 @@ export default function YsConcept() {
                   >
                     <Link
                       href={SLIDES[idx].href}
-                      className="inline-flex items-center gap-2 mt-6 h-11 px-5 rounded-full bg-white/95 text-[#16273C] text-[13.5px] font-bold hover:bg-white transition-colors"
+                      className="inline-flex items-center gap-2 mt-6 h-11 px-5 rounded-full bg-white/95 text-[#16273C] text-[13.5px] font-bold transition-colors duration-500 hover:bg-[#E8762C] hover:text-white"
                     >
                       {SLIDES[idx].cta} <span aria-hidden>→</span>
                     </Link>
@@ -424,20 +424,20 @@ export default function YsConcept() {
               style={{ background: "rgba(10,18,30,0.42)", backdropFilter: "blur(8px)" }}
             >
               <button type="button" onClick={() => go(-1)} aria-label="이전 배너"
-                className="w-8 h-8 rounded-full text-white/85 hover:text-white hover:bg-white/15 flex items-center justify-center transition-colors">
+                className="w-8 h-8 rounded-full text-white/85 hover:text-[#E8762C] hover:bg-white/15 flex items-center justify-center transition-colors">
                 <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden><polyline points="15 18 9 12 15 6" /></svg>
               </button>
               <span className="w-12 text-center text-[12.5px] text-white/90 tabular-nums" aria-live="polite">
                 {idx + 1} / {SLIDES.length}
               </span>
               <button type="button" onClick={() => go(1)} aria-label="다음 배너"
-                className="w-8 h-8 rounded-full text-white/85 hover:text-white hover:bg-white/15 flex items-center justify-center transition-colors">
+                className="w-8 h-8 rounded-full text-white/85 hover:text-[#E8762C] hover:bg-white/15 flex items-center justify-center transition-colors">
                 <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden><polyline points="9 18 15 12 9 6" /></svg>
               </button>
               <span className="w-px h-4 bg-white/20 mx-1" />
               <button type="button" onClick={() => setPlaying((v) => !v)}
                 aria-label={playing ? "배너 일시정지" : "배너 재생"}
-                className="w-8 h-8 rounded-full text-white/85 hover:text-white hover:bg-white/15 flex items-center justify-center transition-colors">
+                className="w-8 h-8 rounded-full text-white/85 hover:text-[#E8762C] hover:bg-white/15 flex items-center justify-center transition-colors">
                 {playing ? (
                   <svg width="10" height="11" viewBox="0 0 11 12" fill="currentColor" aria-hidden><rect x="1" width="3" height="12" rx="1" /><rect x="7" width="3" height="12" rx="1" /></svg>
                 ) : (
@@ -464,7 +464,7 @@ export default function YsConcept() {
                   >
                     {q.icon}
                   </span>
-                  <span className="text-[13px] sm:text-[13.5px] font-semibold" style={{ color: INK }}>
+                  <span className="text-[13px] sm:text-[13.5px] font-semibold transition-colors duration-500 group-hover:!text-[#E8762C]" style={{ color: INK }}>
                     {q.label}
                   </span>
                 </Link>

@@ -78,9 +78,9 @@ export default function HdConcept() {
           transition: "background .55s ease, border-color .55s ease, box-shadow .55s ease",
         }}
       >
-        <div className="max-w-[1440px] mx-auto px-5 sm:px-8 xl:px-10 h-[60px] lg:h-[68px] flex items-stretch justify-between gap-4">
-          {/* 로고 — 가독성 위해 바 높이 대비 크게 (26.07 헤더 가독성 피드백) */}
-          <Link href="/demo/5" className="shrink-0 flex items-center" aria-label="세종호이스트크레인">
+        {/* 로고-메뉴-유틸 3분할 그리드 — 메뉴가 항상 정중앙 (26.07 헤더 정렬 피드백) */}
+        <div className="max-w-[1440px] mx-auto px-5 sm:px-8 xl:px-10 h-[60px] lg:h-[68px] grid grid-cols-[1fr_auto_1fr] items-stretch gap-6">
+          <Link href="/demo/5" className="justify-self-start shrink-0 flex items-center" aria-label="세종호이스트크레인">
             <Image
               src="/images/sejong-logo.png" alt="세종호이스트크레인"
               width={220} height={54} priority
@@ -95,7 +95,7 @@ export default function HdConcept() {
               <div key={item.href} className="relative flex" onMouseEnter={() => setMega(true)}>
                 <Link
                   href={item.href}
-                  className="group relative flex items-center px-4 xl:px-6 text-[16px] font-bold tracking-[-0.01em] whitespace-nowrap transition-colors duration-500"
+                  className="group relative flex items-center px-5 xl:px-6 text-[16px] font-bold tracking-[-0.01em] whitespace-nowrap transition-colors duration-500 hover:!text-[#E8762C]"
                   style={{ color: fg, textShadow: solid ? "none" : "0 1px 14px rgba(0,0,0,0.5)" }}
                 >
                   {item.label}
@@ -109,14 +109,14 @@ export default function HdConcept() {
           </nav>
 
           {/* 우측 유틸 */}
-          <div className="flex items-center gap-3 xl:gap-5 shrink-0" style={{ textShadow: solid ? "none" : "0 1px 12px rgba(0,0,0,0.45)" }}>
-            <div className="hidden md:flex items-center gap-2 text-[12px] font-semibold tracking-wide" style={{ color: fg }}>
-              <Link href="/" className="opacity-100 hover:opacity-70 transition-opacity">KOR</Link>
+          <div className="justify-self-end flex items-center gap-4 xl:gap-5 shrink-0" style={{ textShadow: solid ? "none" : "0 1px 12px rgba(0,0,0,0.45)" }}>
+            <div className="hidden md:flex items-center gap-2.5 text-[13px] font-semibold tracking-wide" style={{ color: fg }}>
+              <Link href="/" className="transition-colors duration-500 hover:!text-[#E8762C]">KOR</Link>
               <span className="opacity-30">|</span>
-              <Link href="/en" className="opacity-45 hover:opacity-90 transition-opacity">ENG</Link>
+              <Link href="/en" className="opacity-50 transition-all duration-500 hover:opacity-100 hover:!text-[#E8762C]">ENG</Link>
             </div>
             <span className="hidden xl:block w-px h-4" style={{ background: solid ? "#DDE3EA" : "rgba(255,255,255,0.25)" }} />
-            <a href="tel:044-865-0801" className="hidden xl:flex items-center gap-1.5 text-[13px] font-medium tracking-wide whitespace-nowrap opacity-80 hover:opacity-100 transition-opacity" style={{ color: fg }}>
+            <a href="tel:044-865-0801" className="hidden xl:flex items-center gap-1.5 text-[13.5px] font-medium tracking-wide whitespace-nowrap transition-colors duration-500 hover:!text-[#E8762C]" style={{ color: fg }}>
               <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
                 <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.08 4.18 2 2 0 0 1 4.06 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z" />
               </svg>
@@ -226,13 +226,13 @@ export default function HdConcept() {
                   className="py-4" style={{ borderBottom: "1px solid rgba(255,255,255,0.08)" }}
                 >
                   <Link href={item.href} onClick={() => setMobileOpen(false)}
-                    className="block text-[22px] font-extrabold text-white tracking-tight">
+                    className="block text-[22px] font-extrabold text-white tracking-tight transition-colors duration-500 hover:text-[#E8762C]">
                     {item.label}
                   </Link>
                   <div className="flex flex-wrap gap-x-4 gap-y-1.5 mt-2.5">
                     {item.children.map((c) => (
                       <Link key={c.href} href={c.href} onClick={() => setMobileOpen(false)}
-                        className="text-[13px] text-white/50 hover:text-white transition-colors">
+                        className="text-[13px] text-white/50 hover:text-[#E8762C] transition-colors duration-500">
                         {c.label}
                       </Link>
                     ))}
@@ -241,11 +241,11 @@ export default function HdConcept() {
               ))}
               <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.4 }} className="pt-7 flex gap-3">
                 <Link href="/support/inquiry" onClick={() => setMobileOpen(false)}
-                  className="flex-1 h-12 rounded-full bg-white text-[#16273C] text-[14px] font-bold flex items-center justify-center">
+                  className="flex-1 h-12 rounded-full bg-white text-[#16273C] text-[14px] font-bold flex items-center justify-center transition-colors duration-500 hover:bg-[#E8762C] hover:text-white">
                   견적 문의
                 </Link>
                 <a href="tel:044-865-0801"
-                  className="flex-1 h-12 rounded-full border border-white/30 text-white text-[14px] font-semibold flex items-center justify-center">
+                  className="flex-1 h-12 rounded-full border border-white/30 text-white text-[14px] font-semibold flex items-center justify-center transition-colors duration-500 hover:border-[#E8762C] hover:text-[#E8762C]">
                   044-865-0801
                 </a>
               </motion.div>

@@ -138,15 +138,15 @@ export default function EditorialConcept() {
             <span>{COMPANY.address}</span>
           </div>
           <div className="flex items-center gap-5">
-            <a href={`tel:${COMPANY.tel.replace(/-/g, "")}`} className="hover:text-white transition-colors duration-300">
+            <a href={`tel:${COMPANY.tel.replace(/-/g, "")}`} className="hover:text-[#E8762C] transition-colors duration-500">
               대표전화 {COMPANY.tel}
             </a>
             <span style={{ width: 1, height: 11, background: "rgba(255,255,255,0.2)" }} />
-            <a href={`mailto:${COMPANY.email}`} className="hover:text-white transition-colors duration-300">
+            <a href={`mailto:${COMPANY.email}`} className="hover:text-[#E8762C] transition-colors duration-500">
               {COMPANY.email}
             </a>
             <span style={{ width: 1, height: 11, background: "rgba(255,255,255,0.2)" }} />
-            <Link href="/en" className="hover:text-white transition-colors duration-300">ENG</Link>
+            <Link href="/en" className="hover:text-[#E8762C] transition-colors duration-500">ENG</Link>
           </div>
         </div>
       </div>
@@ -159,10 +159,10 @@ export default function EditorialConcept() {
           transition: "box-shadow .5s ease, border-color .5s ease",
         }}
       >
-        <div className="mx-auto flex items-stretch justify-between gap-6 h-[64px] lg:h-[72px]"
+        {/* 로고-메뉴-유틸 3분할 그리드 — 메뉴가 항상 정중앙 (26.07 헤더 정렬 피드백) */}
+        <div className="mx-auto grid grid-cols-[1fr_auto_1fr] items-stretch gap-6 h-[64px] lg:h-[72px]"
           style={{ maxWidth: 1400, paddingInline: "clamp(20px, 3.5vw, 48px)" }}>
-          {/* 로고 — 바 높이 대비 크게 (26.07 헤더 가독성 피드백) */}
-          <Link href="/demo/8" aria-label={COMPANY.name} className="shrink-0 flex items-center">
+          <Link href="/demo/8" aria-label={COMPANY.name} className="justify-self-start shrink-0 flex items-center">
             <Image
               src="/images/sejong-logo.png" alt={COMPANY.name}
               width={220} height={54} priority
@@ -184,9 +184,9 @@ export default function EditorialConcept() {
             ))}
           </nav>
 
-          <div className="flex items-center gap-4">
+          <div className="justify-self-end flex items-center gap-5">
             <Link href="/support/inquiry"
-              className="hidden sm:flex items-center gap-2 h-10 px-6 rounded-full text-[13.5px] font-bold text-white transition-colors duration-300 hover:bg-[#E8762C]"
+              className="hidden sm:flex items-center gap-2 h-10 px-6 rounded-full text-[13.5px] font-bold text-white transition-colors duration-500 hover:bg-[#E8762C]"
               style={{ background: ROYAL }}>
               견적 문의 <NE />
             </Link>
@@ -449,14 +449,14 @@ export default function EditorialConcept() {
                 <div className="flex items-baseline gap-6">
                   <span className="w-2 h-2 rounded-full self-center hidden sm:block" style={{ background: ROYAL }} aria-hidden />
                   <button type="button" onClick={() => setTab("notice")}
-                    className="text-[clamp(22px,2.4vw,30px)] font-extrabold tracking-tight transition-colors duration-600"
+                    className="text-[clamp(22px,2.4vw,30px)] font-extrabold tracking-tight transition-colors duration-600 hover:!text-[#E8762C]"
                     style={{ color: tab === "notice" ? INK : "rgba(16,24,40,0.3)" }}
                     aria-pressed={tab === "notice"}>
                     공지사항
                   </button>
                   <span style={{ width: 1, height: 20, background: HAIR, alignSelf: "center" }} aria-hidden />
                   <button type="button" onClick={() => setTab("news")}
-                    className="text-[clamp(22px,2.4vw,30px)] font-extrabold tracking-tight transition-colors duration-600"
+                    className="text-[clamp(22px,2.4vw,30px)] font-extrabold tracking-tight transition-colors duration-600 hover:!text-[#E8762C]"
                     style={{ color: tab === "news" ? INK : "rgba(16,24,40,0.3)" }}
                     aria-pressed={tab === "news"}>
                     시공 소식
@@ -580,7 +580,7 @@ export default function EditorialConcept() {
               <div className="flex flex-col gap-3 mt-10">
                 {QUICK_RAIL.map((q) => (
                   <Link key={q.label} href={q.href}
-                    className="group flex items-center gap-4 h-[64px] px-6 text-white transition-colors duration-500 hover:bg-white hover:text-[#16273C]"
+                    className="group flex items-center gap-4 h-[64px] px-6 text-white transition-colors duration-500 hover:bg-[#E8762C] hover:!border-[#E8762C]"
                     style={{ border: "1px solid rgba(255,255,255,0.28)" }}>
                     {q.icon}
                     <span className="text-[15px] font-bold">{q.label}</span>
@@ -682,7 +682,7 @@ export default function EditorialConcept() {
       {/* 연세대式 원형 플로팅: QUICK(견적) + TOP */}
       <div className="fixed right-4 sm:right-5 bottom-32 sm:bottom-24 z-[60] flex flex-col gap-3">
         <Link href="/support/inquiry" aria-label="견적 문의"
-          className="relative w-14 h-14 sm:w-[64px] sm:h-[64px] rounded-full flex flex-col items-center justify-center gap-0.5 text-white text-[11px] font-bold shadow-[0_10px_30px_rgba(16,24,40,0.35)] transition-transform duration-500 hover:scale-110"
+          className="relative w-14 h-14 sm:w-[64px] sm:h-[64px] rounded-full flex flex-col items-center justify-center gap-0.5 text-white text-[11px] font-bold shadow-[0_10px_30px_rgba(16,24,40,0.35)] transition-all duration-500 hover:scale-110 hover:!bg-[#E8762C]"
           style={{ background: ROYAL }}>
           {/* 회전 대시 링 */}
           <motion.span
@@ -697,7 +697,7 @@ export default function EditorialConcept() {
         </Link>
         <button type="button" aria-label="맨 위로"
           onClick={() => window.scrollTo({ top: 0, behavior: reduced ? "auto" : "smooth" })}
-          className="w-14 h-14 sm:w-[64px] sm:h-[64px] rounded-full flex flex-col items-center justify-center gap-1 text-[11px] font-bold bg-white shadow-[0_10px_30px_rgba(16,24,40,0.18)] transition-transform duration-500 hover:scale-110"
+          className="w-14 h-14 sm:w-[64px] sm:h-[64px] rounded-full flex flex-col items-center justify-center gap-1 text-[11px] font-bold bg-white shadow-[0_10px_30px_rgba(16,24,40,0.18)] transition-all duration-500 hover:scale-110 hover:!bg-[#E8762C] hover:!text-white"
           style={{ border: `1px solid ${HAIR}`, color: INK }}>
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden><polyline points="18 15 12 9 6 15" /></svg>
           TOP
