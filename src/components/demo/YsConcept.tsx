@@ -201,14 +201,14 @@ export default function YsConcept() {
                   <Link
                     href={item.href}
                     className="relative flex items-center px-[22px] text-[16.5px] font-bold transition-colors duration-200"
-                    style={{ color: hovered === item.href ? NAVY : INK }}
+                    style={{ color: hovered === item.href ? "#E8762C" : INK }}
                   >
                     {item.label}
                     {hovered === item.href && (
                       <motion.span
                         layoutId="ysUnderline"
                         className="absolute left-4 right-4 bottom-0 h-[3px] rounded-full"
-                        style={{ background: NAVY }}
+                        style={{ background: "#E8762C" }}
                         transition={{ duration: 0.6, ease: E }}
                       />
                     )}
@@ -220,7 +220,7 @@ export default function YsConcept() {
             <div className="flex items-center gap-3">
               <Link
                 href="/support/inquiry"
-                className="hidden sm:flex items-center h-10 px-[22px] rounded-full text-white text-[13.5px] font-bold bg-[#2C4A6E] hover:bg-[#213956] transition-colors"
+                className="hidden sm:flex items-center h-10 px-[22px] rounded-full text-white text-[13.5px] font-bold bg-[#2C4A6E] hover:bg-[#E8762C] transition-colors"
               >
                 견적 문의
               </Link>
@@ -272,7 +272,7 @@ export default function YsConcept() {
                         >
                           <Link
                             href={c.href}
-                            className="block text-[13.5px] py-1.5 px-2.5 -mx-2.5 rounded-lg text-[#5A6B7E] hover:text-[#16273C] hover:bg-[#F2F5F9] transition-colors"
+                            className="block text-[13.5px] py-1.5 px-2.5 -mx-2.5 rounded-lg text-[#5A6B7E] hover:text-[#E8762C] hover:bg-[#FBF3EA] transition-colors"
                           >
                             {c.label}
                           </Link>
@@ -383,8 +383,8 @@ export default function YsConcept() {
                   <motion.span
                     initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.15, duration: 0.5, ease: E }}
-                    className="inline-flex items-center h-7 px-3 rounded-full text-[11px] font-bold tracking-[0.18em] text-white"
-                    style={{ background: "rgba(255,255,255,0.16)", backdropFilter: "blur(6px)" }}
+                    className="inline-flex items-center h-7 px-3 rounded-full text-[11px] font-bold tracking-[0.18em]"
+                    style={{ background: "rgba(198,155,84,0.3)", color: "#F2DCAE", backdropFilter: "blur(6px)" }}
                   >
                     {SLIDES[idx].chip}
                   </motion.span>
@@ -459,7 +459,7 @@ export default function YsConcept() {
                   className="group flex flex-col items-center justify-center gap-2.5 rounded-[10px] bg-white py-5 sm:py-6 border border-[#E7ECF2] hover:border-[#B9C7D8] shadow-[0_8px_24px_rgba(23,42,69,0.06)] hover:shadow-[0_16px_36px_rgba(23,42,69,0.12)] transition-all duration-700 hover:-translate-y-1"
                 >
                   <span
-                    className="w-11 h-11 rounded-full flex items-center justify-center bg-[#EEF3F9] group-hover:bg-[#2C4A6E] group-hover:text-white transition-colors duration-300"
+                    className="w-11 h-11 rounded-full flex items-center justify-center bg-[#EEF3F9] group-hover:bg-[#E8762C] group-hover:text-white transition-colors duration-300"
                     style={{ color: NAVY }}
                   >
                     {q.icon}

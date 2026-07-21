@@ -174,19 +174,19 @@ export default function EditorialConcept() {
             {NAV.map((item) => (
               <Link
                 key={item.href} href={item.href}
-                className="group relative flex items-center px-5 xl:px-6 text-[16px] font-bold whitespace-nowrap transition-colors duration-300 hover:text-[#2E5AA7]"
+                className="group relative flex items-center px-5 xl:px-6 text-[16px] font-bold whitespace-nowrap transition-colors duration-300 hover:text-[#E8762C]"
                 style={{ letterSpacing: "-0.01em" }}
               >
                 {item.label}
                 <span className="absolute left-5 right-5 xl:left-6 xl:right-6 bottom-0 h-[2.5px] origin-center scale-x-0 group-hover:scale-x-100"
-                  style={{ background: ROYAL, transition: "transform .6s cubic-bezier(0.16,1,0.3,1)" }} />
+                  style={{ background: "#E8762C", transition: "transform .6s cubic-bezier(0.16,1,0.3,1)" }} />
               </Link>
             ))}
           </nav>
 
           <div className="flex items-center gap-4">
             <Link href="/support/inquiry"
-              className="hidden sm:flex items-center gap-2 h-10 px-6 rounded-full text-[13.5px] font-bold text-white transition-colors duration-300 hover:bg-[#1d3f7c]"
+              className="hidden sm:flex items-center gap-2 h-10 px-6 rounded-full text-[13.5px] font-bold text-white transition-colors duration-300 hover:bg-[#E8762C]"
               style={{ background: ROYAL }}>
               견적 문의 <NE />
             </Link>
@@ -303,11 +303,11 @@ export default function EditorialConcept() {
           <div className="mx-auto flex items-center justify-between gap-6"
             style={{ maxWidth: 1400, paddingInline: "clamp(20px, 3.5vw, 48px)" }}>
             <div className="flex items-center gap-4 flex-1 max-w-[300px]" aria-hidden>
-              <span className="text-[13px] font-bold text-white tabular-nums">{String(idx + 1).padStart(2, "0")}</span>
+              <span className="text-[13px] font-bold text-[#E5C285] tabular-nums">{String(idx + 1).padStart(2, "0")}</span>
               <span className="relative flex-1 h-px overflow-hidden" style={{ background: "rgba(255,255,255,0.28)" }}>
                 <motion.span
                   key={`${idx}-${playing ? "p" : "s"}`}
-                  className="absolute inset-y-0 left-0 w-full origin-left bg-white"
+                  className="absolute inset-y-0 left-0 w-full origin-left bg-[#C69B54]"
                   initial={{ scaleX: 0 }}
                   animate={{ scaleX: playing && !reduced ? 1 : 0 }}
                   transition={{ duration: playing && !reduced ? SLIDE_MS / 1000 : 0.4, ease: "linear" }}
@@ -412,7 +412,7 @@ export default function EditorialConcept() {
                       KCs 안전인증 5건 · 서면심사도서 11권 · ISO 3종
                     </p>
                   </div>
-                  <span className="w-13 h-13 shrink-0 rounded-full flex items-center justify-center w-[52px] h-[52px] transition-all duration-500 group-hover:bg-[#2E5AA7] group-hover:text-white group-hover:rotate-45"
+                  <span className="w-13 h-13 shrink-0 rounded-full flex items-center justify-center w-[52px] h-[52px] transition-all duration-500 group-hover:bg-[#E8762C] group-hover:text-white group-hover:rotate-45"
                     style={{ border: `1.5px solid ${ROYAL}`, color: ROYAL }}>
                     <NE />
                   </span>
@@ -455,7 +455,7 @@ export default function EditorialConcept() {
                   </button>
                 </div>
                 <Link href={tab === "notice" ? "/support/notice" : "/portfolio"} aria-label="더보기"
-                  className="text-[28px] font-light leading-none transition-transform duration-500 hover:rotate-90" style={{ color: INK }}>
+                  className="text-[28px] font-light leading-none transition-all duration-500 hover:rotate-90 hover:!text-[#E8762C]" style={{ color: INK }}>
                   +
                 </Link>
               </div>
@@ -482,12 +482,12 @@ export default function EditorialConcept() {
                         style={{ paddingInline: 6 }}>
                         <span className="shrink-0 min-w-[64px] text-center text-[11.5px] font-bold px-2.5 py-1.5"
                           style={{
-                            background: i === 0 ? ROYAL : "rgba(16,24,40,0.06)",
+                            background: i === 0 ? "#C69B54" : "rgba(16,24,40,0.06)",
                             color: i === 0 ? "#fff" : "rgba(16,24,40,0.55)",
                           }}>
                           {row.chip}
                         </span>
-                        <span className="flex-1 min-w-0 text-[15px] font-medium truncate transition-colors duration-300 group-hover:text-[#2E5AA7]"
+                        <span className="flex-1 min-w-0 text-[15px] font-medium truncate transition-colors duration-300 group-hover:text-[#E8762C]"
                           style={{ color: "rgba(16,24,40,0.82)" }}>
                           {row.title}
                         </span>
@@ -519,15 +519,15 @@ export default function EditorialConcept() {
                   </p>
                 </div>
                 <Link href="/technology#safety" className="group flex items-center justify-between py-5" style={{ borderBottom: `1px solid ${HAIR}` }}>
-                  <span className="text-[15.5px] font-bold transition-colors duration-300 group-hover:text-[#2E5AA7]">안전관리 자세히 보기</span>
+                  <span className="text-[15.5px] font-bold transition-colors duration-300 group-hover:text-[#E8762C]">안전관리 자세히 보기</span>
                   <span className="transition-transform duration-500 group-hover:translate-x-1.5" style={{ color: ROYAL }}><NE /></span>
                 </Link>
                 <Link href="/technology#license" className="group flex items-center justify-between py-5" style={{ borderBottom: `1px solid ${HAIR}` }}>
-                  <span className="text-[15.5px] font-bold transition-colors duration-300 group-hover:text-[#2E5AA7]">보유 자격 인력</span>
+                  <span className="text-[15.5px] font-bold transition-colors duration-300 group-hover:text-[#E8762C]">보유 자격 인력</span>
                   <span className="transition-transform duration-500 group-hover:translate-x-1.5" style={{ color: ROYAL }}><NE /></span>
                 </Link>
                 <Link href="/support/inquiry" className="group flex items-center justify-between py-5" style={{ borderBottom: `1px solid ${HAIR}` }}>
-                  <span className="text-[15.5px] font-bold transition-colors duration-300 group-hover:text-[#2E5AA7]">온라인 견적 문의</span>
+                  <span className="text-[15.5px] font-bold transition-colors duration-300 group-hover:text-[#E8762C]">온라인 견적 문의</span>
                   <span className="transition-transform duration-500 group-hover:translate-x-1.5" style={{ color: ROYAL }}><NE /></span>
                 </Link>
 
@@ -596,7 +596,7 @@ export default function EditorialConcept() {
                       <span className="self-start text-[11.5px] font-bold px-2.5 py-1 mb-4" style={{ background: NAVY, color: "#fff" }}>
                         {item.capacity}
                       </span>
-                      <h3 className="text-[16.5px] font-bold leading-[1.45] transition-colors duration-300 group-hover:text-[#2E5AA7]">
+                      <h3 className="text-[16.5px] font-bold leading-[1.45] transition-colors duration-300 group-hover:text-[#E8762C]">
                         {item.title}
                       </h3>
                       <p className="mt-auto pt-5 text-[13px]" style={{ color: "rgba(16,24,40,0.5)" }}>
@@ -631,7 +631,7 @@ export default function EditorialConcept() {
             <Rise delay={0.15} x={90}>
               <div className="flex flex-col sm:flex-row gap-4">
                 <Link href="/support/inquiry"
-                  className="flex items-center justify-center gap-2.5 h-[60px] px-10 rounded-full text-[15px] font-bold transition-colors duration-500 hover:bg-[#dfe9f8]"
+                  className="flex items-center justify-center gap-2.5 h-[60px] px-10 rounded-full text-[15px] font-bold transition-colors duration-500 hover:bg-[#F6E7D2]"
                   style={{ background: "#fff", color: NAVY }}>
                   온라인 견적 문의 <NE />
                 </Link>

@@ -207,7 +207,7 @@ export default function MonumentConcept() {
                 {item.label}
                 <span
                   className="absolute left-5 right-5 xl:left-6 xl:right-6 bottom-0 h-[2px] origin-left scale-x-0 group-hover:scale-x-100"
-                  style={{ background: BRASS, transition: "transform .7s cubic-bezier(0.16,1,0.3,1)" }}
+                  style={{ background: "#E8762C", transition: "transform .7s cubic-bezier(0.16,1,0.3,1)" }}
                 />
               </Link>
             ))}
@@ -226,7 +226,7 @@ export default function MonumentConcept() {
             </a>
             <Link
               href="/support/inquiry"
-              className="hidden sm:flex items-center h-11 px-7 text-[13.5px] font-bold tracking-wide transition-colors duration-500"
+              className="hidden sm:flex items-center h-11 px-7 text-[13.5px] font-bold tracking-wide transition-colors duration-500 hover:!border-[#E8762C] hover:!text-[#E8762C]"
               style={{ border: `1px solid ${BRASS}`, color: BRASS }}
             >
               견적 문의
@@ -449,7 +449,7 @@ export default function MonumentConcept() {
                 크레인은 한 번 올라가면 수십 년을 버팁니다. 저희가 쌓아온 실적은
                 그 시간을 견뎌온 설비의 기록입니다.
               </p>
-              <Link href="/about" className="inline-flex items-center gap-3 mt-9 h-14 px-8 text-[14px] font-bold group" style={{ border: `1px solid ${LINE}`, color: TEXT }}>
+              <Link href="/about" className="inline-flex items-center gap-3 mt-9 h-14 px-8 text-[14px] font-bold group transition-colors duration-500 hover:!text-[#E8762C] hover:!border-[#E8762C]" style={{ border: `1px solid ${LINE}`, color: TEXT }}>
                 회사소개 보기
                 <span className="group-hover:translate-x-2" style={{ display: "inline-block", color: BRASS, transition: "transform .8s cubic-bezier(0.16,1,0.3,1)" }}>→</span>
               </Link>
@@ -533,7 +533,7 @@ export default function MonumentConcept() {
                       <span className="text-[12px] font-bold tabular-nums" style={{ color: "#9A7434" }}>
                         {String(i + 1).padStart(2, "0")}
                       </span>
-                      <h3 className="text-[21px] font-bold tracking-tight">{area.title}</h3>
+                      <h3 className="text-[21px] font-bold tracking-tight transition-colors duration-500 group-hover:text-[#C9631F]">{area.title}</h3>
                     </div>
                     <p className="mt-3.5 text-[14.5px] leading-[1.85]" style={{ color: "rgba(12,15,19,0.6)" }}>
                       {area.desc}
@@ -566,7 +566,7 @@ export default function MonumentConcept() {
                   증명한 기술
                 </h2>
               </div>
-              <Link href="/portfolio" className="inline-flex items-center gap-3 text-[14px] font-semibold group" style={{ color: BRASS }}>
+              <Link href="/portfolio" className="inline-flex items-center gap-3 text-[14px] font-semibold group transition-colors duration-500 hover:!text-[#E8762C]" style={{ color: BRASS }}>
                 전체 시공사례 보기
                 <span style={{ display: "inline-block", transition: "transform .8s cubic-bezier(0.16,1,0.3,1)" }} className="group-hover:translate-x-2">→</span>
               </Link>
@@ -618,7 +618,7 @@ export default function MonumentConcept() {
                   </div>
                   <div className="pt-6" style={{ borderTop: `1px solid ${LINE}`, marginTop: 20 }}>
                     <div className="flex items-center justify-between gap-4">
-                      <h3 className="text-[17px] font-bold tracking-tight" style={{ color: TEXT }}>{item.title}</h3>
+                      <h3 className="text-[17px] font-bold tracking-tight transition-colors duration-500 group-hover:!text-[#E8762C]" style={{ color: TEXT }}>{item.title}</h3>
                       <span className="text-[12.5px] font-bold shrink-0" style={{ color: BRASS }}>{item.capacity}</span>
                     </div>
                     <p className="mt-2.5 text-[13.5px]" style={{ color: MUTED }}>
@@ -689,7 +689,7 @@ export default function MonumentConcept() {
                 취득한 인증과 심사 도서를 그대로 공개합니다. 판단에 필요한 근거를
                 감추지 않는 것이 저희의 방식입니다.
               </p>
-              <Link href="/technology" className="inline-flex items-center gap-3 mt-10 h-14 px-9 text-[14px] font-bold" style={{ border: `1px solid ${BRASS}`, color: BRASS }}>
+              <Link href="/technology" className="inline-flex items-center gap-3 mt-10 h-14 px-9 text-[14px] font-bold transition-colors duration-500 hover:!border-[#E8762C] hover:!text-[#E8762C]" style={{ border: `1px solid ${BRASS}`, color: BRASS }}>
                 인증 자료 보기
               </Link>
             </Rise>

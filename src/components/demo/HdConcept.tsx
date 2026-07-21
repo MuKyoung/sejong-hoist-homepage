@@ -101,7 +101,7 @@ export default function HdConcept() {
                   {item.label}
                   <span
                     className="absolute left-3 right-3 xl:left-4 xl:right-4 bottom-0 h-[2px] origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-700"
-                    style={{ background: solid ? "#2C4A6E" : "#FFFFFF" }}
+                    style={{ background: "#E8762C" }}
                   />
                 </Link>
               </div>
@@ -124,7 +124,7 @@ export default function HdConcept() {
             </a>
             <Link
               href="/support/inquiry"
-              className="hidden sm:flex items-center h-10 px-5 rounded-full text-[13px] font-bold whitespace-nowrap transition-all duration-500"
+              className="hidden sm:flex items-center h-10 px-5 rounded-full text-[13px] font-bold whitespace-nowrap transition-all duration-500 hover:!border-[#E8762C] hover:!text-[#E8762C]"
               style={{
                 border: `1.5px solid ${solid ? "#2C4A6E" : "rgba(255,255,255,0.55)"}`,
                 color: solid ? "#2C4A6E" : "#fff",
@@ -166,7 +166,7 @@ export default function HdConcept() {
                 {NAV.map((item, ci) => (
                   <div key={item.href}>
                     <Link href={item.href} className="group inline-block">
-                      <p className="text-[15px] font-extrabold group-hover:text-[#2C4A6E] transition-colors" style={{ color: INK }}>
+                      <p className="text-[15px] font-extrabold group-hover:text-[#E8762C] transition-colors" style={{ color: INK }}>
                         {item.label}
                       </p>
                     </Link>
@@ -177,7 +177,7 @@ export default function HdConcept() {
                           transition={{ delay: 0.08 + ci * 0.02 + i * 0.03, duration: 0.35, ease: E }}
                         >
                           <Link href={c.href}
-                            className="block text-[13.5px] py-0.5 text-[#5E6E80] hover:text-[#16273C] hover:translate-x-1 transition-all duration-500">
+                            className="block text-[13.5px] py-0.5 text-[#5E6E80] hover:text-[#E8762C] hover:translate-x-1 transition-all duration-500">
                             {c.label}
                           </Link>
                         </motion.div>
@@ -338,7 +338,7 @@ export default function HdConcept() {
                     key={idx}
                     initial={{ y: 18, opacity: 0 }} animate={{ y: 0, opacity: 1 }} exit={{ y: -18, opacity: 0 }}
                     transition={{ duration: 0.75, ease: E }}
-                    className="block text-[24px] sm:text-[28px] font-extrabold text-white leading-8 sm:leading-9 tabular-nums"
+                    className="block text-[24px] sm:text-[28px] font-extrabold text-[#C69B54] leading-8 sm:leading-9 tabular-nums"
                   >
                     {String(idx + 1).padStart(2, "0")}
                   </motion.span>
@@ -352,7 +352,7 @@ export default function HdConcept() {
                   initial={{ scaleX: 0 }}
                   animate={{ scaleX: playing && !reduced ? 1 : 0 }}
                   transition={{ duration: playing ? DUR / 1000 : 0.3, ease: "linear" }}
-                  className="h-full bg-white/90 origin-left"
+                  className="h-full bg-[#C69B54] origin-left"
                 />
               </div>
               <span className="text-[13px] text-white/50 tabular-nums" aria-hidden>/ {String(SLIDES.length).padStart(2, "0")}</span>
@@ -364,7 +364,7 @@ export default function HdConcept() {
               className="flex items-center gap-2 sm:gap-2.5">
               <button type="button" onClick={() => setPlaying((v) => !v)}
                 aria-label={playing ? "슬라이드 일시정지" : "슬라이드 재생"}
-                className="w-10 h-10 sm:w-11 sm:h-11 rounded-full border border-white/30 text-white flex items-center justify-center hover:bg-white/10 hover:border-white/60 transition-all duration-500">
+                className="w-10 h-10 sm:w-11 sm:h-11 rounded-full border border-white/30 text-white flex items-center justify-center hover:bg-white/10 hover:border-[#E8762C] hover:text-[#E8762C] transition-all duration-500">
                 {playing ? (
                   <svg width="11" height="12" viewBox="0 0 11 12" fill="currentColor" aria-hidden><rect x="1" width="3" height="12" rx="1" /><rect x="7" width="3" height="12" rx="1" /></svg>
                 ) : (
@@ -372,11 +372,11 @@ export default function HdConcept() {
                 )}
               </button>
               <button type="button" onClick={() => go(-1)} aria-label="이전 슬라이드"
-                className="w-10 h-10 sm:w-11 sm:h-11 rounded-full border border-white/30 text-white flex items-center justify-center hover:bg-white/10 hover:border-white/60 transition-all duration-500">
+                className="w-10 h-10 sm:w-11 sm:h-11 rounded-full border border-white/30 text-white flex items-center justify-center hover:bg-white/10 hover:border-[#E8762C] hover:text-[#E8762C] transition-all duration-500">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden><polyline points="15 18 9 12 15 6" /></svg>
               </button>
               <button type="button" onClick={() => go(1)} aria-label="다음 슬라이드"
-                className="w-10 h-10 sm:w-11 sm:h-11 rounded-full border border-white/30 text-white flex items-center justify-center hover:bg-white/10 hover:border-white/60 transition-all duration-500">
+                className="w-10 h-10 sm:w-11 sm:h-11 rounded-full border border-white/30 text-white flex items-center justify-center hover:bg-white/10 hover:border-[#E8762C] hover:text-[#E8762C] transition-all duration-500">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden><polyline points="9 18 15 12 9 6" /></svg>
               </button>
             </motion.div>
