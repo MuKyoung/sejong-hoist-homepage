@@ -105,6 +105,7 @@ export default function EditorialConcept() {
   const reduced = useReducedMotion();
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+  const [megaOpen, setMegaOpen] = useState(false);
   const [idx, setIdx] = useState(0);
   const [playing, setPlaying] = useState(true);
   const [tab, setTab] = useState<"notice" | "news">("notice");
@@ -124,8 +125,8 @@ export default function EditorialConcept() {
 
   const go = (d: number) => setIdx((i) => (i + d + SLIDES.length) % SLIDES.length);
 
-  /* 현대일렉트릭式: 히어로 위 투명 → 스크롤 시 화이트 전환 */
-  const solid = scrolled && !menuOpen;
+  /* 현대일렉트릭式: 히어로 위 투명 → 스크롤/메가 패널 시 화이트 전환 */
+  const solid = (scrolled || megaOpen) && !menuOpen;
   const fg = solid ? INK : "#FFFFFF";
 
   const noticeRows = NOTICES.slice(0, 5);
@@ -137,6 +138,7 @@ export default function EditorialConcept() {
       {/* ══════════ 헤더 : 히어로 위 투명 2단 → 스크롤 시 유틸 접힘 + 화이트 전환 ══════════ */}
       <header
         className="fixed top-0 inset-x-0 z-50"
+        onMouseLeave={() => setMegaOpen(false)}
         style={{
           background: solid ? "rgba(255,255,255,0.98)" : "transparent",
           boxShadow: solid ? "0 12px 32px rgba(16,24,40,0.08)" : "none",
@@ -144,15 +146,15 @@ export default function EditorialConcept() {
           transition: "background .55s ease, box-shadow .55s ease, border-color .55s ease",
         }}
       >
-        {/* 유틸 바 — 투명 상태에서만 노출, 스크롤 시 접힘 */}
+        {/* 유틸 바 — 스크롤 시에만 접힘 (호버 패널로는 높이 유지, 색만 전환) */}
         <div className="hidden md:block overflow-hidden"
           style={{
-            height: solid ? 0 : 36,
-            borderBottom: solid ? "none" : "1px solid rgba(255,255,255,0.14)",
+            height: scrolled ? 0 : 36,
+            borderBottom: scrolled ? "none" : `1px solid ${solid ? HAIR : "rgba(255,255,255,0.14)"}`,
             transition: "height .55s ease, border-color .55s ease",
           }}>
           <div className="mx-auto flex items-center justify-between h-9 text-[12.5px]"
-            style={{ maxWidth: 1400, paddingInline: "clamp(20px, 3.5vw, 48px)", color: "rgba(255,255,255,0.78)" }}>
+            style={{ maxWidth: 1400, paddingInline: "clamp(20px, 3.5vw, 48px)", color: solid ? "rgba(16,24,40,0.6)" : "rgba(255,255,255,0.78)", transition: "color .55s ease" }}>
             <div className="flex items-center gap-5">
               <span>{COMPANY.address}</span>
             </div>
@@ -186,6 +188,7 @@ export default function EditorialConcept() {
             {NAV.map((item) => (
               <Link
                 key={item.href} href={item.href}
+                onMouseEnter={() => setMegaOpen(true)}
                 className="group relative flex items-center px-5 xl:px-6 text-[16px] font-bold whitespace-nowrap transition-colors duration-300 hover:!text-[#E8762C]"
                 style={{ letterSpacing: "-0.01em", color: fg, textShadow: solid ? "none" : "0 1px 14px rgba(0,0,0,0.5)" }}
               >
@@ -213,6 +216,45 @@ export default function EditorialConcept() {
             </button>
           </div>
         </div>
+
+        {/* ── GNB 호버 시 헤더 아래로 펼쳐지는 풀 메뉴 패널 (토글 메뉴와 동일 구성) ── */}
+        <AnimatePresence>
+          {megaOpen && !menuOpen && (
+            <motion.div
+              initial={{ height: 0, opacity: 0 }}
+              animate={{ height: "auto", opacity: 1 }}
+              exit={{ height: 0, opacity: 0 }}
+              transition={{ duration: 0.6, ease: E }}
+              className="hidden lg:block overflow-hidden bg-white"
+              style={{ borderTop: `1px solid ${HAIR}`, boxShadow: "0 28px 48px rgba(16,24,40,0.12)" }}
+            >
+              <div className="mx-auto grid grid-cols-5 gap-8 py-9"
+                style={{ maxWidth: 1400, paddingInline: "clamp(20px, 3.5vw, 48px)" }}>
+                {NAV.map((item, ci) => (
+                  <div key={item.href}>
+                    <Link href={item.href} className="text-[15px] font-extrabold transition-colors duration-500 hover:text-[#E8762C]" style={{ color: INK }}>
+                      {item.label}
+                    </Link>
+                    <span className="block w-6 h-[2.5px] mt-2.5 mb-4" style={{ background: ROYAL }} aria-hidden />
+                    <div className="flex flex-col gap-2">
+                      {item.children.map((c, i) => (
+                        <motion.div key={c.href}
+                          initial={{ opacity: 0, y: 6 }} animate={{ opacity: 1, y: 0 }}
+                          transition={{ delay: 0.08 + ci * 0.02 + i * 0.03, duration: 0.35, ease: E }}
+                        >
+                          <Link href={c.href}
+                            className="block text-[13.5px] py-0.5 text-[#5E6E80] hover:text-[#E8762C] hover:translate-x-1 transition-all duration-500">
+                            {c.label}
+                          </Link>
+                        </motion.div>
+                      ))}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </header>
 
       {/* 전체 메뉴 오버레이 (연세대 MENU) */}
@@ -221,8 +263,8 @@ export default function EditorialConcept() {
           <motion.div
             initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
             transition={{ duration: 0.5, ease: E }}
-            className="fixed inset-0 z-40 overflow-y-auto"
-            style={{ background: "rgba(14,20,32,0.98)", paddingTop: 104 }}
+            className="fixed inset-0 z-40 overflow-y-auto pt-20 md:pt-[124px]"
+            style={{ background: "rgba(14,20,32,0.98)" }}
           >
             <div className="mx-auto grid sm:grid-cols-2 lg:grid-cols-5 gap-x-10 gap-y-12 pb-20"
               style={{ maxWidth: 1400, paddingInline: "clamp(20px, 3.5vw, 48px)" }}>

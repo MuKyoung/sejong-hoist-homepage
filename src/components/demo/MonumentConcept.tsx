@@ -143,10 +143,13 @@ export default function MonumentConcept() {
   const reduced = useReducedMotion();
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+  const [megaOpen, setMegaOpen] = useState(false);
   const [idx, setIdx] = useState(0);
   const [playing, setPlaying] = useState(true);
 
   const solid = scrolled || menuOpen;
+  /* 호버 패널이 열릴 때도 헤더는 다크 솔리드로 (높이는 스크롤 시에만 축소) */
+  const dark = solid || megaOpen;
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 40);
@@ -169,10 +172,11 @@ export default function MonumentConcept() {
       {/* ══════════ 헤더 ══════════ */}
       <header
         className="fixed top-0 inset-x-0 z-50"
+        onMouseLeave={() => setMegaOpen(false)}
         style={{
-          background: solid ? "rgba(12,15,19,0.94)" : "transparent",
-          backdropFilter: solid ? "blur(14px)" : "none",
-          borderBottom: `1px solid ${solid ? LINE : "rgba(255,255,255,0.14)"}`,
+          background: dark ? "rgba(12,15,19,0.94)" : "transparent",
+          backdropFilter: dark ? "blur(14px)" : "none",
+          borderBottom: `1px solid ${dark ? LINE : "rgba(255,255,255,0.14)"}`,
           transition: "background .6s ease, border-color .6s ease, backdrop-filter .6s ease",
         }}
       >
@@ -201,8 +205,9 @@ export default function MonumentConcept() {
               <Link
                 key={item.href}
                 href={item.href}
+                onMouseEnter={() => setMegaOpen(true)}
                 className="group relative flex items-center px-5 xl:px-6 text-[16px] font-bold whitespace-nowrap transition-colors duration-500 hover:!text-[#E8762C]"
-                style={{ color: TEXT, letterSpacing: "-0.01em", textShadow: solid ? "none" : "0 1px 12px rgba(0,0,0,0.45)" }}
+                style={{ color: TEXT, letterSpacing: "-0.01em", textShadow: dark ? "none" : "0 1px 12px rgba(0,0,0,0.45)" }}
               >
                 {item.label}
                 <span
@@ -213,7 +218,7 @@ export default function MonumentConcept() {
             ))}
           </nav>
 
-          <div className="justify-self-end flex items-center gap-5 shrink-0" style={{ textShadow: solid ? "none" : "0 1px 12px rgba(0,0,0,0.4)" }}>
+          <div className="justify-self-end flex items-center gap-5 shrink-0" style={{ textShadow: dark ? "none" : "0 1px 12px rgba(0,0,0,0.4)" }}>
             <a
               href={`tel:${COMPANY.tel.replace(/-/g, "")}`}
               className="hidden lg:flex items-center gap-2 text-[13.5px] font-medium tracking-wide transition-colors duration-500 hover:!text-[#E8762C]"
@@ -241,6 +246,46 @@ export default function MonumentConcept() {
             </button>
           </div>
         </div>
+
+        {/* ── GNB 호버 시 헤더 아래로 펼쳐지는 풀 메뉴 패널 ── */}
+        <AnimatePresence>
+          {megaOpen && !menuOpen && (
+            <motion.div
+              initial={{ height: 0, opacity: 0 }}
+              animate={{ height: "auto", opacity: 1 }}
+              exit={{ height: 0, opacity: 0 }}
+              transition={{ duration: 0.65, ease: E }}
+              className="hidden lg:block overflow-hidden"
+              style={{ borderTop: `1px solid ${LINE}` }}
+            >
+              <div className="mx-auto grid grid-cols-5 gap-8 py-9"
+                style={{ maxWidth: 1440, paddingInline: "clamp(20px, 4vw, 56px)" }}>
+                {NAV.map((item, ci) => (
+                  <div key={item.href}>
+                    <Link href={item.href} className="text-[15px] font-extrabold transition-colors duration-500 hover:!text-[#E8762C]" style={{ color: TEXT }}>
+                      {item.label}
+                    </Link>
+                    <span className="block w-6 h-[2px] mt-2.5 mb-4" style={{ background: BRASS }} aria-hidden />
+                    <div className="flex flex-col gap-2">
+                      {item.children.map((c, i) => (
+                        <motion.div key={c.href}
+                          initial={{ opacity: 0, y: 6 }} animate={{ opacity: 1, y: 0 }}
+                          transition={{ delay: 0.08 + ci * 0.02 + i * 0.03, duration: 0.35, ease: E }}
+                        >
+                          <Link href={c.href}
+                            className="block text-[13.5px] py-0.5 transition-all duration-500 hover:!text-[#E8762C] hover:translate-x-1"
+                            style={{ color: MUTED }}>
+                            {c.label}
+                          </Link>
+                        </motion.div>
+                      ))}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </header>
 
       {/* 모바일 메뉴 */}
