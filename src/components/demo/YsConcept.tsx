@@ -172,10 +172,6 @@ export default function YsConcept() {
               <Link href="/about/location" className="hover:text-[#E8762C] transition-colors duration-500">오시는 길</Link>
             </div>
             <div className="flex items-center gap-4">
-              <a href="tel:044-865-0801" className="tracking-wide hover:text-[#E8762C] transition-colors duration-500">
-                044-865-0801
-              </a>
-              <span className="w-px h-3 bg-white/20" />
               <div className="flex items-center gap-2.5">
                 <Link href="/" className="text-white font-bold transition-colors duration-500 hover:text-[#E8762C]">KOR</Link>
                 <Link href="/en" className="hover:text-[#E8762C] transition-colors duration-500">ENG</Link>
@@ -222,12 +218,12 @@ export default function YsConcept() {
             </nav>
 
             <div className="justify-self-end flex items-center gap-3">
-              <Link
-                href="/support/inquiry"
-                className="hidden sm:flex items-center h-9 px-6 rounded-full text-white text-[13.5px] font-bold bg-[#2C4A6E] hover:bg-[#E8762C] transition-colors duration-500"
-              >
-                견적 문의
-              </Link>
+              <a href="tel:044-865-0801" className="hidden lg:flex items-center gap-2 text-[13.5px] font-semibold tracking-wide transition-colors duration-500 hover:!text-[#E8762C]" style={{ color: INK }}>
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#2C4A6E" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+                  <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.08 4.18 2 2 0 0 1 4.06 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z" />
+                </svg>
+                044-865-0801
+              </a>
 
               {/* 모바일 햄버거 */}
               <button

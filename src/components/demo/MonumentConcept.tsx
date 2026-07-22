@@ -216,7 +216,7 @@ export default function MonumentConcept() {
           <div className="justify-self-end flex items-center gap-5 shrink-0" style={{ textShadow: solid ? "none" : "0 1px 12px rgba(0,0,0,0.4)" }}>
             <a
               href={`tel:${COMPANY.tel.replace(/-/g, "")}`}
-              className="hidden xl:flex items-center gap-2 text-[13.5px] font-medium tracking-wide transition-colors duration-500 hover:!text-[#E8762C]"
+              className="hidden lg:flex items-center gap-2 text-[13.5px] font-medium tracking-wide transition-colors duration-500 hover:!text-[#E8762C]"
               style={{ color: MUTED }}
             >
               <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke={BRASS} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
@@ -224,13 +224,6 @@ export default function MonumentConcept() {
               </svg>
               {COMPANY.tel}
             </a>
-            <Link
-              href="/support/inquiry"
-              className="hidden sm:flex items-center h-10 px-6 text-[13.5px] font-bold tracking-wide transition-colors duration-500 hover:!border-[#E8762C] hover:!text-[#E8762C]"
-              style={{ border: `1px solid ${BRASS}`, color: BRASS }}
-            >
-              견적 문의
-            </Link>
 
             <button
               type="button"

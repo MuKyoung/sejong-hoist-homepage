@@ -115,23 +115,13 @@ export default function HdConcept() {
               <span className="opacity-30">|</span>
               <Link href="/en" className="opacity-50 transition-all duration-500 hover:opacity-100 hover:!text-[#E8762C]">ENG</Link>
             </div>
-            <span className="hidden xl:block w-px h-4" style={{ background: solid ? "#DDE3EA" : "rgba(255,255,255,0.25)" }} />
-            <a href="tel:044-865-0801" className="hidden xl:flex items-center gap-1.5 text-[13.5px] font-medium tracking-wide whitespace-nowrap transition-colors duration-500 hover:!text-[#E8762C]" style={{ color: fg }}>
+            <span className="hidden lg:block w-px h-4" style={{ background: solid ? "#DDE3EA" : "rgba(255,255,255,0.25)" }} />
+            <a href="tel:044-865-0801" className="hidden lg:flex items-center gap-1.5 text-[13.5px] font-medium tracking-wide whitespace-nowrap transition-colors duration-500 hover:!text-[#E8762C]" style={{ color: fg }}>
               <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
                 <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.08 4.18 2 2 0 0 1 4.06 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z" />
               </svg>
               044-865-0801
             </a>
-            <Link
-              href="/support/inquiry"
-              className="hidden sm:flex items-center h-9 px-5 rounded-full text-[13px] font-bold whitespace-nowrap transition-all duration-500 hover:!border-[#E8762C] hover:!text-[#E8762C]"
-              style={{
-                border: `1.5px solid ${solid ? "#2C4A6E" : "rgba(255,255,255,0.55)"}`,
-                color: solid ? "#2C4A6E" : "#fff",
-              }}
-            >
-              견적 문의
-            </Link>
 
             {/* 모바일 햄버거 */}
             <button

@@ -197,11 +197,6 @@ export default function EditorialConcept() {
           </nav>
 
           <div className="justify-self-end flex items-center gap-5">
-            <Link href="/support/inquiry"
-              className="hidden sm:flex items-center gap-2 h-9 px-6 rounded-full text-[13.5px] font-bold text-white transition-colors duration-500 hover:bg-[#E8762C]"
-              style={{ background: ROYAL }}>
-              견적 문의 <NE />
-            </Link>
             <button
               type="button"
               onClick={() => setMenuOpen((v) => !v)}
