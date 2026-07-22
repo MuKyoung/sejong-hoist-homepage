@@ -8,7 +8,7 @@
  * - 모션: 전반적으로 느리게 (리빌 1.2s / 슬라이드 8s / 켄번스 14s / 호버 줌 1.3s)
  */
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
@@ -94,7 +94,7 @@ function Rise({
       initial={{ opacity: 0, x, y: x ? 0 : y }}
       whileInView={{ opacity: 1, x: 0, y: 0 }}
       viewport={{ once: true, margin: "-8%" }}
-      transition={{ duration: 1.2, delay, ease: E }}
+      transition={{ duration: 0.6, delay, ease: E }}
     >
       {children}
     </motion.div>
@@ -125,6 +125,21 @@ export default function EditorialConcept() {
 
   const go = (d: number) => setIdx((i) => (i + d + SLIDES.length) % SLIDES.length);
 
+
+  /* 메가 패널 칼럼을 GNB 버튼 x좌표에 실측 정렬 */
+  const barRef = useRef<HTMLDivElement>(null);
+  const navRef = useRef<HTMLElement>(null);
+  const [colLefts, setColLefts] = useState<number[] | null>(null);
+  useEffect(() => {
+    const measure = () => {
+      if (!barRef.current || !navRef.current) return;
+      const base = barRef.current.getBoundingClientRect().left;
+      setColLefts(Array.from(navRef.current.children).map((el) => (el as HTMLElement).getBoundingClientRect().left - base));
+    };
+    measure();
+    window.addEventListener("resize", measure);
+    return () => window.removeEventListener("resize", measure);
+  }, []);
   /* 현대일렉트릭式: 히어로 위 투명 → 스크롤/메가 패널 시 화이트 전환 */
   const solid = (scrolled || megaOpen) && !menuOpen;
   const fg = solid ? INK : "#FFFFFF";
@@ -143,7 +158,7 @@ export default function EditorialConcept() {
           background: solid ? "rgba(255,255,255,0.98)" : "transparent",
           boxShadow: solid ? "0 12px 32px rgba(16,24,40,0.08)" : "none",
           borderBottom: solid ? `1px solid ${HAIR}` : "1px solid rgba(255,255,255,0.16)",
-          transition: "background .55s ease, box-shadow .55s ease, border-color .55s ease",
+          transition: "background .28s ease, box-shadow .28s ease, border-color .28s ease",
         }}
       >
         {/* 유틸 바 — 스크롤 시에만 접힘 (호버 패널로는 높이 유지, 색만 전환) */}
@@ -151,50 +166,50 @@ export default function EditorialConcept() {
           style={{
             height: scrolled ? 0 : 36,
             borderBottom: scrolled ? "none" : `1px solid ${solid ? HAIR : "rgba(255,255,255,0.14)"}`,
-            transition: "height .55s ease, border-color .55s ease",
+            transition: "height .28s ease, border-color .28s ease",
           }}>
           <div className="mx-auto flex items-center justify-between h-9 text-[12.5px]"
-            style={{ maxWidth: 1400, paddingInline: "clamp(20px, 3.5vw, 48px)", color: solid ? "rgba(16,24,40,0.6)" : "rgba(255,255,255,0.78)", transition: "color .55s ease" }}>
+            style={{ maxWidth: 1400, paddingInline: "clamp(20px, 3.5vw, 48px)", color: solid ? "rgba(16,24,40,0.6)" : "rgba(255,255,255,0.78)", transition: "color .28s ease" }}>
             <div className="flex items-center gap-5">
               <span>{COMPANY.address}</span>
             </div>
             <div className="flex items-center gap-5">
-              <a href={`tel:${COMPANY.tel.replace(/-/g, "")}`} className="hover:text-[#E8762C] transition-colors duration-500">
+              <a href={`tel:${COMPANY.tel.replace(/-/g, "")}`} className="hover:text-[#E8762C] transition-colors duration-250">
                 대표전화 {COMPANY.tel}
               </a>
               <span style={{ width: 1, height: 11, background: "rgba(255,255,255,0.25)" }} />
-              <a href={`mailto:${COMPANY.email}`} className="hover:text-[#E8762C] transition-colors duration-500">
+              <a href={`mailto:${COMPANY.email}`} className="hover:text-[#E8762C] transition-colors duration-250">
                 {COMPANY.email}
               </a>
               <span style={{ width: 1, height: 11, background: "rgba(255,255,255,0.25)" }} />
-              <Link href="/en" className="hover:text-[#E8762C] transition-colors duration-500">ENG</Link>
+              <Link href="/en" className="hover:text-[#E8762C] transition-colors duration-250">ENG</Link>
             </div>
           </div>
         </div>
 
         {/* 로고-메뉴-유틸 3분할 그리드 — 메뉴가 항상 정중앙 (26.07 헤더 정렬 피드백) */}
-        <div className="mx-auto grid grid-cols-[1fr_auto_1fr] items-stretch gap-6 h-14 lg:h-[64px]"
+        <div ref={barRef} className="mx-auto grid grid-cols-[1fr_auto_1fr] items-stretch gap-6 h-14 lg:h-[64px]"
           style={{ maxWidth: 1400, paddingInline: "clamp(20px, 3.5vw, 48px)" }}>
           <Link href="/demo/8" aria-label={COMPANY.name} className="justify-self-start shrink-0 flex items-center">
             <Image
               src="/images/sejong-logo.png" alt={COMPANY.name}
               width={220} height={54} priority
-              className="w-auto h-9 lg:h-10 transition-[filter] duration-500"
+              className="w-auto h-9 lg:h-10 transition-[filter] duration-250"
               style={{ objectFit: "contain", filter: solid ? "none" : "brightness(0) invert(1)" }}
             />
           </Link>
 
-          <nav className="hidden lg:flex items-stretch self-stretch" aria-label="주요 메뉴">
+          <nav ref={navRef} className="hidden lg:flex items-stretch self-stretch" aria-label="주요 메뉴">
             {NAV.map((item) => (
               <Link
                 key={item.href} href={item.href}
                 onMouseEnter={() => setMegaOpen(true)}
-                className="group relative flex items-center px-5 xl:px-6 text-[16px] font-bold whitespace-nowrap transition-colors duration-300 hover:!text-[#E8762C]"
+                className="group relative flex items-center px-5 xl:px-6 text-[16px] font-bold whitespace-nowrap transition-colors duration-150 hover:!text-[#E8762C]"
                 style={{ letterSpacing: "-0.01em", color: fg, textShadow: solid ? "none" : "0 1px 14px rgba(0,0,0,0.5)" }}
               >
                 {item.label}
                 <span className="absolute left-5 right-5 xl:left-6 xl:right-6 bottom-0 h-[2.5px] origin-center scale-x-0 group-hover:scale-x-100"
-                  style={{ background: "#E8762C", transition: "transform .6s cubic-bezier(0.16,1,0.3,1)" }} />
+                  style={{ background: "#E8762C", transition: "transform .3s cubic-bezier(0.16,1,0.3,1)" }} />
               </Link>
             ))}
           </nav>
@@ -207,12 +222,12 @@ export default function EditorialConcept() {
               aria-label={menuOpen ? "메뉴 닫기" : "메뉴 열기"}
               aria-expanded={menuOpen}
             >
-              <motion.span className="block h-[2px] w-6 rounded-full transition-colors duration-500" style={{ background: fg, originX: "right" }}
-                animate={{ rotate: menuOpen ? -45 : 0, y: menuOpen ? 8 : 0 }} transition={{ duration: 0.4, ease: E }} />
-              <motion.span className="block h-[2px] w-4 rounded-full transition-colors duration-500" style={{ background: fg }}
-                animate={{ opacity: menuOpen ? 0 : 1 }} transition={{ duration: 0.25 }} />
-              <motion.span className="block h-[2px] rounded-full transition-colors duration-500" style={{ background: fg, originX: "right" }}
-                animate={{ width: menuOpen ? 24 : 20, rotate: menuOpen ? 45 : 0, y: menuOpen ? -8 : 0 }} transition={{ duration: 0.4, ease: E }} />
+              <motion.span className="block h-[2px] w-6 rounded-full transition-colors duration-250" style={{ background: fg, originX: "right" }}
+                animate={{ rotate: menuOpen ? -45 : 0, y: menuOpen ? 8 : 0 }} transition={{ duration: 0.2, ease: E }} />
+              <motion.span className="block h-[2px] w-4 rounded-full transition-colors duration-250" style={{ background: fg }}
+                animate={{ opacity: menuOpen ? 0 : 1 }} transition={{ duration: 0.125 }} />
+              <motion.span className="block h-[2px] rounded-full transition-colors duration-250" style={{ background: fg, originX: "right" }}
+                animate={{ width: menuOpen ? 24 : 20, rotate: menuOpen ? 45 : 0, y: menuOpen ? -8 : 0 }} transition={{ duration: 0.2, ease: E }} />
             </button>
           </div>
         </div>
@@ -224,15 +239,14 @@ export default function EditorialConcept() {
               initial={{ height: 0, opacity: 0 }}
               animate={{ height: "auto", opacity: 1 }}
               exit={{ height: 0, opacity: 0 }}
-              transition={{ duration: 0.6, ease: E }}
+              transition={{ duration: 0.3, ease: E }}
               className="hidden lg:block overflow-hidden bg-white"
               style={{ borderTop: `1px solid ${HAIR}`, boxShadow: "0 28px 48px rgba(16,24,40,0.12)" }}
             >
-              <div className="mx-auto grid grid-cols-5 gap-8 py-9"
-                style={{ maxWidth: 1400, paddingInline: "clamp(20px, 3.5vw, 48px)" }}>
-                {NAV.map((item, ci) => (
-                  <div key={item.href}>
-                    <Link href={item.href} className="text-[15px] font-extrabold transition-colors duration-500 hover:text-[#E8762C]" style={{ color: INK }}>
+              <div className="relative mx-auto" style={{ maxWidth: 1400, paddingInline: "clamp(20px, 3.5vw, 48px)", minHeight: 318 }}>
+                {colLefts && NAV.map((item, ci) => (
+                  <div key={item.href} className="absolute top-0 px-5 xl:px-6 py-9" style={{ left: colLefts[ci] }}>
+                    <Link href={item.href} className="text-[15px] font-extrabold transition-colors duration-250 hover:text-[#E8762C] whitespace-nowrap" style={{ color: INK }}>
                       {item.label}
                     </Link>
                     <span className="block w-6 h-[2.5px] mt-2.5 mb-4" style={{ background: ROYAL }} aria-hidden />
@@ -240,10 +254,10 @@ export default function EditorialConcept() {
                       {item.children.map((c, i) => (
                         <motion.div key={c.href}
                           initial={{ opacity: 0, y: 6 }} animate={{ opacity: 1, y: 0 }}
-                          transition={{ delay: 0.08 + ci * 0.02 + i * 0.03, duration: 0.35, ease: E }}
+                          transition={{ delay: 0.04 + ci * 0.01 + i * 0.015, duration: 0.175, ease: E }}
                         >
                           <Link href={c.href}
-                            className="block text-[13.5px] py-0.5 text-[#5E6E80] hover:text-[#E8762C] hover:translate-x-1 transition-all duration-500">
+                            className="block whitespace-nowrap text-[13.5px] py-0.5 text-[#5E6E80] hover:text-[#E8762C] hover:translate-x-1 transition-all duration-250">
                             {c.label}
                           </Link>
                         </motion.div>
@@ -262,7 +276,7 @@ export default function EditorialConcept() {
         {menuOpen && (
           <motion.div
             initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
-            transition={{ duration: 0.5, ease: E }}
+            transition={{ duration: 0.25, ease: E }}
             className="fixed inset-0 z-40 overflow-y-auto pt-20 md:pt-[124px]"
             style={{ background: "rgba(14,20,32,0.98)" }}
           >
@@ -271,7 +285,7 @@ export default function EditorialConcept() {
               {NAV.map((item, i) => (
                 <motion.div key={item.href}
                   initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.1 + i * 0.08, duration: 0.9, ease: E }}
+                  transition={{ delay: 0.05 + i * 0.04, duration: 0.45, ease: E }}
                 >
                   <Link href={item.href} onClick={() => setMenuOpen(false)}
                     className="block text-[22px] font-extrabold text-white tracking-tight pb-4 mb-4"
@@ -281,7 +295,7 @@ export default function EditorialConcept() {
                   <div className="flex flex-col gap-3">
                     {item.children.map((c) => (
                       <Link key={c.href} href={c.href} onClick={() => setMenuOpen(false)}
-                        className="text-[14px] transition-colors duration-300 hover:text-white"
+                        className="text-[14px] transition-colors duration-150 hover:text-white"
                         style={{ color: "rgba(255,255,255,0.55)" }}>
                         {c.label}
                       </Link>
@@ -303,7 +317,7 @@ export default function EditorialConcept() {
             className="absolute inset-0"
             initial={false}
             animate={{ opacity: idx === i ? 1 : 0, scale: reduced ? 1 : idx === i ? 1.08 : 1 }}
-            transition={{ opacity: { duration: 1.6, ease: "easeInOut" }, scale: { duration: 14, ease: "linear" } }}
+            transition={{ opacity: { duration: 0.8, ease: "easeInOut" }, scale: { duration: 7, ease: "linear" } }}
           >
             <Image src={s.img} alt="" fill priority={i === 0} quality={85} sizes="100vw" className="object-cover" />
           </motion.div>
@@ -315,19 +329,19 @@ export default function EditorialConcept() {
         <div className="absolute inset-0 flex items-center">
           <div className="w-full mx-auto" style={{ maxWidth: 1400, paddingInline: "clamp(20px, 3.5vw, 48px)" }}>
             <AnimatePresence mode="wait">
-              <motion.div key={idx} exit={{ opacity: 0, y: -18, transition: { duration: 0.5, ease: E } }} style={{ maxWidth: 880 }}>
+              <motion.div key={idx} exit={{ opacity: 0, y: -18, transition: { duration: 0.25, ease: E } }} style={{ maxWidth: 880 }}>
                 {/* 명지대식 짧은 룰 */}
                 <motion.span
                   className="block mb-9"
                   style={{ width: 104, height: 1, background: "rgba(255,255,255,0.55)" }}
                   initial={{ scaleX: 0, originX: 0 }} animate={{ scaleX: 1 }}
-                  transition={{ duration: 1.1, ease: E }}
+                  transition={{ duration: 0.55, ease: E }}
                 />
                 {SLIDES[idx].lines.map((line, li) => (
                   <div key={li} className="overflow-hidden">
                     <motion.h2
                       initial={{ y: "114%" }} animate={{ y: 0 }}
-                      transition={{ delay: 0.1 + li * 0.13, duration: 1.35, ease: E }}
+                      transition={{ delay: 0.05 + li * 0.065, duration: 0.675, ease: E }}
                       className="font-extrabold text-white"
                       style={{ fontSize: "clamp(38px, 6.4vw, 88px)", lineHeight: 1.1, letterSpacing: "-0.045em", textShadow: "0 4px 36px rgba(0,0,0,0.35)" }}
                     >
@@ -337,7 +351,7 @@ export default function EditorialConcept() {
                 ))}
                 <motion.p
                   initial={{ opacity: 0, y: 18 }} animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.62, duration: 1.1, ease: E }}
+                  transition={{ delay: 0.31, duration: 0.55, ease: E }}
                   className="mt-8 text-[15px] sm:text-[17px] leading-[1.85]"
                   style={{ color: "rgba(255,255,255,0.78)", maxWidth: 600 }}
                 >
@@ -370,12 +384,12 @@ export default function EditorialConcept() {
 
             <div className="flex items-center gap-2.5 text-white">
               <button type="button" onClick={() => go(-1)} aria-label="이전 슬라이드"
-                className="w-11 h-11 rounded-full flex items-center justify-center border border-white/35 transition-all duration-500 hover:bg-white/15 hover:border-white/70">
+                className="w-11 h-11 rounded-full flex items-center justify-center border border-white/35 transition-all duration-250 hover:bg-white/15 hover:border-white/70">
                 <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden><polyline points="15 18 9 12 15 6" /></svg>
               </button>
               <button type="button" onClick={() => setPlaying((v) => !v)}
                 aria-label={playing ? "슬라이드 일시정지" : "슬라이드 재생"}
-                className="w-11 h-11 rounded-full flex items-center justify-center border border-white/35 transition-all duration-500 hover:bg-white/15 hover:border-white/70">
+                className="w-11 h-11 rounded-full flex items-center justify-center border border-white/35 transition-all duration-250 hover:bg-white/15 hover:border-white/70">
                 {playing ? (
                   <svg width="10" height="11" viewBox="0 0 11 12" fill="currentColor" aria-hidden><rect x="1" width="3" height="12" rx="1" /><rect x="7" width="3" height="12" rx="1" /></svg>
                 ) : (
@@ -383,7 +397,7 @@ export default function EditorialConcept() {
                 )}
               </button>
               <button type="button" onClick={() => go(1)} aria-label="다음 슬라이드"
-                className="w-11 h-11 rounded-full flex items-center justify-center border border-white/35 transition-all duration-500 hover:bg-white/15 hover:border-white/70">
+                className="w-11 h-11 rounded-full flex items-center justify-center border border-white/35 transition-all duration-250 hover:bg-white/15 hover:border-white/70">
                 <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden><polyline points="9 18 15 12 9 6" /></svg>
               </button>
             </div>
@@ -443,9 +457,9 @@ export default function EditorialConcept() {
                   aria-hidden
                   className="absolute -right-24 -bottom-24 w-[340px] h-[340px] pointer-events-none"
                   animate={reduced ? undefined : { x: [0, -22, 0], y: [0, 16, 0] }}
-                  transition={{ duration: 16, repeat: Infinity, ease: "easeInOut" }}
+                  transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
                 >
-                  <div className="w-full h-full rounded-full opacity-60 transition-transform duration-[1400ms] group-hover:scale-125"
+                  <div className="w-full h-full rounded-full opacity-60 transition-transform duration-[700ms] group-hover:scale-125"
                     style={{ background: "radial-gradient(circle, rgba(46,90,167,0.55), transparent 68%)", transitionTimingFunction: "cubic-bezier(0.16,1,0.3,1)" }} />
                 </motion.div>
                 <div>
@@ -455,7 +469,7 @@ export default function EditorialConcept() {
                     현장이 요구하는 모든 형태의 크레인을 공급합니다.
                   </p>
                 </div>
-                <span className="inline-flex items-center gap-2.5 h-12 px-6 self-start text-[13.5px] font-semibold transition-colors duration-500 group-hover:bg-white group-hover:text-[#16273C]"
+                <span className="inline-flex items-center gap-2.5 h-12 px-6 self-start text-[13.5px] font-semibold transition-colors duration-250 group-hover:bg-white group-hover:text-[#16273C]"
                   style={{ border: "1px solid rgba(255,255,255,0.45)" }}>
                   사업영역 보기 <NE />
                 </span>
@@ -467,14 +481,14 @@ export default function EditorialConcept() {
               <Rise delay={0.12} x={90}>
                 <Link href="/portfolio" className="group relative block overflow-hidden rounded-tr-[24px] min-h-[300px] lg:min-h-[340px]">
                   <Image src="/images/pf-gantry350.jpg" alt="350TON 겐트리 크레인" fill quality={85} sizes="(max-width: 1024px) 100vw, 720px"
-                    className="object-cover group-hover:scale-[1.07]" style={{ transition: "transform 1.3s cubic-bezier(0.16,1,0.3,1)" }} />
+                    className="object-cover group-hover:scale-[1.07]" style={{ transition: "transform 0.65s cubic-bezier(0.16,1,0.3,1)" }} />
                   <span className="absolute inset-0" style={{ background: "linear-gradient(0deg, rgba(10,16,28,0.72) 8%, rgba(10,16,28,0.18) 55%, transparent)" }} />
                   <div className="absolute left-0 right-0 bottom-0 p-8 lg:p-10 text-white">
                     <p className="font-extrabold" style={{ fontSize: "clamp(28px, 3vw, 42px)", letterSpacing: "-0.03em" }}>Projects</p>
                     <p className="mt-2.5 text-[14px]" style={{ color: "rgba(255,255,255,0.75)" }}>
                       350TON 겐트리부터 0.5TON 윈치까지, 현장이 증명한 시공 기록
                     </p>
-                    <span className="inline-flex items-center gap-2.5 h-11 px-5 mt-6 text-[13px] font-semibold backdrop-blur-[2px] transition-colors duration-500 group-hover:bg-white group-hover:text-[#16273C]"
+                    <span className="inline-flex items-center gap-2.5 h-11 px-5 mt-6 text-[13px] font-semibold backdrop-blur-[2px] transition-colors duration-250 group-hover:bg-white group-hover:text-[#16273C]"
                       style={{ border: "1px solid rgba(255,255,255,0.5)", background: "rgba(10,16,28,0.25)" }}>
                       시공사례 보기 <NE />
                     </span>
@@ -499,7 +513,7 @@ export default function EditorialConcept() {
                       KCs 안전인증 5건 · 서면심사도서 11권 · ISO 3종
                     </p>
                   </div>
-                  <span className="w-13 h-13 shrink-0 rounded-full flex items-center justify-center w-[52px] h-[52px] transition-all duration-500 group-hover:bg-[#E8762C] group-hover:text-white group-hover:rotate-45"
+                  <span className="w-13 h-13 shrink-0 rounded-full flex items-center justify-center w-[52px] h-[52px] transition-all duration-250 group-hover:bg-[#E8762C] group-hover:text-white group-hover:rotate-45"
                     style={{ border: `1.5px solid ${ROYAL}`, color: ROYAL }}>
                     <NE />
                   </span>
@@ -528,21 +542,21 @@ export default function EditorialConcept() {
                 <div className="flex items-baseline gap-6">
                   <span className="w-2 h-2 rounded-full self-center hidden sm:block" style={{ background: ROYAL }} aria-hidden />
                   <button type="button" onClick={() => setTab("notice")}
-                    className="text-[clamp(22px,2.4vw,30px)] font-extrabold tracking-tight transition-colors duration-600 hover:!text-[#E8762C]"
+                    className="text-[clamp(22px,2.4vw,30px)] font-extrabold tracking-tight transition-colors duration-300 hover:!text-[#E8762C]"
                     style={{ color: tab === "notice" ? INK : "rgba(16,24,40,0.3)" }}
                     aria-pressed={tab === "notice"}>
                     공지사항
                   </button>
                   <span style={{ width: 1, height: 20, background: HAIR, alignSelf: "center" }} aria-hidden />
                   <button type="button" onClick={() => setTab("news")}
-                    className="text-[clamp(22px,2.4vw,30px)] font-extrabold tracking-tight transition-colors duration-600 hover:!text-[#E8762C]"
+                    className="text-[clamp(22px,2.4vw,30px)] font-extrabold tracking-tight transition-colors duration-300 hover:!text-[#E8762C]"
                     style={{ color: tab === "news" ? INK : "rgba(16,24,40,0.3)" }}
                     aria-pressed={tab === "news"}>
                     시공 소식
                   </button>
                 </div>
                 <Link href={tab === "notice" ? "/support/notice" : "/portfolio"} aria-label="더보기"
-                  className="text-[28px] font-light leading-none transition-all duration-500 hover:rotate-90 hover:!text-[#E8762C]" style={{ color: INK }}>
+                  className="text-[28px] font-light leading-none transition-all duration-250 hover:rotate-90 hover:!text-[#E8762C]" style={{ color: INK }}>
                   +
                 </Link>
               </div>
@@ -551,7 +565,7 @@ export default function EditorialConcept() {
                 <motion.ul
                   key={tab}
                   initial={{ opacity: 0, y: 14 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -8 }}
-                  transition={{ duration: 0.85, ease: E }}
+                  transition={{ duration: 0.425, ease: E }}
                   className="list-none"
                 >
                   {(tab === "notice"
@@ -565,7 +579,7 @@ export default function EditorialConcept() {
                       }))
                   ).map((row, i) => (
                     <li key={row.key} style={{ borderBottom: `1px solid ${HAIR}` }}>
-                      <Link href={row.href} className="group flex items-center gap-5 py-[18px] transition-colors duration-600 hover:bg-white"
+                      <Link href={row.href} className="group flex items-center gap-5 py-[18px] transition-colors duration-300 hover:bg-white"
                         style={{ paddingInline: 6 }}>
                         <span className="shrink-0 min-w-[64px] text-center text-[11.5px] font-bold px-2.5 py-1.5"
                           style={{
@@ -574,7 +588,7 @@ export default function EditorialConcept() {
                           }}>
                           {row.chip}
                         </span>
-                        <span className="flex-1 min-w-0 text-[15px] font-medium truncate transition-colors duration-300 group-hover:text-[#E8762C]"
+                        <span className="flex-1 min-w-0 text-[15px] font-medium truncate transition-colors duration-150 group-hover:text-[#E8762C]"
                           style={{ color: "rgba(16,24,40,0.82)" }}>
                           {row.title}
                         </span>
@@ -588,10 +602,10 @@ export default function EditorialConcept() {
               </AnimatePresence>
 
               <Link href={tab === "notice" ? "/support/notice" : "/portfolio"}
-                className="group flex items-center justify-center gap-2.5 h-[58px] mt-8 text-[14px] font-bold transition-colors duration-500 hover:bg-[#16273C] hover:text-white"
+                className="group flex items-center justify-center gap-2.5 h-[58px] mt-8 text-[14px] font-bold transition-colors duration-250 hover:bg-[#16273C] hover:text-white"
                 style={{ border: `1px solid ${INK}` }}>
                 {tab === "notice" ? "공지사항 전체 보기" : "시공사례 전체 보기"}
-                <span className="transition-transform duration-500 group-hover:translate-x-1"><NE /></span>
+                <span className="transition-transform duration-250 group-hover:translate-x-1"><NE /></span>
               </Link>
             </Rise>
 
@@ -606,16 +620,16 @@ export default function EditorialConcept() {
                   </p>
                 </div>
                 <Link href="/technology#safety" className="group flex items-center justify-between py-5" style={{ borderBottom: `1px solid ${HAIR}` }}>
-                  <span className="text-[15.5px] font-bold transition-colors duration-300 group-hover:text-[#E8762C]">안전관리 자세히 보기</span>
-                  <span className="transition-transform duration-500 group-hover:translate-x-1.5" style={{ color: ROYAL }}><NE /></span>
+                  <span className="text-[15.5px] font-bold transition-colors duration-150 group-hover:text-[#E8762C]">안전관리 자세히 보기</span>
+                  <span className="transition-transform duration-250 group-hover:translate-x-1.5" style={{ color: ROYAL }}><NE /></span>
                 </Link>
                 <Link href="/technology#license" className="group flex items-center justify-between py-5" style={{ borderBottom: `1px solid ${HAIR}` }}>
-                  <span className="text-[15.5px] font-bold transition-colors duration-300 group-hover:text-[#E8762C]">보유 자격 인력</span>
-                  <span className="transition-transform duration-500 group-hover:translate-x-1.5" style={{ color: ROYAL }}><NE /></span>
+                  <span className="text-[15.5px] font-bold transition-colors duration-150 group-hover:text-[#E8762C]">보유 자격 인력</span>
+                  <span className="transition-transform duration-250 group-hover:translate-x-1.5" style={{ color: ROYAL }}><NE /></span>
                 </Link>
                 <Link href="/support/inquiry" className="group flex items-center justify-between py-5" style={{ borderBottom: `1px solid ${HAIR}` }}>
-                  <span className="text-[15.5px] font-bold transition-colors duration-300 group-hover:text-[#E8762C]">온라인 견적 문의</span>
-                  <span className="transition-transform duration-500 group-hover:translate-x-1.5" style={{ color: ROYAL }}><NE /></span>
+                  <span className="text-[15.5px] font-bold transition-colors duration-150 group-hover:text-[#E8762C]">온라인 견적 문의</span>
+                  <span className="transition-transform duration-250 group-hover:translate-x-1.5" style={{ color: ROYAL }}><NE /></span>
                 </Link>
 
                 <div className="relative overflow-hidden mt-8 rounded-tr-[24px]" style={{ aspectRatio: "16 / 9" }}>
@@ -659,11 +673,11 @@ export default function EditorialConcept() {
               <div className="flex flex-col gap-3 mt-10">
                 {QUICK_RAIL.map((q) => (
                   <Link key={q.label} href={q.href}
-                    className="group flex items-center gap-4 h-[64px] px-6 text-white transition-colors duration-500 hover:bg-[#E8762C] hover:!border-[#E8762C]"
+                    className="group flex items-center gap-4 h-[64px] px-6 text-white transition-colors duration-250 hover:bg-[#E8762C] hover:!border-[#E8762C]"
                     style={{ border: "1px solid rgba(255,255,255,0.28)" }}>
                     {q.icon}
                     <span className="text-[15px] font-bold">{q.label}</span>
-                    <span className="ml-auto transition-transform duration-500 group-hover:translate-x-1.5"><NE /></span>
+                    <span className="ml-auto transition-transform duration-250 group-hover:translate-x-1.5"><NE /></span>
                   </Link>
                 ))}
               </div>
@@ -673,24 +687,24 @@ export default function EditorialConcept() {
             <div className="grid sm:grid-cols-3 gap-5">
               {cards.map((item, i) => (
                 <Rise key={item.slug} delay={0.12 + i * 0.14} x={80} className="h-full">
-                  <Link href={`/portfolio/${item.slug}`} className="group flex flex-col h-full overflow-hidden rounded-[14px] rounded-bl-none backdrop-blur-[3px] transition-colors duration-500 hover:bg-white"
+                  <Link href={`/portfolio/${item.slug}`} className="group flex flex-col h-full overflow-hidden rounded-[14px] rounded-bl-none backdrop-blur-[3px] transition-colors duration-250 hover:bg-white"
                     style={{ background: "rgba(255,255,255,0.96)" }}>
                     <div className="relative overflow-hidden" style={{ aspectRatio: "4 / 3" }}>
                       <Image src={item.src} alt={item.title} fill sizes="(max-width: 640px) 100vw, 320px"
-                        className="object-cover group-hover:scale-[1.08]" style={{ transition: "transform 1.3s cubic-bezier(0.16,1,0.3,1)" }} />
+                        className="object-cover group-hover:scale-[1.08]" style={{ transition: "transform 0.65s cubic-bezier(0.16,1,0.3,1)" }} />
                     </div>
                     <div className="flex flex-col flex-1 p-6">
                       <span className="self-start text-[11.5px] font-bold px-2.5 py-1 mb-4" style={{ background: NAVY, color: "#fff" }}>
                         {item.capacity}
                       </span>
-                      <h3 className="text-[16.5px] font-bold leading-[1.45] transition-colors duration-300 group-hover:text-[#E8762C]">
+                      <h3 className="text-[16.5px] font-bold leading-[1.45] transition-colors duration-150 group-hover:text-[#E8762C]">
                         {item.title}
                       </h3>
                       <div className="mt-auto pt-5 flex items-center justify-between gap-4">
                         <p className="text-[13px]" style={{ color: "rgba(16,24,40,0.5)" }}>
                           {item.client} · {item.year}
                         </p>
-                        <span className="shrink-0 transition-all duration-500 group-hover:translate-x-1 group-hover:text-[#E8762C]"
+                        <span className="shrink-0 transition-all duration-250 group-hover:translate-x-1 group-hover:text-[#E8762C]"
                           style={{ color: "rgba(16,24,40,0.35)" }}>
                           <NE />
                         </span>
@@ -716,7 +730,7 @@ export default function EditorialConcept() {
           <Rise x={60} delay={0.1} className="flex-1">
             <div className="flex flex-wrap items-baseline gap-x-12 gap-y-3">
               {["LS ELECTRIC", "두산중공업", "현대위아"].map((n) => (
-                <span key={n} className="font-extrabold tracking-tight transition-colors duration-500 hover:text-[#E8762C]"
+                <span key={n} className="font-extrabold tracking-tight transition-colors duration-250 hover:text-[#E8762C]"
                   style={{ fontSize: "clamp(18px, 1.9vw, 26px)", color: "rgba(16,24,40,0.42)" }}>
                   {n}
                 </span>
@@ -749,12 +763,12 @@ export default function EditorialConcept() {
             <Rise delay={0.15} x={90}>
               <div className="flex flex-col sm:flex-row gap-4">
                 <Link href="/support/inquiry"
-                  className="flex items-center justify-center gap-2.5 h-[60px] px-10 rounded-full text-[15px] font-bold transition-colors duration-500 hover:bg-[#F6E7D2]"
+                  className="flex items-center justify-center gap-2.5 h-[60px] px-10 rounded-full text-[15px] font-bold transition-colors duration-250 hover:bg-[#F6E7D2]"
                   style={{ background: "#fff", color: NAVY }}>
                   온라인 견적 문의 <NE />
                 </Link>
                 <a href={`tel:${COMPANY.tel.replace(/-/g, "")}`}
-                  className="flex items-center justify-center h-[60px] px-10 rounded-full text-[15px] font-bold text-white transition-colors duration-500 hover:bg-white/10"
+                  className="flex items-center justify-center h-[60px] px-10 rounded-full text-[15px] font-bold text-white transition-colors duration-250 hover:bg-white/10"
                   style={{ border: "1px solid rgba(255,255,255,0.4)" }}>
                   {COMPANY.tel}
                 </a>
@@ -773,7 +787,7 @@ export default function EditorialConcept() {
               className="w-auto h-8" style={{ filter: "brightness(0) invert(1)", objectFit: "contain", opacity: 0.85 }} />
             <div className="flex flex-wrap gap-x-7 gap-y-2">
               {NAV.map((n) => (
-                <Link key={n.href} href={n.href} className="text-[13.5px] font-semibold transition-colors duration-300 hover:text-white"
+                <Link key={n.href} href={n.href} className="text-[13.5px] font-semibold transition-colors duration-150 hover:text-white"
                   style={{ color: "rgba(255,255,255,0.55)" }}>
                   {n.label}
                 </Link>
@@ -792,7 +806,7 @@ export default function EditorialConcept() {
       {/* 연세대式 원형 플로팅: QUICK(견적) + TOP */}
       <div className="fixed right-4 sm:right-5 bottom-32 sm:bottom-24 z-[60] flex flex-col gap-3">
         <Link href="/support/inquiry" aria-label="견적 문의"
-          className="relative w-14 h-14 sm:w-[64px] sm:h-[64px] rounded-full flex flex-col items-center justify-center gap-0.5 text-white text-[11px] font-bold shadow-[0_10px_30px_rgba(16,24,40,0.35)] transition-all duration-500 hover:scale-110 hover:!bg-[#E8762C]"
+          className="relative w-14 h-14 sm:w-[64px] sm:h-[64px] rounded-full flex flex-col items-center justify-center gap-0.5 text-white text-[11px] font-bold shadow-[0_10px_30px_rgba(16,24,40,0.35)] transition-all duration-250 hover:scale-110 hover:!bg-[#E8762C]"
           style={{ background: ROYAL }}>
           {/* 회전 대시 링 */}
           <motion.span
@@ -800,14 +814,14 @@ export default function EditorialConcept() {
             className="absolute -inset-[7px] rounded-full pointer-events-none"
             style={{ border: "1.5px dashed rgba(46,90,167,0.55)" }}
             animate={reduced ? undefined : { rotate: 360 }}
-            transition={{ duration: 26, repeat: Infinity, ease: "linear" }}
+            transition={{ duration: 13, repeat: Infinity, ease: "linear" }}
           />
           <NE />
           견적
         </Link>
         <button type="button" aria-label="맨 위로"
           onClick={() => window.scrollTo({ top: 0, behavior: reduced ? "auto" : "smooth" })}
-          className="w-14 h-14 sm:w-[64px] sm:h-[64px] rounded-full flex flex-col items-center justify-center gap-1 text-[11px] font-bold bg-white shadow-[0_10px_30px_rgba(16,24,40,0.18)] transition-all duration-500 hover:scale-110 hover:!bg-[#E8762C] hover:!text-white"
+          className="w-14 h-14 sm:w-[64px] sm:h-[64px] rounded-full flex flex-col items-center justify-center gap-1 text-[11px] font-bold bg-white shadow-[0_10px_30px_rgba(16,24,40,0.18)] transition-all duration-250 hover:scale-110 hover:!bg-[#E8762C] hover:!text-white"
           style={{ border: `1px solid ${HAIR}`, color: INK }}>
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden><polyline points="18 15 12 9 6 15" /></svg>
           TOP

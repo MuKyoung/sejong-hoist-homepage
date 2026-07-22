@@ -7,7 +7,7 @@
  * - 이 컴포넌트는 헤더+히어로만 담당. 이하 섹션은 /demo/6 page.tsx에서 실제 홈 섹션을 연결
  */
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
@@ -149,6 +149,21 @@ export default function YsConcept() {
   const go = (d: number) =>
     setSlide((s) => ({ idx: (s.idx + d + SLIDES.length) % SLIDES.length, dir: d }));
 
+
+  /* 메가 패널 칼럼을 GNB 버튼 x좌표에 실측 정렬 */
+  const barRef = useRef<HTMLDivElement>(null);
+  const navRef = useRef<HTMLElement>(null);
+  const [colLefts, setColLefts] = useState<number[] | null>(null);
+  useEffect(() => {
+    const measure = () => {
+      if (!barRef.current || !navRef.current) return;
+      const base = barRef.current.getBoundingClientRect().left;
+      setColLefts(Array.from(navRef.current.children).map((el) => (el as HTMLElement).getBoundingClientRect().left - base));
+    };
+    measure();
+    window.addEventListener("resize", measure);
+    return () => window.removeEventListener("resize", measure);
+  }, []);
   /* 현대일렉트릭式: 상단에서는 투명, 스크롤/패널 시 화이트 전환 */
   const solid = scrolled || panel || mobileOpen;
 
@@ -161,29 +176,29 @@ export default function YsConcept() {
         style={{
           background: solid ? "#fff" : "transparent",
           boxShadow: solid ? "0 10px 30px rgba(23,42,69,0.10)" : "none",
-          transition: "background .55s ease, box-shadow .55s ease",
+          transition: "background .28s ease, box-shadow .28s ease",
         }}
       >
         {/* 유틸 바 (데스크톱) */}
         <div className="hidden lg:block" style={{ background: NAVY_DEEP }}>
           <div className="max-w-[1280px] mx-auto px-8 h-9 flex items-center justify-between text-[12px] text-white/65">
             <div className="flex items-center gap-5">
-              <Link href="/support/notice" className="hover:text-[#E8762C] transition-colors duration-500">공지사항</Link>
-              <Link href="/about/location" className="hover:text-[#E8762C] transition-colors duration-500">오시는 길</Link>
+              <Link href="/support/notice" className="hover:text-[#E8762C] transition-colors duration-250">공지사항</Link>
+              <Link href="/about/location" className="hover:text-[#E8762C] transition-colors duration-250">오시는 길</Link>
             </div>
             <div className="flex items-center gap-4">
               <div className="flex items-center gap-2.5">
-                <Link href="/" className="text-white font-bold transition-colors duration-500 hover:text-[#E8762C]">KOR</Link>
-                <Link href="/en" className="hover:text-[#E8762C] transition-colors duration-500">ENG</Link>
+                <Link href="/" className="text-white font-bold transition-colors duration-250 hover:text-[#E8762C]">KOR</Link>
+                <Link href="/en" className="hover:text-[#E8762C] transition-colors duration-250">ENG</Link>
               </div>
             </div>
           </div>
         </div>
 
         {/* 메인 바 */}
-        <div style={{ borderBottom: `1px solid ${solid ? "#E8EDF3" : "transparent"}`, transition: "border-color .55s ease" }}>
+        <div style={{ borderBottom: `1px solid ${solid ? "#E8EDF3" : "transparent"}`, transition: "border-color .28s ease" }}>
           {/* 로고-메뉴-유틸 3분할 그리드 — 메뉴가 항상 정중앙 (26.07 헤더 정렬 피드백) */}
-          <div className="max-w-[1280px] mx-auto px-5 sm:px-8 h-14 lg:h-[60px] grid grid-cols-[1fr_auto_1fr] items-stretch gap-6">
+          <div ref={barRef} className="max-w-[1280px] mx-auto px-5 sm:px-8 h-14 lg:h-[60px] grid grid-cols-[1fr_auto_1fr] items-stretch gap-6">
             <Link href="/demo/6" className="justify-self-start shrink-0 flex items-center" aria-label="세종호이스트크레인">
               <Image
                 src="/images/sejong-logo.png" alt="세종호이스트크레인"
@@ -192,7 +207,7 @@ export default function YsConcept() {
               />
             </Link>
 
-            <nav className="hidden lg:flex items-stretch self-stretch" aria-label="주요 메뉴">
+            <nav ref={navRef} className="hidden lg:flex items-stretch self-stretch" aria-label="주요 메뉴">
               {NAV.map((item) => (
                 <div
                   key={item.href} className="relative flex"
@@ -200,7 +215,7 @@ export default function YsConcept() {
                 >
                   <Link
                     href={item.href}
-                    className="relative flex items-center px-5 xl:px-6 text-[16px] font-bold transition-colors duration-500"
+                    className="relative flex items-center px-5 xl:px-6 text-[16px] font-bold transition-colors duration-250"
                     style={{ color: hovered === item.href ? "#E8762C" : INK }}
                   >
                     {item.label}
@@ -209,7 +224,7 @@ export default function YsConcept() {
                         layoutId="ysUnderline"
                         className="absolute left-4 right-4 bottom-0 h-[3px] rounded-full"
                         style={{ background: "#E8762C" }}
-                        transition={{ duration: 0.6, ease: E }}
+                        transition={{ duration: 0.3, ease: E }}
                       />
                     )}
                   </Link>
@@ -218,7 +233,7 @@ export default function YsConcept() {
             </nav>
 
             <div className="justify-self-end flex items-center gap-3">
-              <a href="tel:044-865-0801" className="hidden lg:flex items-center gap-2 text-[13.5px] font-semibold tracking-wide transition-colors duration-500 hover:!text-[#E8762C]" style={{ color: INK }}>
+              <a href="tel:044-865-0801" className="hidden lg:flex items-center gap-2 text-[13.5px] font-semibold tracking-wide transition-colors duration-250 hover:!text-[#E8762C]" style={{ color: INK }}>
                 <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#2C4A6E" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
                   <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.08 4.18 2 2 0 0 1 4.06 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z" />
                 </svg>
@@ -234,11 +249,11 @@ export default function YsConcept() {
                 aria-expanded={mobileOpen}
               >
                 <motion.span className="block h-[2px] w-5 rounded-full" style={{ background: INK, originX: "right" }}
-                  animate={{ rotate: mobileOpen ? -45 : 0, y: mobileOpen ? 7 : 0 }} transition={{ duration: 0.2 }} />
+                  animate={{ rotate: mobileOpen ? -45 : 0, y: mobileOpen ? 7 : 0 }} transition={{ duration: 0.1 }} />
                 <motion.span className="block h-[2px] w-5 rounded-full" style={{ background: INK }}
-                  animate={{ opacity: mobileOpen ? 0 : 1, scaleX: mobileOpen ? 0 : 1 }} transition={{ duration: 0.15 }} />
+                  animate={{ opacity: mobileOpen ? 0 : 1, scaleX: mobileOpen ? 0 : 1 }} transition={{ duration: 0.075 }} />
                 <motion.span className="block h-[2px] rounded-full" style={{ background: INK, originX: "right" }}
-                  animate={{ width: mobileOpen ? 20 : 14, rotate: mobileOpen ? 45 : 0, y: mobileOpen ? -7 : 0 }} transition={{ duration: 0.2 }} />
+                  animate={{ width: mobileOpen ? 20 : 14, rotate: mobileOpen ? 45 : 0, y: mobileOpen ? -7 : 0 }} transition={{ duration: 0.1 }} />
               </button>
             </div>
           </div>
@@ -251,15 +266,15 @@ export default function YsConcept() {
               initial={{ height: 0, opacity: 0 }}
               animate={{ height: "auto", opacity: 1 }}
               exit={{ height: 0, opacity: 0 }}
-              transition={{ duration: 0.65, ease: E }}
+              transition={{ duration: 0.325, ease: E }}
               className="hidden lg:block absolute left-0 right-0 top-full overflow-hidden bg-white rounded-b-[24px]"
               style={{ boxShadow: "0 32px 56px rgba(23,42,69,0.14)" }}
             >
-              <div className="max-w-[1280px] mx-auto grid grid-cols-5 gap-8 px-8 pt-8 pb-10">
-                {NAV.map((item, ci) => (
-                  <div key={item.href}>
+              <div className="relative max-w-[1280px] mx-auto px-5 sm:px-8" style={{ minHeight: 322 }}>
+                {colLefts && NAV.map((item, ci) => (
+                  <div key={item.href} className="absolute top-0 px-5 xl:px-6 pt-8 pb-10" style={{ left: colLefts[ci] }}>
                     <Link href={item.href} className="group inline-block">
-                      <p className="text-[15px] font-extrabold group-hover:text-[#E8762C] transition-colors" style={{ color: INK }}>
+                      <p className="text-[15px] font-extrabold group-hover:text-[#E8762C] transition-colors whitespace-nowrap" style={{ color: INK }}>
                         {item.label}
                       </p>
                     </Link>
@@ -268,11 +283,11 @@ export default function YsConcept() {
                       {item.children.map((c, i) => (
                         <motion.div key={c.href}
                           initial={{ opacity: 0, y: 6 }} animate={{ opacity: 1, y: 0 }}
-                          transition={{ delay: 0.06 + ci * 0.02 + i * 0.03, duration: 0.35, ease: E }}
+                          transition={{ delay: 0.06 + ci * 0.02 + i * 0.03, duration: 0.175, ease: E }}
                         >
                           <Link
                             href={c.href}
-                            className="block text-[13.5px] py-1.5 px-2.5 -mx-2.5 rounded-lg text-[#5A6B7E] hover:text-[#E8762C] hover:bg-[#FBF3EA] transition-colors"
+                            className="block whitespace-nowrap text-[13.5px] py-1.5 px-2.5 -mx-2.5 rounded-lg text-[#5A6B7E] hover:text-[#E8762C] hover:bg-[#FBF3EA] transition-colors"
                           >
                             {c.label}
                           </Link>
@@ -292,7 +307,7 @@ export default function YsConcept() {
         {mobileOpen && (
           <motion.div
             initial={{ opacity: 0, x: 44 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: 44 }}
-            transition={{ duration: 0.6, ease: E }}
+            transition={{ duration: 0.3, ease: E }}
             className="fixed inset-0 z-40 lg:hidden overflow-y-auto bg-white"
             style={{ paddingTop: "56px" }}
           >
@@ -300,26 +315,26 @@ export default function YsConcept() {
               {NAV.map((item, i) => (
                 <motion.div key={item.href}
                   initial={{ opacity: 0, x: 16 }} animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: 0.04 + i * 0.05, ease: E }}
+                  transition={{ delay: 0.02 + i * 0.025, ease: E }}
                   className="py-4" style={{ borderBottom: "1px solid #EEF2F6" }}
                 >
                   <Link href={item.href} onClick={() => setMobileOpen(false)}
-                    className="block text-[20px] font-extrabold tracking-tight transition-colors duration-500 hover:!text-[#E8762C]" style={{ color: NAVY_DEEP }}>
+                    className="block text-[20px] font-extrabold tracking-tight transition-colors duration-250 hover:!text-[#E8762C]" style={{ color: NAVY_DEEP }}>
                     {item.label}
                   </Link>
                   <div className="flex flex-wrap gap-1.5 mt-3">
                     {item.children.map((c) => (
                       <Link key={c.href} href={c.href} onClick={() => setMobileOpen(false)}
-                        className="text-[12.5px] px-3 py-1.5 rounded-full bg-[#F2F5F9] text-[#44556A] hover:bg-[#FBF3EA] hover:text-[#E8762C] transition-colors duration-500">
+                        className="text-[12.5px] px-3 py-1.5 rounded-full bg-[#F2F5F9] text-[#44556A] hover:bg-[#FBF3EA] hover:text-[#E8762C] transition-colors duration-250">
                         {c.label}
                       </Link>
                     ))}
                   </div>
                 </motion.div>
               ))}
-              <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.35 }} className="pt-6 flex gap-3">
+              <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.175 }} className="pt-6 flex gap-3">
                 <Link href="/support/inquiry" onClick={() => setMobileOpen(false)}
-                  className="flex-1 h-12 rounded-full bg-[#2C4A6E] text-white text-[14px] font-bold flex items-center justify-center transition-colors duration-500 hover:bg-[#E8762C]">
+                  className="flex-1 h-12 rounded-full bg-[#2C4A6E] text-white text-[14px] font-bold flex items-center justify-center transition-colors duration-250 hover:bg-[#E8762C]">
                   견적 문의
                 </Link>
                 <a href="tel:044-865-0801"
@@ -356,14 +371,14 @@ export default function YsConcept() {
                   exit: (d: number) => ({ x: d * -36, opacity: 0 }),
                 }}
                 initial="enter" animate="center" exit="exit"
-                transition={{ duration: 1.0, ease: E }}
+                transition={{ duration: 0.5, ease: E }}
                 className="absolute inset-0"
               >
                 <motion.div
                   className="absolute inset-0"
                   initial={{ scale: reduced ? 1 : 1.06 }}
                   animate={{ scale: 1 }}
-                  transition={{ duration: 7, ease: "linear" }}
+                  transition={{ duration: 3.5, ease: "linear" }}
                 >
                   <Image
                     src={SLIDES[idx].img}
@@ -382,7 +397,7 @@ export default function YsConcept() {
                 <div className="absolute left-0 bottom-0 p-6 sm:p-10 lg:p-12 max-w-[620px]">
                   <motion.span
                     initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.15, duration: 0.5, ease: E }}
+                    transition={{ delay: 0.075, duration: 0.25, ease: E }}
                     className="inline-flex items-center h-7 px-3.5 rounded-full text-[12px] font-bold"
                     style={{ background: "rgba(198,155,84,0.3)", color: "#F2DCAE", backdropFilter: "blur(6px)" }}
                   >
@@ -390,7 +405,7 @@ export default function YsConcept() {
                   </motion.span>
                   <motion.h2
                     initial={{ opacity: 0, y: 14 }} animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.24, duration: 0.6, ease: E }}
+                    transition={{ delay: 0.12, duration: 0.3, ease: E }}
                     className="mt-4 text-white font-extrabold whitespace-pre-line leading-[1.22]"
                     style={{ fontSize: "clamp(24px, 3.4vw, 40px)", letterSpacing: "-0.03em", textShadow: "0 2px 18px rgba(0,0,0,0.25)" }}
                   >
@@ -398,18 +413,18 @@ export default function YsConcept() {
                   </motion.h2>
                   <motion.p
                     initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.34, duration: 0.6, ease: E }}
+                    transition={{ delay: 0.17, duration: 0.3, ease: E }}
                     className="mt-3 hidden sm:block text-[14.5px] leading-[1.75] text-white/80"
                   >
                     {SLIDES[idx].sub}
                   </motion.p>
                   <motion.div
                     initial={{ opacity: 0 }} animate={{ opacity: 1 }}
-                    transition={{ delay: 0.44, duration: 0.6, ease: E }}
+                    transition={{ delay: 0.22, duration: 0.3, ease: E }}
                   >
                     <Link
                       href={SLIDES[idx].href}
-                      className="inline-flex items-center gap-2 mt-6 h-11 px-5 rounded-full bg-white/95 text-[#16273C] text-[13.5px] font-bold transition-colors duration-500 hover:bg-[#E8762C] hover:text-white"
+                      className="inline-flex items-center gap-2 mt-6 h-11 px-5 rounded-full bg-white/95 text-[#16273C] text-[13.5px] font-bold transition-colors duration-250 hover:bg-[#E8762C] hover:text-white"
                     >
                       {SLIDES[idx].cta} <span aria-hidden>→</span>
                     </Link>
@@ -452,19 +467,19 @@ export default function YsConcept() {
             {QUICK.map((q, i) => (
               <motion.div key={q.href}
                 initial={{ opacity: 0, x: i < 3 ? -70 : 70 }} animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: 0.25 + i * 0.08, duration: 0.85, ease: E }}
+                transition={{ delay: 0.125 + i * 0.04, duration: 0.425, ease: E }}
               >
                 <Link
                   href={q.href}
-                  className="group flex flex-col items-center justify-center gap-2.5 rounded-[18px] rounded-br-none bg-white py-5 sm:py-6 border border-[#E7ECF2] hover:border-[#B9C7D8] shadow-[0_8px_24px_rgba(23,42,69,0.06)] hover:shadow-[0_16px_36px_rgba(23,42,69,0.12)] transition-all duration-700 hover:-translate-y-1"
+                  className="group flex flex-col items-center justify-center gap-2.5 rounded-[18px] rounded-br-none bg-white py-5 sm:py-6 border border-[#E7ECF2] hover:border-[#B9C7D8] shadow-[0_8px_24px_rgba(23,42,69,0.06)] hover:shadow-[0_16px_36px_rgba(23,42,69,0.12)] transition-all duration-350 hover:-translate-y-1"
                 >
                   <span
-                    className="w-11 h-11 rounded-full flex items-center justify-center bg-[#EEF3F9] group-hover:bg-[#E8762C] group-hover:text-white group-hover:rotate-[360deg] transition-all duration-1000"
+                    className="w-11 h-11 rounded-full flex items-center justify-center bg-[#EEF3F9] group-hover:bg-[#E8762C] group-hover:text-white group-hover:rotate-[360deg] transition-all duration-500"
                     style={{ color: NAVY }}
                   >
                     {q.icon}
                   </span>
-                  <span className="text-[13px] sm:text-[13.5px] font-semibold transition-colors duration-500 group-hover:!text-[#E8762C]" style={{ color: INK }}>
+                  <span className="text-[13px] sm:text-[13.5px] font-semibold transition-colors duration-250 group-hover:!text-[#E8762C]" style={{ color: INK }}>
                     {q.label}
                   </span>
                 </Link>
