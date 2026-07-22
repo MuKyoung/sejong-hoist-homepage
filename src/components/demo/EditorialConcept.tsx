@@ -124,41 +124,52 @@ export default function EditorialConcept() {
 
   const go = (d: number) => setIdx((i) => (i + d + SLIDES.length) % SLIDES.length);
 
+  /* 현대일렉트릭式: 히어로 위 투명 → 스크롤 시 화이트 전환 */
+  const solid = scrolled && !menuOpen;
+  const fg = solid ? INK : "#FFFFFF";
+
   const noticeRows = NOTICES.slice(0, 5);
   const newsRows = PORTFOLIO.slice(0, 5);
   const cards = PORTFOLIO.slice(0, 3);
 
   return (
     <div className="overflow-x-clip" style={{ background: "#fff", color: INK }}>
-      {/* ══════════ 헤더 : 명지대式 2단 (다크 유틸 + 라이트 메인) ══════════ */}
-      <div style={{ background: "#0E1420" }}>
-        <div className="mx-auto hidden md:flex items-center justify-between h-9 text-[12.5px]"
-          style={{ maxWidth: 1400, paddingInline: "clamp(20px, 3.5vw, 48px)", color: "rgba(255,255,255,0.74)" }}>
-          <div className="flex items-center gap-5">
-            <span>{COMPANY.address}</span>
-          </div>
-          <div className="flex items-center gap-5">
-            <a href={`tel:${COMPANY.tel.replace(/-/g, "")}`} className="hover:text-[#E8762C] transition-colors duration-500">
-              대표전화 {COMPANY.tel}
-            </a>
-            <span style={{ width: 1, height: 11, background: "rgba(255,255,255,0.2)" }} />
-            <a href={`mailto:${COMPANY.email}`} className="hover:text-[#E8762C] transition-colors duration-500">
-              {COMPANY.email}
-            </a>
-            <span style={{ width: 1, height: 11, background: "rgba(255,255,255,0.2)" }} />
-            <Link href="/en" className="hover:text-[#E8762C] transition-colors duration-500">ENG</Link>
-          </div>
-        </div>
-      </div>
-
+      {/* ══════════ 헤더 : 히어로 위 투명 2단 → 스크롤 시 유틸 접힘 + 화이트 전환 ══════════ */}
       <header
-        className="sticky top-0 z-50 bg-white"
+        className="fixed top-0 inset-x-0 z-50"
         style={{
-          borderBottom: `1px solid ${scrolled ? HAIR : "rgba(16,24,40,0.06)"}`,
-          boxShadow: scrolled ? "0 12px 32px rgba(16,24,40,0.08)" : "none",
-          transition: "box-shadow .5s ease, border-color .5s ease",
+          background: solid ? "rgba(255,255,255,0.98)" : "transparent",
+          boxShadow: solid ? "0 12px 32px rgba(16,24,40,0.08)" : "none",
+          borderBottom: solid ? `1px solid ${HAIR}` : "1px solid rgba(255,255,255,0.16)",
+          transition: "background .55s ease, box-shadow .55s ease, border-color .55s ease",
         }}
       >
+        {/* 유틸 바 — 투명 상태에서만 노출, 스크롤 시 접힘 */}
+        <div className="hidden md:block overflow-hidden"
+          style={{
+            height: solid ? 0 : 36,
+            borderBottom: solid ? "none" : "1px solid rgba(255,255,255,0.14)",
+            transition: "height .55s ease, border-color .55s ease",
+          }}>
+          <div className="mx-auto flex items-center justify-between h-9 text-[12.5px]"
+            style={{ maxWidth: 1400, paddingInline: "clamp(20px, 3.5vw, 48px)", color: "rgba(255,255,255,0.78)" }}>
+            <div className="flex items-center gap-5">
+              <span>{COMPANY.address}</span>
+            </div>
+            <div className="flex items-center gap-5">
+              <a href={`tel:${COMPANY.tel.replace(/-/g, "")}`} className="hover:text-[#E8762C] transition-colors duration-500">
+                대표전화 {COMPANY.tel}
+              </a>
+              <span style={{ width: 1, height: 11, background: "rgba(255,255,255,0.25)" }} />
+              <a href={`mailto:${COMPANY.email}`} className="hover:text-[#E8762C] transition-colors duration-500">
+                {COMPANY.email}
+              </a>
+              <span style={{ width: 1, height: 11, background: "rgba(255,255,255,0.25)" }} />
+              <Link href="/en" className="hover:text-[#E8762C] transition-colors duration-500">ENG</Link>
+            </div>
+          </div>
+        </div>
+
         {/* 로고-메뉴-유틸 3분할 그리드 — 메뉴가 항상 정중앙 (26.07 헤더 정렬 피드백) */}
         <div className="mx-auto grid grid-cols-[1fr_auto_1fr] items-stretch gap-6 h-14 lg:h-[64px]"
           style={{ maxWidth: 1400, paddingInline: "clamp(20px, 3.5vw, 48px)" }}>
@@ -166,7 +177,8 @@ export default function EditorialConcept() {
             <Image
               src="/images/sejong-logo.png" alt={COMPANY.name}
               width={220} height={54} priority
-              className="w-auto h-9 lg:h-10" style={{ objectFit: "contain" }}
+              className="w-auto h-9 lg:h-10 transition-[filter] duration-500"
+              style={{ objectFit: "contain", filter: solid ? "none" : "brightness(0) invert(1)" }}
             />
           </Link>
 
@@ -174,8 +186,8 @@ export default function EditorialConcept() {
             {NAV.map((item) => (
               <Link
                 key={item.href} href={item.href}
-                className="group relative flex items-center px-5 xl:px-6 text-[16px] font-bold whitespace-nowrap transition-colors duration-300 hover:text-[#E8762C]"
-                style={{ letterSpacing: "-0.01em" }}
+                className="group relative flex items-center px-5 xl:px-6 text-[16px] font-bold whitespace-nowrap transition-colors duration-300 hover:!text-[#E8762C]"
+                style={{ letterSpacing: "-0.01em", color: fg, textShadow: solid ? "none" : "0 1px 14px rgba(0,0,0,0.5)" }}
               >
                 {item.label}
                 <span className="absolute left-5 right-5 xl:left-6 xl:right-6 bottom-0 h-[2.5px] origin-center scale-x-0 group-hover:scale-x-100"
@@ -197,11 +209,11 @@ export default function EditorialConcept() {
               aria-label={menuOpen ? "메뉴 닫기" : "메뉴 열기"}
               aria-expanded={menuOpen}
             >
-              <motion.span className="block h-[2px] w-6 rounded-full" style={{ background: INK, originX: "right" }}
+              <motion.span className="block h-[2px] w-6 rounded-full transition-colors duration-500" style={{ background: fg, originX: "right" }}
                 animate={{ rotate: menuOpen ? -45 : 0, y: menuOpen ? 8 : 0 }} transition={{ duration: 0.4, ease: E }} />
-              <motion.span className="block h-[2px] w-4 rounded-full" style={{ background: INK }}
+              <motion.span className="block h-[2px] w-4 rounded-full transition-colors duration-500" style={{ background: fg }}
                 animate={{ opacity: menuOpen ? 0 : 1 }} transition={{ duration: 0.25 }} />
-              <motion.span className="block h-[2px] rounded-full" style={{ background: INK, originX: "right" }}
+              <motion.span className="block h-[2px] rounded-full transition-colors duration-500" style={{ background: fg, originX: "right" }}
                 animate={{ width: menuOpen ? 24 : 20, rotate: menuOpen ? 45 : 0, y: menuOpen ? -8 : 0 }} transition={{ duration: 0.4, ease: E }} />
             </button>
           </div>
@@ -260,6 +272,7 @@ export default function EditorialConcept() {
           </motion.div>
         ))}
         <div className="absolute inset-0" style={{ background: "linear-gradient(94deg, rgba(10,16,28,0.86) 0%, rgba(10,16,28,0.52) 48%, rgba(10,16,28,0.18) 100%)" }} />
+        <div className="absolute inset-x-0 top-0 h-44" style={{ background: "linear-gradient(180deg, rgba(10,16,28,0.66), transparent)" }} />
         <div className="absolute inset-x-0 bottom-0 h-48" style={{ background: "linear-gradient(0deg, rgba(10,16,28,0.72), transparent)" }} />
 
         <div className="absolute inset-0 flex items-center">

@@ -149,15 +149,19 @@ export default function YsConcept() {
   const go = (d: number) =>
     setSlide((s) => ({ idx: (s.idx + d + SLIDES.length) % SLIDES.length, dir: d }));
 
+  /* 현대일렉트릭式: 상단에서는 투명, 스크롤/패널 시 화이트 전환 */
+  const solid = scrolled || panel || mobileOpen;
+
   return (
     <>
       {/* ══ 2단 헤더 ══ */}
       <header
-        className="fixed top-0 inset-x-0 z-50 bg-white"
+        className="fixed top-0 inset-x-0 z-50"
         onMouseLeave={() => { setPanel(false); setHovered(null); }}
         style={{
-          boxShadow: scrolled || panel ? "0 10px 30px rgba(23,42,69,0.10)" : "none",
-          transition: "box-shadow .3s ease",
+          background: solid ? "#fff" : "transparent",
+          boxShadow: solid ? "0 10px 30px rgba(23,42,69,0.10)" : "none",
+          transition: "background .55s ease, box-shadow .55s ease",
         }}
       >
         {/* 유틸 바 (데스크톱) */}
@@ -181,7 +185,7 @@ export default function YsConcept() {
         </div>
 
         {/* 메인 바 */}
-        <div style={{ borderBottom: "1px solid #E8EDF3" }}>
+        <div style={{ borderBottom: `1px solid ${solid ? "#E8EDF3" : "transparent"}`, transition: "border-color .55s ease" }}>
           {/* 로고-메뉴-유틸 3분할 그리드 — 메뉴가 항상 정중앙 (26.07 헤더 정렬 피드백) */}
           <div className="max-w-[1280px] mx-auto px-5 sm:px-8 h-14 lg:h-[60px] grid grid-cols-[1fr_auto_1fr] items-stretch gap-6">
             <Link href="/demo/6" className="justify-self-start shrink-0 flex items-center" aria-label="세종호이스트크레인">
