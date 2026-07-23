@@ -106,6 +106,8 @@ export default function EditorialConcept() {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const [megaOpen, setMegaOpen] = useState(false);
+  /* 호버 중인 GNB 버튼의 칼럼 강조 (나머지는 디밍) */
+  const [megaCol, setMegaCol] = useState<number | null>(null);
   const [idx, setIdx] = useState(0);
   const [playing, setPlaying] = useState(true);
   const [tab, setTab] = useState<"notice" | "news">("notice");
@@ -153,7 +155,7 @@ export default function EditorialConcept() {
       {/* ══════════ 헤더 : 히어로 위 투명 2단 → 스크롤 시 유틸 접힘 + 화이트 전환 ══════════ */}
       <header
         className="fixed top-0 inset-x-0 z-50"
-        onMouseLeave={() => setMegaOpen(false)}
+        onMouseLeave={() => { setMegaOpen(false); setMegaCol(null); }}
         style={{
           background: solid ? "rgba(255,255,255,0.98)" : "transparent",
           boxShadow: solid ? "0 12px 32px rgba(16,24,40,0.08)" : "none",
@@ -200,10 +202,10 @@ export default function EditorialConcept() {
           </Link>
 
           <nav ref={navRef} className="hidden lg:flex items-stretch self-stretch" aria-label="주요 메뉴">
-            {NAV.map((item) => (
+            {NAV.map((item, ni) => (
               <Link
                 key={item.href} href={item.href}
-                onMouseEnter={() => setMegaOpen(true)}
+                onMouseEnter={() => { setMegaOpen(true); setMegaCol(ni); }}
                 className="group relative flex items-center px-5 xl:px-6 text-[16px] font-bold whitespace-nowrap transition-colors duration-600 hover:!text-[#E8762C]"
                 style={{ letterSpacing: "-0.01em", color: fg, textShadow: solid ? "none" : "0 1px 14px rgba(0,0,0,0.5)" }}
               >
@@ -243,13 +245,27 @@ export default function EditorialConcept() {
               className="hidden lg:block overflow-hidden bg-white"
               style={{ borderTop: `1px solid ${HAIR}`, boxShadow: "0 28px 48px rgba(16,24,40,0.12)" }}
             >
-              <div className="relative mx-auto" style={{ maxWidth: 1400, paddingInline: "clamp(20px, 3.5vw, 48px)", minHeight: 318 }}>
+              {/* 26.07: 헤더 버튼 라벨을 칼럼에 반복하지 않음 (중복 노출 피드백) —
+                  버튼 바로 아래 악센트 바만 앵커로 두고 하위 메뉴만 나열 */}
+              <div className="relative mx-auto" style={{ maxWidth: 1400, paddingInline: "clamp(20px, 3.5vw, 48px)", minHeight: 276 }}>
                 {colLefts && NAV.map((item, ci) => (
-                  <div key={item.href} className="absolute top-0 px-5 xl:px-6 py-9" style={{ left: colLefts[ci] }}>
-                    <Link href={item.href} className="text-[15px] font-extrabold transition-colors duration-1000 hover:text-[#E8762C] whitespace-nowrap" style={{ color: INK }}>
-                      {item.label}
-                    </Link>
-                    <span className="block w-6 h-[2.5px] mt-2.5 mb-4" style={{ background: ROYAL }} aria-hidden />
+                  <div
+                    key={item.href}
+                    className="absolute top-0 px-5 xl:px-6 py-8"
+                    onMouseEnter={() => setMegaCol(ci)}
+                    style={{
+                      left: colLefts[ci],
+                      opacity: megaCol === null || megaCol === ci ? 1 : 0.4,
+                      transition: "opacity 0.6s ease",
+                    }}
+                  >
+                    <motion.span
+                      className="block w-6 h-[2.5px] mb-5 origin-left"
+                      style={{ background: ROYAL }}
+                      initial={{ scaleX: 0 }} animate={{ scaleX: 1 }}
+                      transition={{ delay: 0.1 + ci * 0.05, duration: 0.9, ease: E }}
+                      aria-hidden
+                    />
                     <div className="flex flex-col gap-2">
                       {item.children.map((c, i) => (
                         <motion.div key={c.href}
