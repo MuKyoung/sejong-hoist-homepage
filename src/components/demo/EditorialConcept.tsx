@@ -196,7 +196,7 @@ export default function EditorialConcept() {
             <Image
               src="/images/sejong-logo.png" alt={COMPANY.name}
               width={220} height={54} priority
-              className="w-auto h-9 lg:h-10 transition-[filter] duration-1000"
+              className="w-auto h-10 transition-[filter] duration-1000"
               style={{ objectFit: "contain", filter: solid ? "none" : "brightness(0) invert(1)" }}
             />
           </Link>

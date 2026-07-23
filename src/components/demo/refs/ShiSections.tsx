@@ -22,7 +22,7 @@ export function ShiHeader() {
         <nav className="hidden lg:flex items-center gap-1" aria-label="주요 메뉴">
           {NAV.map((item) => (
             <Link key={item.href} href={item.href}
-              className="relative px-4 py-2 text-[14px] font-semibold transition-colors group"
+              className="relative flex items-center h-8 px-4 text-[14px] font-semibold transition-colors group"
               style={{ color: SHI.ink }}>
               <span className="transition-colors group-hover:text-[#1E4FA3]">{item.label}</span>
               <span className="absolute left-4 right-4 bottom-0.5 h-[1.5px] origin-left scale-x-0 group-hover:scale-x-100"

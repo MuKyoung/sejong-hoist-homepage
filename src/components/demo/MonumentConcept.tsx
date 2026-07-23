@@ -210,7 +210,7 @@ export default function MonumentConcept() {
               src="/images/sejong-logo.png"
               alt={COMPANY.name}
               width={220} height={54} priority
-              className="w-auto h-9 lg:h-10"
+              className="w-auto h-10"
               style={{ filter: "brightness(0) invert(1)", objectFit: "contain" }}
             />
           </Link>

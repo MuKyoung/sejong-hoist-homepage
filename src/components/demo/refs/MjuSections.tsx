@@ -41,8 +41,9 @@ export function MjuHeader() {
       <div className="mx-auto flex items-center justify-between h-16"
         style={{ maxWidth: 1400, paddingInline: "clamp(20px,3.5vw,48px)" }}>
         <Link href="/demo/mju" className="flex items-center shrink-0">
+          {/* 로고 높이 = 우측 CTA(h-10)와 동일 (26.07 헤더 요소 높이 통일) */}
           <Image src="/images/sejong-logo.png" alt={COMPANY.name} width={200} height={48} priority
-            className="w-auto h-9" style={{ filter: scrolled ? "none" : "brightness(0) invert(1)", transition: "filter 0.5s" }} />
+            className="w-auto h-10" style={{ filter: scrolled ? "none" : "brightness(0) invert(1)", transition: "filter 0.5s" }} />
         </Link>
         <nav className="hidden lg:flex items-stretch self-stretch" aria-label="주요 메뉴">
           {NAV.map((item) => (

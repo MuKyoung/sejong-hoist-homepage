@@ -99,7 +99,7 @@ export default function HdConcept() {
             <Image
               src="/images/sejong-logo.png" alt="세종호이스트크레인"
               width={220} height={54} priority
-              className="w-auto h-8 lg:h-9 transition-[filter] duration-600"
+              className="w-auto h-9 transition-[filter] duration-600"
               style={{ filter: solid ? "none" : "brightness(0) invert(1)", objectFit: "contain" }}
             />
           </Link>

@@ -203,7 +203,7 @@ export default function YsConcept() {
               <Image
                 src="/images/sejong-logo.png" alt="세종호이스트크레인"
                 width={220} height={54} priority
-                className="w-auto h-8 lg:h-9" style={{ objectFit: "contain" }}
+                className="w-auto h-9" style={{ objectFit: "contain" }}
               />
             </Link>
 

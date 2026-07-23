@@ -22,7 +22,7 @@ export function YsHeader() {
         <nav className="hidden lg:flex items-center" aria-label="주요 메뉴">
           {NAV.map((item) => (
             <Link key={item.href} href={item.href}
-              className="group relative px-5 py-2 text-[15px] font-bold text-white/85 hover:text-white transition-colors">
+              className="group relative flex items-center h-9 px-5 text-[15px] font-bold text-white/85 hover:text-white transition-colors">
               {item.label}
               <span className="absolute left-5 right-5 -bottom-0.5 h-[2px] bg-white origin-center scale-x-0 group-hover:scale-x-100"
                 style={{ transition: "transform 0.45s cubic-bezier(0.16,1,0.3,1)" }} />

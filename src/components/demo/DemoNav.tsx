@@ -93,7 +93,7 @@ export default function DemoNav({
           <Image
             src="/images/sejong-logo.png" alt="SEJONG"
             width={90} height={20}
-            className="h-5 md:h-[22px] w-auto transition-opacity hover:opacity-100"
+            className="h-9 w-auto transition-opacity hover:opacity-100"
             style={{ filter: logoFilter, opacity: logoOpacity }}
           />
         </Link>
@@ -114,7 +114,7 @@ export default function DemoNav({
         {/* 우측: CTA + 햄버거 */}
         <div className="flex items-center gap-3">
           <a href={ctaHref}
-            className="hidden sm:block text-[11px] font-bold px-4 py-2.5 tracking-wide hover:opacity-80 transition-opacity whitespace-nowrap"
+            className="hidden sm:flex items-center h-9 text-[11px] font-bold px-4 tracking-wide hover:opacity-80 transition-opacity whitespace-nowrap"
             style={{ background: ctaColor, color: "#fff" }}>
             {ctaLabel}
           </a>
