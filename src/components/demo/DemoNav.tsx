@@ -74,12 +74,17 @@ export default function DemoNav({
   return (
     <>
       {/* ── 내비게이션 바 ── */}
+      {/* white(불투명) variant는 sticky — fixed는 긴 뷰포트(축소 보기)에서
+          Chromium이 페이지 아래에 고스트 페인트하는 문제가 있음 */}
       <nav
-        className="fixed top-0 inset-x-0 z-50 flex items-center justify-between px-5 sm:px-8 md:px-12 h-14 md:h-16"
+        className={`${isWhite ? "sticky top-0 w-full" : "fixed top-0 inset-x-0"} z-50 flex items-center justify-between px-5 sm:px-8 md:px-12 h-14 md:h-16`}
         style={{
           background: navBg,
-          backdropFilter: "blur(18px)",
-          WebkitBackdropFilter: "blur(18px)",
+          // 완전 불투명(white)에는 blur 불필요 — body overflow clip과 만나
+          // 고정 nav가 페이지 아래에 고스트 페인트되는 Chromium 버그 회피
+          ...(isWhite
+            ? {}
+            : { backdropFilter: "blur(18px)", WebkitBackdropFilter: "blur(18px)" }),
           borderBottom: `1px solid ${navBorder}`,
         }}
       >
@@ -190,8 +195,8 @@ export default function DemoNav({
               transition={{ delay: 0.38 }}
               className="px-7 pt-5"
             >
-              <a href="tel:0317771234" className="text-[14px] font-mono" style={{ color: "rgba(255,255,255,0.3)" }}>
-                031-777-1234
+              <a href="tel:0448650801" className="text-[14px] font-mono" style={{ color: "rgba(255,255,255,0.3)" }}>
+                044-865-0801
               </a>
             </motion.div>
 
