@@ -63,6 +63,58 @@ type DemoEntry = {
   img: string; href: string; dark: boolean;
 };
 
+/* Round 3 (2026-07) : 레퍼런스 3사 완전판 시안 + 섹션 커스텀 믹서 */
+const REF_DEMOS: readonly DemoEntry[] = [
+  {
+    num: "R1",
+    name: "RESEARCH PORTAL",
+    subtitle: "레퍼런스 시안 · 리서치 포털",
+    ref: "명지대학교 산학협력단 (mjuresearch.mju.ac.kr)",
+    palette: ["#16386F", "#0E2247", "#FFFFFF"],
+    desc: "딥블루 포털 문법. 기하 사분원 컴포지션과 풀포토 타일, 다크 유틸바와 투명 전환 헤더까지 산학협력단 사이트의 구조감을 그대로 옮겼습니다.",
+    keys: ["기하 사분원 수치 블록", "풀포토 3열 타일", "딥블루 실적 밴드", "인증 스트립"],
+    img: "/images/hero-02.jpg",
+    href: "/demo/mju",
+    dark: true,
+  },
+  {
+    num: "R2",
+    name: "MONUMENTAL",
+    subtitle: "레퍼런스 시안 · 모뉴멘탈 캠페인",
+    ref: "연세대학교 (yonsei.ac.kr)",
+    palette: ["#0E4A84", "#7FB4E8", "#FFFFFF"],
+    desc: "스카이 그라디언트 위 초대형 350TON 캠페인 타이포. 부채꼴 마스크 이미지와 에디토리얼 여백, QUICK 플로팅 dock까지 연세 메인의 품격을 재현했습니다.",
+    keys: ["초대형 캠페인 숫자", "부채꼴 마스크 이미지", "인덱스 에디토리얼 리스트", "QUICK dock"],
+    img: "/images/hero-03.jpg",
+    href: "/demo/yonsei",
+    dark: false,
+  },
+  {
+    num: "R3",
+    name: "CINEMATIC",
+    subtitle: "레퍼런스 시안 · 시네마틱 미니멀",
+    ref: "삼성중공업 (samsungshi.com)",
+    palette: ["#101820", "#1E4FA3", "#FFFFFF"],
+    desc: "풀블리드 영상 히어로와 극도로 정제된 화이트 본문. 시그니처인 등분할 포토 패널 스트립은 호버 시 해당 패널이 넓어지며 설명이 떠오릅니다.",
+    keys: ["풀블리드 영상 히어로", "등분할 패널 (호버 확장)", "원형 마스크 모티프", "다크 CTA 밴드"],
+    img: "/images/hero-04.jpg",
+    href: "/demo/shi",
+    dark: true,
+  },
+  {
+    num: "MIX",
+    name: "CUSTOM MIXER",
+    subtitle: "섹션별 스타일 조합기",
+    ref: "위 3개 시안 × 6개 섹션 자유 조합",
+    palette: ["#16386F", "#0E4A84", "#101820"],
+    desc: "헤더·히어로·회사소개·사업영역·실적·뉴스 6개 섹션마다 세 시안 중 마음에 드는 스타일을 골라 즉시 조합해 볼 수 있습니다. 선택은 자동 저장됩니다.",
+    keys: ["섹션 × 스타일 3택", "실시간 조합 미리보기", "선택 자동 저장", "시안 전체 적용 프리셋"],
+    img: "/images/pf-ceiling30.jpg",
+    href: "/demo/custom",
+    dark: true,
+  },
+];
+
 /* Round 2 (2026-07) : 운영 사이트의 헤더 · 히어로만 교체하는 A/B 시안 */
 const HERO_DEMOS: readonly DemoEntry[] = [
   {
@@ -224,6 +276,36 @@ export default function DemoSelector() {
             </span>
           ))}
         </motion.div>
+      </div>
+
+      {/* ── Round 3 : 레퍼런스 3사 완전판 + 커스텀 믹서 ── */}
+      <div className="container-xl pb-16">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.15, duration: 0.8, ease: E }}
+          className="mb-8"
+        >
+          <div className="flex items-center gap-3 mb-4">
+            <span className="text-[10px] font-mono font-bold tracking-[0.28em] uppercase px-2.5 py-1.5"
+              style={{ background: "rgba(127,180,232,0.16)", color: "#7FB4E8" }}>
+              NEW · Round 3
+            </span>
+            <span className="text-[11px] font-mono" style={{ color: "rgba(240,240,240,0.3)" }}>
+              레퍼런스 3사 완전판 시안 + 커스텀 믹서 · 2026-07
+            </span>
+          </div>
+          <h2 className="text-2xl font-black tracking-tight mb-3">레퍼런스 기반 시안 &amp; 조합</h2>
+          <p className="text-[14px] leading-[1.8] max-w-xl" style={{ color: "rgba(240,240,240,0.4)" }}>
+            명지대 산학협력단 · 연세대학교 · 삼성중공업 세 사이트의 디자인 문법을 각각 완전한
+            메인 페이지로 구현했습니다. 커스텀 믹서에서는 섹션 단위로 세 스타일을 자유롭게
+            조합해 바로 비교할 수 있습니다. 각 시안의 분석 문서는 design-refs/ 폴더에 있습니다.
+          </p>
+        </motion.div>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+          {REF_DEMOS.map((d, i) => (
+            <DemoCard key={d.num} d={d} i={i} />
+          ))}
+        </div>
       </div>
 
       {/* ── Round 2 : 헤더 · 히어로 A/B 시안 ── */}
