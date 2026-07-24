@@ -8,6 +8,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
 import { E, MJU, NAV_MJU, COMPANY, BUSINESS_AREAS, CASES, NOTICES, STATS, HERO_SLIDES } from "./data";
+import RefMenu from "./RefMenu";
 
 const pad = (n: number) => String(n).padStart(2, "0");
 
@@ -57,6 +58,7 @@ export function MjuHeader() {
             </Link>
           ))}
         </nav>
+        <RefMenu items={NAV_MJU} bg={MJU.deep} barColor={scrolled ? MJU.deep : "#fff"} barShadow={!scrolled} />
       </div>
     </header>
   );
@@ -115,6 +117,11 @@ export function MjuHero() {
         <div className="absolute bottom-12 flex items-center gap-6 text-white/80">
           <span className="text-[13px] tracking-[0.2em] font-semibold tabular-nums">
             {pad(idx + 1)} <span className="opacity-40">—</span> {pad(HERO_SLIDES.length)}
+          </span>
+          {/* 오토플레이 진행바 (6s 주기 동기) */}
+          <span className="relative hidden sm:block w-28 h-[2px] overflow-hidden" style={{ background: "rgba(255,255,255,0.25)" }}>
+            <motion.span key={idx} className="absolute inset-y-0 left-0 bg-white"
+              initial={{ width: "0%" }} animate={{ width: "100%" }} transition={{ duration: 6, ease: "linear" }} />
           </span>
           <div className="flex gap-2">
             {[-1, 1].map((d) => (
@@ -184,13 +191,11 @@ export function MjuAbout() {
               <motion.div key={r.label} initial={{ opacity: 0, x: -20 }} whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true }} transition={{ delay: i * 0.08, duration: 0.7, ease: E }}>
                 <Link href={r.href}
-                  className="group flex items-center justify-between py-4 border-b text-[15px] font-semibold transition-colors"
+                  className="group flex items-center justify-between py-4 border-b text-[15px] font-semibold transition-colors group-hover:text-[#16386F]"
                   style={{ borderColor: MJU.line, color: MJU.deep }}>
                   {r.label}
-                  <span className="w-8 h-8 flex items-center justify-center border text-[16px] font-light transition-all duration-300 group-hover:rotate-90 group-hover:text-white"
-                    style={{ borderColor: MJU.line }}
-                    onMouseEnter={(e) => (e.currentTarget.style.background = MJU.royal)}
-                    onMouseLeave={(e) => (e.currentTarget.style.background = "transparent")}>+</span>
+                  <span className="w-8 h-8 flex items-center justify-center border text-[16px] font-light transition-all duration-300 group-hover:rotate-90 group-hover:bg-[#16386F] group-hover:border-transparent group-hover:text-white"
+                    style={{ borderColor: MJU.line }}>+</span>
                 </Link>
               </motion.div>
             ))}

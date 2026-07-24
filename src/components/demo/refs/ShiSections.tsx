@@ -8,6 +8,7 @@ import { motion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
 import { E, SHI, NAV_SHI, COMPANY, AREAS_MAIN, CASES, NOTICES, STATS, HERO_VIDEO, CTA_VIDEO } from "./data";
+import RefMenu from "./RefMenu";
 
 /* ── 1. 헤더: 화이트 미니멀 ── */
 export function ShiHeader() {
@@ -33,11 +34,8 @@ export function ShiHeader() {
         </nav>
         <div className="flex items-center gap-5">
           <span className="hidden md:block text-[14px] font-semibold tracking-wide" style={{ color: "rgba(16,24,32,0.5)" }}>KO</span>
-          <Link href="/support/inquiry" aria-label="견적 문의"
-            className="flex flex-col justify-center gap-[6px] w-8 h-8 group">
-            <span className="block h-[1.5px] w-7 transition-all group-hover:w-5" style={{ background: SHI.ink }} />
-            <span className="block h-[1.5px] w-5 transition-all group-hover:w-7" style={{ background: SHI.ink }} />
-          </Link>
+          {/* 삼성重 문법: 데스크톱에서도 햄버거로 풀메뉴 (장식이 아닌 실제 메뉴) */}
+          <RefMenu items={NAV_SHI} bg={SHI.dark} barColor={SHI.ink} triggerClass="" />
         </div>
       </div>
     </header>
@@ -105,7 +103,7 @@ function CenterHead({ eyebrow, title, sub }: { eyebrow: string; title: string; s
       initial={{ opacity: 0, y: 26 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: "-8%" }} transition={{ duration: 0.9, ease: E }}>
       <p className="text-[12px] font-bold tracking-[0.28em] uppercase mb-4" style={{ color: SHI.accent }}>{eyebrow}</p>
       <h2 className="font-bold tracking-[-0.02em]" style={{ fontSize: "clamp(1.7rem,3vw,2.4rem)", color: SHI.ink }}>{title}</h2>
-      {sub && <p className="mt-4 text-[14px] leading-[1.8]" style={{ color: "rgba(16,24,32,0.55)" }}>{sub}</p>}
+      {sub && <p className="mt-4 text-[14px] leading-[1.8] whitespace-pre-line" style={{ color: "rgba(16,24,32,0.55)" }}>{sub}</p>}
     </motion.div>
   );
 }

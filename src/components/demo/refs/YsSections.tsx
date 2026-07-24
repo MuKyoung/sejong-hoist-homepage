@@ -8,6 +8,7 @@ import { motion, useInView, animate } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
 import { E, YS, NAV_YS, COMPANY, BUSINESS_AREAS, CASES, NOTICES } from "./data";
+import RefMenu from "./RefMenu";
 
 /* ── 1. 헤더: 항상 로열블루 솔리드 바 ── */
 export function YsHeader() {
@@ -34,6 +35,7 @@ export function YsHeader() {
           <a href={`tel:${COMPANY.tel.replace(/-/g, "")}`} className="hidden 2xl:block hover:text-white transition-colors tabular-nums">{COMPANY.tel}</a>
           <span className="hidden 2xl:block w-px h-3.5 bg-white/30" />
           <Link href="/en" className="hover:text-white transition-colors font-semibold">ENG</Link>
+          <RefMenu items={NAV_YS} bg={YS.royal} barColor="#fff" />
         </div>
       </div>
     </header>
