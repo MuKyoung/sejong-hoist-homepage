@@ -50,7 +50,8 @@ export const STATS = [
   { value: "100", suffix: "%", label: "안전인증 적합", desc: "13대 전수 합격, 부적합 0건" },
 ];
 
-export const HERO_VIDEO = "/videos/12716-241674181_medium.mp4";
+/* 보유 스톡 중 가장 기계·산업적인 컷 (실사 시공 영상 수급 시 교체) */
+export const HERO_VIDEO = "/videos/4768-179741152_medium.mp4";
 export const CTA_VIDEO = "/videos/48420-453832153_medium.mp4";
 
 /* 사업영역: 시안에서 주로 쓰는 4개 + 전체 */

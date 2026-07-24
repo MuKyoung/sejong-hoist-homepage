@@ -23,7 +23,7 @@ export function YsHeader() {
         <nav className="hidden xl:flex items-center" aria-label="주요 메뉴">
           {NAV.map((item) => (
             <Link key={item.href} href={item.href}
-              className="group relative flex items-center px-3 text-[36px] leading-none font-bold tracking-[-0.03em] whitespace-nowrap text-white/85 hover:text-white transition-colors">
+              className="group relative flex items-center px-3 text-[36px] leading-none font-bold tracking-[-0.03em] whitespace-nowrap text-white transition-opacity opacity-90 hover:opacity-100">
               {item.label}
               <span className="absolute left-3 right-3 -bottom-1 h-[2px] bg-white origin-center scale-x-0 group-hover:scale-x-100"
                 style={{ transition: "transform 0.45s cubic-bezier(0.16,1,0.3,1)" }} />
@@ -74,8 +74,12 @@ export function YsHero() {
         LS ELECTRIC 부산사업장 350TON 겐트리 크랩 크레인 · KCs 안전인증 취득
       </motion.p>
 
-      {/* 하단에서 떠오르는 장비 컷 */}
+      {/* 하단에서 떠오르는 장비 컷 — 좌우·상단을 하늘에 녹여 하드 엣지 제거 */}
       <motion.div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[min(920px,92vw)] h-[38%] overflow-hidden"
+        style={{
+          WebkitMaskImage: "linear-gradient(90deg, transparent 0%, #000 10%, #000 90%, transparent 100%)",
+          maskImage: "linear-gradient(90deg, transparent 0%, #000 10%, #000 90%, transparent 100%)",
+        }}
         initial={{ opacity: 0, y: 80 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.9, duration: 1.4, ease: E }}>
         <Image src="/images/hero-03.jpg" alt="" fill className="object-cover object-top" sizes="920px" priority />
         <div aria-hidden className="absolute inset-0" style={{ background: "linear-gradient(180deg, rgba(232,241,250,1) 0%, rgba(232,241,250,0) 42%)" }} />
@@ -293,7 +297,7 @@ export function YsNews() {
           { label: "오시는길", href: "/about/location" },
         ].map((q, i) => (
           <a key={q.label} href={q.href}
-            className="px-4 py-3.5 text-[11.5px] font-bold text-white/85 hover:bg-white/15 hover:text-white text-center transition-colors"
+            className="px-4 py-3.5 text-[11.5px] font-bold text-white hover:bg-white/15 text-center transition-colors"
             style={{ borderTop: i ? "1px solid rgba(255,255,255,0.18)" : "none" }}>
             {q.label}
           </a>

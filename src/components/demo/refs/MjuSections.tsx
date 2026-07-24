@@ -246,9 +246,10 @@ export function MjuProjects() {
             ))}
           </div>
         </motion.div>
-        <div className="flex gap-4 overflow-x-auto pb-3 -mr-4 pr-4" style={{ scrollbarWidth: "thin" }}>
+        {/* 26.07 완성도 리뷰: 가로 스크롤에서 4번째 카드가 잘려 보이던 것을 2x2 그리드로 */}
+        <div className="grid sm:grid-cols-2 gap-4">
           {CASES.map((c, i) => (
-            <motion.div key={c.slug} className="shrink-0 w-[280px]"
+            <motion.div key={c.slug}
               initial={{ opacity: 0, y: 36 }} whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-8%" }} transition={{ delay: i * 0.1, duration: 0.85, ease: E }}>
               <Link href={`/portfolio/${c.slug}`} className="group block bg-white">
@@ -290,7 +291,7 @@ export function MjuNews() {
                   viewport={{ once: true }} transition={{ delay: i * 0.06, duration: 0.6, ease: E }}>
                   <Link href={`/support/notice/${n.id}`}
                     className="group flex items-center gap-5 py-4 border-b" style={{ borderColor: MJU.line }}>
-                    <span className="shrink-0 text-[12px] font-bold w-16" style={{ color: MJU.royal }}>[{n.category}]</span>
+                    <span className="shrink-0 text-[12px] font-bold w-20 whitespace-nowrap" style={{ color: MJU.royal }}>[{n.category}]</span>
                     <span className="flex-1 min-w-0 truncate text-[15px] text-[#33405C] group-hover:font-semibold transition-all">{n.title}</span>
                     <span className="shrink-0 text-[12.5px] text-[#98A2B8] tabular-nums">{n.date}</span>
                   </Link>
