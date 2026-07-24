@@ -19,19 +19,20 @@ export function YsHeader() {
           <Image src="/images/sejong-logo.png" alt={COMPANY.name} width={200} height={48} priority
             className="w-auto h-9" style={{ filter: "brightness(0) invert(1)" }} />
         </Link>
-        <nav className="hidden lg:flex items-center" aria-label="주요 메뉴">
+        {/* GNB 텍스트 = 로고 높이(36px)와 동일. 폭이 커져 xl(1280)부터 노출 */}
+        <nav className="hidden xl:flex items-center" aria-label="주요 메뉴">
           {NAV.map((item) => (
             <Link key={item.href} href={item.href}
-              className="group relative flex items-center h-9 px-5 text-[15px] font-bold text-white/85 hover:text-white transition-colors">
+              className="group relative flex items-center px-3 text-[36px] leading-none font-bold tracking-[-0.03em] whitespace-nowrap text-white/85 hover:text-white transition-colors">
               {item.label}
-              <span className="absolute left-5 right-5 -bottom-0.5 h-[2px] bg-white origin-center scale-x-0 group-hover:scale-x-100"
+              <span className="absolute left-3 right-3 -bottom-1 h-[2px] bg-white origin-center scale-x-0 group-hover:scale-x-100"
                 style={{ transition: "transform 0.45s cubic-bezier(0.16,1,0.3,1)" }} />
             </Link>
           ))}
         </nav>
-        <div className="flex items-center gap-4 text-white/80 text-[13px]">
-          <a href={`tel:${COMPANY.tel.replace(/-/g, "")}`} className="hidden md:block hover:text-white transition-colors tabular-nums">{COMPANY.tel}</a>
-          <span className="hidden md:block w-px h-3.5 bg-white/30" />
+        <div className="flex items-center gap-4 text-white/80 text-[15px]">
+          <a href={`tel:${COMPANY.tel.replace(/-/g, "")}`} className="hidden 2xl:block hover:text-white transition-colors tabular-nums">{COMPANY.tel}</a>
+          <span className="hidden 2xl:block w-px h-3.5 bg-white/30" />
           <Link href="/en" className="hover:text-white transition-colors font-semibold">ENG</Link>
         </div>
       </div>

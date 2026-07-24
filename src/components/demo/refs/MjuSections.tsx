@@ -45,21 +45,18 @@ export function MjuHeader() {
           <Image src="/images/sejong-logo.png" alt={COMPANY.name} width={200} height={48} priority
             className="w-auto h-10" style={{ filter: scrolled ? "none" : "brightness(0) invert(1)", transition: "filter 0.5s" }} />
         </Link>
-        <nav className="hidden lg:flex items-stretch self-stretch" aria-label="주요 메뉴">
+        {/* GNB 텍스트 = 로고 높이(40px)와 동일. 폭이 커져 xl(1280)부터 노출 */}
+        <nav className="hidden xl:flex items-stretch self-stretch" aria-label="주요 메뉴">
           {NAV.map((item) => (
             <Link key={item.href} href={item.href}
-              className="group relative flex items-center px-5 text-[15.5px] font-bold whitespace-nowrap"
+              className="group relative flex items-center px-4 text-[40px] leading-none font-bold tracking-[-0.03em] whitespace-nowrap"
               style={{ color: fg, transition: "color 0.5s" }}>
               {item.label}
-              <span className="absolute left-5 right-5 bottom-3 h-[2px] origin-left scale-x-0 group-hover:scale-x-100"
+              <span className="absolute left-4 right-4 bottom-1.5 h-[2px] origin-left scale-x-0 group-hover:scale-x-100"
                 style={{ background: scrolled ? MJU.royal : "#fff", transition: "transform 0.45s cubic-bezier(0.16,1,0.3,1)" }} />
             </Link>
           ))}
         </nav>
-        <Link href="/support/inquiry" className="hidden md:flex items-center h-10 px-5 text-[13px] font-bold"
-          style={{ background: scrolled ? MJU.royal : "rgba(255,255,255,0.14)", color: "#fff", border: scrolled ? "none" : "1px solid rgba(255,255,255,0.4)", transition: "all 0.5s" }}>
-          견적 문의
-        </Link>
       </div>
     </header>
   );

@@ -19,19 +19,20 @@ export function ShiHeader() {
         <Link href="/demo/shi" className="flex items-center shrink-0">
           <Image src="/images/sejong-logo.png" alt={COMPANY.name} width={200} height={48} priority className="w-auto h-8" />
         </Link>
-        <nav className="hidden lg:flex items-center gap-1" aria-label="주요 메뉴">
+        {/* GNB 텍스트 = 로고 높이(32px)와 동일. 폭이 커져 xl(1280)부터 노출 */}
+        <nav className="hidden xl:flex items-center gap-1" aria-label="주요 메뉴">
           {NAV.map((item) => (
             <Link key={item.href} href={item.href}
-              className="relative flex items-center h-8 px-4 text-[14px] font-semibold transition-colors group"
+              className="relative flex items-center px-3 text-[32px] leading-none font-semibold tracking-[-0.03em] whitespace-nowrap transition-colors group"
               style={{ color: SHI.ink }}>
               <span className="transition-colors group-hover:text-[#1E4FA3]">{item.label}</span>
-              <span className="absolute left-4 right-4 bottom-0.5 h-[1.5px] origin-left scale-x-0 group-hover:scale-x-100"
+              <span className="absolute left-3 right-3 -bottom-1 h-[1.5px] origin-left scale-x-0 group-hover:scale-x-100"
                 style={{ background: SHI.accent, transition: "transform 0.4s cubic-bezier(0.16,1,0.3,1)" }} />
             </Link>
           ))}
         </nav>
         <div className="flex items-center gap-5">
-          <span className="hidden md:block text-[12.5px] font-semibold tracking-wide" style={{ color: "rgba(16,24,32,0.5)" }}>KO</span>
+          <span className="hidden md:block text-[14px] font-semibold tracking-wide" style={{ color: "rgba(16,24,32,0.5)" }}>KO</span>
           <Link href="/support/inquiry" aria-label="견적 문의"
             className="flex flex-col justify-center gap-[6px] w-8 h-8 group">
             <span className="block h-[1.5px] w-7 transition-all group-hover:w-5" style={{ background: SHI.ink }} />
