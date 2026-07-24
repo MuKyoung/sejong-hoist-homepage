@@ -7,7 +7,7 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
-import { E, SHI, NAV, COMPANY, AREAS_MAIN, CASES, NOTICES, STATS, HERO_VIDEO, CTA_VIDEO } from "./data";
+import { E, SHI, NAV_SHI, COMPANY, AREAS_MAIN, CASES, NOTICES, STATS, HERO_VIDEO, CTA_VIDEO } from "./data";
 
 /* ── 1. 헤더: 화이트 미니멀 ── */
 export function ShiHeader() {
@@ -21,7 +21,7 @@ export function ShiHeader() {
         </Link>
         {/* GNB 텍스트 = 로고 높이(32px)와 동일. 폭이 커져 xl(1280)부터 노출 */}
         <nav className="hidden xl:flex items-center gap-1" aria-label="주요 메뉴">
-          {NAV.map((item) => (
+          {NAV_SHI.map((item) => (
             <Link key={item.href} href={item.href}
               className="relative flex items-center px-3 text-[32px] leading-none font-semibold tracking-[-0.03em] whitespace-nowrap transition-colors group"
               style={{ color: SHI.ink }}>
@@ -50,10 +50,14 @@ export function ShiHero() {
   const words2 = ["350톤의", "기술"];
   return (
     <section className="relative overflow-hidden" style={{ height: "min(94svh,920px)", minHeight: 580, background: SHI.dark }}>
-      <video src={HERO_VIDEO} autoPlay muted loop playsInline
-        className="absolute inset-0 w-full h-full object-cover"
-        style={{ filter: "brightness(0.55) saturate(0.9)" }}
-        poster="/images/hero-02.jpg" />
+      {/* 영상이 줌아웃으로 세틀하며 시작 — 시네마틱 오프닝 */}
+      <motion.div className="absolute inset-0"
+        initial={{ scale: 1.14 }} animate={{ scale: 1 }} transition={{ duration: 2.6, ease: E }}>
+        <video src={HERO_VIDEO} autoPlay muted loop playsInline
+          className="absolute inset-0 w-full h-full object-cover"
+          style={{ filter: "brightness(0.55) saturate(0.9)" }}
+          poster="/images/hero-02.jpg" />
+      </motion.div>
       <div className="absolute inset-0" style={{ background: "linear-gradient(100deg, rgba(13,21,35,0.72) 0%, rgba(13,21,35,0.28) 60%, rgba(13,21,35,0.15) 100%)" }} />
       <div className="relative z-10 mx-auto h-full flex flex-col justify-center"
         style={{ maxWidth: 1400, paddingInline: "clamp(20px,3.5vw,48px)" }}>
@@ -118,9 +122,10 @@ export function ShiAbout() {
       <div className="mx-auto" style={{ maxWidth: 1180, paddingInline: "clamp(20px,3.5vw,48px)" }}>
         <CenterHead eyebrow="About" title="현장을 선도하는 기술과 신뢰"
           sub={"혁신적인 설비의 설계와 제작, 흔들림 없는 안전 기준의\n준수로 고객 현장의 가치를 만들어 갑니다."} />
+        {/* 원형 사진이 굴러 들어오듯 회전하며 등장 */}
         <motion.div className="relative mx-auto w-[min(420px,80vw)] aspect-square rounded-full overflow-hidden"
-          initial={{ opacity: 0, scale: 0.9 }} whileInView={{ opacity: 1, scale: 1 }}
-          viewport={{ once: true, margin: "-10%" }} transition={{ duration: 1.1, ease: E }}>
+          initial={{ opacity: 0, scale: 0.82, rotate: -14, y: 60 }} whileInView={{ opacity: 1, scale: 1, rotate: 0, y: 0 }}
+          viewport={{ once: true, margin: "-10%" }} transition={{ duration: 1.3, ease: E }}>
           <Image src="/images/about-01.jpg" alt="세종호이스트크레인 사옥 전경" fill className="object-cover" sizes="420px" />
         </motion.div>
         <div className="mt-14 grid md:grid-cols-3 gap-10 text-center">
@@ -149,7 +154,7 @@ export function ShiBusiness() {
         <motion.div className="hidden md:flex h-[440px] overflow-hidden rounded-[24px] shadow-[0_28px_60px_rgba(16,24,32,0.18)]"
           initial={{ opacity: 0, y: 40 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: "-8%" }} transition={{ duration: 1, ease: E }}>
           {AREAS_MAIN.map((a, i) => (
-            <Link key={a.slug} href={a.href}
+            <Link key={a.slug} href="/demo/shi/business"
               onMouseEnter={() => setHover(i)} onMouseLeave={() => setHover(null)}
               className="relative overflow-hidden"
               style={{
@@ -160,7 +165,10 @@ export function ShiBusiness() {
               <div className="absolute inset-0 transition-colors duration-700"
                 style={{ background: hover === i ? "rgba(13,21,35,0.18)" : "rgba(13,21,35,0.45)" }} />
               {i > 0 && <span aria-hidden className="absolute left-0 top-0 bottom-0 w-px bg-white/25" />}
-              <div className="absolute inset-x-0 bottom-0 p-7">
+              {/* 라벨 블록이 패널별 시차를 두고 아래에서 상승 */}
+              <motion.div className="absolute inset-x-0 bottom-0 p-7"
+                initial={{ opacity: 0, y: 70 }} whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-8%" }} transition={{ delay: 0.35 + i * 0.12, duration: 0.9, ease: E }}>
                 <p className="text-[11px] font-bold tracking-[0.16em] uppercase text-white/60">{a.en}</p>
                 <div className="mt-1.5 flex items-center gap-3">
                   <p className="text-[19px] font-bold text-white whitespace-nowrap">{a.title}</p>
@@ -171,14 +179,14 @@ export function ShiBusiness() {
                   style={{ opacity: hover === i ? 1 : 0 }}>
                   {a.desc}
                 </p>
-              </div>
+              </motion.div>
             </Link>
           ))}
         </motion.div>
         {/* 모바일: 2열 카드 */}
         <div className="md:hidden grid grid-cols-1 sm:grid-cols-2 gap-4">
           {AREAS_MAIN.map((a) => (
-            <Link key={a.slug} href={a.href} className="relative block aspect-[16/10] overflow-hidden rounded-[16px]">
+            <Link key={a.slug} href="/demo/shi/business" className="relative block aspect-[16/10] overflow-hidden rounded-[16px]">
               <Image src={a.image} alt={a.title} fill className="object-cover" sizes="100vw" />
               <div className="absolute inset-0" style={{ background: "rgba(13,21,35,0.4)" }} />
               <p className="absolute left-5 bottom-5 text-[17px] font-bold text-white">{a.title} →</p>
@@ -186,7 +194,7 @@ export function ShiBusiness() {
           ))}
         </div>
         <div className="mt-8 text-center">
-          <Link href="/business" className="inline-flex items-center gap-2 text-[13.5px] font-bold group" style={{ color: SHI.accent }}>
+          <Link href="/demo/shi/business" className="inline-flex items-center gap-2 text-[13.5px] font-bold group" style={{ color: SHI.accent }}>
             전체 사업영역 보기 <span className="transition-transform group-hover:translate-x-1.5">→</span>
           </Link>
         </div>
@@ -216,9 +224,10 @@ export function ShiProjects() {
         <div className="grid sm:grid-cols-2 gap-5">
           {CASES.map((c, i) => (
             <motion.div key={c.slug}
-              initial={{ opacity: 0, y: 36 }} whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-8%" }} transition={{ delay: (i % 2) * 0.1, duration: 0.9, ease: E }}>
-              <Link href={`/portfolio/${c.slug}`} className="group relative block aspect-[16/10] overflow-hidden rounded-[20px]">
+              /* 좌우 화면 밖에서 교차 진입 */
+              initial={{ opacity: 0, x: i % 2 ? 150 : -150 }} whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true, margin: "-8%" }} transition={{ delay: (i % 2) * 0.08, duration: 1, ease: E }}>
+              <Link href="/demo/shi/portfolio" className="group relative block aspect-[16/10] overflow-hidden rounded-[20px]">
                 <Image src={c.src} alt={c.title} fill
                   className="object-cover transition-transform duration-[1.3s] group-hover:scale-[1.06]"
                   sizes="(max-width:640px) 100vw, 50vw" />
@@ -275,7 +284,7 @@ export function ShiNews() {
           </motion.h2>
           <motion.div className="flex flex-wrap gap-3"
             initial={{ opacity: 0, x: 20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ delay: 0.15, duration: 0.9, ease: E }}>
-            <Link href="/support/inquiry" className="h-13 px-8 py-4 bg-white text-[13.5px] font-bold hover:opacity-85 transition-opacity rounded-full" style={{ color: SHI.dark }}>
+            <Link href="/demo/shi/contact" className="h-13 px-8 py-4 bg-white text-[13.5px] font-bold hover:opacity-85 transition-opacity rounded-full" style={{ color: SHI.dark }}>
               온라인 문의
             </Link>
             <a href={`tel:${COMPANY.tel.replace(/-/g, "")}`}
@@ -287,19 +296,26 @@ export function ShiNews() {
         </div>
       </section>
 
-      <footer className="py-12 bg-white" style={{ borderTop: "1px solid rgba(16,24,32,0.08)" }}>
-        <div className="mx-auto flex flex-col md:flex-row justify-between gap-6 text-[12.5px] leading-[1.9]"
-          style={{ maxWidth: 1400, paddingInline: "clamp(20px,3.5vw,48px)", color: "rgba(16,24,32,0.55)" }}>
-          <div>
-            <p className="font-bold text-[14px] mb-2" style={{ color: SHI.ink }}>{COMPANY.name}</p>
-            <p>{COMPANY.address}<br />대표이사 {COMPANY.ceo} · 사업자등록번호 {COMPANY.bizNo}</p>
-          </div>
-          <div className="md:text-right">
-            <p>TEL {COMPANY.tel} · FAX {COMPANY.fax}<br />{COMPANY.email}</p>
-            <p className="mt-2" style={{ color: "rgba(16,24,32,0.35)" }}>© {COMPANY.name}. All rights reserved.</p>
-          </div>
-        </div>
-      </footer>
+      <ShiFooter />
     </>
+  );
+}
+
+/* ── 푸터 (서브 페이지 공용) ── */
+export function ShiFooter() {
+  return (
+    <footer className="py-12 bg-white" style={{ borderTop: "1px solid rgba(16,24,32,0.08)" }}>
+      <div className="mx-auto flex flex-col md:flex-row justify-between gap-6 text-[12.5px] leading-[1.9]"
+        style={{ maxWidth: 1400, paddingInline: "clamp(20px,3.5vw,48px)", color: "rgba(16,24,32,0.55)" }}>
+        <div>
+          <p className="font-bold text-[14px] mb-2" style={{ color: SHI.ink }}>{COMPANY.name}</p>
+          <p>{COMPANY.address}<br />대표이사 {COMPANY.ceo} · 사업자등록번호 {COMPANY.bizNo}</p>
+        </div>
+        <div className="md:text-right">
+          <p>TEL {COMPANY.tel} · FAX {COMPANY.fax}<br />{COMPANY.email}</p>
+          <p className="mt-2" style={{ color: "rgba(16,24,32,0.35)" }}>© {COMPANY.name}. All rights reserved.</p>
+        </div>
+      </div>
+    </footer>
   );
 }

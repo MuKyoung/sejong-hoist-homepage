@@ -7,7 +7,7 @@ import { useEffect, useRef, useState } from "react";
 import { motion, useInView, animate } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
-import { E, YS, NAV, COMPANY, BUSINESS_AREAS, CASES, NOTICES } from "./data";
+import { E, YS, NAV_YS, COMPANY, BUSINESS_AREAS, CASES, NOTICES } from "./data";
 
 /* ── 1. 헤더: 항상 로열블루 솔리드 바 ── */
 export function YsHeader() {
@@ -21,7 +21,7 @@ export function YsHeader() {
         </Link>
         {/* GNB 텍스트 = 로고 높이(36px)와 동일. 폭이 커져 xl(1280)부터 노출 */}
         <nav className="hidden xl:flex items-center" aria-label="주요 메뉴">
-          {NAV.map((item) => (
+          {NAV_YS.map((item) => (
             <Link key={item.href} href={item.href}
               className="group relative flex items-center px-3 text-[36px] leading-none font-bold tracking-[-0.03em] whitespace-nowrap text-white transition-opacity opacity-90 hover:opacity-100">
               {item.label}
@@ -115,7 +115,7 @@ export function YsAbout() {
             안전에 대한 책임을 다하며 운반하역 현장의 지속 가능한 가동을 추구합니다.
           </motion.p>
           <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} transition={{ delay: 0.45, duration: 1 }}>
-            <Link href="/about" className="inline-flex items-center gap-2 mt-9 text-[14px] font-bold group" style={{ color: YS.royal }}>
+            <Link href="/demo/yonsei/about" className="inline-flex items-center gap-2 mt-9 text-[14px] font-bold group" style={{ color: YS.royal }}>
               회사소개 바로가기
               <span className="transition-transform group-hover:translate-x-1.5">→</span>
             </Link>
@@ -126,15 +126,21 @@ export function YsAbout() {
         <div className="relative h-[420px] sm:h-[500px]">
           <div aria-hidden className="absolute left-[8%] bottom-[4%] w-[54%] aspect-square"
             style={{ background: "#E3EBF4", borderRadius: "0 0 0 100%", opacity: 0.8 }} />
+          {/* 부채꼴 사진 — 붐 회전처럼 오른쪽 화면 밖에서 회전하며 진입 */}
           <motion.div className="absolute right-0 top-0 w-[78%] aspect-square overflow-hidden"
-            style={{ borderRadius: "0 100% 0 0" }}
-            initial={{ opacity: 0, scale: 0.94, y: 30 }} whileInView={{ opacity: 1, scale: 1, y: 0 }}
-            viewport={{ once: true, margin: "-10%" }} transition={{ duration: 1.1, ease: E }}>
+            style={{ borderRadius: "0 100% 0 0", transformOrigin: "100% 100%" }}
+            initial={{ opacity: 0, x: 180, rotate: 10, scale: 0.94 }} whileInView={{ opacity: 1, x: 0, rotate: 0, scale: 1 }}
+            viewport={{ once: true, margin: "-10%" }} transition={{ duration: 1.3, ease: E }}>
             <Image src="/images/about-01.jpg" alt="세종호이스트크레인 사옥" fill className="object-cover" sizes="640px" />
           </motion.div>
+          {/* 배경 호 — 반대 방향으로 진입한 뒤 아주 느리게 상시 회전 */}
           <motion.div aria-hidden className="absolute left-[2%] top-[16%] w-[30%] aspect-square"
-            style={{ border: `1.5px solid ${YS.royal}`, borderRadius: "100% 0 0 0", opacity: 0.35 }}
-            initial={{ opacity: 0 }} whileInView={{ opacity: 0.35 }} viewport={{ once: true }} transition={{ delay: 0.4, duration: 1 }} />
+            initial={{ opacity: 0, x: -120 }} whileInView={{ opacity: 0.35, x: 0 }}
+            viewport={{ once: true }} transition={{ delay: 0.3, duration: 1.1, ease: E }}>
+            <motion.div className="w-full h-full"
+              style={{ border: `1.5px solid ${YS.royal}`, borderRadius: "100% 0 0 0" }}
+              animate={{ rotate: 360 }} transition={{ duration: 70, repeat: Infinity, ease: "linear" }} />
+          </motion.div>
         </div>
       </div>
     </section>
@@ -156,9 +162,10 @@ export function YsBusiness() {
         <div className="relative border-t" style={{ borderColor: "rgba(16,36,62,0.14)" }}>
           {BUSINESS_AREAS.map((a, i) => (
             <motion.div key={a.slug}
-              initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-6%" }} transition={{ delay: i * 0.05, duration: 0.7, ease: E }}>
-              <Link href={a.href}
+              /* 행이 화면 밖 왼쪽에서 순차 진입 */
+              initial={{ opacity: 0, x: -120 }} whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true, margin: "-6%" }} transition={{ delay: i * 0.06, duration: 0.85, ease: E }}>
+              <Link href="/demo/yonsei/business"
                 onMouseEnter={() => setHover(i)} onMouseLeave={() => setHover(null)}
                 className="group grid grid-cols-[64px_1fr_auto] items-center gap-5 py-6 border-b transition-all duration-500"
                 style={{ borderColor: "rgba(16,36,62,0.14)", paddingLeft: hover === i ? 18 : 0 }}>
@@ -236,7 +243,7 @@ export function YsProjects() {
             <motion.div key={c.slug}
               initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-8%" }} transition={{ delay: i * 0.08, duration: 0.8, ease: E }}>
-              <Link href={`/portfolio/${c.slug}`} className="group block bg-white">
+              <Link href="/demo/yonsei/portfolio" className="group block bg-white">
                 <div className="relative aspect-[4/3] overflow-hidden">
                   <Image src={c.src} alt={c.title} fill className="object-cover transition-transform duration-[1.1s] group-hover:scale-[1.06]"
                     sizes="(max-width:640px) 100vw, 25vw" />
@@ -273,8 +280,9 @@ export function YsNews() {
           <div className="grid sm:grid-cols-3 gap-5">
             {NOTICES.slice(0, 3).map((n, i) => (
               <motion.div key={n.id}
-                initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-8%" }} transition={{ delay: i * 0.1, duration: 0.8, ease: E }}>
+                /* 카드가 아래 화면 밖에서 살짝 기울어 올라와 수평으로 세틀 */
+                initial={{ opacity: 0, y: 90, rotate: i % 2 ? 2.5 : -2.5 }} whileInView={{ opacity: 1, y: 0, rotate: 0 }}
+                viewport={{ once: true, margin: "-8%" }} transition={{ delay: i * 0.1, duration: 0.95, ease: E }}>
                 <Link href={`/support/notice/${n.id}`} className="group block">
                   <div className="relative aspect-[16/10] overflow-hidden" style={{ borderRadius: "0 36px 0 0" }}>
                     <Image src={imgs[i]} alt="" fill className="object-cover transition-transform duration-[1.1s] group-hover:scale-[1.06]" sizes="360px" />
@@ -289,12 +297,24 @@ export function YsNews() {
         </div>
       </section>
 
-      {/* QUICK dock */}
-      <div className="fixed right-4 bottom-20 z-40 hidden md:flex flex-col overflow-hidden rounded-full shadow-xl" style={{ background: YS.royal }}>
+      <YsFooter />
+    </>
+  );
+}
+
+/* ── QUICK dock + 푸터 (서브 페이지 공용) ── */
+export function YsFooter() {
+  return (
+    <>
+      {/* QUICK dock — 화면 밖 오른쪽에서 슬라이드인 */}
+      <motion.div className="fixed right-4 bottom-20 z-40 hidden md:flex flex-col overflow-hidden rounded-full shadow-xl"
+        style={{ background: YS.royal }}
+        initial={{ x: 90, opacity: 0 }} animate={{ x: 0, opacity: 1 }}
+        transition={{ delay: 0.8, duration: 0.9, ease: E }}>
         {[
-          { label: "견적", href: "/support/inquiry" },
+          { label: "견적", href: "/demo/yonsei/contact" },
           { label: "전화", href: `tel:${COMPANY.tel.replace(/-/g, "")}` },
-          { label: "오시는길", href: "/about/location" },
+          { label: "오시는길", href: "/demo/yonsei/contact" },
         ].map((q, i) => (
           <a key={q.label} href={q.href}
             className="px-4 py-3.5 text-[11.5px] font-bold text-white hover:bg-white/15 text-center transition-colors"
@@ -302,7 +322,7 @@ export function YsNews() {
             {q.label}
           </a>
         ))}
-      </div>
+      </motion.div>
 
       <footer className="py-12" style={{ background: YS.royal }}>
         <div className="mx-auto flex flex-col md:flex-row justify-between gap-6 text-[12.5px] leading-[1.9] text-white/65"

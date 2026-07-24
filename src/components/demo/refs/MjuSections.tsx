@@ -7,7 +7,7 @@ import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
-import { E, MJU, NAV, COMPANY, BUSINESS_AREAS, CASES, NOTICES, STATS, HERO_SLIDES } from "./data";
+import { E, MJU, NAV_MJU, COMPANY, BUSINESS_AREAS, CASES, NOTICES, STATS, HERO_SLIDES } from "./data";
 
 const pad = (n: number) => String(n).padStart(2, "0");
 
@@ -47,7 +47,7 @@ export function MjuHeader() {
         </Link>
         {/* GNB 텍스트 = 로고 높이(40px)와 동일. 폭이 커져 xl(1280)부터 노출 */}
         <nav className="hidden xl:flex items-stretch self-stretch" aria-label="주요 메뉴">
-          {NAV.map((item) => (
+          {NAV_MJU.map((item) => (
             <Link key={item.href} href={item.href}
               className="group relative flex items-center px-4 text-[40px] leading-none font-bold tracking-[-0.03em] whitespace-nowrap"
               style={{ color: fg, transition: "color 0.5s" }}>
@@ -80,11 +80,20 @@ export function MjuHero() {
         </motion.div>
       ))}
       <div className="absolute inset-0" style={{ background: "linear-gradient(100deg, rgba(14,34,71,0.86) 0%, rgba(14,34,71,0.45) 55%, rgba(14,34,71,0.2) 100%)" }} />
-      {/* 우하단 사분원 기하 도형 */}
-      <div aria-hidden className="absolute -bottom-32 -right-32 w-[420px] h-[420px] rounded-full"
-        style={{ background: "rgba(22,56,111,0.55)", backdropFilter: "blur(2px)" }} />
-      <div aria-hidden className="absolute bottom-20 right-40 w-[140px] h-[140px] rounded-full"
-        style={{ border: "1px solid rgba(255,255,255,0.35)" }} />
+      {/* 우하단 사분원 기하 도형 — 화면 밖에서 진입 + 대시 링은 상시 회전 */}
+      <motion.div aria-hidden className="absolute -bottom-32 -right-32 w-[420px] h-[420px] rounded-full"
+        style={{ background: "rgba(22,56,111,0.55)", backdropFilter: "blur(2px)" }}
+        initial={{ x: 220, y: 220, opacity: 0 }} animate={{ x: 0, y: 0, opacity: 1 }}
+        transition={{ delay: 0.5, duration: 1.4, ease: E }} />
+      <motion.div aria-hidden className="absolute bottom-20 right-40 w-[140px] h-[140px] rounded-full"
+        style={{ border: "1.5px dashed rgba(255,255,255,0.4)" }}
+        initial={{ opacity: 0, scale: 0.6 }}
+        animate={{ opacity: 1, scale: 1, rotate: 360 }}
+        transition={{
+          opacity: { delay: 0.9, duration: 0.8 },
+          scale: { delay: 0.9, duration: 0.8, ease: E },
+          rotate: { duration: 36, repeat: Infinity, ease: "linear" },
+        }} />
 
       <div className="relative z-10 mx-auto h-full flex flex-col justify-center"
         style={{ maxWidth: 1400, paddingInline: "clamp(20px,3.5vw,48px)" }}>
@@ -125,31 +134,39 @@ export function MjuHero() {
 /* ── 3. 회사소개: 기하 컴포지션(수치 원) + 카피 + '+' 행 링크 ── */
 export function MjuAbout() {
   const rows = [
-    { label: "인사말", href: "/about" },
-    { label: "연혁 · 1999년부터", href: "/about/history" },
-    { label: "조직도", href: "/about/organization" },
+    { label: "인사말", href: "/demo/mju/about" },
+    { label: "연혁 · 1999년부터", href: "/demo/mju/about" },
+    { label: "조직도", href: "/demo/mju/about" },
   ];
   return (
     <section className="py-24 lg:py-32 bg-white overflow-hidden">
       <div className="mx-auto grid lg:grid-cols-2 gap-16 items-center"
         style={{ maxWidth: 1400, paddingInline: "clamp(20px,3.5vw,48px)" }}>
-        {/* 기하 컴포지션 */}
-        <motion.div className="relative h-[380px] sm:h-[440px]"
-          initial={{ opacity: 0, y: 40 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: "-10%" }}
-          transition={{ duration: 1, ease: E }}>
-          <div className="absolute left-0 top-0 w-[62%] aspect-square rounded-full flex flex-col items-center justify-center text-white"
-            style={{ background: MJU.royal }}>
+        {/* 기하 컴포지션 — 두 원이 화면 밖 좌우에서 굴러 들어와 자리를 잡음 */}
+        <div className="relative h-[380px] sm:h-[440px]">
+          <motion.div className="absolute left-0 top-0 w-[62%] aspect-square rounded-full flex flex-col items-center justify-center text-white"
+            style={{ background: MJU.royal }}
+            initial={{ opacity: 0, x: -260, rotate: -24 }} whileInView={{ opacity: 1, x: 0, rotate: 0 }}
+            viewport={{ once: true, margin: "-10%" }} transition={{ duration: 1.2, ease: E }}>
             <p className="font-black leading-none" style={{ fontSize: "clamp(2.6rem,4.5vw,4rem)" }}>{STATS[2].value}<span className="text-[0.45em] font-extrabold ml-1">{STATS[2].suffix}</span></p>
             <p className="mt-3 text-[13px] text-white/75">{STATS[2].label} · {STATS[2].desc}</p>
-          </div>
-          <div className="absolute right-[6%] top-[38%] w-[42%] aspect-square rounded-full flex flex-col items-center justify-center text-white"
-            style={{ background: MJU.deep }}>
+          </motion.div>
+          <motion.div className="absolute right-[6%] top-[38%] w-[42%] aspect-square rounded-full flex flex-col items-center justify-center text-white"
+            style={{ background: MJU.deep }}
+            initial={{ opacity: 0, x: 200, rotate: 18 }} whileInView={{ opacity: 1, x: 0, rotate: 0 }}
+            viewport={{ once: true, margin: "-10%" }} transition={{ delay: 0.15, duration: 1.2, ease: E }}>
             <p className="font-black leading-none" style={{ fontSize: "clamp(1.8rem,3vw,2.6rem)" }}>{STATS[1].value}<span className="text-[0.5em] ml-0.5">{STATS[1].suffix}</span></p>
             <p className="mt-2 text-[12px] text-white/70">{STATS[1].label}</p>
-          </div>
-          <div aria-hidden className="absolute left-[48%] bottom-0 w-[26%] aspect-square rounded-full"
-            style={{ border: `1.5px solid ${MJU.royal}`, opacity: 0.4 }} />
-        </motion.div>
+          </motion.div>
+          <motion.div aria-hidden className="absolute left-[48%] bottom-0 w-[26%] aspect-square"
+            initial={{ opacity: 0, scale: 0.5 }} whileInView={{ opacity: 0.4, scale: 1 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.4, duration: 0.9, ease: E }}>
+            <motion.div className="w-full h-full rounded-full"
+              style={{ border: `1.5px dashed ${MJU.royal}` }}
+              animate={{ rotate: 360 }} transition={{ duration: 40, repeat: Infinity, ease: "linear" }} />
+          </motion.div>
+        </div>
 
         <div>
           <motion.div initial={{ opacity: 0, y: 26 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.8, ease: E }}>
@@ -164,7 +181,7 @@ export function MjuAbout() {
           </motion.div>
           <div className="mt-9 border-t" style={{ borderColor: MJU.line }}>
             {rows.map((r, i) => (
-              <motion.div key={r.href} initial={{ opacity: 0, x: -20 }} whileInView={{ opacity: 1, x: 0 }}
+              <motion.div key={r.label} initial={{ opacity: 0, x: -20 }} whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true }} transition={{ delay: i * 0.08, duration: 0.7, ease: E }}>
                 <Link href={r.href}
                   className="group flex items-center justify-between py-4 border-b text-[15px] font-semibold transition-colors"
@@ -195,16 +212,18 @@ export function MjuBusiness() {
             <p className="text-[13px] font-bold tracking-[0.22em] uppercase mb-3" style={{ color: MJU.royal }}>Business</p>
             <h2 className="font-extrabold tracking-[-0.02em]" style={{ fontSize: "clamp(1.8rem,3vw,2.6rem)", color: MJU.deep }}>사업영역</h2>
           </div>
-          <Link href="/business" className="text-[13.5px] font-semibold hover:underline underline-offset-4" style={{ color: MJU.royal }}>
+          <Link href="/demo/mju/business" className="text-[13.5px] font-semibold hover:underline underline-offset-4" style={{ color: MJU.royal }}>
             전체 보기 +
           </Link>
         </motion.div>
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
           {BUSINESS_AREAS.map((a, i) => (
             <motion.div key={a.slug}
-              initial={{ opacity: 0, y: 32 }} whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-8%" }} transition={{ delay: (i % 3) * 0.09, duration: 0.8, ease: E }}>
-              <Link href={a.href} className="group relative block aspect-[4/3] overflow-hidden">
+              /* 좌·중·우 열이 각각 화면 밖 왼쪽·아래·오른쪽에서 진입 */
+              initial={{ opacity: 0, x: i % 3 === 0 ? -140 : i % 3 === 2 ? 140 : 0, y: i % 3 === 1 ? 80 : 24 }}
+              whileInView={{ opacity: 1, x: 0, y: 0 }}
+              viewport={{ once: true, margin: "-8%" }} transition={{ delay: (i % 3) * 0.09, duration: 0.9, ease: E }}>
+              <Link href="/demo/mju/business" className="group relative block aspect-[4/3] overflow-hidden">
                 <Image src={a.image} alt={a.title} fill className="object-cover transition-transform duration-[1.2s] group-hover:scale-[1.07]"
                   sizes="(max-width:640px) 100vw, 33vw" />
                 <div className="absolute inset-0" style={{ background: "linear-gradient(to top, rgba(14,34,71,0.85) 0%, rgba(14,34,71,0.15) 45%, transparent 70%)" }} />
@@ -250,9 +269,10 @@ export function MjuProjects() {
         <div className="grid sm:grid-cols-2 gap-4">
           {CASES.map((c, i) => (
             <motion.div key={c.slug}
-              initial={{ opacity: 0, y: 36 }} whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-8%" }} transition={{ delay: i * 0.1, duration: 0.85, ease: E }}>
-              <Link href={`/portfolio/${c.slug}`} className="group block bg-white">
+              /* 화면 밖 오른쪽에서 순차 진입 + 미세 회전 세틀 */
+              initial={{ opacity: 0, x: 160, rotate: 2.5 }} whileInView={{ opacity: 1, x: 0, rotate: 0 }}
+              viewport={{ once: true, margin: "-8%" }} transition={{ delay: i * 0.1, duration: 0.95, ease: E }}>
+              <Link href="/demo/mju/portfolio" className="group block bg-white">
                 <div className="relative aspect-[4/3] overflow-hidden">
                   <Image src={c.src} alt={c.title} fill className="object-cover transition-transform duration-[1.2s] group-hover:scale-[1.06]" sizes="280px" />
                 </div>
@@ -307,7 +327,7 @@ export function MjuNews() {
               <p className="mt-4 text-[13.5px] leading-[1.75] text-white/70">현장 조건만 알려주시면 영업일 1일 내 회신드립니다.</p>
             </div>
             <div className="mt-8 flex flex-col gap-2.5">
-              <Link href="/support/inquiry" className="h-12 flex items-center justify-center bg-white text-[14px] font-bold" style={{ color: MJU.royal }}>
+              <Link href="/demo/mju/contact" className="h-12 flex items-center justify-center bg-white text-[14px] font-bold" style={{ color: MJU.royal }}>
                 온라인 견적 문의
               </Link>
               <a href={`tel:${COMPANY.tel.replace(/-/g, "")}`} className="h-12 flex items-center justify-center border border-white/40 text-[14px] font-semibold hover:bg-white/10 transition-colors">
@@ -329,19 +349,26 @@ export function MjuNews() {
         </div>
       </div>
 
-      <footer className="py-12 text-white/60" style={{ background: MJU.deep }}>
-        <div className="mx-auto flex flex-col md:flex-row justify-between gap-6 text-[12.5px] leading-[1.9]"
-          style={{ maxWidth: 1400, paddingInline: "clamp(20px,3.5vw,48px)" }}>
-          <div>
-            <p className="text-white font-bold text-[14px] mb-2">{COMPANY.name}</p>
-            <p>{COMPANY.address}<br />대표이사 {COMPANY.ceo} · 사업자등록번호 {COMPANY.bizNo}</p>
-          </div>
-          <div className="md:text-right">
-            <p>TEL {COMPANY.tel} · FAX {COMPANY.fax}<br />{COMPANY.email}</p>
-            <p className="mt-2 text-white/35">© {COMPANY.name}. All rights reserved.</p>
-          </div>
-        </div>
-      </footer>
+      <MjuFooter />
     </>
+  );
+}
+
+/* ── 푸터 (서브 페이지 공용) ── */
+export function MjuFooter() {
+  return (
+    <footer className="py-12 text-white/60" style={{ background: MJU.deep }}>
+      <div className="mx-auto flex flex-col md:flex-row justify-between gap-6 text-[12.5px] leading-[1.9]"
+        style={{ maxWidth: 1400, paddingInline: "clamp(20px,3.5vw,48px)" }}>
+        <div>
+          <p className="text-white font-bold text-[14px] mb-2">{COMPANY.name}</p>
+          <p>{COMPANY.address}<br />대표이사 {COMPANY.ceo} · 사업자등록번호 {COMPANY.bizNo}</p>
+        </div>
+        <div className="md:text-right">
+          <p>TEL {COMPANY.tel} · FAX {COMPANY.fax}<br />{COMPANY.email}</p>
+          <p className="mt-2 text-white/35">© {COMPANY.name}. All rights reserved.</p>
+        </div>
+      </div>
+    </footer>
   );
 }

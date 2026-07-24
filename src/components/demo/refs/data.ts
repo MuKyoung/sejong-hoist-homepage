@@ -1,7 +1,10 @@
 /* 레퍼런스 3사 시안 공용 데이터 (design-refs/REF-*.md)
  * /demo/mju · /demo/yonsei · /demo/shi · /demo/custom 에서 사용. 데모 전용. */
 
-import { COMPANY, BUSINESS_AREAS, PORTFOLIO, NOTICES } from "@/data/site";
+import {
+  COMPANY, BUSINESS_AREAS, PORTFOLIO, NOTICES,
+  HISTORY, PRODUCTS, ISO_CERTS, ISO_META,
+} from "@/data/site";
 import { CONCEPT_NAV } from "@/components/demo/conceptNav";
 
 export const E = [0.16, 1, 0.3, 1] as const;
@@ -20,7 +23,24 @@ export const YS = { royal: "#0E4A84", ink: "#10243E", soft: "#F4F7FB" };
 export const SHI = { ink: "#101820", accent: "#1E4FA3", dark: "#0D1523" };
 
 export const NAV = CONCEPT_NAV;
-export { COMPANY, BUSINESS_AREAS, PORTFOLIO, NOTICES };
+export { COMPANY, BUSINESS_AREAS, PORTFOLIO, NOTICES, HISTORY, PRODUCTS, ISO_CERTS, ISO_META };
+
+/* ── 시안 내부 하위 페이지 IA — 각 시안 헤더는 자기 스타일의 서브 페이지로 라우팅 ── */
+export type RefSub = "about" | "business" | "portfolio" | "technology" | "contact";
+
+export const SUBS: { key: RefSub; label: string; en: string; desc: string }[] = [
+  { key: "about", label: "회사소개", en: "About Us", desc: "운반하역 외길 25년, 세종호이스트크레인을 소개합니다." },
+  { key: "business", label: "사업영역", en: "Business", desc: "여섯 개 사업영역과 세 개의 제품 라인업으로 현장에 대응합니다." },
+  { key: "portfolio", label: "시공사례", en: "Projects", desc: "전국 현장에서 검증된 대표 시공 실적입니다." },
+  { key: "technology", label: "기술·인증", en: "Technology", desc: "ISO 3종과 KCs 안전인증으로 품질을 증명합니다." },
+  { key: "contact", label: "견적·문의", en: "Contact", desc: "현장 조건만 알려주시면 영업일 1일 내 회신드립니다." },
+];
+
+export const refNav = (base: string) => SUBS.map((s) => ({ label: s.label, href: `${base}/${s.key}` }));
+
+export const NAV_MJU = refNav("/demo/mju");
+export const NAV_YS = refNav("/demo/yonsei");
+export const NAV_SHI = refNav("/demo/shi");
 
 export const HERO_SLIDES = [
   {
