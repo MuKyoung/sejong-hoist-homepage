@@ -5,14 +5,17 @@
 
 import { motion } from "framer-motion";
 import Image from "next/image";
-import Link from "next/link";
 import {
-  E, MJU, YS, SHI, SUBS, COMPANY, HISTORY, PRODUCTS, ISO_CERTS, ISO_META, PORTFOLIO,
+  E, MJU, YS, SHI, SUBS, HISTORY, PRODUCTS, ISO_CERTS, ISO_META,
   type RefStyle, type RefSub,
 } from "./data";
-import { MjuHeader, MjuAbout, MjuBusiness, MjuFooter } from "./MjuSections";
-import { YsHeader, YsAbout, YsBusiness, YsFooter } from "./YsSections";
-import { ShiHeader, ShiAbout, ShiBusiness, ShiFooter } from "./ShiSections";
+import { MjuHeader, MjuFooter } from "./MjuSections";
+import { YsHeader, YsFooter } from "./YsSections";
+import { ShiHeader, ShiFooter } from "./ShiSections";
+import {
+  GreetingBlock, OrgBlock, LocationBlock, AreaDetailBlock,
+  PortfolioExplorer, KcsBlock, SafetyBlock, InquiryFormBlock,
+} from "./SubBlocks";
 
 /* 블록 공용 토큰 — 각 시안 MD의 팔레트 표와 동일 계열 */
 type Tk = { a: string; d: string; ink: string; soft: string; r: number };
@@ -227,101 +230,48 @@ function CertBlock({ t }: { t: Tk }) {
   );
 }
 
-/* 시공사례 전체 — 8건 그리드, 아래에서 기울어 올라오는 스태거 */
-function PortfolioFull({ t }: { t: Tk }) {
-  return (
-    <section className="py-20 bg-white">
-      <div className="mx-auto" style={CONTAINER}>
-        <BlockHead t={t} en="Projects" title="시공 실적 전체" />
-        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
-          {PORTFOLIO.map((p, i) => (
-            <motion.div key={p.slug}
-              initial={{ opacity: 0, y: 100, rotate: i % 2 ? 2 : -2 }}
-              whileInView={{ opacity: 1, y: 0, rotate: 0 }}
-              viewport={{ once: true, margin: "-6%" }} transition={{ delay: (i % 4) * 0.08, duration: 0.9, ease: E }}>
-              <div className="relative aspect-[4/3] overflow-hidden group" style={{ borderRadius: t.r }}>
-                <Image src={p.src} alt={p.title} fill className="object-cover transition-transform duration-[1.2s] group-hover:scale-[1.06]"
-                  sizes="(max-width:640px) 100vw, 25vw" />
-                <span className="absolute top-3 right-3 px-2.5 py-1 text-[11.5px] font-bold text-white"
-                  style={{ background: t.a, borderRadius: t.r ? 999 : 0 }}>
-                  {p.capacity}
-                </span>
-              </div>
-              <h3 className="mt-4 text-[15px] font-bold leading-snug" style={{ color: t.ink }}>{p.title}</h3>
-              <p className="mt-1.5 text-[12.5px]" style={{ color: "rgba(16,24,32,0.5)" }}>{p.client} · {p.industry} · {p.year}</p>
-            </motion.div>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
-
-/* 연락처 — 실제 접수 폼(운영)으로 연결 */
-function ContactBlock({ t }: { t: Tk }) {
-  const items = [
-    { label: "대표전화", value: COMPANY.tel, href: `tel:${COMPANY.tel.replace(/-/g, "")}` },
-    { label: "휴대전화", value: COMPANY.mobile, href: `tel:${COMPANY.mobile.replace(/-/g, "")}` },
-    { label: "이메일", value: COMPANY.email, href: `mailto:${COMPANY.email}` },
-  ];
-  return (
-    <section className="py-20 bg-white">
-      <div className="mx-auto" style={CONTAINER}>
-        <div className="grid sm:grid-cols-3 gap-6 mb-14">
-          {items.map((it, i) => (
-            <motion.a key={it.label} href={it.href}
-              className="block p-8 text-center transition-shadow hover:shadow-lg"
-              style={{ background: t.soft, borderRadius: t.r }}
-              initial={{ opacity: 0, y: 80, rotate: i === 1 ? 0 : i === 0 ? -2.5 : 2.5 }}
-              whileInView={{ opacity: 1, y: 0, rotate: 0 }}
-              viewport={{ once: true, margin: "-8%" }} transition={{ delay: i * 0.09, duration: 0.9, ease: E }}>
-              <p className="text-[12px] font-bold tracking-[0.14em] uppercase mb-3" style={{ color: t.a }}>{it.label}</p>
-              <p className="text-[19px] font-extrabold tabular-nums" style={{ color: t.ink }}>{it.value}</p>
-            </motion.a>
-          ))}
-        </div>
-        <motion.div className="p-10 text-center text-white" style={{ background: t.d, borderRadius: t.r }}
-          initial={{ opacity: 0, scale: 0.94, y: 50 }} whileInView={{ opacity: 1, scale: 1, y: 0 }}
-          viewport={{ once: true }} transition={{ duration: 1, ease: E }}>
-          <p className="text-[21px] font-extrabold">프로젝트 상담이 필요하신가요?</p>
-          <p className="mt-3 text-[13.5px] text-white/70">
-            {COMPANY.address} · 현장 조건만 알려주시면 영업일 1일 내 회신드립니다.
-          </p>
-          <Link href="/support/inquiry"
-            className="inline-flex items-center justify-center mt-7 h-12 px-9 bg-white text-[14px] font-bold hover:opacity-85 transition-opacity"
-            style={{ color: t.d, borderRadius: t.r ? 999 : 0 }}>
-            온라인 견적 문의 접수
-          </Link>
-        </motion.div>
-      </div>
-    </section>
-  );
-}
-
 /* ══════════ 컴포지션 ══════════ */
 
 const PARTS: Record<RefStyle, {
   Header: React.ComponentType; Footer: React.ComponentType;
-  About: React.ComponentType; Business: React.ComponentType;
   Banner: React.ComponentType<{ s: RefSub }>;
 }> = {
-  mju: { Header: MjuHeader, Footer: MjuFooter, About: MjuAbout, Business: MjuBusiness, Banner: MjuBanner },
-  ys: { Header: YsHeader, Footer: YsFooter, About: YsAbout, Business: YsBusiness, Banner: YsBanner },
-  shi: { Header: ShiHeader, Footer: ShiFooter, About: ShiAbout, Business: ShiBusiness, Banner: ShiBanner },
+  mju: { Header: MjuHeader, Footer: MjuFooter, Banner: MjuBanner },
+  ys: { Header: YsHeader, Footer: YsFooter, Banner: YsBanner },
+  shi: { Header: ShiHeader, Footer: ShiFooter, Banner: ShiBanner },
 };
 
+/* 각 페이지는 성격에 맞는 상세 블록으로 구성 (메인 섹션 재활용 없음) */
 export function RefSubPage({ style, page }: { style: RefStyle; page: RefSub }) {
-  const { Header, Footer, About, Business, Banner } = PARTS[style];
+  const { Header, Footer, Banner } = PARTS[style];
   const t = TK[style];
   return (
     <>
       <Header />
       <Banner s={page} />
-      {page === "about" && (<><About /><HistoryBlock t={t} /></>)}
-      {page === "business" && (<><Business /><ProductsBlock t={t} /></>)}
-      {page === "portfolio" && <PortfolioFull t={t} />}
-      {page === "technology" && <CertBlock t={t} />}
-      {page === "contact" && <ContactBlock t={t} />}
+      {page === "about" && (
+        <>
+          <GreetingBlock t={t} />
+          <HistoryBlock t={t} />
+          <OrgBlock t={t} />
+          <LocationBlock t={t} />
+        </>
+      )}
+      {page === "business" && (
+        <>
+          <AreaDetailBlock t={t} />
+          <ProductsBlock t={t} />
+        </>
+      )}
+      {page === "portfolio" && <PortfolioExplorer t={t} />}
+      {page === "technology" && (
+        <>
+          <CertBlock t={t} />
+          <KcsBlock t={t} />
+          <SafetyBlock t={t} />
+        </>
+      )}
+      {page === "contact" && <InquiryFormBlock t={t} />}
       <Footer />
     </>
   );

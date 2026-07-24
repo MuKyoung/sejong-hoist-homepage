@@ -4,6 +4,8 @@
 import {
   COMPANY, BUSINESS_AREAS, PORTFOLIO, NOTICES,
   HISTORY, PRODUCTS, ISO_CERTS, ISO_META,
+  GREETING, ORG_UNITS, PORTFOLIO_INDUSTRIES, PORTFOLIO_CAPACITY_BUCKETS,
+  QUALIFICATIONS, SAFETY_STEPS, CERT_DOCS, certCover,
 } from "@/data/site";
 import { CONCEPT_NAV } from "@/components/demo/conceptNav";
 
@@ -23,7 +25,11 @@ export const YS = { royal: "#0E4A84", ink: "#10243E", soft: "#F4F7FB" };
 export const SHI = { ink: "#101820", accent: "#1E4FA3", dark: "#0D1523" };
 
 export const NAV = CONCEPT_NAV;
-export { COMPANY, BUSINESS_AREAS, PORTFOLIO, NOTICES, HISTORY, PRODUCTS, ISO_CERTS, ISO_META };
+export {
+  COMPANY, BUSINESS_AREAS, PORTFOLIO, NOTICES, HISTORY, PRODUCTS, ISO_CERTS, ISO_META,
+  GREETING, ORG_UNITS, PORTFOLIO_INDUSTRIES, PORTFOLIO_CAPACITY_BUCKETS,
+  QUALIFICATIONS, SAFETY_STEPS, CERT_DOCS, certCover,
+};
 
 /* ── 시안 내부 하위 페이지 IA — 각 시안 헤더는 자기 스타일의 서브 페이지로 라우팅 ── */
 export type RefSub = "about" | "business" | "portfolio" | "technology" | "contact";
